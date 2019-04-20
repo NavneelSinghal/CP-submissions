@@ -29,59 +29,86 @@
 #include <utility>
 #include <vector>
 using namespace std;
+ 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <ext/rope>
+using namespace __gnu_pbds;
+using namespace __gnu_cxx;
 
-#define int long long
-#define double long double
-#define vi vector<int>
-#define vvi vector<vi>
-#define pii pair<int, int>
-#define vpii vector<pii> 
-#define vvpii vector<vpii>
-#define mii map<int, int>
-#define rep(i, n) for(int i = 0; i < n; i++)
-#define rep2(i, a, b) for(int i = a; i < b; i++)
-#define repd2(i, a, b) for(int i = b - 1; i >= a; i--)
-#define repd(i, n) for(int i = n-1; i >= 0; i--)
-#define F first
-#define S second
-#define fastio ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+#define FLSH fflush(stdout)
+#define fileIO(name) \
+    freopen(name".in", "r", stdin); \
+    freopen(name".out", "w", stdout);
+#define PRECISION(x) cout << fixed << setprecision(x); 
+#define FAST_IO ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+
+typedef tree<int,null_type,less<int>,rb_tree_tag,
+tree_order_statistics_node_update> indexed_set;
+
+typedef long long ll;
+typedef long double LD;
+#define int ll
+#define double LD
 #define pb push_back
 #define mp make_pair
-#define eb emplace_back
+#define REP(i,n) for (int i = 0; i < n; i++)
+#define FOR(i,a,b) for (int i = a; i < b; i++)
+#define REPD(i,n) for (int i = n-1; i >= 0; i--)
+#define FORD(i,a,b) for (int i = a; i >= b; i--)
+#define foreach(c,itr) for(__typeof((c).begin()) itr=(c).begin();itr!=(c).end();itr++)
+#define remax(a,b) a = max(a,b)
+#define remin(a,b) a = min(a,b)
 #define all(v) v.begin(),v.end()
-#define INF 2e9
-#define EPS 1e-9
-#define PI acosl(-1)
+typedef map<int,int> mii;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef pair<int,int> pii;
+typedef vector<pii> vpii;
+#define F first
+#define S second
+#define PQ(type) priority_queue<type>
+#define PQD(type) priority_queue<type,vector<type>,greater<type> >
+#define ITR :: iterator it
+#define WL(t) while(t --)
+#define SZ(x) ((int)(x).size())
+#define runtime() ((double)clock() / CLOCKS_PER_SEC)
+#define TR(container,it) for(typeof(container.begin()) it=container.begin();it!=container.end();it++)
+#define sqr(x) ((x)*(x))
 
-const int mod = 1e9 + 7;
+const int MAXN = 1000005;
+const int SQRTN = 1003;
+const int LOGN = 22;
+const double PI=acos(-1);
+const int INF = 1000000000;
+const int MOD = 1000000007;
+const int FMOD = 998244353;
+const double eps = 1e-9;
 
-int powmod (int a, int n) {
-    int ans = 1;
-    while(n) {
-        if(n & 1) ans = (ans * a) % mod;
-        a = (a * a) % mod;
-        n >>= 1;
-    }
-    return ans;
-}
+mt19937 RNG(chrono::steady_clock::now().time_since_epoch().count()); 
+#define SHUF(v) shuffle(all(v), RNG);
 
-int inv (int a) {
-    return powmod(a, mod-2);
-}
+template<typename T> T gcd(T a, T b){return(b?__gcd(a,b):a);}
+template<typename T> T lcm(T a, T b){return(a*(b/gcd(a,b)));}
+int add(int a, int b, int c){int res=a+b;return(res>=c?res-c:res);}
+int mod_neg(int a, int b, int c){int res;if(abs(a-b)<c)res=a-b;else res=(a-b)%c;return(res<0?res+c:res);}
+int mul(int a, int b, int c){ll res=(ll)a*b;return(res>=c?res%c:res);}
+ll mulmod(ll a,ll b, ll m){ll q = (ll)(((LD)a*(LD)b)/(LD)m);ll r=a*b-q*m;if(r>m)r%=m;if(r<0)r+=m;return r;}
+template<typename T>T expo(T e, T n){T x=1,p=e;while(n){if(n&1)x=x*p;p=p*p;n>>=1;}return x;}
+template<typename T>T power(T e, T n, T m){T x=1,p=e;while(n){if(n&1)x=mul(x,p,m);p=mul(p,p,m);n>>=1;}return x;}
+template<typename T>T extended_euclid(T a, T b, T &x, T &y){T xx=0,yy=1;y=0;x=1;while(b){T q=a/b,t=b;b=a%b;a=t;\
+t=xx;xx=x-q*xx;x=t;t=yy;yy=y-q*yy;y=t;}return a;}
+template<typename T>T mod_inverse(T a, T n){T x,y,z=0;T d=extended_euclid(a,n,x,y);return(d>1?-1:mod_neg(x,z,n));}
 
-void solve(){
-    string a, b;
-    cin >> a >> b;
-    if(a != b) cout << max(a.size(), b.size()) << endl;
-    else cout << -1 << endl;
-}
+using namespace std;
 
 signed main(){
-    fastio;
-    cout << setprecision(20) << fixed;
-    int t = 1;
-    //cin >> t;
-    while(t--){
-        solve();
+    string a, b;
+    cin>>a>>b;
+    if(a.compare(b)!=0){
+        cout<<max(a.size(), b.size());
     }
-} 
+    else cout<<-1;
+}
