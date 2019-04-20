@@ -1,233 +1,127 @@
-#pragma GCC optimize ("Ofast")
-
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <bitset>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <complex>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <deque>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <limits>
+#include <list>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <random>
+#include <ratio>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <utility>
+#include <vector>
+using namespace std;
+ 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 #include <ext/rope>
-
 using namespace __gnu_pbds;
 using namespace __gnu_cxx;
-using namespace std;
 
-#define int long long
-#define double long double
-#define Int signed
-#define vi vector<int>
-#define vvi vector<vi>
-#define vd vector<double>
-#define vvd vector<vd>
-#define pii pair<int, int>
-#define vpii vector<pii>
-#define vvpii vector<vpii>
-#define mii map<int, int>
-#define unordered_map gp_hash_table
 
-#define OVERLOADED_MACRO(M, ...) _OVR(M, _COUNT_ARGS(__VA_ARGS__)) (__VA_ARGS__)
-#define _OVR(macroName, number_of_args)   _OVR_EXPAND(macroName, number_of_args)
-#define _OVR_EXPAND(macroName, number_of_args)    macroName##number_of_args
+#define FLSH fflush(stdout)
+#define fileIO(name) \
+    freopen(name".in", "r", stdin); \
+    freopen(name".out", "w", stdout);
+#define PRECISION(x) cout << fixed << setprecision(x); 
+#define FAST_IO ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-#define _COUNT_ARGS(...)  _ARG_PATTERN_MATCH(__VA_ARGS__, 9,8,7,6,5,4,3,2,1)
-#define _ARG_PATTERN_MATCH(_1,_2,_3,_4,_5,_6,_7,_8,_9, N, ...)   N
 
-#define rep(...) OVERLOADED_MACRO(rep, __VA_ARGS__)
-#define repd(...) OVERLOADED_MACRO(repd, __VA_ARGS__)
+typedef tree<int,null_type,less<int>,rb_tree_tag,
+tree_order_statistics_node_update> indexed_set;
 
-#define rep3(i, a, b) for (int i = a; i < b; ++i)
-#define rep2(i, n) rep3(i, 0, n)
-#define repd3(i, a, b) for(int i = b - 1; i >= a; --i)
-#define repd2(i, n) repd3(i, 0, n)
-
-#define F first
-#define S second
-
-#define fastio ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+typedef long long ll;
+typedef long double LD;
+#define int ll
+#define double LD
 #define pb push_back
 #define mp make_pair
-#define eb emplace_back
+#define REP(i,n) for (int i = 0; i < n; i++)
+#define FOR(i,a,b) for (int i = a; i < b; i++)
+#define REPD(i,n) for (int i = n-1; i >= 0; i--)
+#define FORD(i,a,b) for (int i = a; i >= b; i--)
+#define foreach(c,itr) for(__typeof((c).begin()) itr=(c).begin();itr!=(c).end();itr++)
+#define remax(a,b) a = max(a,b)
+#define remin(a,b) a = min(a,b)
 #define all(v) v.begin(),v.end()
+typedef map<int,int> mii;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef pair<int,int> pii;
+typedef vector<pii> vpii;
+#define F first
+#define S second
+#define PQ(type) priority_queue<type>
+#define PQD(type) priority_queue<type,vector<type>,greater<type> >
+#define ITR :: iterator it
+#define WL(t) while(t --)
+#define SZ(x) ((int)(x).size())
+#define runtime() ((double)clock() / CLOCKS_PER_SEC)
+#define TR(container,it) for(typeof(container.begin()) it=container.begin();it!=container.end();it++)
+#define sqr(x) ((x)*(x))
 
-#define bitcount __builtin_popcountll
-#define gcd __gcd
-//for trailing 1s, do trailing0(n + 1)
-#define leading0 __builtin_clzll
-#define trailing0 __builtin_ctzll
-#define isodd(n) (n & 1)
-#define iseven(n) (!(n & 1))
+const int MAXN = 1000005;
+const int SQRTN = 1003;
+const int LOGN = 22;
+const double PI=acos(-1);
+const int INF = 1000000000;
+const int MOD = 1000000007;
+const int FMOD = 998244353;
+const double eps = 1e-9;
 
-#define sz(v) ((int) v.size())
-#define del_rep(v) sort(all(v)); v.erase(unique(all(v)), v.end());
-#define checkbit(n, b) ((n >> b) & 1)
+mt19937 RNG(chrono::steady_clock::now().time_since_epoch().count()); 
+#define SHUF(v) shuffle(all(v), RNG);
 
-#ifdef DEBUG
-#define debug(args...) {\
-    std::string _s = #args;\
-    replace(_s.begin(), _s.end(), ',', ' ');\
-    std::stringstream _ss(_s);\
-    std::istream_iterator <std::string> _it(_ss);\
-    err(_it, args);\
-}
+template<typename T> T gcd(T a, T b){return(b?__gcd(a,b):a);}
+template<typename T> T lcm(T a, T b){return(a*(b/gcd(a,b)));}
+int add(int a, int b, int c){int res=a+b;return(res>=c?res-c:res);}
+int mod_neg(int a, int b, int c){int res;if(abs(a-b)<c)res=a-b;else res=(a-b)%c;return(res<0?res+c:res);}
+int mul(int a, int b, int c){ll res=(ll)a*b;return(res>=c?res%c:res);}
+ll mulmod(ll a,ll b, ll m){ll q = (ll)(((LD)a*(LD)b)/(LD)m);ll r=a*b-q*m;if(r>m)r%=m;if(r<0)r+=m;return r;}
+template<typename T>T expo(T e, T n){T x=1,p=e;while(n){if(n&1)x=x*p;p=p*p;n>>=1;}return x;}
+template<typename T>T power(T e, T n, T m){T x=1,p=e;while(n){if(n&1)x=mul(x,p,m);p=mul(p,p,m);n>>=1;}return x;}
+template<typename T>T extended_euclid(T a, T b, T &x, T &y){T xx=0,yy=1;y=0;x=1;while(b){T q=a/b,t=b;b=a%b;a=t;\
+t=xx;xx=x-q*xx;x=t;t=yy;yy=y-q*yy;y=t;}return a;}
+template<typename T>T mod_inverse(T a, T n){T x,y,z=0;T d=extended_euclid(a,n,x,y);return(d>1?-1:mod_neg(x,z,n));}
 
-#define print_container(v) {\
-    bool first = true; os << "[";\
-    for (auto x : v) {\
-        if (!first) os << ", "; os << x; first = false;\
-    }\
-    return os << "]";\
-}
-
-void err (std::istream_iterator <std::string> it) {}
-template <typename T, typename... Args>
-void err (std::istream_iterator <std::string> it, T a, Args... args) {
-    std::cerr << *it << " = " << a << std::endl;
-    err(++it, args...);
-}
-template <typename T1, typename T2>
-inline std::ostream& operator << (std::ostream& os, const std::pair<T1, T2>& p) {
-    return os << "(" << p.first << ", " << p.second << ")";
-}
-template<typename T>
-inline std::ostream &operator << (std::ostream & os, const std::vector<T>& v) {
-    print_container(v);
-}
-template<typename T>
-inline std::ostream &operator << (std::ostream & os, const std::set<T>& v) {
-    print_container(v);
-}
-template<typename T1, typename T2>
-inline std::ostream &operator << (std::ostream & os, const std::map<T1, T2>& v) {
-    print_container(v);
-}
-template<typename T1, typename T2, class C>
-inline std::ostream &operator << (std::ostream & os, const unordered_map<T1, T2, C>& v) {
-    print_container(v);
-}
-template<typename T, class C>
-inline std::ostream &operator << (std::ostream & os, const unordered_set<T, C>& v) {
-    print_container(v);
-}
-template<typename T1, typename T2>
-inline std::ostream &operator << (std::ostream & os, const std::multimap<T1, T2>& v) {
-    print_container(v);
-}
-template<typename T>
-inline std::ostream &operator << (std::ostream & os, const std::multiset<T>& v) {
-    print_container(v);
-}
-#else
-#define debug(args...) 0
-#endif
-
-//order_of_key(k) - number of elements e such that func(e, k) returns true, where func is less or less_equal
-//find_by_order(k) - kth element in the set counting from 0
-//
-typedef tree <int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
-typedef tree <int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
-
-const int INF = 1e9;
-const double EPS = 1e-9;
-const double PI = acosl(-1);
-const int mod = 1e9 + 7;
-const int maxn = 5e5 + 5;
-const int maxa = 1e6 + 5;
-const int logmax = 25;
-
-struct custom_hash {
-    // http://xorshift.di.unimi.it/splitmix64.c
-    static uint64_t splitmix64(uint64_t x) {
-        x += 0x9e3779b97f4a7c15;
-        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
-        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
-        return x ^ (x >> 31);
-    }
-    size_t operator()(uint64_t x) const {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(x + FIXED_RANDOM);
-    }
-};
-
-struct pair_hash {
-    static uint64_t splitmix64(uint64_t x) {
-        x += 0x9e3779b97f4a7c15;
-        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
-        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
-        return x ^ (x >> 31);
-    }
-    size_t operator()(uint64_t x) const {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(x + FIXED_RANDOM);
-    }
-    size_t operator()(pair<int, int> p) const {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(p.first * 31 + p.second + FIXED_RANDOM);
-    }
-};
-
-vector<int> sort_cyclic_shifts(string const& s) {
-    int n = s.size();
-    const int alphabet = 128;
-    vector<int> p(n), c(n), cnt(max(alphabet, n), 0);
-    //base case : length = 1, so sort by counting sort
-    for (int i = 0; i < n; i++) cnt[s[i]]++;
-    for (int i = 1; i < alphabet; i++) cnt[i] += cnt[i - 1];
-    for (int i = 0; i < n; i++) p[--cnt[s[i]]] = i;
-    c[p[0]] = 0;
-    int classes = 1;
-    for (int i = 1; i < n; i++) {
-        if (s[p[i]] != s[p[i - 1]]) ++classes;
-        c[p[i]] = classes - 1;
-    }
-    //inductive case, sort by radix sort on pairs (in fact you only need to sort by first elements now)
-    vector<int> p_new(n), c_new(n);
-    for (int h = 0; (1 << h) < n; ++h) {
-        for (int i = 0; i < n; i++) {
-            p_new[i] = p[i] - (1 << h);
-            if (p_new[i] < 0) p_new[i] += n;
-        }
-        fill(cnt.begin(), cnt.begin() + classes, 0);
-        for (int i = 0; i < n; i++) cnt[c[p_new[i]]]++;
-        for (int i = 1; i < classes; i++) cnt[i] += cnt[i - 1];
-        for (int i = n - 1; i >= 0; i--) p[--cnt[c[p_new[i]]]] = p_new[i];
-        c_new[p[0]] = 0;
-        classes = 1;
-        for (int i = 1; i < n; i++) {
-            pair<int, int> cur = {c[p[i]], c[(p[i] + (1 << h)) % n]};
-            pair<int, int> prev = {c[p[i - 1]], c[(p[i - 1] + (1 << h)) % n]};
-            if (cur != prev) ++classes;
-            c_new[p[i]] = classes - 1;
-        }
-        c.swap(c_new);
-    }
-    return p;
-}
-vector<int> suffix_array_construct (string s) {
-    s += "$";
-    //what about s += " "; ?
-    vector<int> sorted_shifts = sort_cyclic_shifts(s);
-    //sorted_shifts.erase(sorted_shifts.begin());
-    return sorted_shifts;
-}
-
-void solve() {
-    int n;
-    cin >> n;
-    vi a(n);
-    rep(i, n) cin >> a[i];
-    int x = *max_element(all(a));
-    int y = *min_element(all(a));
-    int c = 0;
-    rep(i, n) {
-        if(a[i] == x || a[i] == y) c++;
-    }
-    cout << n - c << endl;
-}
+using namespace std;
 
 signed main(){
-    fastio;
-    cout << setprecision(6) << fixed;
-    int t = 1;
-    //cin >> t;
-    while(t--){
-        solve();
+    int n;
+    int maxi = 0;
+    int mini = INF;
+    int a[MAXN];
+    cin>>n;
+    REP(i, n){
+        int x;
+        cin>>x;
+        a[i]=x;
+        mini = min(mini, x);
+        maxi = max(maxi, x);
     }
-    return 0;
+    int ans = 0;
+    REP(i, n){
+        if(a[i]!=mini && a[i]!=maxi){
+            ans+=1;
+        }
+    }
+    cout<<ans;
 }
