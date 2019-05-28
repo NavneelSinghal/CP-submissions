@@ -10,8 +10,8 @@ int main(){
     ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     
     cin>>k>>n;
-    for(auto c : n){
-        int d = c-'0';
+    for(int i = 0; i<n.size(); i++){
+        int d = n[i]-'0';
         cnt[d]++;
         sum += d;
     }
