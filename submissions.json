@@ -506,6 +506,23 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54890635": {
+    "contest_id": 479,
+    "language": "GNU C++17",
+    "path": "codeforces/479/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Exams",
+    "problem_url": "https://codeforces.com/contest/479/problem/C",
+    "submission_id": "CF54890635",
+    "submission_url": "https://codeforces.com/contest/479/submission/54890635",
+    "tags": [
+      "greedy",
+      "sortings",
+      "*1400"
+    ],
+    "timestamp": "Jun/01/2019 01:34"
+  },
   "CF54890762": {
     "contest_id": 897,
     "language": "GNU C++17",
