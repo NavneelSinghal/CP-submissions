@@ -506,6 +506,22 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54884949": {
+    "contest_id": 285,
+    "language": "GNU C++17",
+    "path": "codeforces/285/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Find Marble",
+    "problem_url": "https://codeforces.com/contest/285/problem/B",
+    "submission_id": "CF54884949",
+    "submission_url": "https://codeforces.com/contest/285/submission/54884949",
+    "tags": [
+      "implementation",
+      "*1200"
+    ],
+    "timestamp": "May/31/2019 22:11"
+  },
   "CF54886581": {
     "contest_id": 448,
     "language": "GNU C++17",
