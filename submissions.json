@@ -506,6 +506,22 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54953587": {
+    "contest_id": 36,
+    "language": "GNU C++17",
+    "path": "codeforces/36/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Extra-terrestrial Intelligence",
+    "problem_url": "https://codeforces.com/contest/36/problem/A",
+    "submission_id": "CF54953587",
+    "submission_url": "https://codeforces.com/contest/36/submission/54953587",
+    "tags": [
+      "implementation",
+      "*1300"
+    ],
+    "timestamp": "Jun/02/2019 02:12"
+  },
   "CF54954015": {
     "contest_id": 36,
     "language": "GNU C++17",
