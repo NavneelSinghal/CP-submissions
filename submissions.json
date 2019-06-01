@@ -506,6 +506,23 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54904306": {
+    "contest_id": 330,
+    "language": "GNU C++17",
+    "path": "codeforces/330/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Road Construction",
+    "problem_url": "https://codeforces.com/contest/330/problem/B",
+    "submission_id": "CF54904306",
+    "submission_url": "https://codeforces.com/contest/330/submission/54904306",
+    "tags": [
+      "constructive algorithms",
+      "graphs",
+      "*1300"
+    ],
+    "timestamp": "Jun/01/2019 13:36"
+  },
   "CF54905117": {
     "contest_id": 116,
     "language": "GNU C++17",
