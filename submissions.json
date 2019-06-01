@@ -506,6 +506,22 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54954015": {
+    "contest_id": 36,
+    "language": "GNU C++17",
+    "path": "codeforces/36/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Fractal",
+    "problem_url": "https://codeforces.com/contest/36/problem/B",
+    "submission_id": "CF54954015",
+    "submission_url": "https://codeforces.com/contest/36/submission/54954015",
+    "tags": [
+      "implementation",
+      "*1600"
+    ],
+    "timestamp": "Jun/02/2019 02:33"
+  },
   "CF54954423": {
     "contest_id": 1119,
     "language": "GNU C++17",
