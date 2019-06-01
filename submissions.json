@@ -506,6 +506,23 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54912644": {
+    "contest_id": 900,
+    "language": "GNU C++17",
+    "path": "codeforces/900/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Position in Fraction",
+    "problem_url": "https://codeforces.com/contest/900/problem/B",
+    "submission_id": "CF54912644",
+    "submission_url": "https://codeforces.com/contest/900/submission/54912644",
+    "tags": [
+      "math",
+      "number theory",
+      "*1300"
+    ],
+    "timestamp": "Jun/01/2019 17:30"
+  },
   "CF54913830": {
     "contest_id": 900,
     "language": "GNU C++17",
