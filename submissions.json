@@ -506,6 +506,24 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54913830": {
+    "contest_id": 900,
+    "language": "GNU C++17",
+    "path": "codeforces/900/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Remove Extra One",
+    "problem_url": "https://codeforces.com/contest/900/problem/C",
+    "submission_id": "CF54913830",
+    "submission_url": "https://codeforces.com/contest/900/submission/54913830",
+    "tags": [
+      "brute force",
+      "data structures",
+      "math",
+      "*1700"
+    ],
+    "timestamp": "Jun/01/2019 18:06"
+  },
   "CF54914019": {
     "contest_id": 903,
     "language": "GNU C++17",
