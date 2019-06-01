@@ -6480,6 +6480,22 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF54911040": {
+    "contest_id": 58,
+    "language": "GNU C++17",
+    "path": "codeforces/58/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Coins",
+    "problem_url": "https://codeforces.com/contest/58/problem/B",
+    "submission_id": "CF54911040",
+    "submission_url": "https://codeforces.com/contest/58/submission/54911040",
+    "tags": [
+      "greedy",
+      "*1300"
+    ],
+    "timestamp": "Jun/01/2019 16:42"
+  },
   "CF54912276": {
     "contest_id": 514,
     "language": "GNU C++17",
