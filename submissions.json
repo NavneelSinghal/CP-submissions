@@ -506,6 +506,23 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54907305": {
+    "contest_id": 155,
+    "language": "GNU C++17",
+    "path": "codeforces/155/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Combination",
+    "problem_url": "https://codeforces.com/contest/155/problem/B",
+    "submission_id": "CF54907305",
+    "submission_url": "https://codeforces.com/contest/155/submission/54907305",
+    "tags": [
+      "greedy",
+      "sortings",
+      "*1100"
+    ],
+    "timestamp": "Jun/01/2019 14:55"
+  },
   "CF54907726": {
     "contest_id": 352,
     "language": "GNU C++17",
