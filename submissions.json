@@ -506,6 +506,22 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF54918963": {
+    "contest_id": 1148,
+    "language": "GNU C++17",
+    "path": "codeforces/1148/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Another One Bites The Dust",
+    "problem_url": "https://codeforces.com/contest/1148/problem/A",
+    "submission_id": "CF54918963",
+    "submission_url": "https://codeforces.com/contest/1148/submission/54918963",
+    "tags": [
+      "greedy",
+      "*800"
+    ],
+    "timestamp": "Jun/01/2019 20:10"
+  },
   "CF54949990": {
     "contest_id": 441,
     "language": "GNU C++17",
