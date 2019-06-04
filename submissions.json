@@ -6480,6 +6480,24 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55072218": {
+    "contest_id": 650,
+    "language": "GNU C++17",
+    "path": "codeforces/650/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Watchmen",
+    "problem_url": "https://codeforces.com/contest/650/problem/A",
+    "submission_id": "CF55072218",
+    "submission_url": "https://codeforces.com/contest/650/submission/55072218",
+    "tags": [
+      "data structures",
+      "geometry",
+      "math",
+      "*1400"
+    ],
+    "timestamp": "Jun/04/2019 12:20"
+  },
   "CF55072922": {
     "contest_id": 550,
     "language": "GNU C++17",
