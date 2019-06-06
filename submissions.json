@@ -6480,6 +6480,19 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55222444": {
+    "contest_id": 528,
+    "language": "GNU C++17",
+    "path": "codeforces/528/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Triangles 3000",
+    "problem_url": "https://codeforces.com/contest/528/problem/E",
+    "submission_id": "CF55222444",
+    "submission_url": "https://codeforces.com/contest/528/submission/55222444",
+    "tags": [],
+    "timestamp": "Jun/07/2019 02:13"
+  },
   "CF55246451": {
     "contest_id": 1173,
     "language": "GNU C++17",
