@@ -5,7 +5,7 @@ typedef long long ll;
 typedef long double ld;
 #define double ld
 typedef pair<double, double> pd;
-#define MAX 3010
+#define MAX 3456
 #define F first
 #define S second
 #define mp make_pair
@@ -23,17 +23,18 @@ pd intersect(int u, int v){
 }
 
 signed main(){
-  ios::sync_with_stdio(0);
-  cin.tie(0);
+  ios::sync_with_stdio(0); 
+  cin.tie(0); 
   cout.tie(0);
   cout<<fixed<<setprecision(11);
+
   int n;
   cin>>n;
 
   for(int i = 0; i<n; i++){
     cin>>a[i]>>b[i]>>c[i];
     if(a[i]<0){
-      a[i]*=-1;
+      a[i]*=-1; 
       b[i]*=-1;
       c[i]*=-1;
     }
@@ -54,6 +55,6 @@ signed main(){
       sum.S += point.S;
     }
   }
-
+  
   cout<<fabs(ans);
 }
