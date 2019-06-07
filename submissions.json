@@ -6480,6 +6480,23 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55249734": {
+    "contest_id": 1173,
+    "language": "GNU C++17",
+    "path": "codeforces/1173/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Nauuo and Chess",
+    "problem_url": "https://codeforces.com/contest/1173/problem/B",
+    "submission_id": "CF55249734",
+    "submission_url": "https://codeforces.com/contest/1173/submission/55249734",
+    "tags": [
+      "constructive algorithms",
+      "greedy",
+      "*1100"
+    ],
+    "timestamp": "Jun/07/2019 17:51"
+  },
   "CF55377562": {
     "contest_id": 1176,
     "language": "GNU C++17",
