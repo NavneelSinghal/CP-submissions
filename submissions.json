@@ -506,6 +506,22 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF55545677": {
+    "contest_id": 1054,
+    "language": "PyPy 3",
+    "path": "codeforces/1054/A.py",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Elevator or Stairs?",
+    "problem_url": "https://codeforces.com/contest/1054/problem/A",
+    "submission_id": "CF55545677",
+    "submission_url": "https://codeforces.com/contest/1054/submission/55545677",
+    "tags": [
+      "implementation",
+      "*800"
+    ],
+    "timestamp": "Jun/14/2019 07:41"
+  },
   "CF55545872": {
     "contest_id": 1054,
     "language": "GNU C++17",
