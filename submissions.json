@@ -6480,6 +6480,23 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55546359": {
+    "contest_id": 1054,
+    "language": "GNU C++17",
+    "path": "codeforces/1054/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Candies Distribution",
+    "problem_url": "https://codeforces.com/contest/1054/problem/C",
+    "submission_id": "CF55546359",
+    "submission_url": "https://codeforces.com/contest/1054/submission/55546359",
+    "tags": [
+      "constructive algorithms",
+      "implementation",
+      "*1500"
+    ],
+    "timestamp": "Jun/14/2019 08:39"
+  },
   "CF55621787": {
     "contest_id": 1181,
     "language": "GNU C++17",
