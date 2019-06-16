@@ -6480,6 +6480,22 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55646641": {
+    "contest_id": 51,
+    "language": "GNU C++17",
+    "path": "codeforces/51/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Cheaterius's Problem",
+    "problem_url": "https://codeforces.com/contest/51/problem/A",
+    "submission_id": "CF55646641",
+    "submission_url": "https://codeforces.com/contest/51/submission/55646641",
+    "tags": [
+      "implementation",
+      "*1300"
+    ],
+    "timestamp": "Jun/16/2019 18:03"
+  },
   "CF55667330": {
     "contest_id": 729,
     "language": "GNU C++17",
