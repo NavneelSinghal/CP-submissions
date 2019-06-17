@@ -6480,6 +6480,22 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55669538": {
+    "contest_id": 234,
+    "language": "GNU C++17",
+    "path": "codeforces/234/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Reading",
+    "problem_url": "https://codeforces.com/contest/234/problem/B",
+    "submission_id": "CF55669538",
+    "submission_url": "https://codeforces.com/contest/234/submission/55669538",
+    "tags": [
+      "sortings",
+      "*1000"
+    ],
+    "timestamp": "Jun/17/2019 12:09"
+  },
   "CF55669908": {
     "contest_id": 29,
     "language": "GNU C++17",
