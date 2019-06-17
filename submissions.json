@@ -6480,6 +6480,22 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55668529": {
+    "contest_id": 244,
+    "language": "GNU C++17",
+    "path": "codeforces/244/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Dividing Orange",
+    "problem_url": "https://codeforces.com/contest/244/problem/A",
+    "submission_id": "CF55668529",
+    "submission_url": "https://codeforces.com/contest/244/submission/55668529",
+    "tags": [
+      "implementation",
+      "*900"
+    ],
+    "timestamp": "Jun/17/2019 11:32"
+  },
   "CF55668890": {
     "contest_id": 1055,
     "language": "GNU C++17",
