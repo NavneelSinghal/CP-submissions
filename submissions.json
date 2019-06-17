@@ -6480,6 +6480,22 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55668890": {
+    "contest_id": 1055,
+    "language": "GNU C++17",
+    "path": "codeforces/1055/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Metro",
+    "problem_url": "https://codeforces.com/contest/1055/problem/A",
+    "submission_id": "CF55668890",
+    "submission_url": "https://codeforces.com/contest/1055/submission/55668890",
+    "tags": [
+      "graphs",
+      "*900"
+    ],
+    "timestamp": "Jun/17/2019 11:44"
+  },
   "CF55669066": {
     "contest_id": 137,
     "language": "GNU C++17",
