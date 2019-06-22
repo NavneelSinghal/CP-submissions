@@ -6480,6 +6480,22 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF55921979": {
+    "contest_id": 515,
+    "language": "GNU C++17",
+    "path": "codeforces/515/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Drazil and Date",
+    "problem_url": "https://codeforces.com/contest/515/problem/A",
+    "submission_id": "CF55921979",
+    "submission_url": "https://codeforces.com/contest/515/submission/55921979",
+    "tags": [
+      "math",
+      "*1000"
+    ],
+    "timestamp": "Jun/22/2019 13:18"
+  },
   "CF55922139": {
     "contest_id": 766,
     "language": "GNU C++17",
