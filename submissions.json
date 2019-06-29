@@ -6480,6 +6480,24 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF56254263": {
+    "contest_id": 1186,
+    "language": "GNU C++17",
+    "path": "codeforces/1186/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Vus the Cossack and a Field",
+    "problem_url": "https://codeforces.com/contest/1186/problem/E",
+    "submission_id": "CF56254263",
+    "submission_url": "https://codeforces.com/contest/1186/submission/56254263",
+    "tags": [
+      "divide and conquer",
+      "implementation",
+      "math",
+      "*2500"
+    ],
+    "timestamp": "Jun/29/2019 10:53"
+  },
   "CF56305504": {
     "contest_id": 1009,
     "language": "GNU C++17",
