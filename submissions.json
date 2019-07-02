@@ -6480,6 +6480,22 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF56442542": {
+    "contest_id": 1145,
+    "language": "GNU C++17",
+    "path": "codeforces/1145/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Mystery Circuit",
+    "problem_url": "https://codeforces.com/contest/1145/problem/C",
+    "submission_id": "CF56442542",
+    "submission_url": "https://codeforces.com/contest/1145/submission/56442542",
+    "tags": [
+      "bitmasks",
+      "brute force"
+    ],
+    "timestamp": "Jul/02/2019 22:39"
+  },
   "CF56442909": {
     "contest_id": 202,
     "language": "GNU C++17",
