@@ -17,7 +17,7 @@ int main(){
     cin.tie(NULL);
     int n;
     n = getint();
-    int a[n];
+    vector<int> a(n);
     for(int i = 0; i<n; i++){
         a[i] = getint();
     }
