@@ -6480,6 +6480,24 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF56503776": {
+    "contest_id": 645,
+    "language": "GNU C++17",
+    "path": "codeforces/645/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Amity Assessment",
+    "problem_url": "https://codeforces.com/contest/645/problem/A",
+    "submission_id": "CF56503776",
+    "submission_url": "https://codeforces.com/contest/645/submission/56503776",
+    "tags": [
+      "brute force",
+      "constructive algorithms",
+      "implementation",
+      "*1200"
+    ],
+    "timestamp": "Jul/04/2019 13:01"
+  },
   "CF56504159": {
     "contest_id": 379,
     "language": "GNU C++17",
