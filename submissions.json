@@ -6480,6 +6480,23 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF57246723": {
+    "contest_id": 1195,
+    "language": "GNU C++17",
+    "path": "codeforces/1195/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "OpenStreetMap",
+    "problem_url": "https://codeforces.com/contest/1195/problem/E",
+    "submission_id": "CF57246723",
+    "submission_url": "https://codeforces.com/contest/1195/submission/57246723",
+    "tags": [
+      "data structures",
+      "two pointers",
+      "*2100"
+    ],
+    "timestamp": "Jul/18/2019 01:17"
+  },
   "CF57752840": {
     "contest_id": 1196,
     "language": "GNU C++17",
