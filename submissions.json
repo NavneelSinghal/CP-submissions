@@ -6480,6 +6480,24 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF57245900": {
+    "contest_id": 1195,
+    "language": "GNU C++17",
+    "path": "codeforces/1195/D1.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D1",
+    "problem_name": "Submarine in the Rybinsk Sea (easy edition)",
+    "problem_url": "https://codeforces.com/contest/1195/problem/D1",
+    "submission_id": "CF57245900",
+    "submission_url": "https://codeforces.com/contest/1195/submission/57245900",
+    "tags": [
+      "combinatorics",
+      "math",
+      "number theory",
+      "*1500"
+    ],
+    "timestamp": "Jul/18/2019 00:53"
+  },
   "CF57245918": {
     "contest_id": 1195,
     "language": "GNU C++17",
