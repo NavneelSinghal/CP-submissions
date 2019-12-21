@@ -4,7 +4,7 @@
 
 using namespace std;
 #define maxn 500005
-#define sq 292
+#define sq 291
 
 int a[maxn];
 int ans[sq+1][sq+1];
