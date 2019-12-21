@@ -4,10 +4,10 @@
 
 using namespace std;
 #define maxn 500005
-#define sq 289
+#define sq 293
 
-//int a[maxn];
-//int ans[sq+1][sq+1];
+int a[maxn];
+int ans[sq+1][sq+1];
 int t, q, x, y, i, sol;
 
 namespace IO {
@@ -111,8 +111,6 @@ using namespace IO;
 
 int main(){
 	//ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	vector<int> a(maxn);
-	vector<vector<int>> ans(sq+1, vector<int>(sq+1));
 	init();
 	read_int(t);
 	while(t--){
