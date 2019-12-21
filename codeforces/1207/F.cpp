@@ -1,23 +1,8 @@
-#pragma GCC optimize("O3", "unroll-loops")
-#pragma GCC target("avx2")
+#pragma GCC optimize("Ofast")
 
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <algorithm>
-#include <cmath>
-#include <string>
-#include <map>
-#include <unordered_map>
-#include <set>
-#include <unordered_set>
-#include <bitset>
-#include <sstream>
-#include <deque>
-#include <queue>
-#include <random>
-#include <complex>
-#include <cassert>
+#include<algorithm>
+#include<iostream>
+#include<vector>
 
 using namespace std;
 #define maxn 500005
