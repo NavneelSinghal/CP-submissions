@@ -49,7 +49,7 @@ void print(char c) {
 int main(){
 	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 	read(t);
-	for(int j = 0; j < t; j++){
+	while(t--){
 		read(q); read(x); read(y);
 		if(q == 1){
 			a[x] += y;
