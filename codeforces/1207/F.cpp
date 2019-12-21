@@ -54,12 +54,12 @@ int main(){
 		read(q); read(x); read(y);
 		if(q == 1){
 			a[x] += y;
-			for(i = 1; i < sq; i++) ans[i][x % i] += y;
+			for(i = 1; i <= sq; i++) ans[i][x % i] += y;
 		}
 		else{
-			if(x >= sq){
+			if(x > sq){
 				sol = 0;
-				for(i = y; i < maxn; i+=x) sol += a[i];
+				for(i = y; i <= maxn; i+=x) sol += a[i];
 				print(sol);
 				putchar('\n');
 			}
