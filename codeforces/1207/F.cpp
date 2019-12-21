@@ -108,8 +108,6 @@ template<typename T>T mod_inverse(T a, T n){T x,y,z=0;T d=extended_euclid(a,n,x,
  
 using namespace std;
 
-#define int signed
-
 const int maxn = 500005;
 const int sq = 270;
 
@@ -121,6 +119,8 @@ signed main(){
 	PRECISION(10)
 	int t;
 	cin >> t;
+	REP(i, maxn) a[i] = 0;
+	REP(i, sq+1) REP(j, sq+1) ans[i][j] = 0;
 	while(t--){
 		int q, x, y;
 		cin >> q >> x >> y;
