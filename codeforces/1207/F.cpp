@@ -1,5 +1,5 @@
-#pragma GCC optimize("Ofast", "unroll-loops")
-#pragma GCC target("avx2")
+#pragma GCC optimize("Ofast")
+
 #include<bits/stdc++.h>
 using namespace std;
 #define maxn 500005
