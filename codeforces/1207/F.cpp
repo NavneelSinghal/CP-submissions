@@ -4,7 +4,7 @@
 
 using namespace std;
 #define maxn 500005
-#define sq 290
+#define sq 283
 
 int a[maxn];
 int ans[sq+1][sq+1];
@@ -110,7 +110,6 @@ namespace IO {
 using namespace IO;
 
 int main(){
-	//ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 	init();
 	read_int(t);
 	while(t--){
