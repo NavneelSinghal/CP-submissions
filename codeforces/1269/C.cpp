@@ -1,292 +1,173 @@
-#pragma GCC optimize ("Ofast")
-#pragma GCC target ("avx")
-#pragma GCC optimize ("unroll-loops")
+#pragma GCC optimize("Ofast")
 
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <bitset>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <complex>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <deque>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <limits>
+#include <list>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <random>
+#include <ratio>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <utility>
+#include <vector>
+using namespace std;
+ 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-//#include <ext/rope>
-
+#include <ext/rope>
 using namespace __gnu_pbds;
-//using namespace __gnu_cxx;
-using namespace std;
-
-#define int long long
-#define double long double
-#define Int signed
-#define vi vector<int>
-#define vI vector<Int>
-#define vvi vector<vi>
-#define vvI vector<vI>
-#define vd vector<double>
-#define vvd vector<vd>
-#define pii pair<int, int>
-#define vpii vector<pii>
-#define vvpii vector<vpii>
-#define mii map<int, int>
-#define unordered_map gp_hash_table
-
-#define OVERLOADED_MACRO(M, ...) _OVR(M, _COUNT_ARGS(__VA_ARGS__)) (__VA_ARGS__)
-#define _OVR(macroName, number_of_args)   _OVR_EXPAND(macroName, number_of_args)
-#define _OVR_EXPAND(macroName, number_of_args)    macroName##number_of_args
-
-#define _COUNT_ARGS(...)  _ARG_PATTERN_MATCH(__VA_ARGS__, 9,8,7,6,5,4,3,2,1)
-#define _ARG_PATTERN_MATCH(_1,_2,_3,_4,_5,_6,_7,_8,_9, N, ...)   N
-
-#define rep(...) OVERLOADED_MACRO(rep, __VA_ARGS__)
-#define repd(...) OVERLOADED_MACRO(repd, __VA_ARGS__)
-
-#define rep3(i, a, b) for (int i = a; i < b; ++i)
-#define rep2(i, n) rep3(i, 0, n)
-#define repd3(i, a, b) for(int i = b - 1; i >= a; --i)
-#define repd2(i, n) repd3(i, 0, n)
-#define rep4(i, a, b, c) for(int i = a; i < b; i += c)
-
-#define F first
-#define S second
-
-#define fastio ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+using namespace __gnu_cxx;
+ 
+ 
+#define FLSH fflush(stdout)
+#define fileIO(name) \
+    freopen(name".in", "r", stdin); \
+    freopen(name".out", "w", stdout);
+#define PRECISION(x) cout << fixed << setprecision(x); 
+#define FAST_IO ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+ 
+ 
+typedef tree<int,null_type,less<int>,rb_tree_tag,
+tree_order_statistics_node_update> indexed_set;
+ 
+typedef long long ll;
+typedef long double LD;
+#define int ll
+#define double LD
 #define pb push_back
 #define mp make_pair
-#define eb emplace_back
+#define REP(i,n) for (int i = 0; i < n; i++)
+#define REP1(i,n) for (int i = 1; i<=n; i++)
+#define FOR(i,a,b) for (int i = a; i < b; i++)
+#define REPD(i,n) for (int i = n-1; i >= 0; i--)
+#define REPD1(i,n) for (int i = n; i > 0; i--)
+#define FORD(i,a,b) for (int i = a; i >= b; i--)
+#define foreach(c,itr) for(__typeof((c).begin()) itr=(c).begin();itr!=(c).end();itr++)
+#define remax(a,b) a = max(a,b)
+#define remin(a,b) a = min(a,b)
 #define all(v) v.begin(),v.end()
-
-#define bitcount __builtin_popcountll
-//for trailing 1s, do trailing0(n + 1)
-#define leading0 __builtin_clzll
-#define trailing0 __builtin_ctzll
-#define isodd(n) (n & 1)
-#define iseven(n) (!(n & 1))
-
-#define sz(v) ((int) v.size())
-#define del_rep(v) sort(all(v)); v.erase(unique(all(v)), v.end());
-#define checkbit(n, b) ((n >> b) & 1)
-
-#ifdef DEBUG
-#define debug(args...) {\
-    std::string _s = #args;\
-    replace(_s.begin(), _s.end(), ',', ' ');\
-    std::stringstream _ss(_s);\
-    std::istream_iterator <std::string> _it(_ss);\
-    err(_it, args);\
-}
-#define print_container(v) {\
-    bool first = true; os << "[";\
-    for (auto x : v) {\
-        if (!first) os << ", "; os << x; first = false;\
-    }\
-    return os << "]";\
-}
-void err (std::istream_iterator <std::string> it) {}
-template <typename T, typename... Args>
-void err (std::istream_iterator <std::string> it, T a, Args... args) {
-    std::cerr << *it << " = " << a << std::endl;
-    err(++it, args...);
-}
-template <typename T1, typename T2> inline std::ostream& operator << (std::ostream& os, const std::pair<T1, T2>& p) { return os << "(" << p.first << ", " << p.second << ")"; }
-template <typename T> inline std::ostream &operator << (std::ostream & os, const std::vector<T>& v) { print_container(v); }
-template <typename T> inline std::ostream &operator << (std::ostream & os, const std::set<T>& v) { print_container(v); }
-template <typename T1, typename T2> inline std::ostream &operator << (std::ostream & os, const std::map<T1, T2>& v) { print_container(v); }
-template <typename T1, typename T2, class C> inline std::ostream &operator << (std::ostream & os, const unordered_map<T1, T2, C>& v) { print_container(v); }
-template <typename T, class C> inline std::ostream &operator << (std::ostream & os, const unordered_set<T, C>& v) { print_container(v); }
-template <typename T1, typename T2> inline std::ostream &operator << (std::ostream & os, const std::multimap<T1, T2>& v) { print_container(v); }
-template <typename T> inline std::ostream &operator << (std::ostream & os, const std::multiset<T>& v) { print_container(v); }
-#else
-#define debug(args...) 0
-#endif
-
-//order_of_key(k) - number of elements e such that func(e, k) returns true, where func is less or less_equal
-//find_by_order(k) - kth element in the set counting from 0
-//
-typedef tree <int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
-typedef tree <int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
-
-const int INF = 1e9;
-const int LINF = INF * INF;
-const double EPS = 1e-9;
-const double PI = acosl(-1);
-
-struct custom_hash {
-    // http://xorshift.di.unimi.it/splitmix64.c
-    static uint64_t splitmix64(uint64_t x) {
-        x += 0x9e3779b97f4a7c15;
-        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
-        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
-        return x ^ (x >> 31);
-    }
-    size_t operator()(uint64_t x) const {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(x + FIXED_RANDOM);
-    }
-    size_t operator()(pair<int, int> x) const { 
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(FIXED_RANDOM + 31 * x.first + x.second);
-    }
-};
-
-template <class T, class F = multiplies<T>>
-T power(T a, long long n, F op = multiplies<T>(), T e = {1}) {
-    assert(n >= 0);
-    T res = e;
-    while (n) {
-        if (n & 1) res = op(res, a);
-        if (n >>= 1) a = op(a, a);
-    }
-    return res;
-}
-
-template <unsigned Mod = 998'244'353> 
-struct Modular {
-    using M = Modular;
-    unsigned v;
-    Modular(long long a = 0) : v((a %= Mod) < 0 ? a + Mod : a) {}
-    M operator-() const { return M() -= *this; }
-    M& operator+=(M r) { if ((v += r.v) >= Mod) v -= Mod; return *this; }
-    M& operator-=(M r) { if ((v += Mod - r.v) >= Mod) v -= Mod; return *this; }
-    M& operator*=(M r) { v = (uint64_t)v * r.v % Mod; return *this; }
-    M& operator/=(M r) { return *this *= power(r, Mod - 2); }
-    friend M operator+(M l, M r) { return l += r; }
-    friend M operator-(M l, M r) { return l -= r; }
-    friend M operator*(M l, M r) { return l *= r; }
-    friend M operator/(M l, M r) { return l /= r; }
-    friend bool operator==(M l, M r) { return l.v == r.v; }
-    friend bool operator!=(M l, M r) { return l.v != r.v; }
-    friend ostream& operator<<(ostream& os, M &a) { return os << a.v; }
-    friend istream& operator>>(istream& is, M &a) { int64_t w; is >> w; a = M(w); return is; }
-};
-
-const int mod = 1e9 + 7;
-
-using mint = Modular<>;
-
-const int maxn = 5e5 + 5;
-const int maxa = 1e6 + 5;
-const int logmax = 25;
-
-namespace IO {
-    const int BUFFER_SIZE = 1 << 15;
-    char input_buffer[BUFFER_SIZE];
-    int input_pos = 0, input_len = 0;
-    char output_buffer[BUFFER_SIZE];
-    int output_pos = 0;
-    char number_buffer[100];
-    uint8_t lookup[100];
-    void _update_input_buffer() {
-        input_len = fread(input_buffer, sizeof(char), BUFFER_SIZE, stdin);
-        input_pos = 0;
-        if (input_len == 0)
-            input_buffer[0] = EOF;
-    }
-
-    inline char next_char(bool advance = true) {
-        if (input_pos >= input_len)
-            _update_input_buffer();
-
-        return input_buffer[advance ? input_pos++ : input_pos];
-    }
-
-    template<typename T>
-        inline void read_int(T &number) {
-            bool negative = false;
-            number = 0;
-
-            while (!isdigit(next_char(false)))
-                if (next_char() == '-')
-                    negative = true;
-
-            do {
-                number = 10 * number + (next_char() - '0');
-            } while (isdigit(next_char(false)));
-
-            if (negative)
-                number = -number;
-        }
-
-    template<typename T, typename... Args>
-        inline void read_int(T &number, Args &... args) {
-            read_int(number);
-            read_int(args...);
-        }
-
-    void _flush_output() {
-        fwrite(output_buffer, sizeof(char), output_pos, stdout);
-        output_pos = 0;
-    }
-
-    inline void write_char(char c) {
-        if (output_pos == BUFFER_SIZE)
-            _flush_output();
-
-        output_buffer[output_pos++] = c;
-    }
-
-    template<typename T>
-        inline void write_int(T number, char after = '\0') {
-            if (number < 0) {
-                write_char('-');
-                number = -number;
-            }
-            int length = 0;
-            while (number >= 10) {
-                uint8_t lookup_value = lookup[number % 100];
-                number /= 100;
-                number_buffer[length++] = (lookup_value & 15) + '0';
-                number_buffer[length++] = (lookup_value >> 4) + '0';
-            }
-            if (number != 0 || length == 0)
-                write_char(number + '0');
-            for (int i = length - 1; i >= 0; i--)
-                write_char(number_buffer[i]);
-            if (after)
-                write_char(after);
-        }
-
-    void IOinit() {
-        // Make sure _flush_output() is called at the end of the program.
-        bool exit_success = atexit(_flush_output) == 0;
-        assert(exit_success);
-        for (int i = 0; i < 100; i++)
-            lookup[i] = (i / 10 << 4) + i % 10;
-    }
-}
-
-using namespace IO;
-void solve(int case_no) {
-    int n, k;
-    cin >> n >> k;
-    string a;
-    cin >> a;
-    string b(a);
-    rep(i, n - k) {
-        b[i + k] = b[i];
-    }
-    if (b >= a) {
-        cout << b.size() << endl;
-        cout << b << endl;
-        return;
-    }
-    int cur = k - 1;
-    while (cur >= 0 && b[cur] == '9') cur--;
-    for (int i = k - 1; i > cur; --i) b[i] = '0';
-    b[cur]++;
-    rep(i, n - k) {
-        b[i + k] = b[i];
-    }
-    cout << b.size() << endl;
-    cout << b << endl;
-}
+typedef map<int,int> mii;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef pair<int,int> pii;
+typedef vector<pii> vpii;
+#define F first
+#define S second
+#define PQ(type) priority_queue<type>
+#define PQD(type) priority_queue<type,vector<type>,greater<type> >
+#define ITR :: iterator it
+#define WL(t) while(t --)
+#define SZ(x) ((int)(x).size())
+#define runtime() ((double)clock() / CLOCKS_PER_SEC)
+#define TR(container,it) for(typeof(container.begin()) it=container.begin();it!=container.end();it++)
+#define sqr(x) ((x)*(x))
+ 
+const int MAXN = 1000005;
+const int SQRTN = 1003;
+const int LOGN = 22;
+const double PI=acos(-1);
+const int INF = 1000000000;
+const int MOD = 1000000007;
+const int FMOD = 998244353;
+const double eps = 1e-9;
+ 
+mt19937 RNG(chrono::steady_clock::now().time_since_epoch().count()); 
+#define SHUF(v) shuffle(all(v), RNG);
+ 
+template<typename T> T gcd(T a, T b){return(b?__gcd(a,b):a);}
+template<typename T> T lcm(T a, T b){return(a*(b/gcd(a,b)));}
+int add(int a, int b, int c){int res=a+b;return(res>=c?res-c:res);}
+int mod_neg(int a, int b, int c){int res;if(abs(a-b)<c)res=a-b;else res=(a-b)%c;return(res<0?res+c:res);}
+int mul(int a, int b, int c){ll res=(ll)a*b;return(res>=c?res%c:res);}
+ll mulmod(ll a,ll b, ll m){ll q = (ll)(((LD)a*(LD)b)/(LD)m);ll r=a*b-q*m;if(r>m)r%=m;if(r<0)r+=m;return r;}
+template<typename T>T expo(T e, T n){T x=1,p=e;while(n){if(n&1)x=x*p;p=p*p;n>>=1;}return x;}
+template<typename T>T power(T e, T n, T m){T x=1,p=e;while(n){if(n&1)x=mul(x,p,m);p=mul(p,p,m);n>>=1;}return x;}
+template<typename T>T extended_euclid(T a, T b, T &x, T &y){T xx=0,yy=1;y=0;x=1;while(b){T q=a/b,t=b;b=a%b;a=t;\
+t=xx;xx=x-q*xx;x=t;t=yy;yy=y-q*yy;y=t;}return a;}
+template<typename T>T mod_inverse(T a, T n){T x,y,z=0;T d=extended_euclid(a,n,x,y);return(d>1?-1:mod_neg(x,z,n));}
+ 
+using namespace std;
 
 signed main(){
-    //IOinit();
-    fastio;
-    cout << setprecision(10) << fixed;
-    int t = 1;
-    //read_int(t);
-    //cin >> t;
-    for (int _t = 1; _t <= t; _t++) {
-        //cout << "Case #" << _t << ": ";
-        solve(_t);
-    }
-    exit(0);
+	FAST_IO
+	PRECISION(10)
+	int n, k;
+	cin >> n >> k;
+	string s;
+	cout << n << endl;
+	cin >> s;
+	string a = s.substr(0, k);
+	string w = s;
+	for(int i = 0; i < n; i++){
+		w[i] = a[i%k];
+	}
+	bool check = true;
+	int i = 0;
+	while(i < n && w[i] == s[i]){
+		i++;
+	}
+	if(i == n) check = true;
+	else if(w[i] < s[i]) check = false;
+	if(check){
+		cout << w << endl;
+	}
+	else{
+		a = s.substr(0, k);
+		i = k-1;
+		while(a[i] == '9'){
+			a[i] = '0';
+			i--;
+		}
+		a[i] = a[i]+1;
+		w = s;
+		for(i = 0; i < n; i++){
+			w[i] = a[i%k];
+		}
+		
+		cout << w << endl;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
