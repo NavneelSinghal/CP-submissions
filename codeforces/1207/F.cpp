@@ -3,7 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define maxn 500005
-#define sq 250
+#define sq 270
 
 int a[maxn];
 int ans[sq+1][sq+1];
