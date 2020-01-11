@@ -122,21 +122,21 @@ signed main(){
 	
 	int m = n;
 	
-	vi fact;
+	vpii fact;
 	
 	for(int i = 2; i < 1e6+2; i++){
 		if(n % i == 0){
-			int cnt = 1;
+			int cnt = 0;
 			while(n % i == 0){
-				cnt *= i;
+				++cnt;
 				n /= i;
 			}
-			fact.pb(cnt);
+			fact.pb({i, cnt});
 		}
 	}
 	
 	if(n != 1){
-		fact.pb(n);
+		fact.pb({n, 1});
 		n = 1;
 	}
 	int ans = 1e13;
@@ -146,7 +146,7 @@ signed main(){
 		int prod = 1;
 		for(int j = 0; j < r; j++){
 			if(i & (1ll << j)){
-				prod *= fact[j];
+				prod *= expo(fact[j].F, fact[j].S);
 			}
 		}
 		if(ans > max(prod, m/prod)){
