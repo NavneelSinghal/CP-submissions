@@ -111,18 +111,11 @@ template<typename T>T mod_inverse(T a, T n){T x,y,z=0;T d=extended_euclid(a,n,x,
 
 const int maxn = 1e5+5;
 
-int ff, ss, n;
-
-double f(pii &p, vi &pre){
-	ff = p.F;
-	ss = p.S;
-	return ((double)pre[ss] - pre[ff])/(ss - ff); 
-}
-
 signed main(){
 	FAST_IO
 	PRECISION(20)
-
+	
+	int n;
 	cin >> n;
 	vi a(n);
 	REP(i, n) cin >> a[i];
@@ -131,10 +124,14 @@ signed main(){
 	int acc = 0;
 	REP(i, n) acc += a[i], pre[i+1] = acc;
 	
+	auto f = [&](pii p){
+		return ((double)pre[p.S] - pre[p.F])/(p.S - p.F); 
+	};
+	
 	vpii s;
 	REP(i, n){
 		s.pb({i, i+1});
-		while(s.size() > 1 && (f(s[s.size()-2], pre) >= f(s[s.size()-1], pre))){
+		while(s.size() > 1 && (f(s[s.size()-2]) >= f(s[s.size()-1]))){
 			pii w = s.back();
 			s.pop_back();
 			pii u = s.back();
@@ -146,11 +143,13 @@ signed main(){
 	int sz = s.size();
 	vector<double> ans(n);
 	REP(i, sz){
-		double w = f(s[i], pre);
+		double w = f(s[i]);
 		for(int j = s[i].F; j < s[i].S; j++){
 			cout << w << ' ';
 		}
 	}
+	
 	cout << '\n';
+	
 	return 0;
 }
