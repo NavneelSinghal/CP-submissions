@@ -56,16 +56,16 @@ tree_order_statistics_node_update> indexed_set;
 typedef long long ll;
 typedef long double LD;
 #define int ll
-//#define double LD
+#define double LD
 #define pb push_back
 #define mp make_pair
-#define REP(i,n) for (int i = 0; i < n; ++i)
-#define REP1(i,n) for (int i = 1; i <= n; ++i)
-#define FOR(i,a,b) for (int i = a; i < b; ++i)
-#define REPD(i,n) for (int i = n-1; i >= 0; --i)
-#define REPD1(i,n) for (int i = n; i > 0; --i)
-#define FORD(i,a,b) for (int i = a; i >= b; --i)
-#define foreach(c,itr) for(__typeof((c).begin()) itr=(c).begin();itr!=(c).end(); ++itr)
+#define REP(i,n) for (int i = 0; i < n; i++)
+#define REP1(i,n) for (int i = 1; i <= n; i++)
+#define FOR(i,a,b) for (int i = a; i < b; i++)
+#define REPD(i,n) for (int i = n-1; i >= 0; i--)
+#define REPD1(i,n) for (int i = n; i > 0; i--)
+#define FORD(i,a,b) for (int i = a; i >= b; i--)
+#define foreach(c,itr) for(__typeof((c).begin()) itr=(c).begin();itr!=(c).end();itr++)
 #define remax(a,b) a = max(a,b)
 #define remin(a,b) a = min(a,b)
 #define all(v) v.begin(),v.end()
@@ -140,16 +140,16 @@ signed main(){
 		}
 	}
 	
-	int sz = s.size();
 	vector<double> ans(n);
-	REP(i, sz){
+	REP(i, (int)s.size()){
 		double w = f(s[i]);
 		for(int j = s[i].F; j < s[i].S; j++){
-			cout << w << ' ';
+			ans[j] = w;
 		}
 	}
 	
-	cout << '\n';
+	for(int i = 0; i < n; i++) cout << ans[i] << ' ';
+	cout << endl;
 	
 	return 0;
 }
