@@ -9,59 +9,88 @@ using namespace std;
 #define S second
 #define all(a) a.begin(), a.end()
 
-void prev_smaller(vi& arr, vi& res){
+vi prev_smaller(vi& arr){
     int n = arr.size();
+    vi res(n);
     stack<pii> s;
     rep(i, n){
-        while(!s.empty() && s.top().F >= arr[i]) s.pop();
-        if(!s.empty()) res[i] = s.top().S;
-        else res[i] = -1;
+        while(!s.empty() && s.top().F >= arr[i]){
+            s.pop();
+        }
+        if(!s.empty()){
+            res[i] = s.top().S;
+        }
+        else{
+            res[i] = -1;
+        }
         s.push({arr[i], i});
     }
+    return res;
 }
 
-void next_smaller(vi& arr, vi& res){
+vi next_smaller(vi& arr){
     int n = arr.size();
+    vi res(n);
     stack<pii> s;
     repd(i, n){
-        while(!s.empty() && s.top().F >= arr[i]) s.pop();
-        if(!s.empty()) res[i] = s.top().S;
-        else res[i] = n;
+        while(!s.empty() && s.top().F >= arr[i]){
+            s.pop();
+        }
+        if(!s.empty()){
+            res[i] = s.top().S;
+        }
+        else{
+            res[i] = n;
+        }
         s.push({arr[i], i});
     }
+    return res;
 }
 
 signed main(){
     int n;
     cin >> n;
-    vi m(n), l(n), r(n), le(n);
+    vi m(n), l(n), r(n);
     rep(i, n) cin >> m[i];
-    prev_smaller(m, le);
+    vi le = prev_smaller(m);
+    vi ri = next_smaller(m);
     rep(i, n){
-        int lei = le[i];
-        if(lei == -1) l[i] = (i + 1) * m[i];
-        else l[i] = l[lei] + (i - lei) * m[i];
+        if(le[i] == -1){
+            l[i] = (i + 1) * m[i];
+        }
+        else{
+            l[i] = l[le[i]] + (i - le[i]) * m[i];
+        }
     }
-    next_smaller(m, le);
     repd(i, n){
-        int rii = le[i];
-        if(rii == n) r[i] = (n - i) * m[i];
-        else r[i] = r[rii] + (rii - i) * m[i];
+        if(ri[i] == n){
+            r[i] = (n - i) * m[i];
+        }
+        else{
+            r[i] = r[ri[i]] + (ri[i] - i) * m[i];
+        }
     }
     int idx = -1;
     int ans = 0;
     rep(i, n){
-        int wt = l[i] + r[i] - m[i];
-        if(ans < wt){
-            ans = wt;
+        if(ans < l[i] + r[i] - m[i]){
+            ans = l[i] + r[i] - m[i];
             idx = i;
         }
     }
+    int prevht = m[idx];
     vi hts(n);
     hts[idx] = m[idx];
-    repd(i, idx) hts[i] = min(m[i], hts[i + 1]);
-    for(int i = idx + 1; i < n; ++i) hts[i] = min(m[i], hts[i - 1]);
-    rep(i, n) cout << hts[i] << ' ';
-    cout << '\n';
+    repd(i, idx){
+        hts[i] = min(m[i], hts[i + 1]);
+    }
+    for(int i = idx + 1; i < n; i++){
+        hts[i] = min(m[i], hts[i - 1]);
+    }
+    rep(i, n){
+        cout << hts[i] << ' ';
+    }
+    cout << endl;
     return 0;
+    
 }
