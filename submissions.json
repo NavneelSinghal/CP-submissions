@@ -6480,6 +6480,25 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF82206135": {
+    "contest_id": 1363,
+    "language": "GNU C++17",
+    "path": "codeforces/1363/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Tree Shuffling",
+    "problem_url": "https://codeforces.com/contest/1363/problem/E",
+    "submission_id": "CF82206135",
+    "submission_url": "https://codeforces.com/contest/1363/submission/82206135",
+    "tags": [
+      "dfs and similar",
+      "dp",
+      "greedy",
+      "trees",
+      "*2000"
+    ],
+    "timestamp": "Jun/01/2020 16:08"
+  },
   "CF82218367": {
     "contest_id": 1363,
     "language": "GNU C++17",
