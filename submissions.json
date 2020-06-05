@@ -6480,6 +6480,22 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF82600988": {
+    "contest_id": 1154,
+    "language": "GNU C++17",
+    "path": "codeforces/1154/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Restoring Three Numbers",
+    "problem_url": "https://codeforces.com/contest/1154/problem/A",
+    "submission_id": "CF82600988",
+    "submission_url": "https://codeforces.com/contest/1154/submission/82600988",
+    "tags": [
+      "math",
+      "*800"
+    ],
+    "timestamp": "Jun/05/2020 11:44"
+  },
   "CF82602322": {
     "contest_id": 707,
     "language": "GNU C++17",
