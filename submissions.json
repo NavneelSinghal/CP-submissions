@@ -1,4 +1,20 @@
 {
+  "AC14100802": {
+    "contest_id": "abc169",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc169/A.cpp",
+    "platform": "AtCoder",
+    "problem_index": "A",
+    "problem_name": "Multiplication 1",
+    "problem_url": "https://atcoder.jp/contests/abc169/tasks/abc169_a",
+    "submission_id": "AC14100802",
+    "submission_url": "https://atcoder.jp/contests/abc169/submissions/14100802",
+    "tags": [
+      "AtCoder",
+      "*100"
+    ],
+    "timestamp": "Jun/07/2020 21:16"
+  },
   "AC14101059": {
     "contest_id": "abc169",
     "language": "C++ (GCC 9.2.1)",
