@@ -6480,6 +6480,24 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF83384959": {
+    "contest_id": 534,
+    "language": "GNU C++17",
+    "path": "codeforces/534/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Exam",
+    "problem_url": "https://codeforces.com/contest/534/problem/A",
+    "submission_id": "CF83384959",
+    "submission_url": "https://codeforces.com/contest/534/submission/83384959",
+    "tags": [
+      "constructive algorithms",
+      "implementation",
+      "math",
+      "*1100"
+    ],
+    "timestamp": "Jun/11/2020 19:05"
+  },
   "CF83393170": {
     "contest_id": 1366,
     "language": "GNU C++17",
