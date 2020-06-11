@@ -6480,6 +6480,24 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF83365612": {
+    "contest_id": 964,
+    "language": "GNU C++17",
+    "path": "codeforces/964/D.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D",
+    "problem_name": "Destruction of a Tree",
+    "problem_url": "https://codeforces.com/contest/964/problem/D",
+    "submission_id": "CF83365612",
+    "submission_url": "https://codeforces.com/contest/964/submission/83365612",
+    "tags": [
+      "dfs and similar",
+      "dp",
+      "trees",
+      "*2000"
+    ],
+    "timestamp": "Jun/11/2020 14:40"
+  },
   "CF83370127": {
     "contest_id": 1365,
     "language": "GNU C++17",
