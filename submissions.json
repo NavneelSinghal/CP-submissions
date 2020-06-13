@@ -6480,6 +6480,23 @@
     ],
     "timestamp": "Dec/17/2021 14:50"
   },
+  "CF83612439": {
+    "contest_id": 959,
+    "language": "GNU C++17",
+    "path": "codeforces/959/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Mahmoud and Ehab and the wrong algorithm",
+    "problem_url": "https://codeforces.com/contest/959/problem/C",
+    "submission_id": "CF83612439",
+    "submission_url": "https://codeforces.com/contest/959/submission/83612439",
+    "tags": [
+      "constructive algorithms",
+      "trees",
+      "*1500"
+    ],
+    "timestamp": "Jun/13/2020 18:19"
+  },
   "CF83621760": {
     "contest_id": 1015,
     "language": "GNU C++17",
