@@ -247,9 +247,9 @@ void solve() {
         }
         if(colour[i] == 2) ans.pb(i);
     }
-    cout << ans.size() << "\n";
+    cout << ans.size() << endl;
     for(auto x : ans) cout << x + 1 << " ";
-    cout << "\n";
+    cout << endl;
     return;
 }
 
