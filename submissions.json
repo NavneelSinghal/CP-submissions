@@ -1,4 +1,20 @@
 {
+  "AC14838650": {
+    "contest_id": "arc103",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc103/C.cpp",
+    "platform": "AtCoder",
+    "problem_index": "C",
+    "problem_name": "/\\/\\/\\/",
+    "problem_url": "https://atcoder.jp/contests/arc103/tasks/arc103_a",
+    "submission_id": "AC14838650",
+    "submission_url": "https://atcoder.jp/contests/arc103/submissions/14838650",
+    "tags": [
+      "AtCoder",
+      "*300"
+    ],
+    "timestamp": "Jun/29/2020 13:45"
+  },
   "AC14839307": {
     "contest_id": "arc103",
     "language": "C++ (GCC 9.2.1)",
