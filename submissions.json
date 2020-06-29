@@ -4197,6 +4197,23 @@
     ],
     "timestamp": "Jul/14/2019 19:12"
   },
+  "CF85421557": {
+    "contest_id": 1374,
+    "language": "GNU C++17",
+    "path": "codeforces/1374/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Move Brackets",
+    "problem_url": "https://codeforces.com/contest/1374/problem/C",
+    "submission_id": "CF85421557",
+    "submission_url": "https://codeforces.com/contest/1374/submission/85421557",
+    "tags": [
+      "greedy",
+      "strings",
+      "*1000"
+    ],
+    "timestamp": "Jun/29/2020 09:53"
+  },
   "CF85422329": {
     "contest_id": 1374,
     "language": "GNU C++17",
