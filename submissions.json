@@ -1,4 +1,20 @@
 {
+  "AC14837884": {
+    "contest_id": "arc058",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc058/D.cpp",
+    "platform": "AtCoder",
+    "problem_index": "D",
+    "problem_name": "Iroha and a Grid",
+    "problem_url": "https://atcoder.jp/contests/arc058/tasks/arc058_b",
+    "submission_id": "AC14837884",
+    "submission_url": "https://atcoder.jp/contests/arc058/submissions/14837884",
+    "tags": [
+      "AtCoder",
+      "*400"
+    ],
+    "timestamp": "Jun/29/2020 13:12"
+  },
   "AC14838650": {
     "contest_id": "arc103",
     "language": "C++ (GCC 9.2.1)",
