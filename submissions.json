@@ -1,4 +1,20 @@
 {
+  "AC14836913": {
+    "contest_id": "abc172",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc172/F.cpp",
+    "platform": "AtCoder",
+    "problem_index": "F",
+    "problem_name": "Unfair Nim",
+    "problem_url": "https://atcoder.jp/contests/abc172/tasks/abc172_f",
+    "submission_id": "AC14836913",
+    "submission_url": "https://atcoder.jp/contests/abc172/submissions/14836913",
+    "tags": [
+      "AtCoder",
+      "*600"
+    ],
+    "timestamp": "Jun/29/2020 12:29"
+  },
   "AC14837419": {
     "contest_id": "abc172",
     "language": "C++ (GCC 9.2.1)",
