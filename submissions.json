@@ -1,4 +1,20 @@
 {
+  "AC14839307": {
+    "contest_id": "arc103",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc103/E.cpp",
+    "platform": "AtCoder",
+    "problem_index": "E",
+    "problem_name": "Tr/ee",
+    "problem_url": "https://atcoder.jp/contests/arc103/tasks/arc103_c",
+    "submission_id": "AC14839307",
+    "submission_url": "https://atcoder.jp/contests/arc103/submissions/14839307",
+    "tags": [
+      "AtCoder",
+      "*700"
+    ],
+    "timestamp": "Jun/29/2020 14:17"
+  },
   "AC14840091": {
     "contest_id": "arc103",
     "language": "C++ (GCC 9.2.1)",
