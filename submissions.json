@@ -1,4 +1,20 @@
 {
+  "AC14837419": {
+    "contest_id": "abc172",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc172/E.cpp",
+    "platform": "AtCoder",
+    "problem_index": "E",
+    "problem_name": "NEQ",
+    "problem_url": "https://atcoder.jp/contests/abc172/tasks/abc172_e",
+    "submission_id": "AC14837419",
+    "submission_url": "https://atcoder.jp/contests/abc172/submissions/14837419",
+    "tags": [
+      "AtCoder",
+      "*500"
+    ],
+    "timestamp": "Jun/29/2020 12:53"
+  },
   "AC14837604": {
     "contest_id": "arc058",
     "language": "C++ (GCC 9.2.1)",
