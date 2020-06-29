@@ -1,4 +1,20 @@
 {
+  "AC14840409": {
+    "contest_id": "abc133",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc133/B.cpp",
+    "platform": "AtCoder",
+    "problem_index": "B",
+    "problem_name": "Good Distance",
+    "problem_url": "https://atcoder.jp/contests/abc133/tasks/abc133_b",
+    "submission_id": "AC14840409",
+    "submission_url": "https://atcoder.jp/contests/abc133/submissions/14840409",
+    "tags": [
+      "AtCoder",
+      "*200"
+    ],
+    "timestamp": "Jun/29/2020 15:04"
+  },
   "AC14840717": {
     "contest_id": "abc133",
     "language": "C++ (GCC 9.2.1)",
