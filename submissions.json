@@ -4197,6 +4197,24 @@
     ],
     "timestamp": "Jul/14/2019 19:12"
   },
+  "CF85586046": {
+    "contest_id": 768,
+    "language": "GNU C++17",
+    "path": "codeforces/768/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Code For 1",
+    "problem_url": "https://codeforces.com/contest/768/problem/B",
+    "submission_id": "CF85586046",
+    "submission_url": "https://codeforces.com/contest/768/submission/85586046",
+    "tags": [
+      "constructive algorithms",
+      "dfs and similar",
+      "divide and conquer",
+      "*1600"
+    ],
+    "timestamp": "Jul/01/2020 08:33"
+  },
   "CF85586400": {
     "contest_id": 768,
     "language": "GNU C++17",
