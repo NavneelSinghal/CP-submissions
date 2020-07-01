@@ -4197,6 +4197,24 @@
     ],
     "timestamp": "Jul/14/2019 19:12"
   },
+  "CF85589317": {
+    "contest_id": 768,
+    "language": "GNU C++17",
+    "path": "codeforces/768/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Game of Stones",
+    "problem_url": "https://codeforces.com/contest/768/problem/E",
+    "submission_id": "CF85589317",
+    "submission_url": "https://codeforces.com/contest/768/submission/85589317",
+    "tags": [
+      "bitmasks",
+      "dp",
+      "games",
+      "*2100"
+    ],
+    "timestamp": "Jul/01/2020 10:01"
+  },
   "CF85591276": {
     "contest_id": 771,
     "language": "GNU C++17",
