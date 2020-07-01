@@ -4197,6 +4197,26 @@
     ],
     "timestamp": "Jul/14/2019 19:12"
   },
+  "CF85597857": {
+    "contest_id": 1332,
+    "language": "GNU C++17",
+    "path": "codeforces/1332/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "K-Complete Word",
+    "problem_url": "https://codeforces.com/contest/1332/problem/C",
+    "submission_id": "CF85597857",
+    "submission_url": "https://codeforces.com/contest/1332/submission/85597857",
+    "tags": [
+      "dfs and similar",
+      "dsu",
+      "greedy",
+      "implementation",
+      "strings",
+      "*1500"
+    ],
+    "timestamp": "Jul/01/2020 12:27"
+  },
   "CF85599051": {
     "contest_id": 1332,
     "language": "GNU C++17",
