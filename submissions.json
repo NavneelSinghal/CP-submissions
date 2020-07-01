@@ -4197,6 +4197,24 @@
     ],
     "timestamp": "Jul/14/2019 19:12"
   },
+  "CF85599051": {
+    "contest_id": 1332,
+    "language": "GNU C++17",
+    "path": "codeforces/1332/D.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D",
+    "problem_name": "Walk on Matrix",
+    "problem_url": "https://codeforces.com/contest/1332/problem/D",
+    "submission_id": "CF85599051",
+    "submission_url": "https://codeforces.com/contest/1332/submission/85599051",
+    "tags": [
+      "bitmasks",
+      "constructive algorithms",
+      "math",
+      "*1700"
+    ],
+    "timestamp": "Jul/01/2020 12:43"
+  },
   "CF85601136": {
     "contest_id": 1332,
     "language": "GNU C++17",
