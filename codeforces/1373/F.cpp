@@ -244,7 +244,7 @@ int work(vi a, vi b, int n, int x) {
         a[i] -= temp;
         b[i] -= temp;
     }
-    a[0] -= min(a[0], b[n - 1]);
+    a[0] -= min(a[0], b[n-1]);
     int sum = 0;
     rep(i, n) sum += a[i];
     return sum;
@@ -259,7 +259,7 @@ void solve() {
     int left = 0, right = min(a[0], b[0]);
     while(left <= right) {
         int m1 = left + (right - left) / 3;
-        int m2 = right + left - m1;
+        int m2 = right - (right - left) / 3;
         int x = work(a, b, n, m1);
         int y = work(a, b, n, m2);
         if(x == 0 || y == 0) {
