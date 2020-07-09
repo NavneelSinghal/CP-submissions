@@ -367,8 +367,7 @@ void solve() {
         cin >> a[i];
         --a[i];
     }
-    vector<bool> vis(n);
-    vector<Int> v;
+    vector<Int> vis(n), v;
     vector<vector<Int>> cycles;
     for (Int i = 0; i < n; ++i) {
         if (vis[i]) continue;
@@ -383,21 +382,20 @@ void solve() {
         }
         cycles.pb(cyc);
     }
-    Int cur = 0;
+    int cur = 0;
     vector<Int> ans(n);
     for (auto &c : cycles) {
         if (c.size() & 1) {
             Int cs = c.size();
             Int w = (cs + 1) >> 1;
-            for (Int i = 0, j = w; i < cs; ++i, ++j) {
-                if (j >= cs) j -= cs;
-                ans[c[i]] = c[j];
+            for (Int i = 0; i < cs; ++i) {
+                ans[c[i]] = c[(i + w) % cs];
             }
-            ++cur;
+            cur++;
             continue;
         }
         v.pb(cur);
-        ++cur;
+        cur++;
     }
     if (v.size() & 1) {
         write_int(-1, '\n');
@@ -431,6 +429,7 @@ void solve() {
         write_int(x + 1, ' ');
     }
     write_char('\n');
+    _flush_output();
     return;
 }
 
