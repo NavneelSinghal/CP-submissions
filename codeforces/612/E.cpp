@@ -398,22 +398,21 @@ void solve() {
         write_int(-1, '\n');
         return;
     }
-    vvi vp(n + 1);
+    vpii vp;
     rep(i, (int)v.size()) {
-        vp[v[i].size()].pb(i);
+        vp.eb(v[i].size(), i);
     }
+    sort(all(vp));
     debug(vp);
     rep(i, (int)vp.size()) {
-        if (vp[i].size() % 2 == 0) while (vp[i].size()) {
-            vi v1 = v[vp[i].back()];
-            vp[i].pop_back();
-            vi v2 = v[vp[i].back()];
-            vp[i].pop_back();
+        if (vp[i].F == vp[i+1].F) {
+            vi v1 = v[vp[i].S];
+            vi v2 = v[vp[i+1].S];
             debug(v1);
             debug(v2);
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < v1.size(); j++) {
                 ans[v1[j]] = v2[j];
-                ans[v2[j]] = v1[(j + 1) % i];
+                ans[v2[j]] = v1[(j + 1) % v1.size()];
             }
         }
         else {
