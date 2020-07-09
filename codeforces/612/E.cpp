@@ -360,21 +360,21 @@ T power (T a, int n = 1, T id = 1) {
 using mint = Modular<mod>;
 
 void solve() {
-    Int n;
+    int n;
     cin >> n;
-    vector<Int> a(n);
-    for (Int i = 0; i < n; ++i) {
+    vi a(n);
+    rep(i, n) {
         cin >> a[i];
         --a[i];
     }
-    vector<Int> vis(n);
-    vector<vector<Int>> cycles, v;
-    for (Int i = 0; i < n; ++i) {
+    vi vis(n);
+    vvi cycles, v;
+    rep(i, n) {
         if (vis[i]) continue;
         vis[i] = true;
-        vector<Int> cyc;
+        vi cyc;
         cyc.pb(i);
-        Int cur = a[i];
+        int cur = a[i];
         while (!vis[cur]) {
             vis[cur] = true;
             cyc.pb(cur);
@@ -382,13 +382,12 @@ void solve() {
         }
         cycles.pb(cyc);
     }
-    vector<Int> ans(n);
+    vi ans(n);
     for (auto &c : cycles) {
         if (c.size() & 1) {
-            Int cs = c.size();
-            Int w = (cs + 1) >> 1;
-            for (Int i = 0; i < cs; ++i) {
-                ans[c[i]] = c[(i + w) % cs];
+            int w = (c.size() + 1) >> 1;
+            rep (i, (int)c.size()) {
+                ans[c[i]] = c[(i + w) % c.size()];
             }
             continue;
         }
@@ -398,19 +397,19 @@ void solve() {
         write_int(-1, '\n');
         return;
     }
-    vector<vector<Int>> vp(n + 1);
-    Int vs = v.size();
-    for(Int i = 0; i < vs; ++i) {
+    vvi vp(n + 1);
+    int vs = v.size();
+    rep(i, vs) {
         vp[v[i].size()].pb(i);
     }
     for (auto &vpi : vp) {
         if (vpi.size() % 2 == 0) while (vpi.size()) {
-            vector<Int> v1 = v[vpi.back()];
+            vi v1 = v[vpi.back()];
             vpi.pop_back();
-            vector<Int> v2 = v[vpi.back()];
+            vi v2 = v[vpi.back()];
             vpi.pop_back();
-            Int i = v1.size();
-            for (Int j = 0; j < i; j++) {
+            int i = v1.size();
+            for (int j = 0; j < i; j++) {
                 ans[v1[j]] = v2[j];
                 ans[v2[j]] = v1[(j == i - 1 ? 0 : j + 1)];
             }
