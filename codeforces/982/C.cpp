@@ -13,9 +13,7 @@ using namespace std;
 #define double long double
 #define Int signed
 #define vi vector<int>
-#define vI vector<Int>
 #define vvi vector<vi>
-#define vvI vector<vI>
 #define vd vector<double>
 #define vvd vector<vd>
 #define pii pair<int, int>
@@ -361,10 +359,10 @@ T power (T a, int n = 1, T id = 1) {
 
 using mint = Modular<mod>;
 
-vvI g;
-vI siz;
+vvi g;
+vi siz;
 
-void dfs (Int v, Int p) {
+void dfs (int v, int p) {
     siz[v] = 1;
     for (auto w : g[v]) {
         if (w == p) continue;
@@ -374,17 +372,17 @@ void dfs (Int v, Int p) {
 }
 
 void solve() {
-    Int n;
+    int n;
     cin >> n;
     if (n & 1) {
         cout << -1 << endl;
         return;
     }
-    Int ans = 0;
+    int ans = 0;
     g.resize(n);
     siz.resize(n);
     rep (i, n - 1) {
-        Int u, v;
+        int u, v;
         cin >> u >> v;
         --u, --v;
         g[v].pb(u);

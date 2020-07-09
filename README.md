@@ -4,7 +4,8 @@ Submissions
 ## Introduction
 
 A repository to keep track of problem solving practice, containing solutions from platforms:
-* Codeforces* AtCoder
+* Codeforces
+
 
 ## Contents
 
