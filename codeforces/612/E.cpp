@@ -367,8 +367,8 @@ void solve() {
         cin >> a[i];
         --a[i];
     }
-    vector<Int> vis(n), v;
-    vector<vector<Int>> cycles;
+    vector<Int> vis(n);
+    vector<vector<Int>> cycles, v;
     for (Int i = 0; i < n; ++i) {
         if (vis[i]) continue;
         vis[i] = true;
@@ -382,7 +382,6 @@ void solve() {
         }
         cycles.pb(cyc);
     }
-    int cur = 0;
     vector<Int> ans(n);
     for (auto &c : cycles) {
         if (c.size() & 1) {
@@ -391,11 +390,9 @@ void solve() {
             for (Int i = 0; i < cs; ++i) {
                 ans[c[i]] = c[(i + w) % cs];
             }
-            cur++;
             continue;
         }
-        v.pb(cur);
-        cur++;
+        v.pb(c);
     }
     if (v.size() & 1) {
         write_int(-1, '\n');
@@ -403,22 +400,20 @@ void solve() {
     }
     vector<vector<Int>> vp(n + 1);
     Int vs = v.size();
-    for (Int i = 0; i < vs; ++i) {
-        vp[cycles[v[i]].size()].pb(i);
+    for(Int i = 0; i < vs; ++i) {
+        vp[v[i].size()].pb(i);
     }
     for (auto &vpi : vp) {
         if (vpi.size() % 2 == 0) while (vpi.size()) {
-            vector<Int> &v1 = cycles[v[vpi.back()]];
+            vector<Int> v1 = v[vpi.back()];
             vpi.pop_back();
-            vector<Int> &v2 = cycles[v[vpi.back()]];
+            vector<Int> v2 = v[vpi.back()];
             vpi.pop_back();
-            Int i = v1.size() - 1;
-            for (Int j = 0; j < i; ++j) {
+            Int i = v1.size();
+            for (Int j = 0; j < i; j++) {
                 ans[v1[j]] = v2[j];
-                ans[v2[j]] = v1[j + 1];
+                ans[v2[j]] = v1[(j == i - 1 ? 0 : j + 1)];
             }
-            ans[v1[i]] = v2[i];
-            ans[v2[i]] = v1[0];
         }
         else {
             write_int(-1, '\n');
