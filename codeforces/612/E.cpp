@@ -383,7 +383,8 @@ void solve() {
         cycles.pb(cyc);
     }
     vi ans(n);
-    for (auto &c : cycles) {
+    for (auto c : cycles) {
+        debug(c);
         if (c.size() & 1) {
             int w = (c.size() + 1) >> 1;
             rep (i, (int)c.size()) {
@@ -398,29 +399,31 @@ void solve() {
         return;
     }
     vvi vp(n + 1);
-    int vs = v.size();
-    rep(i, vs) {
+    rep(i, (int)v.size()) {
         vp[v[i].size()].pb(i);
     }
-    for (auto &vpi : vp) {
-        if (vpi.size() % 2 == 0) while (vpi.size()) {
-            vi v1 = v[vpi.back()];
-            vpi.pop_back();
-            vi v2 = v[vpi.back()];
-            vpi.pop_back();
-            int i = v1.size();
+    debug(vp);
+    rep(i, (int)vp.size()) {
+        if (vp[i].size() % 2 == 0) while (vp[i].size()) {
+            vi v1 = v[vp[i].back()];
+            vp[i].pop_back();
+            vi v2 = v[vp[i].back()];
+            vp[i].pop_back();
+            debug(v1);
+            debug(v2);
             for (int j = 0; j < i; j++) {
                 ans[v1[j]] = v2[j];
-                ans[v2[j]] = v1[(j == i - 1 ? 0 : j + 1)];
+                ans[v2[j]] = v1[(j + 1) % i];
             }
         }
         else {
             write_int(-1, '\n');
             return;
         }
+        ++i;
     }
     for (auto x : ans) {
-        write_int(x + 1, ' ');
+        write_int(x+1, ' ');
     }
     write_char('\n');
     _flush_output();
