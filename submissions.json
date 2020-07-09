@@ -4197,6 +4197,23 @@
     ],
     "timestamp": "Jul/14/2019 19:12"
   },
+  "CF86380597": {
+    "contest_id": 763,
+    "language": "GNU C++17",
+    "path": "codeforces/763/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Timofey and rectangles",
+    "problem_url": "https://codeforces.com/contest/763/problem/B",
+    "submission_id": "CF86380597",
+    "submission_url": "https://codeforces.com/contest/763/submission/86380597",
+    "tags": [
+      "constructive algorithms",
+      "geometry",
+      "*2100"
+    ],
+    "timestamp": "Jul/10/2020 01:32"
+  },
   "CF86380649": {
     "contest_id": 763,
     "language": "GNU C++17",

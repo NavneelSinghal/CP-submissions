@@ -360,11 +360,11 @@ T power (T a, int n = 1, T id = 1) {
 using mint = Modular<mod>;
 
 void solve() {
-    Int n;
+    int n;
     read_int(n);
     cout << "YES" << endl;
     while (n--) {
-        Int x1, y1, x2, y2, xm, ym;
+        int x1, y1, x2, y2, xm, ym;
         read_int(x1, y1, x2, y2);
         xm = min(x1, x2) & 1;
         ym = min(y1, y2) & 1;
