@@ -506,6 +506,24 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF86391906": {
+    "contest_id": 1270,
+    "language": "GNU C++17",
+    "path": "codeforces/1270/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Divide Points",
+    "problem_url": "https://codeforces.com/contest/1270/problem/E",
+    "submission_id": "CF86391906",
+    "submission_url": "https://codeforces.com/contest/1270/submission/86391906",
+    "tags": [
+      "constructive algorithms",
+      "geometry",
+      "math",
+      "*2300"
+    ],
+    "timestamp": "Jul/10/2020 08:32"
+  },
   "CF86392597": {
     "contest_id": 77,
     "language": "GNU C++17",
