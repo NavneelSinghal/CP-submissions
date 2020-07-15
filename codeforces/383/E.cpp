@@ -11,26 +11,30 @@ int main () {
     cin.tie(0);
     cout.tie(0);
 
-    int n, e, ans = 0, i, j, mask;
-    string s;
+    int n;
     cin >> n;
     
-    for (i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
+        string s;
         cin >> s;
-        e = 0;
-        for (j = 0; j < 3; ++j) e |= (1 << (s[j] - 'a'));
+        unsigned e = 0;
+        for (int j = 0; j < 3; ++j) {
+            int pos = s[j] - 'a';
+            e |= (1 << pos);
+        }
         dp[e]++;
     }
 
-    for (i = 1; i < M; i <<= 1) {
-        for (mask = 0; mask < M; ++mask) {
+    for (int i = 1; i < M; i <<= 1) {
+        for (int mask = 0; mask < M; ++mask) {
             if (i & mask) {
                 dp[mask] += dp[mask ^ i];
             }
         }
     }
 
-    for (i = 0; i < M; ++i) {
+    int ans = 0;
+    for (int i = 0; i < M; ++i) {
         ans ^= (n - dp[i]) * (n - dp[i]);
     }
     
