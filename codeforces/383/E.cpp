@@ -1,14 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int m = 24, M = 1 << m;
-int dp[M] = {0}, n, e, ans = 0, i, j, mask;
-char s[4];
+const int m = 24;
+const int M = 1 << m;
+int dp[M] = {0};
 
 int main () {
-
+    
+    int n, e, ans = 0, i, j, mask;
+    char s[4];
     scanf("%d", &n);
-
+    
     for (i = 0; i < n; ++i) {
         scanf("%s", s);
         e = 0;
@@ -27,6 +29,6 @@ int main () {
     for (i = 0; i < M; ++i) {
         ans ^= (n - dp[i]) * (n - dp[i]);
     }
-
+    
     printf("%d\n", ans);
 }
