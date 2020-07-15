@@ -7,12 +7,16 @@ int dp[M] = {0};
 
 int main () {
     
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
     int n, e, ans = 0, i, j, mask;
-    char s[4];
-    scanf("%d", &n);
+    string s;
+    cin >> n;
     
     for (i = 0; i < n; ++i) {
-        scanf("%s", s);
+        cin >> s;
         e = 0;
         for (j = 0; j < 3; ++j) e |= (1 << (s[j] - 'a'));
         dp[e]++;
@@ -30,5 +34,5 @@ int main () {
         ans ^= (n - dp[i]) * (n - dp[i]);
     }
     
-    printf("%d\n", ans);
+    cout << ans << "\n";
 }
