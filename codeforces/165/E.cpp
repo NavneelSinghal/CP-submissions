@@ -13,13 +13,12 @@ int main () {
     cout.tie(0);
    
     memset(dp, UINT_MAX, sizeof dp);
-    int n, x; 
+    int n; 
     cin >> n;
     
     for (int i = 0; i < n; ++i) {
-        cin >> x;
-        dp[x] = x;
-        a[i] = x;
+        cin >> a[i];
+        dp[a[i]] = a[i];
     }
     
     for (int i = 0; i < m; ++i) {
