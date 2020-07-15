@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int m = 24, M = 1 << m, M2 = M >> 1;
-int dp[M] = {0}, n, e, ans = 0, i, j, v, w, mask, cur = 0;
+const int m = 24, M = 1 << m;
+int dp[M] = {0}, n, e, ans = 0, i, j, mask;
 char s[4];
 
 int main () {
@@ -17,11 +17,10 @@ int main () {
     }
 
     for (i = 1; i < M; i <<= 1) {
-        v = i - 1;
-        w = - i;
-        for (mask = 0; mask < M2; ++mask) {
-            cur = (v & mask) | ((mask & w) << 1);
-            dp[cur ^ i] += dp[cur];
+        for (mask = 0; mask < M; ++mask) {
+            if (i & mask) {
+                dp[mask] += dp[mask ^ i];
+            }
         }
     }
 
