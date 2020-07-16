@@ -3,8 +3,18 @@ using namespace std;
 
 const int m = 20;
 const int M = 1 << m;
-vector<int> dp(M), p2(M);
+vector<int> dp(M);
+
 const int mod = 1e9 + 7;
+
+int power (long long a, int n) {
+    long long res = 1;
+    while (n) {
+        if (n & 1) res = (res * a) % mod;
+        if (n >>= 1) a = (a * a) % mod;
+    }
+    return res;
+}
 
 namespace IO {
     const int BUFFER_SIZE = 1 << 15;
@@ -114,17 +124,9 @@ int main () {
             }
         }
     }
-    
-    int cur = 1;
-    for (int i = 0; i < M; ++i) {
-        p2[i] = cur;
-        cur = (cur << 1) % mod;
-    }
-
     int ans = 0;
-
     for (int i = 0; i < M; i++) {
-        ans += ((__builtin_popcount(i) & 1) ? -1 : 1) * p2[dp[i]];
+        ans += ((__builtin_popcount(i) & 1) ? -1 : 1) * power(2, dp[i]);
         if (ans < 0) ans += mod;
         else if (ans >= mod) ans -= mod;
     }
