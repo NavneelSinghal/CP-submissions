@@ -36,7 +36,7 @@ int main () {
     }
     int ans = 0;
     for (int i = 0; i < M; i++) {
-        ans += ((__builtin_popcount(i) & 1) ? -1 : 1) * power(2, dp[i]);
+        ans += power(-1, __builtin_popcount(i)) * power(2, dp[i]);
         if (ans < 0) ans += mod;
         else if (ans >= mod) ans -= mod;
     }
