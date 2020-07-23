@@ -506,6 +506,25 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF87735999": {
+    "contest_id": 1386,
+    "language": "GNU C++17",
+    "path": "codeforces/1386/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Colors",
+    "problem_url": "https://codeforces.com/contest/1386/problem/A",
+    "submission_id": "CF87735999",
+    "submission_url": "https://codeforces.com/contest/1386/submission/87735999",
+    "tags": [
+      "*special problem",
+      "binary search",
+      "constructive algorithms",
+      "interactive",
+      "*2700"
+    ],
+    "timestamp": "Jul/23/2020 11:12"
+  },
   "CF87751805": {
     "contest_id": 1386,
     "language": "GNU C++17",
