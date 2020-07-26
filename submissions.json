@@ -1,4 +1,20 @@
 {
+  "AC15463753": {
+    "contest_id": "m-solutions2020",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/m-solutions2020/C.cpp",
+    "platform": "AtCoder",
+    "problem_index": "C",
+    "problem_name": "Marks",
+    "problem_url": "https://atcoder.jp/contests/m-solutions2020/tasks/m_solutions2020_c",
+    "submission_id": "AC15463753",
+    "submission_url": "https://atcoder.jp/contests/m-solutions2020/submissions/15463753",
+    "tags": [
+      "AtCoder",
+      "*300"
+    ],
+    "timestamp": "Jul/26/2020 09:29"
+  },
   "AC15463822": {
     "contest_id": "m-solutions2020",
     "language": "C++ (GCC 9.2.1)",
