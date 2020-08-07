@@ -506,6 +506,25 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF89252750": {
+    "contest_id": 1393,
+    "language": "GNU C++17",
+    "path": "codeforces/1393/D.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D",
+    "problem_name": "Rarity and New Dress",
+    "problem_url": "https://codeforces.com/contest/1393/problem/D",
+    "submission_id": "CF89252750",
+    "submission_url": "https://codeforces.com/contest/1393/submission/89252750",
+    "tags": [
+      "dfs and similar",
+      "dp",
+      "implementation",
+      "shortest paths",
+      "*2100"
+    ],
+    "timestamp": "Aug/07/2020 21:12"
+  },
   "CF89495806": {
     "contest_id": 1391,
     "language": "GNU C++17",
