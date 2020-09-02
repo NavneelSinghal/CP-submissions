@@ -506,6 +506,24 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF91626949": {
+    "contest_id": 580,
+    "language": "Ocaml",
+    "path": "codeforces/580/B.ml",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Kefa and Company",
+    "problem_url": "https://codeforces.com/contest/580/problem/B",
+    "submission_id": "CF91626949",
+    "submission_url": "https://codeforces.com/contest/580/submission/91626949",
+    "tags": [
+      "binary search",
+      "sortings",
+      "two pointers",
+      "*1500"
+    ],
+    "timestamp": "Sep/02/2020 14:42"
+  },
   "CF93448741": {
     "contest_id": 1059,
     "language": "GNU C++17",
