@@ -506,6 +506,24 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF93937053": {
+    "contest_id": 1425,
+    "language": "GNU C++17",
+    "path": "codeforces/1425/D.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D",
+    "problem_name": "Danger of Mad Snakes",
+    "problem_url": "https://codeforces.com/contest/1425/problem/D",
+    "submission_id": "CF93937053",
+    "submission_url": "https://codeforces.com/contest/1425/submission/93937053",
+    "tags": [
+      "combinatorics",
+      "dp",
+      "math",
+      "*2300"
+    ],
+    "timestamp": "Sep/27/2020 13:59"
+  },
   "CF93938567": {
     "contest_id": 1425,
     "language": "GNU C++17",
