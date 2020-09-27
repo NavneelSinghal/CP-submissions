@@ -506,6 +506,23 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF93938567": {
+    "contest_id": 1425,
+    "language": "GNU C++17",
+    "path": "codeforces/1425/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Arena of Greed",
+    "problem_url": "https://codeforces.com/contest/1425/problem/A",
+    "submission_id": "CF93938567",
+    "submission_url": "https://codeforces.com/contest/1425/submission/93938567",
+    "tags": [
+      "games",
+      "greedy",
+      "*1400"
+    ],
+    "timestamp": "Sep/27/2020 14:17"
+  },
   "CF94305258": {
     "contest_id": 1416,
     "language": "GNU C++17",
