@@ -506,6 +506,22 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF94796213": {
+    "contest_id": 1423,
+    "language": "GNU C++17",
+    "path": "codeforces/1423/F.cpp",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Coins",
+    "problem_url": "https://codeforces.com/contest/1423/problem/F",
+    "submission_id": "CF94796213",
+    "submission_url": "https://codeforces.com/contest/1423/submission/94796213",
+    "tags": [
+      "math",
+      "*2700"
+    ],
+    "timestamp": "Oct/05/2020 22:59"
+  },
   "CF94814116": {
     "contest_id": 1423,
     "language": "GNU C++17",
