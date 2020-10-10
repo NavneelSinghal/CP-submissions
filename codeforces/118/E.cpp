@@ -321,7 +321,7 @@ void solve(int case_no) {
                 dp[u]++;
             }
         }
-        tout[u] = timer;
+        tout[u] = timer++;
         if (level[u] > 1 && dp[u] == 0) {
             cout << 0 << '\n';
             exit(0);
