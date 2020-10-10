@@ -303,16 +303,17 @@ void solve(int case_no) {
         edges.emplace_back(u, v);
     }
 
-    vector<int> low(n), par(n), tin(n);
+    vector<int> low(n), par(n), tin(n), visited_b(n);
 
     int timer = 0;
 
     function<void(int, int)> dfs_b = [&] (int u, int p) {
         par[u] = p;
-        low[u] = tin[u] = ++timer;
+        low[u] = tin[u] = timer++;
+        visited_b[u] = true;
         for (auto v : g[u]) {
             if (v == p) continue;
-            else if (tin[v]) {
+            else if (visited_b[v]) {
                 low[u] = min(low[u], tin[v]);
             } else {
                 dfs_b(v, u);
