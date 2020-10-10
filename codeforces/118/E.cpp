@@ -305,6 +305,7 @@ void solve(int case_no) {
 
     vector<int> level(n), dp(n, -1), par(n), tin(n), tout(n);
 
+    int bridge_count = 0;
     int timer = 0;
 
     function<void(int, int)> dfs_b = [&] (int u, int p) {
@@ -323,14 +324,18 @@ void solve(int case_no) {
         }
         tout[u] = timer++;
         if (level[u] > 1 && dp[u] == 0) {
-            cout << 0 << '\n';
-            exit(0);
+            bridge_count++;
         }
     };
     
     level[0] = 1;
     dfs_b(0, -1);
     
+    if (bridge_count) {
+        cout << 0 << '\n';
+        return;
+    }
+
     for (int i = 0; i < m; ++i) {
         if (par[U[i]] == V[i]) {
             cout << 1 + V[i] << ' ' << 1 + U[i] << '\n';
