@@ -326,18 +326,16 @@ void solve(int case_no) {
     };
     
     dfs_b(0, -1);
-
-    for (auto &[U, V] : edges) {
-        if (tin[U] > tin[V]) {
-            swap(U, V);
-        }
-    }
-
-    for (auto &[U, V] : edges) {
-        if (par[V] == U) {
-            cout << 1 + U << ' ' << 1 + V << '\n';
-        } else {
+    
+    for (auto &&[U, V] : edges) {
+        if (par[U] == V) {
             cout << 1 + V << ' ' << 1 + U << '\n';
+        } else if (par[V] == U) {
+            cout << 1 + U << ' ' << 1 + V << '\n';
+        } else if (tin[U] < tin[V]) {
+            cout << 1 + V << ' ' << 1 + U << '\n';
+        } else {
+            cout << 1 + U << ' ' << 1 + V << '\n';
         }
     }
 
