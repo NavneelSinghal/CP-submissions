@@ -287,15 +287,15 @@ void setIO(string name = "") {
 
 void solve(int case_no) {
     
-    Int n, m;
+    int n, m;
     cin >> n >> m;
 
-    vector<vector<Int>> g(n);
-    vector<pair<Int, Int>> edges;
+    vector<vector<int>> g(n);
+    vector<pair<int, int>> edges;
     edges.reserve(m);
 
     rep(i, m) {
-        Int u, v;
+        int u, v;
         cin >> u >> v;
         --u, --v;
         g[u].pb(v);
@@ -303,11 +303,11 @@ void solve(int case_no) {
         edges.emplace_back(u, v);
     }
 
-    vector<Int> low(n), par(n), tin(n);
+    vector<int> low(n), par(n), tin(n);
 
-    Int timer = 0;
+    int timer = 0;
 
-    function<void(Int, Int)> dfs_b = [&] (Int u, Int p) {
+    function<void(int, int)> dfs_b = [&] (int u, int p) {
         par[u] = p;
         low[u] = tin[u] = ++timer;
         for (auto v : g[u]) {
@@ -331,6 +331,9 @@ void solve(int case_no) {
         if (tin[U] > tin[V]) {
             swap(U, V);
         }
+    }
+
+    for (auto &[U, V] : edges) {
         if (par[V] == U) {
             cout << 1 + U << ' ' << 1 + V << '\n';
         } else {
