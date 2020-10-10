@@ -291,8 +291,7 @@ void solve(int case_no) {
     cin >> n >> m;
 
     vector<vector<int>> g(n);
-    vector<pair<int, int>> edges;
-    edges.reserve(m);
+    vector<int> U(m), V(m);
 
     rep(i, m) {
         int u, v;
@@ -300,43 +299,47 @@ void solve(int case_no) {
         --u, --v;
         g[u].pb(v);
         g[v].pb(u);
-        edges.emplace_back(u, v);
+        U[i] = u;
+        V[i] = v;
     }
 
-    vector<int> low(n), par(n), tin(n), visited_b(n);
+    vector<int> level(n), dp(n, -1), par(n), tin(n), tout(n);
 
     int timer = 0;
 
     function<void(int, int)> dfs_b = [&] (int u, int p) {
         par[u] = p;
-        low[u] = tin[u] = timer++;
-        visited_b[u] = true;
+        tin[u] = timer++;
         for (auto v : g[u]) {
-            if (v == p) continue;
-            else if (visited_b[v]) {
-                low[u] = min(low[u], tin[v]);
-            } else {
+            if (level[v] == 0) {
+                level[v] = level[u] + 1;
                 dfs_b(v, u);
-                low[u] = min(low[u], low[v]);
-                if (low[v] > tin[u]) {
-                    cout << 0 << '\n';
-                    exit(0);
-                }
+                dp[u] += dp[v];
+            } else if (level[u] < level[v]) {
+                dp[u]--;
+            } else if (level[u] > level[v]) {
+                dp[u]++;
             }
+        }
+        tout[u] = timer;
+        if (level[u] > 1 && dp[u] == 0) {
+            cout << 0 << '\n';
+            exit(0);
         }
     };
     
+    level[0] = 1;
     dfs_b(0, -1);
     
-    for (auto &&[U, V] : edges) {
-        if (par[U] == V) {
-            cout << 1 + V << ' ' << 1 + U << '\n';
-        } else if (par[V] == U) {
-            cout << 1 + U << ' ' << 1 + V << '\n';
-        } else if (tin[U] < tin[V]) {
-            cout << 1 + V << ' ' << 1 + U << '\n';
+    for (int i = 0; i < m; ++i) {
+        if (par[U[i]] == V[i]) {
+            cout << 1 + V[i] << ' ' << 1 + U[i] << '\n';
+        } else if (par[V[i]] == U[i]) {
+            cout << 1 + U[i] << ' ' << 1 + V[i] << '\n';
+        } else if (tin[U[i]] <= tin[V[i]] && tout[V[i]] <= tout[U[i]]) {
+            cout << 1 + V[i] << ' ' << 1 + U[i] << '\n';
         } else {
-            cout << 1 + U << ' ' << 1 + V << '\n';
+            cout << 1 + U[i] << ' ' << 1 + V[i] << '\n';
         }
     }
 
