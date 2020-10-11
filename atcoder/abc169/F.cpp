@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// https://atcoder.jp/contests/abc169/tasks/abc169_f
-
 using i32 = int_fast32_t;
 using i64 = int_fast64_t;
 using u64 = uint_fast64_t;
@@ -24,9 +22,18 @@ struct Modular {
     unsigned v;
     Modular(long long a = 0) : v((a %= Mod) < 0 ? a + Mod : a) {}
     M operator-() const { return M() -= *this; }
-    M& operator+=(M r) { if ((v += r.v) >= Mod) v -= Mod; return *this; }
-    M& operator-=(M r) { if ((v += Mod - r.v) >= Mod) v -= Mod; return *this; }
-    M& operator*=(M r) { v = (u64)v * r.v % Mod; return *this; }
+    M& operator+=(M r) {
+        if ((v += r.v) >= Mod) v -= Mod;
+        return *this;
+    }
+    M& operator-=(M r) {
+        if ((v += Mod - r.v) >= Mod) v -= Mod;
+        return *this;
+    }
+    M& operator*=(M r) {
+        v = (u64)v * r.v % Mod;
+        return *this;
+    }
     M& operator/=(M r) { return *this *= pwr(r, Mod - 2); }
     friend M operator+(M l, M r) { return l += r; }
     friend M operator-(M l, M r) { return l -= r; }
@@ -35,7 +42,12 @@ struct Modular {
     friend bool operator==(M l, M r) { return l.v == r.v; }
     friend bool operator!=(M l, M r) { return l.v != r.v; }
     friend ostream& operator<<(ostream& os, M a) { return os << a.v; }
-    friend istream& operator>>(istream& is, M& a) { i64 w; is >> w; a = M(w); return is; }
+    friend istream& operator>>(istream& is, M& a) {
+        i64 w;
+        is >> w;
+        a = M(w);
+        return is;
+    }
 };
 
 using mint = Modular<998'244'353>;
@@ -110,25 +122,25 @@ namespace ntt {
 
     vector<Mint197> operator*(const vector<Mint197>& l, const vector<Mint197>& r) {
         if (l.empty() or r.empty()) return {};
-        i32 n = l.size(), m = r.size();
-        static constexpr i32 mod0 = 998244353, mod1 = 1300234241, mod2 = 1484783617;
+        int n = l.size(), m = r.size();
+        static constexpr int mod0 = 998244353, mod1 = 1300234241, mod2 = 1484783617;
         using Mint0 = Modular<mod0>;
         using Mint1 = Modular<mod1>;
         using Mint2 = Modular<mod2>;
         vector<Mint0> l0(n), r0(m);
         vector<Mint1> l1(n), r1(m);
         vector<Mint2> l2(n), r2(m);
-        for (i32 i = 0; i < n; ++i) l0[i] = l[i].v, l1[i] = l[i].v, l2[i] = l[i].v;
-        for (i32 j = 0; j < m; ++j) r0[j] = r[j].v, r1[j] = r[j].v, r2[j] = r[j].v;
+        for (int i = 0; i < n; ++i) l0[i] = l[i].v, l1[i] = l[i].v, l2[i] = l[i].v;
+        for (int j = 0; j < m; ++j) r0[j] = r[j].v, r1[j] = r[j].v, r2[j] = r[j].v;
         l0 = l0 * r0, l1 = l1 * r1, l2 = l2 * r2;
         vector<Mint197> res(n + m - 1);
         static const Mint1 im0 = 1 / Mint1(mod0);
         static const Mint2 im1 = 1 / Mint2(mod1), im0m1 = im1 / mod0;
         static const Mint197 m0 = mod0, m0m1 = m0 * mod1;
-        for (i32 i = 0; i < n + m - 1; ++i) {
-            i32 y0 = l0[i].v;
-            i32 y1 = (im0 * (l1[i] - y0)).v;
-            i32 y2 = (im0m1 * (l2[i] - y0) - im1 * y1).v;
+        for (int i = 0; i < n + m - 1; ++i) {
+            int y0 = l0[i].v;
+            int y1 = (im0 * (l1[i] - y0)).v;
+            int y2 = (im0m1 * (l2[i] - y0) - im1 * y1).v;
             res[i] = y0 + m0 * y1 + m0m1 * y2;
         }
         return res;
@@ -156,7 +168,7 @@ int main() {
             w[a[l].v] = pwr(mint(2), MOD - 2);
             return w;
         }
-        i32 m = (l + r) >> 1;
+        int m = (l + r) >> 1;
         auto p = multiply_many(l, m);
         auto q = multiply_many(m + 1, r);
         auto x = p * q;
@@ -166,4 +178,7 @@ int main() {
     auto p = multiply_many(0, n - 1);
     
     cout << (pwr(mint(2), n) * p[s]) << endl;
+
+
+
 }
