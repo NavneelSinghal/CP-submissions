@@ -1,7 +1,3 @@
-#pragma GCC optimize ("Ofast")
-#pragma GCC target ("avx")
-#pragma GCC optimize ("unroll-loops")
-
 #include <bits/stdc++.h>
 using namespace std;
 
