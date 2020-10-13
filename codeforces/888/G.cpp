@@ -32,7 +32,7 @@ struct binaryTrie {
     // n is the number of total characters, so size needs to be 31 * n
     binaryTrie(int n) {
         sz = 0;
-        trie.assign(2, vector<int>(MAXLEN * (n + 2), -1));
+        trie.assign(MAXLEN * (n + 2), vector<int>(2, -1));
         a.resize(n + 1);
         ends_here.resize(MAXLEN * (n + 2));
         cnt.resize(MAXLEN * (n + 2));
@@ -40,9 +40,8 @@ struct binaryTrie {
 
     void insert(int n) {
         int node = ROOT;
-        int to_insert = a[n];
         for (int i = MAXLEN - 1; ~i; --i) {
-            int& next_node = trie[(to_insert >> i) & 1][node];
+            int& next_node = trie[node][(a[n] >> i) & 1];
             if (next_node == -1) {
                 next_node = ++sz;
             }
@@ -54,9 +53,8 @@ struct binaryTrie {
 
     void remove(int n) { // assumes that n is already inside the trie - if not, then just do a simple traversal
         int node = ROOT;
-        int to_remove = a[n];
         for (int i = MAXLEN - 1; ~i; --i) {
-            node = trie[(to_remove >> i) & 1][node];
+            node = trie[node][(a[n] >> i) & 1];
             cnt[node]--;
         }
     }
@@ -64,16 +62,14 @@ struct binaryTrie {
     pair<int, int> minxor(int n) {
         int node = ROOT;
         int ans = 0;
-        int to_use = a[n];
         for (int i = MAXLEN - 1; ~i; --i) {
             ans <<= 1;
-            int p = (to_use >> i) & 1;
-            int next_node = trie[p][node];
-            if (next_node == -1 || cnt[next_node] <= 0) {
+            int p = (a[n] >> i) & 1;
+            if (trie[node][p] == -1 || cnt[trie[node][p]] <= 0) {
                 ans ^= 1;
                 p ^= 1;
             }
-            node = trie[p][node];
+            node = trie[node][p];
         }
         return make_pair(ans, ends_here[node]);
     }
