@@ -506,6 +506,24 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF97853184": {
+    "contest_id": 1443,
+    "language": "GNU C++17",
+    "path": "codeforces/1443/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Long Permutation",
+    "problem_url": "https://codeforces.com/contest/1443/problem/E",
+    "submission_id": "CF97853184",
+    "submission_url": "https://codeforces.com/contest/1443/submission/97853184",
+    "tags": [
+      "brute force",
+      "math",
+      "two pointers",
+      "*2400"
+    ],
+    "timestamp": "Nov/07/2020 20:21"
+  },
   "CF97853489": {
     "contest_id": 1443,
     "language": "GNU C++17",
