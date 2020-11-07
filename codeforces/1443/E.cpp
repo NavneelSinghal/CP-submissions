@@ -24,19 +24,17 @@ typedef tree <int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node
 //order_of_key(k) - number of elements e such that func(e, k) returns true, where func is less or less_equal
 //find_by_order(k) - kth element in the set counting from 0
 
-const int INV_FACT = 14;
-const int N = 1e6;
-ordered_set pos;
-long long a[N];
-long long fact[INV_FACT];
-
 void solve(int case_no) {
 
     int n, q;
     cin >> n >> q;
     
+    long long a[n];
     iota(a, a + n, 1LL);
 
+    const int INV_FACT = 14;
+    long long fact[INV_FACT];
+    
     fact[0] = 1;
     for (int i = 1; i < INV_FACT; ++i) {
         fact[i] = fact[i - 1] * i;
@@ -53,6 +51,7 @@ void solve(int case_no) {
         if (typ == 1) {
 
             int position = lft;
+            ordered_set pos;
             for (int i = 1; i <= iter; ++i) pos.insert(i);
             old_x = x;
             int found_element;
