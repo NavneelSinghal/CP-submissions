@@ -506,6 +506,24 @@
     ],
     "timestamp": "Jan/01/2021 02:32"
   },
+  "CF97893325": {
+    "contest_id": 888,
+    "language": "GNU C++17",
+    "path": "codeforces/888/G.cpp",
+    "platform": "Codeforces",
+    "problem_index": "G",
+    "problem_name": "Xor-MST",
+    "problem_url": "https://codeforces.com/contest/888/problem/G",
+    "submission_id": "CF97893325",
+    "submission_url": "https://codeforces.com/contest/888/submission/97893325",
+    "tags": [
+      "bitmasks",
+      "constructive algorithms",
+      "data structures",
+      "*2300"
+    ],
+    "timestamp": "Nov/08/2020 11:01"
+  },
   "CF97893525": {
     "contest_id": 888,
     "language": "GNU C++17",

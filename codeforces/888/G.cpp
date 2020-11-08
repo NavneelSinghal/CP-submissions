@@ -113,15 +113,12 @@ void solve(int case_no) {
 
     binaryTrie bt(n);
 
-    vector<int> unique_elements;
+    set<int> unique_elements;
 
     for (int i = 1; i <= n; ++i) {
         cin >> bt.a[i];
-        unique_elements.push_back(bt.a[i]);
+        unique_elements.insert(bt.a[i]);
     }
-
-    sort(unique_elements.begin(), unique_elements.end());
-    unique_elements.resize(unique(unique_elements.begin(), unique_elements.end()) - unique_elements.begin());
 
     n = 0;
     for (auto element : unique_elements) {
@@ -142,7 +139,7 @@ void solve(int case_no) {
             components[find_set(i)].push_back(i);
         }
 
-        vector<pair<pair<int, int>, int>> chosen_edges;
+        set<pair<pair<int, int>, int>> chosen_edges;
 
         for (int i = 1; i <= n; ++i) {
             
@@ -161,15 +158,12 @@ void solve(int case_no) {
             int a = i;
             int b = find_set(shortest_outward.second);
             if (a > b) swap(a, b);
-            chosen_edges.push_back(make_pair(make_pair(a, b), shortest_outward.first));
+            chosen_edges.insert(make_pair(make_pair(a, b), shortest_outward.first));
             
             for (auto element : components[i]) {
                 bt.insert(element);
             }
         }
-
-        sort(chosen_edges.begin(), chosen_edges.end());
-        chosen_edges.resize(unique(chosen_edges.begin(), chosen_edges.end()) - chosen_edges.begin());
 
         for (auto edge : chosen_edges) {
             ans += edge.second;
