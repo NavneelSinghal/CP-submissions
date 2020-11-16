@@ -72,6 +72,8 @@ void solve(int _) {
                 swap(a, b);
             }
 
+            // merge rb into ra
+
             auto &m = rep[ra];
             for (auto &[cl, el] : rep[rb]) {
                 auto &v = m[cl];
@@ -84,7 +86,8 @@ void solve(int _) {
             sz[ra] += sz[rb];
             sz[rb] = 0;
 
-            rep[rb].clear();
+            // clear rb
+            // rep[rb].clear();
 
         } else {
 
