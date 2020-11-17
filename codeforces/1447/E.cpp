@@ -38,13 +38,16 @@ void solve(int _) {
     int n;
     cin >> n;
     vector<int> a(n);
+
     for (auto &x : a) cin >> x;
     
     function<int(vector<int>&, int)> f = [&] (vector<int>& a, int depth) {
         if (depth < 0) return 0;
         vector<int> aa[2];
         for (auto x : a) aa[(x >> depth) & 1].push_back(x);
-        for (auto i : {0, 1}) if (aa[i].empty()) return f(aa[i ^ 1], depth - 1);
+        for (int i = 0; i < 2; ++i) {
+            if (aa[i].empty()) return f(aa[i ^ 1], depth - 1);
+        }
         return 1 + max(f(aa[0], depth - 1), f(aa[1], depth - 1));
     };
 
