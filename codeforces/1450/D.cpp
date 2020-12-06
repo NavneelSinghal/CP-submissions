@@ -37,13 +37,12 @@ void solve(int _) {
     
     int n;
     cin >> n;
-
-    int a[n] = {0}, freq[n] = {0}, ans[n];
-    for (int i = 0; i < n; ++i) ans[i] = 1;
+    
+    vector<int> a(n), freq(n + 1), ans(n, 1);
     
     for (auto &x : a) cin >> x, freq[--x]++;
     for (int i = 0; i < n; ++i) ans[0] &= (freq[i] == 1);
-    ans[n - 1] = *min_element(a, a + n) == 0;
+    ans[n - 1] = *min_element(a.begin(), a.end()) == 0;
 
     int l = 0, r = n - 1, id = n, curmin = 0;
     
