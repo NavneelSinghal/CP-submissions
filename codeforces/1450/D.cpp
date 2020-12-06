@@ -33,22 +33,18 @@ long long pwr(long long a, int n) {
     return ans;
 }
 
-const int maxn = 3e5;
-
-int a[maxn], freq[maxn + 1], ans[maxn];
-
 void solve(int _) {
 
     int n;
     cin >> n;
 
+    int a[n] = {0}, freq[n + 1] = {0}, ans[n];
     ans[0] = 1, ans[n - 1] = 0;
-    memset(freq, 0, (n + 1) * (sizeof (int)));
-    
-    for (int i = 0; i < n; ++i) {
-        cin >> a[i];
-        freq[--a[i]]++;
-        ans[n - 1] |= !a[i];
+
+    for (auto &x : a) {
+        cin >> x;
+        freq[--x]++;
+        ans[n - 1] |= !x;
     }
 
     for (int i = 0; i < n; ++i) ans[0] &= (freq[i] == 1);
@@ -69,7 +65,7 @@ void solve(int _) {
     }
 
     for (int i = 1; i < n - 1; ++i) ans[i] = (i >= n - id - 1);
-    for (int i = 0; i < n; ++i) cout << ans[i];
+    for (auto &x : ans) cout << x;
     cout << '\n';
 }
 
