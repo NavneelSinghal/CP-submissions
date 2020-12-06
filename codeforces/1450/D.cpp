@@ -34,19 +34,19 @@ long long pwr(long long a, int n) {
 }
 
 void solve(int _) {
-
+    
     int n;
     cin >> n;
 
     int a[n] = {0}, freq[n] = {0}, ans[n];
-    ans[0] = 1;
-
+    for (int i = 0; i < n; ++i) ans[i] = 1;
+    
     for (auto &x : a) cin >> x, freq[--x]++;
     for (int i = 0; i < n; ++i) ans[0] &= (freq[i] == 1);
     ans[n - 1] = *min_element(a, a + n) == 0;
 
     int l = 0, r = n - 1, id = n, curmin = 0;
-
+    
     for (int i = 0; i < n; ++i) {
         if (a[l] == i) freq[a[l++]]--;
         else if (a[r] == i) freq[a[r--]]--;
@@ -60,7 +60,7 @@ void solve(int _) {
             break;
         }
     }
-
+    
     for (int i = 1; i < n - 1; ++i) ans[i] = (i >= n - id - 1);
     for (auto &x : ans) cout << x;
     cout << '\n';
