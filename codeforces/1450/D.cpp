@@ -34,18 +34,15 @@ long long pwr(long long a, int n) {
 }
 
 void solve(int _) {
-    
     int n;
     cin >> n;
-    
-    vector<int> a(n), freq(n + 1), ans(n, 1);
-    
-    for (auto &x : a) cin >> x, freq[--x]++;
-    for (int i = 0; i < n; ++i) ans[0] &= (freq[i] == 1);
-    ans[n - 1] = *min_element(a.begin(), a.end()) == 0;
-
+    vector<int> a(n), freq(n + 1);
+    for (auto &x : a) {
+        cin >> x;
+        freq[--x]++;
+    }
+    vector<int> later = freq;
     int l = 0, r = n - 1, id = n, curmin = 0;
-    
     for (int i = 0; i < n; ++i) {
         if (a[l] == i) freq[a[l++]]--;
         else if (a[r] == i) freq[a[r--]]--;
@@ -54,13 +51,16 @@ void solve(int _) {
             break;
         }
         while (curmin < n && freq[curmin] == 0) curmin++;
+        //cout << curmin << '\n';
         if (curmin != i + 1) {
             id = i;
             break;
         }
     }
-    
+    vector<int> ans(n, 1);
+    for (int i = 0; i < n; ++i) ans[0] &= (later[i] == 1);
     for (int i = 1; i < n - 1; ++i) ans[i] = (i >= n - id - 1);
+    ans[n - 1] = *min_element(a.begin(), a.end()) == 0;
     for (auto &x : ans) cout << x;
     cout << '\n';
 }
