@@ -39,15 +39,11 @@ void solve(int _) {
     cin >> n;
 
     int a[n] = {0}, freq[n] = {0}, ans[n];
-    ans[0] = 1, ans[n - 1] = 0;
+    ans[0] = 1;
 
-    for (auto &x : a) {
-        cin >> x;
-        freq[--x]++;
-        ans[n - 1] |= !x;
-    }
-
+    for (auto &x : a) cin >> x, freq[--x]++;
     for (int i = 0; i < n; ++i) ans[0] &= (freq[i] == 1);
+    ans[n - 1] = *min_element(a, a + n) == 0;
 
     int l = 0, r = n - 1, id = n, curmin = 0;
 
