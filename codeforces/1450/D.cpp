@@ -38,7 +38,7 @@ void solve(int _) {
     int n;
     cin >> n;
 
-    int a[n] = {0}, freq[n + 1] = {0}, ans[n];
+    int a[n] = {0}, freq[n] = {0}, ans[n];
     ans[0] = 1, ans[n - 1] = 0;
 
     for (auto &x : a) {
@@ -58,7 +58,8 @@ void solve(int _) {
             id = i;
             break;
         }
-        if (freq[i] || !freq[i + 1]) {
+        while (curmin < n && freq[curmin] == 0) curmin++;
+        if (curmin != i + 1) {
             id = i;
             break;
         }
