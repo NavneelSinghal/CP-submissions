@@ -43,12 +43,22 @@ void solve(int _) {
         cin >> x;
         s += x;
     }
-    long long num = 1, den = 1;
-    for (int i = 1; i <= s; ++i) {
-        den = den * i % mod;
-        num = num * (m - i + 1) % mod;
+    n = s + 100;
+    vector<int> fact(n), ifact(n);
+    fact[0] = ifact[0] = 1;
+    for (int i = 1; i < n; ++i) {
+        fact[i] = (long long) fact[i - 1] * i % mod;
     }
-    cout << ((long long) num * pwr(den, mod - 2) % mod) << '\n';
+    ifact[n - 1] = pwr(fact[n - 1], mod - 2);
+    for (int i = n - 2; i >= 1; --i) {
+        ifact[i] = (long long) ifact[i + 1] * (i + 1) % mod;
+    }
+    // inv[i] = (long long) ifact[i] * fact[i] % mod
+    long long ans = 1;
+    for (int i = 1; i <= s; ++i, --m) {
+        ans = (ans * m % mod) * ((long long) ifact[i] * fact[i - 1] % mod) % mod;
+    }
+    cout << ans << '\n';
 }
 
 signed main() {
