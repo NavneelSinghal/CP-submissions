@@ -1,4 +1,20 @@
 {
+  "AC18655930": {
+    "contest_id": "arc110",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc110/D.cpp",
+    "platform": "AtCoder",
+    "problem_index": "D",
+    "problem_name": "Binomial Coefficient is Fun",
+    "problem_url": "https://atcoder.jp/contests/arc110/tasks/arc110_d",
+    "submission_id": "AC18655930",
+    "submission_url": "https://atcoder.jp/contests/arc110/submissions/18655930",
+    "tags": [
+      "AtCoder",
+      "*600"
+    ],
+    "timestamp": "Dec/09/2020 15:27"
+  },
   "CF100586070": {
     "contest_id": 1450,
     "language": "GNU C++17",
