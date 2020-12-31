@@ -53,13 +53,37 @@ void solve(int _) {
     }
     auto nxt = [&] (int i, int j) {
         if (i < 3 && j < 3) return make_pair(-1, -1);
-        int ii = i, jj = j;
-        int pi = i & 1, pj = j & 1, l = i < j, le = i <= j;
-        if (l && pj) ++ii;
-        else if ((le && !pj && i != 0) || (j == 0 && pi)) --ii;
-        if (!le && !pi) ++jj;
-        else if ((!l && pi && j != 0) || (i == 0 && !pj)) --jj;
-        return make_pair(ii, jj);
+        if (i == j) {
+            if (i & 1) {
+                return make_pair(i, j - 1);
+            } else {
+                return make_pair(i - 1, j);
+            }
+        } else if (i == 0) {
+            if (j & 1) {
+                return make_pair(i + 1, j);
+            } else {
+                return make_pair(i, j - 1);
+            }
+        } else if (j == 0) {
+            if (i & 1) {
+                return make_pair(i - 1, j);
+            } else {
+                return make_pair(i, j + 1);
+            }
+        } else if (i > j) {
+            if (i & 1) {
+                return make_pair(i, j - 1);
+            } else {
+                return make_pair(i, j + 1);
+            }
+        } else {
+            if (j & 1) {
+                return make_pair(i + 1, j);
+            } else {
+                return make_pair(i - 1, j);
+            }
+        }
     };
     int i, j;
     if (n & 1) {
