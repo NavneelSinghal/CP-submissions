@@ -1,4 +1,20 @@
 {
+  "AC19097213": {
+    "contest_id": "agc050",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/agc050/B.cpp",
+    "platform": "AtCoder",
+    "problem_index": "B",
+    "problem_name": "Three Coins",
+    "problem_url": "https://atcoder.jp/contests/agc050/tasks/agc050_b",
+    "submission_id": "AC19097213",
+    "submission_url": "https://atcoder.jp/contests/agc050/submissions/19097213",
+    "tags": [
+      "AtCoder",
+      "*800"
+    ],
+    "timestamp": "Jan/01/2021 15:55"
+  },
   "AC19097360": {
     "contest_id": "agc050",
     "language": "C++ (GCC 9.2.1)",
