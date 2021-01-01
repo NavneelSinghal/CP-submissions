@@ -33,8 +33,6 @@ long long pwr(long long a, long long n) {
     return ans;
 }
 
-
-
 template<typename X, typename Y> 
 X& remin(X& x, const Y& y) { return x = (y < x) ? y : x; }
 
@@ -51,7 +49,7 @@ void precompute() {
 }
 
 void solve(int _) {
-    
+
     int n;
     cin >> n;
 
@@ -59,7 +57,7 @@ void solve(int _) {
     for (auto &x : a) cin >> x;
 
     vector<vector<int>> dp(n + 1, vector<int>(n + 1, -mod));
-    
+
     for (int i = 0; i <= n; ++i) {
         dp[0][i] = 0;
     }
@@ -71,18 +69,18 @@ void solve(int _) {
                 remax(dp[i][j], dp[k][j + 1] + dp[i - k - 3][j + k + 2] + max(0, a[j] + a[i + j - 1] + a[j + k + 1]));
             }
             remax(dp[i][j], dp[i - 3][j] + max(0, a[i + j - 1] + a[i + j - 2] + a[i + j - 3]));
-			remax(dp[i][j], dp[i - 3][j + 3] + max(0, a[j] + a[j + 1] + a[j + 2]));
+            remax(dp[i][j], dp[i - 3][j + 3] + max(0, a[j] + a[j + 1] + a[j + 2]));
         }
     }
     vector<int> ans(n + 1, -mod);
-	ans[0] = 0;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; i + j <= n; j += 3) {
-			remax(ans[i + j], ans[i] + dp[j][i]);
-		}
-		remax(ans[i + 1], ans[i]);
-	}
-	cout << ans.back() << endl;
+    ans[0] = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; i + j <= n; j += 3) {
+            remax(ans[i + j], ans[i] + dp[j][i]);
+        }
+        remax(ans[i + 1], ans[i]);
+    }
+    cout << ans.back() << endl;
 }
 
 signed main() {
