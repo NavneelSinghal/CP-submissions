@@ -106,65 +106,59 @@ struct MU {
     }
 };
 
-class KthRoot {
-    using u32 = unsigned int;
-    using u64 = unsigned long long int;
-    vector<u64> pow[65]; // pow[k][x] = pow(x+2,k)  (k >= 4)
-public:
-    KthRoot() {
-        for (u32 t = 2; t < (1<<16); t++) {
-            u64 s = t*t; s = s*s;
-            for (int k = 4; ; k++) {
-                pow[k].push_back(s);
-                if (__builtin_umulll_overflow(s,t,&s)) break;
-            }
-        }
-    }
-    u64 sqrt(u64 n) const {
-        if (n == -1ull) return u32(-1);
-        u64 x = std::sqrt((double)n);
-        return x*x > n ? x-1 : x;
-    }
-    u64 cbrt(u64 n) const {
-        u64 x = 0, y = 0;
-        for (int s = 63; s >= 0; s -= 3) {
-            x <<= 1;
-            y = 3*x*(x+1)+1;
-            if (y <= (n>>s)) n -= y<<s, ++x;
-        }
-        return x;
-    }
-    u64 operator()(u64 n, int k) {
-        assert(k >= 1);
-        if (k == 1 || n == 0) return n;
-        if (k == 2) return sqrt(n);
-        if (k == 3) return cbrt(n);
-        auto ub = upper_bound(pow[k].begin(), pow[k].end(), n);
-        return (ub-pow[k].begin())+1;
-    }
-};
-
-KthRoot k;
-MU<64> m;
-
 void precompute() {
 }
 
 void solve(int _) {
-    long long n;
-    cin >> n;
-    long long cnt = 0;
-    for (int i = 1; i < 61; ++i) {
-        cnt += m.mu[i] * (k(n, i) - 1);
+
+    int t;
+    cin >> t;
+    
+    vector<pair<long long, int>> queries(t);
+    int num = 0;
+    for (auto &[x, y] : queries) cin >> x, y = num++;
+    sort(queries.rbegin(), queries.rend());
+
+    vector<long long> sol(t);
+
+    vector<long long> mx(64, 1000);
+    mx[3] = 1000000, mx[4] = 32000, mx[5] = 4000;
+
+    MU<64> m;
+
+    for (int _i = 0; _i < t; ++_i) {
+        
+        const long long x = queries[_i].first;
+
+        mx[2] = isqrt(x);
+
+        int l = __lg(x) + 1;
+
+        for (int i = 3; i <= l; ++i) {
+            if (m.mu[i] == 0) continue;
+            while (power_overflow(mx[i], i) > x) --mx[i];
+        }
+
+        long long ans = x - 1;
+
+        for (int i = 2; i <= l; ++i) {
+            ans += m.mu[i] * (mx[i] - 1);
+        }
+
+        sol[queries[_i].second] = ans;
+    
     }
-    cout << cnt << '\n';
+
+    for (auto x : sol) {
+        cout << x << '\n';
+    }
 }
 
 signed main() {
     setIO();
     precompute();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     for (int _t = 1; _t <= t; _t++) {
         //cout << "Case #" << _t << ": ";
         solve(_t);
