@@ -324,7 +324,7 @@ void solve(int _) {
     cin >> n >> m >> a;
     vector<int> b(m);
     for (auto &x : b) cin >> x;
-    vector<mint> p(m + 1), r(m + 1);
+    vector<mint> p(m), r(m);
     p[0] = 1;
     r[0] = 1;
     for (int i = 1; i <= m; ++i) {
