@@ -1,4 +1,20 @@
 {
+  "AC19097360": {
+    "contest_id": "agc050",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/agc050/A.cpp",
+    "platform": "AtCoder",
+    "problem_index": "A",
+    "problem_name": "AtCoder Jumper",
+    "problem_url": "https://atcoder.jp/contests/agc050/tasks/agc050_a",
+    "submission_id": "AC19097360",
+    "submission_url": "https://atcoder.jp/contests/agc050/submissions/19097360",
+    "tags": [
+      "AtCoder",
+      "*500"
+    ],
+    "timestamp": "Jan/01/2021 16:09"
+  },
   "AC20375156": {
     "contest_id": "arc113",
     "language": "C++ (GCC 9.2.1)",
