@@ -106,10 +106,11 @@ struct MU {
     }
 };
 
-struct KthRoot {
+class KthRoot {
     using u32 = unsigned int;
     using u64 = unsigned long long int;
     vector<u64> pow[65]; // pow[k][x] = pow(x+2,k)  (k >= 4)
+public:
     KthRoot() {
         for (u32 t = 2; t < (1<<16); t++) {
             u64 s = t*t; s = s*s;
