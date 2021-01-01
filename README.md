@@ -5,8 +5,8 @@ Submissions
 ## Introduction
 
 A repository to keep track of problem solving practice, containing solutions from platforms:
-* Codeforces &nbsp; [![Codeforces](https://run.kaist.ac.kr/badges/codeforces/nor.svg)](https://codeforces.com/profile/nor)
-* AtCoder &nbsp; [![AtCoder](https://run.kaist.ac.kr/badges/atcoder/nor_.svg)](https://atcoder.jp/users/nor_)
+* Codeforces &nbsp; 
+* AtCoder &nbsp; 
 
 
 ## Contents
