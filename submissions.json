@@ -383,6 +383,21 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF104352670": {
+    "contest_id": 1331,
+    "language": "UnknownX",
+    "path": "codeforces/1331/H.txt",
+    "platform": "Codeforces",
+    "problem_index": "H",
+    "problem_name": "It's showtime",
+    "problem_url": "https://codeforces.com/contest/1331/problem/H",
+    "submission_id": "CF104352670",
+    "submission_url": "https://codeforces.com/contest/1331/submission/104352670",
+    "tags": [
+      "*special problem"
+    ],
+    "timestamp": "Jan/14/2021 22:39"
+  },
   "CF104564891": {
     "contest_id": 743,
     "language": "GNU C++17",
