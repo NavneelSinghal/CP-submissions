@@ -383,6 +383,24 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF104564891": {
+    "contest_id": 743,
+    "language": "GNU C++17",
+    "path": "codeforces/743/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Vladik and flights",
+    "problem_url": "https://codeforces.com/contest/743/problem/A",
+    "submission_id": "CF104564891",
+    "submission_url": "https://codeforces.com/contest/743/submission/104564891",
+    "tags": [
+      "constructive algorithms",
+      "greedy",
+      "implementation",
+      "*1200"
+    ],
+    "timestamp": "Jan/17/2021 13:24"
+  },
   "CF104565049": {
     "contest_id": 743,
     "language": "GNU C++17",
