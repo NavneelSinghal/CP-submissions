@@ -383,6 +383,23 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF104841288": {
+    "contest_id": 1474,
+    "language": "GNU C++17",
+    "path": "codeforces/1474/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "What Is It?",
+    "problem_url": "https://codeforces.com/contest/1474/problem/E",
+    "submission_id": "CF104841288",
+    "submission_url": "https://codeforces.com/contest/1474/submission/104841288",
+    "tags": [
+      "constructive algorithms",
+      "greedy",
+      "*2500"
+    ],
+    "timestamp": "Jan/19/2021 23:05"
+  },
   "CF105307156": {
     "contest_id": 1475,
     "language": "GNU C++17",
