@@ -1,17 +1,22 @@
 Submissions
 ======================
+> *Auto-generated with ❤ using [Harwest](https://github.com/nileshsah/harwest-tool)*
 
 ## Introduction
 
 A repository to keep track of problem solving practice, containing solutions from platforms:
-* Codeforces
-* AtCoder
+* Codeforces &nbsp; [![Codeforces](https://run.kaist.ac.kr/badges/codeforces/nor.svg)](https://codeforces.com/profile/nor)
+* AtCoder &nbsp; [![AtCoder](https://run.kaist.ac.kr/badges/atcoder/nor_.svg)](https://atcoder.jp/users/nor_)
 
 
 ## Contents
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
+423 | [C - Poman Numbers](https://codeforces.com/contest/1464/problem/C) | [GNU C++17](./codeforces/1464/C.cpp) | `bitmasks` `constructive algorithms` `dp` `greedy` `math` `*2300` | Jan/28/2021 17:09 | 
+422 | [B - Grime Zoo](https://codeforces.com/contest/1464/problem/B) | [GNU C++17](./codeforces/1464/B.cpp) | `brute force` `data structures` `greedy` `implementation` `ternary search` `*2100` | Jan/28/2021 16:48 | 
+421 | [A - Peaceful Rooks](https://codeforces.com/contest/1464/problem/A) | [GNU C++17](./codeforces/1464/A.cpp) | `constructive algorithms` `dfs and similar` `dsu` `graphs` `*1700` | Jan/28/2021 15:48 | 
+420 | [D - Strange Housing](https://codeforces.com/contest/1470/problem/D) | [GNU C++17](./codeforces/1470/D.cpp) | `constructive algorithms` `dfs and similar` `graph matchings` `graphs` `greedy` `*2200` | Jan/28/2021 15:05 | 
 419 | [G - Strange Beauty](https://codeforces.com/contest/1475/problem/G) | [GNU C++17](./codeforces/1475/G.cpp) | `dp` `math` | Jan/25/2021 22:06 | 
 418 | [F - Unusual Matrix](https://codeforces.com/contest/1475/problem/F) | [GNU C++17](./codeforces/1475/F.cpp) | `constructive algorithms` | Jan/25/2021 21:54 | 
 417 | [E - Advertising Agency](https://codeforces.com/contest/1475/problem/E) | [GNU C++17](./codeforces/1475/E.cpp) | `combinatorics` `math` | Jan/25/2021 21:21 | 
