@@ -204,7 +204,8 @@ void solve(int) {
     }
 
     while (l < r) {
-        for (auto v : g[q[l++]]) {
+        int u = q[l++];
+        for (auto v : g[u]) {
             --cnt[v];
             if (!cnt[v]) {
                 q[r++] = v;
