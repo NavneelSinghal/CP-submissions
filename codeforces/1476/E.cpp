@@ -195,31 +195,36 @@ void solve(int) {
         }
     }
 
-    vector<int> q(n);
-    int l = 0, r = 0;
+    vector<int> ans;
+    ans.reserve(n);
+
+    queue<int> q;
     for (int i = 0; i < n; ++i) {
         if (!cnt[i]) {
-            q[r++] = i;
+            ans.push_back(i);
+            q.push(i);
         }
     }
 
-    while (l < r) {
-        int u = q[l++];
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
         for (auto v : g[u]) {
             --cnt[v];
             if (!cnt[v]) {
-                q[r++] = v;
+                ans.push_back(v);
+                q.push(v);
             }
         }
     }
 
-    if (r < n) {
+    if (ans.size() < n) {
         cout << "NO\n";
         return;
     }
 
     cout << "YES\n";
-    for (auto x : q) cout << x + 1 << ' ';
+    for (auto x : ans) cout << x + 1 << ' ';
     cout << '\n';
 
 }
