@@ -134,44 +134,55 @@ using mint = Modular<mod>;
 void precompute() {
 }
 
+inline int hash_string(string& a) {
+    int ans = 0;
+    for (auto &x : a) {
+        if (x == '_') {
+            ans = ans * 27 + 26;
+        } else {
+            ans = ans * 27 + x - 'a';
+        }
+    }
+    return ans;
+}
+
 void solve(int) {
-    
+
     int n, m, k;
     cin >> n >> m >> k;
-    
+
     vector<string> a(n);
     for (auto &x : a) cin >> x;
-    
-    map<string, int> position;
+
+    vector<int> position(600'000, -1);
     for (int i = 0; i < n; ++i)
-        position[a[i]] = i;
+        position[hash_string(a[i])] = i;
 
     vector<vector<int>> g(n);
     vector<int> cnt(n);
 
     for (int i = 0; i < m; ++i) {
-    
+
         string x;
         int mt;
         cin >> x >> mt;
         --mt;
-        
+
         bool works = false;
-        
+
         for (int j = 0; j < (1 << k); ++j) {
-        
+
             string w = x;
             for (int l = 0; l < k; ++l)
                 if ((j >> l) & 1)
                     w[l] = '_';
-            
-            auto it = position.find(w);
-            if (it != position.end()) {
-                int pos = it->second;
+
+            int pos = position[hash_string(w)];
+            if (~pos) {
                 if (mt == pos) {
                     works = true;
                 } else {
-                    g[mt].emplace_back(pos);
+                    g[mt].push_back(pos);
                     cnt[pos]++;
                 }
             }
@@ -183,36 +194,30 @@ void solve(int) {
         }
     }
 
-    vector<int> ans;
-    ans.reserve(n);
-
-    queue<int> q;
+    vector<int> q(n);
+    int l = 0, r = 0;
     for (int i = 0; i < n; ++i) {
         if (!cnt[i]) {
-            ans.emplace_back(i);
-            q.emplace(i);
+            q[r++] = i;
         }
     }
 
-    while (!q.empty()) {
-        int u = q.front();
-        q.pop();
-        for (auto v : g[u]) {
+    while (l < r) {
+        for (auto v : g[q[l++]]) {
             --cnt[v];
             if (!cnt[v]) {
-                ans.emplace_back(v);
-                q.push(v);
+                q[r++] = v;
             }
         }
     }
 
-    if (ans.size() < n) {
+    if (r < n) {
         cout << "NO\n";
         return;
     }
 
     cout << "YES\n";
-    for (auto x : ans) cout << x + 1 << ' ';
+    for (auto x : q) cout << x + 1 << ' ';
     cout << '\n';
 
 }
