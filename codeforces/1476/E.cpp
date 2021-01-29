@@ -134,19 +134,6 @@ using mint = Modular<mod>;
 void precompute() {
 }
 
-int hash_string(string& a) {
-    int ans = 0;
-    for (auto &x : a) {
-        if (x == '_') {
-            ans = ans * 27 + 26;
-        } else {
-            ans = ans * 27 + x - 'a';
-        }
-    }
-    return ans;
-}
-
-
 void solve(int) {
     
     int n, m, k;
@@ -155,9 +142,9 @@ void solve(int) {
     vector<string> a(n);
     for (auto &x : a) cin >> x;
     
-    vector<int> position(1'000'000, -1);
+    map<string, int> position;
     for (int i = 0; i < n; ++i)
-        position[hash_string(a[i])] = i;
+        position[a[i]] = i;
 
     vector<vector<int>> g(n);
     vector<int> cnt(n);
@@ -178,8 +165,9 @@ void solve(int) {
                 if ((j >> l) & 1)
                     w[l] = '_';
             
-            int pos = position[hash_string(w)];
-            if (~pos) {
+            auto it = position.find(w);
+            if (it != position.end()) {
+                int pos = it->second;
                 if (mt == pos) {
                     works = true;
                 } else {
