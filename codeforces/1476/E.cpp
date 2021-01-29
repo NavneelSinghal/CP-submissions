@@ -146,10 +146,12 @@ inline int hash_string(string& a) {
     return ans;
 }
 
+
 void solve(int) {
     
     int n, m, k;
     cin >> n >> m >> k;
+    const int j_max = 1 << k;
     
     vector<string> a(n);
     for (auto &x : a) cin >> x;
@@ -170,7 +172,7 @@ void solve(int) {
         
         bool works = false;
 
-        for (int j = 0; j < (1 << k); ++j) {
+        for (int j = 0; j < j_max; ++j) {
         
             string w = x;
             for (int l = 0; l < k; ++l)
