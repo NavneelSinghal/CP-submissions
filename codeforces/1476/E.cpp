@@ -134,7 +134,7 @@ using mint = Modular<mod>;
 void precompute() {
 }
 
-inline int hash_string(string& a) {
+int hash_string(string& a) {
     int ans = 0;
     for (auto &x : a) {
         if (x == '_') {
