@@ -155,7 +155,7 @@ void solve(int) {
     vector<string> a(n);
     for (auto &x : a) cin >> x;
     
-    vector<int> position(600'000, -1);
+    vector<int> position(1'000'000, -1);
     for (int i = 0; i < n; ++i)
         position[hash_string(a[i])] = i;
 
@@ -183,7 +183,7 @@ void solve(int) {
                 if (mt == pos) {
                     works = true;
                 } else {
-                    g[mt].push_back(pos);
+                    g[mt].emplace_back(pos);
                     cnt[pos]++;
                 }
             }
@@ -201,8 +201,8 @@ void solve(int) {
     queue<int> q;
     for (int i = 0; i < n; ++i) {
         if (!cnt[i]) {
-            ans.push_back(i);
-            q.push(i);
+            ans.emplace_back(i);
+            q.emplace(i);
         }
     }
 
@@ -212,7 +212,7 @@ void solve(int) {
         for (auto v : g[u]) {
             --cnt[v];
             if (!cnt[v]) {
-                ans.push_back(v);
+                ans.emplace_back(v);
                 q.push(v);
             }
         }
