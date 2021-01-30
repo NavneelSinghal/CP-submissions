@@ -147,69 +147,55 @@ inline int hash_string(string& a) {
 }
 
 void solve(int) {
-
+    
     int n, m, k;
     cin >> n >> m >> k;
-
+    
     vector<string> a(n);
+    vector<vector<int>> g(n);
+    vector<int> cnt(n), q(n), position(600'000, -1);
+    string x, w;
+    int mt, pos, l = 0, r = 0, i, j;
+    
     for (auto &x : a) cin >> x;
-
-    vector<int> position(600'000, -1);
-    for (int i = 0; i < n; ++i)
+    
+    for (i = 0; i < n; ++i)
         position[hash_string(a[i])] = i;
 
-    vector<vector<int>> g(n);
-    vector<int> cnt(n);
-
-    for (int i = 0; i < m; ++i) {
-
-        string x;
-        int mt;
-        cin >> x >> mt;
-        --mt;
+    for (i = 0; i < m; ++i) {
+        
+        cin >> x >> mt; --mt;
 
         bool works = false;
-
-        for (int j = 0; j < (1 << k); ++j) {
-
-            string w = x;
-            for (int l = 0; l < k; ++l)
+        for (j = 0; j < (1 << k); ++j) {
+            w = x;
+            for (l = 0; l < k; ++l)
                 if ((j >> l) & 1)
                     w[l] = '_';
-
-            int pos = position[hash_string(w)];
+            pos = position[hash_string(w)];
             if (~pos) {
-                if (mt == pos) {
+                if (mt == pos)
                     works = true;
-                } else {
-                    g[mt].push_back(pos);
-                    cnt[pos]++;
-                }
+                else
+                    g[mt].push_back(pos), cnt[pos]++;
             }
         }
-
+        
         if (!works) {
             cout << "NO\n";
             return;
         }
     }
 
-    vector<int> q(n);
-    int l = 0, r = 0;
-    for (int i = 0; i < n; ++i) {
-        if (!cnt[i]) {
+    for (i = 0; i < n; ++i)
+        if (!cnt[i])
             q[r++] = i;
-        }
-    }
 
-    while (l < r) {
-        for (auto v : g[q[l++]]) {
-            --cnt[v];
-            if (!cnt[v]) {
+    l = 0;
+    while (l < r)
+        for (auto v : g[q[l++]])
+            if (!(--cnt[v]))
                 q[r++] = v;
-            }
-        }
-    }
 
     if (r < n) {
         cout << "NO\n";
