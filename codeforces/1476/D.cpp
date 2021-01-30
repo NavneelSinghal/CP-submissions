@@ -141,31 +141,13 @@ void solve(int) {
     cin >> s;
     vector<int> alternating_left(n), alternating_right(n);
     alternating_left[0] = 1;
-    for (int i = 1; i < n; ++i) {
-        if (s[i] == s[i - 1]) {
-            alternating_left[i] = 1;
-        } else {
-            alternating_left[i] = alternating_left[i - 1] + 1;
-        }
-    }
+    for (int i = 1; i < n; ++i)
+        alternating_left[i] = 1 + (s[i] != s[i - 1]) * alternating_left[i - 1];
     alternating_right[n - 1] = 1;
-    for (int i = n - 2; ~i; --i) {
-        if (s[i] == s[i + 1]) {
-            alternating_right[i] = 1;
-        } else {
-            alternating_right[i] = alternating_right[i + 1] + 1;
-        }
-    }
-    for (int i = 0; i <= n; ++i) {
-        int ans = 1;
-        if (i > 0 && s[i - 1] == 'L') {
-            ans += alternating_left[i - 1];
-        }
-        if (i < n && s[i] == 'R') {
-            ans += alternating_right[i];
-        }
-        cout << ans << " \n"[i == n];
-    }
+    for (int i = n - 2; ~i; --i)
+        alternating_right[i] = 1 + (s[i] != s[i + 1]) * alternating_right[i + 1] ;
+    for (int i = 0; i <= n; ++i)
+        cout << 1 + (i > 0 && s[i - 1] == 'L') * alternating_left[i - 1] + (i < n && s[i] == 'R') * alternating_right[i] << " \n"[i == n];
 }
 
 void brute(int) {
