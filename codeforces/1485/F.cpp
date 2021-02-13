@@ -180,9 +180,7 @@ void solve(int) {
         ll x = a;
         a = ans;
         k -= b;
-        ans = (2 * ans - x);
-        if (ans >= mod) ans -= mod;
-        else if (ans < 0) ans += mod;
+        ans = (2 * ans - x + mod) % mod;
     }
     
     cout << ans << '\n';
