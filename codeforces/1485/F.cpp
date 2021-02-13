@@ -164,7 +164,7 @@ void solve(int) {
     // sum(a[1..i]) = j + sum(b[1..i])
     // 
     // dp transition:
-    // dp_real[j + b[i]] = dp_real[j] if j != 0 - this is just an offset
+    // dp_real[j + b[i]] = dp[j] if j != 0 - this is just an offset
     // dp_real[b[i]] = sum of all dp_real[r] = number of good prefixes a[1..i]
     // so we have
     // dp[j] = same, so no transition
