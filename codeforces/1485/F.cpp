@@ -153,12 +153,11 @@ T pwr(T a, int64_t n) {
 void precompute() {}
 
 unordered_map<ll, ll, custom_hash> dp;
-int n, i;
-ll b, ans, k;
 
 void solve(int) {
 
     dp.clear();
+    int n;
     cin >> n;    
 
     // at iteration i, dp[j] = dp_real[j + sum(b[1..i])]
@@ -173,8 +172,8 @@ void solve(int) {
     // dp[-b[1] - b[2] - ... - b[k - 1]] = running sum of dp = running ans
     
     dp[0] = 1;
-    ans = 1, k = 0;
-    for (i = 0; i < n; ++i) {
+    ll b, ans = 1, k = 0;
+    for (int i = 0; i < n; ++i) {
         cin >> b;
         ll& a = dp[k];
         ll x = a;
