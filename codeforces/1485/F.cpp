@@ -152,13 +152,14 @@ T pwr(T a, int64_t n) {
 
 void precompute() {}
 
-unordered_map<ll, ll, custom_hash> dp;
 int n, i;
-ll b, ans, k;
+ll ans, k, x;
+
+const int maxn = 2e5 + 5;
+ll b[maxn], pre[maxn], dp[maxn];
 
 void solve(int) {
 
-    dp.clear();
     cin >> n;    
 
     // at iteration i, dp[j] = dp_real[j + sum(b[1..i])]
@@ -172,17 +173,27 @@ void solve(int) {
     // dp[j] = same, so no transition
     // dp[-b[1] - b[2] - ... - b[k - 1]] = running sum of dp = running ans
     
-    dp[0] = 1;
+    for (i = 0; i < n; ++i)
+        cin >> b[i];
+
+    memset(dp, 0, (n + 1) * sizeof(ll));
+    
+    for (i = 0; i < n; ++i) b[i] = -b[i];
+    pre[0] = 0;
+    partial_sum(b, b + n, pre + 1);
+    for (i = 0; i <= n; ++i) debug(pre[i]);
+    sort(pre, pre + n + 1);
+
+    dp[lower_bound(pre, pre + n + 1, 0) - pre] = 1;
     ans = 1, k = 0;
     for (i = 0; i < n; ++i) {
-        cin >> b;
-        ll& a = dp[k];
-        ll x = a;
+        ll& a = dp[lower_bound(pre, pre + n + 1, k) - pre];
+        x = a;
         a = ans;
-        k -= b;
         ans = (2 * ans - x);
         if (ans >= mod) ans -= mod;
         else if (ans < 0) ans += mod;
+        k += b[i];
     }
     
     cout << ans << '\n';
@@ -210,4 +221,3 @@ signed main() {
  * WRITE STUFF DOWN
  * DON'T GET STUCK ON ONE APPROACH
  */
-
