@@ -152,13 +152,12 @@ T pwr(T a, int64_t n) {
 
 void precompute() {}
 
-unordered_map<ll, ll, custom_hash> dp;
-
 void solve(int) {
 
-    dp.clear();
     int n;
-    cin >> n;    
+    cin >> n;
+    
+    unordered_map<ll, ll, custom_hash> dp;
 
     // at iteration i, dp[j] = dp_real[j + sum(b[1..i])]
     // number of ways of choosing good a[1..i] such that
