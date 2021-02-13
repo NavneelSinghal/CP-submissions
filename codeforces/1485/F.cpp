@@ -153,8 +153,8 @@ T pwr(T a, int64_t n) {
 void precompute() {}
 
 unordered_map<ll, ll, custom_hash> dp;
-ll b, ans, k;
 int n, i;
+ll b, ans, k;
 
 void solve(int) {
 
