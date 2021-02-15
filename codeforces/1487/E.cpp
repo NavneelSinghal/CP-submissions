@@ -170,43 +170,39 @@ void solve(int) {
     multiset<ll> s;
     
     for (int i = 0; i < 3; ++i) {
+        
         s.clear();
+        
         int m;
         cin >> m;
+        
         vector<vector<int>> g(n[i + 1]);
+        
         for (int j = 0; j < m; ++j) {
             int u, v;
             cin >> u >> v;
             --u, --v;
             g[v].push_back(u);
         }
-        // insert all costs in this thing
-        for (int j = 0; j < n[i]; ++j) {
-            s.insert(cost[i][j]);
-        }
+
+        for (auto c : cost[i])
+            s.insert(c);
+        
         for (int j = 0; j < n[i + 1]; ++j) {
-            // remove everything
-            for (auto u : g[j]) {
-                s.erase(s.lower_bound(cost[i][u]));
-            }
+            for (auto u : g[j])
+                s.erase(s.find(cost[i][u]));
             if (s.size() == 0) {
                 cost[i + 1][j] = inf;
             } else {
                 cost[i + 1][j] += *s.begin();
             }
-            for (auto u : g[j]) {
+            for (auto u : g[j])
                 s.insert(cost[i][u]);
-            }
         }
     }
 
     ll ans = inf;
-    for (int i = 0; i < n[3]; ++i) {
-        if (ans > cost[3][i]) {
-            ans = cost[3][i];
-        }
-    }
-
+    remin(ans, *min_element(begin(cost[3]), end(cost[3])));
     if (ans == inf) cout << -1 << '\n';
     else cout << ans << '\n';
 }
