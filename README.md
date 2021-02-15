@@ -11,7 +11,8 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-442 | [E - Cheap Dinner](https://codeforces.com/contest/1487/problem/E) | [GNU C++17](./codeforces/1487/E.cpp) | `data structures` `dp` `implementation` `sortings` `two pointers` | Feb/15/2021 20:52 | 
+443 | [E - Cheap Dinner](https://codeforces.com/contest/1487/problem/E) | [GNU C++17](./codeforces/1487/E.cpp) | `data structures` `dp` `implementation` `sortings` `two pointers` | Feb/15/2021 20:52 | 
+442 | [C - Minimum Ties](https://codeforces.com/contest/1487/problem/C) | [GNU C++17](./codeforces/1487/C.cpp) | `constructive algorithms` `dfs and similar` `graphs` `greedy` `implementation` `math` `matrices` | Feb/15/2021 20:35 | 
 441 | [F - Copy or Prefix Sum](https://codeforces.com/contest/1485/problem/F) | [GNU C++17](./codeforces/1485/F.cpp) | `combinatorics` `data structures` `dp` `sortings` `*2400` | Feb/13/2021 11:49 | 
 440 | [D - Multiples and Power Differences](https://codeforces.com/contest/1485/problem/D) | [GNU C++17](./codeforces/1485/D.cpp) | `constructive algorithms` `math` `number theory` `*2200` | Feb/13/2021 10:16 | 
 439 | [C - Floor and Mod](https://codeforces.com/contest/1485/problem/C) | [GNU C++17](./codeforces/1485/C.cpp) | `binary search` `brute force` `data structures` `math` `number theory` `*1700` | Feb/13/2021 10:10 | 
