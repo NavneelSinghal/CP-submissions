@@ -15,7 +15,6 @@ using ll = long long;
 
 // #define int long long
 #define unordered_map gp_hash_table
-#define cauto const auto
 
 template <typename T>
 void ignore_unused(const T &) {}
@@ -172,6 +171,10 @@ void solve(int) {
         remin(min_cost[v], w);
     }
 
+    for (auto &x : g) {
+        sort(begin(x), end(x));
+    }
+
     vector<int> dist(n, mod);
 
     dist[0] = 0;
@@ -179,17 +182,17 @@ void solve(int) {
     
     while (!pq.empty()) {
     
-        cauto [d, v] = pq.top();
+        auto [d, v] = pq.top();
         pq.pop();
 
         if (dist[v] != d) continue;
         
-        for (cauto &[u, wu] : g[v]) {
+        for (auto &[u, wu] : g[v]) {
             if (done[u]) continue;
             if (wu == min_cost[u]) done[u] = true;
-            for (cauto &[w, ww] : g[u]) {
+            for (auto &[w, ww] : g[u]) {
                 if (w == v) continue;
-                cauto cost = sq(wu + ww);
+                int cost = sq(wu + ww);
                 if (ckmin(dist[w], dist[v] + sq(wu + ww))) {
                     pq.emplace(dist[w], w);
                 }
