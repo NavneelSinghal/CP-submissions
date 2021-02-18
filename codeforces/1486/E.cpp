@@ -171,10 +171,6 @@ void solve(int) {
         remin(min_cost[v], w);
     }
 
-    for (auto &x : g) {
-        sort(begin(x), end(x));
-    }
-
     vector<int> dist(n, mod);
 
     dist[0] = 0;
