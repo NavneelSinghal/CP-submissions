@@ -1,4 +1,20 @@
 {
+  "AC20378260": {
+    "contest_id": "arc113",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc113/B.cpp",
+    "platform": "AtCoder",
+    "problem_index": "B",
+    "problem_name": "A^B^C",
+    "problem_url": "https://atcoder.jp/contests/arc113/tasks/arc113_b",
+    "submission_id": "AC20378260",
+    "submission_url": "https://atcoder.jp/contests/arc113/submissions/20378260",
+    "tags": [
+      "AtCoder",
+      "*400"
+    ],
+    "timestamp": "Feb/21/2021 17:44"
+  },
   "AC20382756": {
     "contest_id": "arc113",
     "language": "C++ (GCC 9.2.1)",
