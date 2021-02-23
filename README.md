@@ -11,9 +11,10 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-879 | [D - Genius's Gambit](https://codeforces.com/contest/1492/problem/D) | [GNU C++17 (64)](./codeforces/1492/D.cpp) | `constructive algorithms` `math` | Feb/23/2021 16:24 | 
-878 | [C - Maximum width](https://codeforces.com/contest/1492/problem/C) | [GNU C++17 (64)](./codeforces/1492/C.cpp) | `data structures` `dp` `greedy` | Feb/23/2021 15:54 | 
-877 | [B - Card Deck](https://codeforces.com/contest/1492/problem/B) | [GNU C++17 (64)](./codeforces/1492/B.cpp) | `data structures` `greedy` `math` | Feb/23/2021 15:37 | 
+880 | [D - Genius's Gambit](https://codeforces.com/contest/1492/problem/D) | [GNU C++17 (64)](./codeforces/1492/D.cpp) | `constructive algorithms` `math` | Feb/23/2021 16:24 | 
+879 | [C - Maximum width](https://codeforces.com/contest/1492/problem/C) | [GNU C++17 (64)](./codeforces/1492/C.cpp) | `data structures` `dp` `greedy` | Feb/23/2021 15:54 | 
+878 | [B - Card Deck](https://codeforces.com/contest/1492/problem/B) | [GNU C++17 (64)](./codeforces/1492/B.cpp) | `data structures` `greedy` `math` | Feb/23/2021 15:37 | 
+877 | [A - Three swimmers](https://codeforces.com/contest/1492/problem/A) | [GNU C++17 (64)](./codeforces/1492/A.cpp) | `implementation` `math` | Feb/23/2021 15:29 | 
 876 | [D - Sky Reflector](https://atcoder.jp/contests/arc113/tasks/arc113_d) | [C++ (GCC 9.2.1)](./atcoder/arc113/D.cpp) | `AtCoder` `*600` | Feb/21/2021 19:03 | 
 875 | [C - String Invasion](https://atcoder.jp/contests/arc113/tasks/arc113_c) | [C++ (GCC 9.2.1)](./atcoder/arc113/C.cpp) | `AtCoder` `*500` | Feb/21/2021 18:02 | 
 874 | [B - A^B^C](https://atcoder.jp/contests/arc113/tasks/arc113_b) | [C++ (GCC 9.2.1)](./atcoder/arc113/B.cpp) | `AtCoder` `*400` | Feb/21/2021 17:44 | 
