@@ -11,6 +11,7 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
+877 | [D - Genius's Gambit](https://codeforces.com/contest/1492/problem/D) | [GNU C++17 (64)](./codeforces/1492/D.cpp) | `constructive algorithms` `math` | Feb/23/2021 16:24 | 
 876 | [D - Sky Reflector](https://atcoder.jp/contests/arc113/tasks/arc113_d) | [C++ (GCC 9.2.1)](./atcoder/arc113/D.cpp) | `AtCoder` `*600` | Feb/21/2021 19:03 | 
 875 | [C - String Invasion](https://atcoder.jp/contests/arc113/tasks/arc113_c) | [C++ (GCC 9.2.1)](./atcoder/arc113/C.cpp) | `AtCoder` `*500` | Feb/21/2021 18:02 | 
 874 | [B - A^B^C](https://atcoder.jp/contests/arc113/tasks/arc113_b) | [C++ (GCC 9.2.1)](./atcoder/arc113/B.cpp) | `AtCoder` `*400` | Feb/21/2021 17:44 | 
