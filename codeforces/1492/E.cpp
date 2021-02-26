@@ -221,7 +221,6 @@ void solve(int) {
     for (auto &x : a)
         for (auto &y : x) cin >> y;
 
-    // diff = number of changes to the first row
     function<bool(int)> works = [&](int diff) {
         if (diff > 2) return false;
         for (int i = 1; i < n; ++i) {
