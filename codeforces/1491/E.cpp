@@ -353,7 +353,7 @@ void solve(int) {
 
     // call iff n > 1 else memory alloc issues
     function<bool(vector<vector<int>>&, int)> works = [&](vector<vector<int>>&g, int f) {
-        if (f <= 3) return true;
+        if (f == 0 || f == 1) return true;
         int n = g.size();
         vector<int> siz(n), par(n, -1);
         function<void(int, int)> get_size = [&](int v, int p) {
