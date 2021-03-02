@@ -331,10 +331,11 @@ using namespace IO;
 using mint = Modular<mod>;
 
 void solve(int) {
+    
     int n;
     read_int(n);
     vector<vector<int>> g(n);
-
+    
     for (int i = 1; i < n; ++i) {
         int u, v;
         read_int(u, v);
@@ -342,107 +343,83 @@ void solve(int) {
         g[u].push_back(v);
         g[v].push_back(u);
     }
-
+    
     const int N = 46;
     vector<int> fib(N);
     fib[0] = 1;
     fib[1] = 1;
-    for (int i = 2; i < N; ++i) fib[i] = fib[i - 1] + fib[i - 2];
+    for (int i = 2; i < N; ++i)
+        fib[i] = fib[i - 1] + fib[i - 2];
 
     // call iff n > 1 else memory alloc issues
-    function<bool(vector<vector<int>> &, int)> works =
-        [&](vector<vector<int>> &g, int f) {
-            if (f <= 3) return true;
-
-            int n = g.size();
-            vector<int> siz(n), par(n, -1);
-
-            function<void(int, int)> get_size = [&](int v, int p) {
-                siz[v] = 1;
-                par[v] = p;
-                for (auto u : g[v]) {
-                    if (u != p) {
-                        get_size(u, v);
-                        siz[v] += siz[u];
-                    }
-                }
-            };
-
-            get_size(0, -1);
-
-            for (int i = 0; i < n; ++i) {
-                if (siz[i] == fib[f - 1] || siz[i] == fib[f - 2]) {
-                    int fl = f - 1, fr = f - 2;
-                    int subtree_larger = 1;
-                    if (siz[i] == fib[f - 2]) subtree_larger = 0;
-
-                    vector<int> in_larger(n, !subtree_larger);
-
-                    function<void(int, int)> dfs = [&](int v, int p) {
-                        in_larger[v] = subtree_larger;
-                        for (auto u : g[v]) {
-                            if (u != p) {
-                                dfs(u, v);
-                            }
-                        }
-                    };
-
-                    dfs(i, par[i]);
-                    // in_larger[i] = 1 if it is in the larger tree
-
-                    // left is larger, right is smaller
-                    // later on, use 1-based indices, and positive-negative to
-                    // optimize space to n instead of 2n
-                    vector<int> map_larger(n, -1), map_smaller(n, -1);
-
-                    int left_idx = 0, right_idx = 0;
-
-                    for (int i = 0; i < n; ++i) {
-                        if (in_larger[i]) {
-                            map_larger[i] = left_idx++;
-                        } else {
-                            map_smaller[i] = right_idx++;
-                        }
-                    }
-
-                    vector<vector<int>> gr(right_idx);
-
-                    for (int i = 0; i < n; ++i) {
-                        if (!in_larger[i]) {
-                            auto &adj_i = gr[map_smaller[i]];
-                            for (auto u : g[i]) {
-                                if (!in_larger[u]) {
-                                    adj_i.push_back(map_smaller[u]);
-                                }
-                            }
-                        }
-                    }
-
-                    auto g_end =
-                        remove_if(begin(g), end(g), [&](const vector<int> &v) {
-                            return !in_larger[&v - &*begin(g)];
-                        });
-                    g.erase(g_end, end(g));
-
-                    for (auto &v : g) {
-                        for (auto &x : v) x = map_larger[x];
-                        auto v_end =
-                            remove_if(begin(v), end(v),
-                                      [&](const int &a) { return a == -1; });
-                        v.erase(v_end, end(v));
-                    }
-
-                    vector<int>().swap(map_larger);
-                    vector<int>().swap(map_smaller);
-                    vector<int>().swap(in_larger);
-                    vector<int>().swap(siz);
-                    vector<int>().swap(par);
-
-                    return works(g, fl) && works(gr, fr);
+    function<bool(vector<vector<int>>&, int)> works = [&](vector<vector<int>>&g, int f) {
+        if (f <= 3) return true;
+        int n = g.size();
+        vector<int> siz(n), par(n, -1);
+        function<void(int, int)> get_size = [&](int v, int p) {
+            siz[v] = 1;
+            par[v] = p;
+            for (auto u : g[v]) {
+                if (u != p) {
+                    get_size(u, v);
+                    siz[v] += siz[u];
                 }
             }
-            return false;
         };
+        get_size(0, -1);
+        for (int i = 0; i < n; ++i) {
+            if (siz[i] == fib[f - 1] || siz[i] == fib[f - 2]) {
+                int fl = f - 1, fr = f - 2;
+                if (siz[i] == fib[f - 2]) swap(fl, fr);
+                // create left and right graphs
+                vector<int> subtree(n);
+                function<void(int, int)> dfs = [&](int v, int p) {
+                    subtree[v] = 1;
+                    for (auto u : g[v]) {
+                        if (u != p) {
+                            dfs(u, v);
+                        }
+                    }
+                };
+                dfs(i, par[i]);
+                vector<int> map_left(n, -1), map_right(n, -1);
+                int left_idx = 0, right_idx = 0;
+                for (int i = 0; i < n; ++i) {
+                    if (subtree[i]) {
+                        map_left[i] = left_idx++;
+                    } else {
+                        map_right[i] = right_idx++;
+                    }
+                }
+                vector<vector<int>> gl(left_idx), gr(right_idx);
+                for (int i = 0; i < n; ++i) {
+                    if (subtree[i]) {
+                        auto &adj_i = gl[map_left[i]];
+                        for (auto u : g[i]) {
+                            if (subtree[u]) {
+                                adj_i.push_back(map_left[u]);
+                            }
+                        }
+                    } else {
+                        auto &adj_i = gr[map_right[i]];
+                        for (auto u : g[i]) {
+                            if (!subtree[u]) {
+                                adj_i.push_back(map_right[u]);
+                            }
+                        }
+                    }
+                }
+                vector<int>().swap(map_left);
+                vector<int>().swap(map_right);
+                vector<int>().swap(subtree);
+                vector<int>().swap(siz);
+                vector<int>().swap(par);
+                vector<vector<int>>().swap(g);
+                return works(gl, fl) && works(gr, fr);
+            }
+        }
+        return false;
+    };
 
     if (n == 1) {
         write_str("YES\n");
@@ -487,4 +464,5 @@ signed main() {
  * WRITE STUFF DOWN
  * DON'T GET STUCK ON ONE APPROACH
  */
+ 
 
