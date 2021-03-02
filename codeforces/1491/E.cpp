@@ -331,21 +331,18 @@ using namespace IO;
 using mint = Modular<mod>;
 
 struct graph_edge_pointers {
+    
     struct edge {
-        int to, nxt, disable;  // to = other vertex,
-                               // nxt = index of next edge from cur vertex
-                               // disable = 1 if edge is deleted
+        int to, nxt, disable; // to = other vertex, nxt = index of next edge from cur vertex
         edge(int to, int nxt) : to(to), nxt(nxt), disable(0) {}
     };
 
-    vector<int> head;  // head[i] = index of first edge emanating from vertex i
+    vector<int> head; // head[i] = index of first edge emanating from vertex i
     vector<edge> edges;
     vector<int> siz;
     int cur_edges;
 
-    graph_edge_pointers(int n, int m) : head(n, -1), siz(n), cur_edges(0) {
-        edges.reserve(m);
-    }
+    graph_edge_pointers(int n, int m) : head(n, -1), siz(n), cur_edges(0) { edges.reserve(m); }
 
     // while adding (u, v), (v, u), we have i, i^1 as corresponding edges
     void add_edge(int u, int v) {
@@ -375,22 +372,23 @@ void solve(int) {
     fib[1] = 1;
     for (int i = 2; i < N; ++i) fib[i] = fib[i - 1] + fib[i - 2];
 
-    function<bool(int, int, int)> dfs = [&](int v, int p, int f) {
+    function<bool(int, int, int)> dfs = [&] (int v, int p, int f) {
         if (f <= 3) return true;
         g.siz[v] = 1;
         for (int i = g.head[v]; ~i; i = g.edges[i].nxt) {
             if (g.edges[i].to != p && !g.edges[i].disable) {
                 int to = g.edges[i].to;
-                if (dfs(to, v, f)) return true;
+                if (dfs(to, v, f))
+                    return true;
                 int siz_child = g.siz[to];
                 if (siz_child == fib[f - 1]) {
                     g.edges[i].disable = 1;
                     g.edges[i ^ 1].disable = 1;
-                    return dfs(to, v, f - 1) && dfs(v, to, f - 2);
+                    return dfs(to, to, f - 1) && dfs(v, v, f - 2);
                 } else if (siz_child == fib[f - 2]) {
                     g.edges[i].disable = 1;
                     g.edges[i ^ 1].disable = 1;
-                    return dfs(to, v, f - 2) && dfs(v, to, f - 1);
+                    return dfs(to, to, f - 2) && dfs(v, v, f - 1);
                 }
                 g.siz[v] += siz_child;
             }
@@ -441,4 +439,4 @@ signed main() {
  * WRITE STUFF DOWN
  * DON'T GET STUCK ON ONE APPROACH
  */
-
+ 
