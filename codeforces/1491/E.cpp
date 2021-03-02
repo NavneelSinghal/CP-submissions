@@ -1,6 +1,6 @@
-// #pragma GCC optimize("Ofast")
-// #pragma GCC target("avx")
-// #pragma GCC optimize("unroll-loops")
+#pragma GCC optimize("Ofast")
+#pragma GCC target("avx")
+#pragma GCC optimize("unroll-loops")
 
 #include "bits/stdc++.h"
 #include "ext/pb_ds/assoc_container.hpp"
@@ -349,46 +349,47 @@ void solve(int) {
     fib[1] = 1;
     for (int i = 2; i < N; ++i) fib[i] = fib[i - 1] + fib[i - 2];
 
-    function<void(int, int, vector<int> &, vector<int> &,
-                  vector<vector<int>> &)>
-        get_size = [&](int v, int p, vector<int> &siz, vector<int> &par,
-                       vector<vector<int>> &g) {
-            siz[v] = 1;
-            par[v] = p;
-            for (auto u : g[v]) {
-                if (u != p) {
-                    get_size(u, v, siz, par, g);
-                    siz[v] += siz[u];
-                }
-            }
-        };
-
-    function<void(int, int, vector<int> &, vector<vector<int>> &, int)> dfs =
-        [&](int v, int p, vector<int> &in_larger, vector<vector<int>> &g,
-            int start_idx) {
-            in_larger[v] = start_idx;
-            for (auto u : g[v]) {
-                if (u != p) {
-                    dfs(u, v, in_larger, g, start_idx);
-                }
-            }
-        };
-
     // call iff n > 1 else memory alloc issues
     function<bool(vector<vector<int>> &, int)> works =
         [&](vector<vector<int>> &g, int f) {
             if (f <= 3) return true;
+
             int n = g.size();
             vector<int> siz(n), par(n, -1);
-            get_size(0, -1, siz, par, g);
+
+            function<void(int, int)> get_size = [&](int v, int p) {
+                siz[v] = 1;
+                par[v] = p;
+                for (auto u : g[v]) {
+                    if (u != p) {
+                        get_size(u, v);
+                        siz[v] += siz[u];
+                    }
+                }
+            };
+
+            get_size(0, -1);
+
             for (int i = 0; i < n; ++i) {
                 if (siz[i] == fib[f - 1] || siz[i] == fib[f - 2]) {
                     const int subtree_larger = siz[i] == fib[f - 1];
                     const int start_idx = subtree_larger;
                     const int increment = 2 * subtree_larger - 1;
+
                     vector<int> in_larger(n, -increment);
                     vector<vector<int>> gr(fib[f - 2]);
-                    dfs(i, par[i], in_larger, g, start_idx);
+
+                    function<void(int, int)> dfs = [&](int v, int p) {
+                        in_larger[v] = start_idx;
+                        for (auto u : g[v]) {
+                            if (u != p) {
+                                dfs(u, v);
+                            }
+                        }
+                    };
+
+                    dfs(i, par[i]);
+
                     int cur_idx = start_idx;
                     for (int i = 0; i < n; ++i) {
                         if (in_larger[i] == start_idx) {
@@ -396,6 +397,7 @@ void solve(int) {
                             cur_idx += increment;
                         }
                     }
+
                     if (increment == 1) {
                         int smaller_idx = 0;
                         for (int i = 0; i < n; ++i) {
@@ -412,6 +414,7 @@ void solve(int) {
                             }
                         }
                     }
+
                     for (int i = 0; i < n; ++i) {
                         if (in_larger[i] <= 0) {
                             auto &adj_i = gr[-in_larger[i]];
@@ -422,11 +425,13 @@ void solve(int) {
                             }
                         }
                     }
+
                     auto g_end =
                         remove_if(begin(g), end(g), [&](const vector<int> &v) {
                             return in_larger[&v - &*begin(g)] <= 0;
                         });
                     g.erase(g_end, end(g));
+
                     for (auto &v : g) {
                         for (auto &x : v) x = in_larger[x] - 1;
                         auto v_end =
@@ -434,9 +439,11 @@ void solve(int) {
                                       [&](const int &a) { return a < 0; });
                         v.erase(v_end, end(v));
                     }
-                    vector<int>().swap(in_larger);
-                    vector<int>().swap(siz);
-                    vector<int>().swap(par);
+
+                    // vector<int>().swap(in_larger);
+                    // vector<int>().swap(siz);
+                    // vector<int>().swap(par);
+
                     return works(g, f - 1) && works(gr, f - 2);
                 }
             }
