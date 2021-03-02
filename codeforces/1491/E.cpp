@@ -371,28 +371,15 @@ void solve(int) {
             get_size(0, -1);
 
             for (int i = 0; i < n; ++i) {
-
                 if (siz[i] == fib[f - 1] || siz[i] == fib[f - 2]) {
-                
+                    int fl = f - 1, fr = f - 2;
                     int subtree_larger = 1;
                     if (siz[i] == fib[f - 2]) subtree_larger = 0;
 
-                    int start_idx = subtree_larger;
-                    int increment = 2 * subtree_larger - 1;
-
-                    // int start_idx, increment;
-                    // if (subtree_larger == 1) {
-                    //     start_idx = 1;
-                    //     increment = 1;
-                    // } else {
-                    //     start_idx = 0;
-                    //     increment = -1;
-                    // }
-
-                    vector<int> in_larger(n, -increment);
+                    vector<int> in_larger(n, !subtree_larger);
 
                     function<void(int, int)> dfs = [&](int v, int p) {
-                        in_larger[v] = start_idx;
+                        in_larger[v] = subtree_larger;
                         for (auto u : g[v]) {
                             if (u != p) {
                                 dfs(u, v);
@@ -401,44 +388,32 @@ void solve(int) {
                     };
 
                     dfs(i, par[i]);
+                    // in_larger[i] = 1 if it is in the larger tree
 
-                    int cur_idx = start_idx;
+                    // left is larger, right is smaller
+                    // later on, use 1-based indices, and positive-negative to
+                    // optimize space to n instead of 2n
+                    vector<int> map_larger(n);
+
+                    int larger_idx = 1, smaller_idx = 0;
+
                     for (int i = 0; i < n; ++i) {
-                        if (in_larger[i] == start_idx) {
-                            in_larger[i] = cur_idx;
-                            cur_idx += increment;
+                        if (in_larger[i]) {
+                            map_larger[i] = larger_idx++;
+                        } else {
+                            map_larger[i] = -smaller_idx;
+                            smaller_idx++;
                         }
                     }
 
-                    int smaller_idx = 0;
-
-                    if (increment == 1) {
-                        for (int i = 0; i < n; ++i) {
-                            if (in_larger[i] == -1) {
-                                in_larger[i] = -smaller_idx;
-                                smaller_idx++;
-                            }
-                        }
-                    } else {
-                        int larger_idx = 1;
-                        for (int i = 0; i < n; ++i) {
-                            if (in_larger[i] == 1) {
-                                in_larger[i] = larger_idx++;
-                            } else {
-                                smaller_idx++;
-                            }
-                        }
-                    }
-
-                    assert(smaller_idx == fib[f - 2]);
                     vector<vector<int>> gr(smaller_idx);
 
                     for (int i = 0; i < n; ++i) {
-                        if (in_larger[i] <= 0) {
-                            auto &adj_i = gr[-in_larger[i]];
+                        if (!in_larger[i]) {
+                            auto &adj_i = gr[-map_larger[i]];
                             for (auto u : g[i]) {
-                                if (in_larger[u] <= 0) {
-                                    adj_i.push_back(-in_larger[u]);
+                                if (!in_larger[u]) {
+                                    adj_i.push_back(-map_larger[u]);
                                 }
                             }
                         }
@@ -446,23 +421,24 @@ void solve(int) {
 
                     auto g_end =
                         remove_if(begin(g), end(g), [&](const vector<int> &v) {
-                            return in_larger[&v - &*begin(g)] <= 0;
+                            return !in_larger[&v - &*begin(g)];
                         });
                     g.erase(g_end, end(g));
 
                     for (auto &v : g) {
-                        for (auto &x : v) x = in_larger[x] - 1;
+                        for (auto &x : v) x = map_larger[x] - 1;
                         auto v_end =
                             remove_if(begin(v), end(v),
                                       [&](const int &a) { return a < 0; });
                         v.erase(v_end, end(v));
                     }
 
+                    vector<int>().swap(map_larger);
                     vector<int>().swap(in_larger);
                     vector<int>().swap(siz);
                     vector<int>().swap(par);
 
-                    return works(g, f - 1) && works(gr, f - 2);
+                    return works(g, fl) && works(gr, fr);
                 }
             }
             return false;
