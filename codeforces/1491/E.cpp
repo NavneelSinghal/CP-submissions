@@ -440,9 +440,9 @@ void solve(int) {
                         v.erase(v_end, end(v));
                     }
 
-                    // vector<int>().swap(in_larger);
-                    // vector<int>().swap(siz);
-                    // vector<int>().swap(par);
+                    vector<int>().swap(in_larger);
+                    vector<int>().swap(siz);
+                    vector<int>().swap(par);
 
                     return works(g, f - 1) && works(gr, f - 2);
                 }
