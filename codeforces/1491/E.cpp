@@ -211,15 +211,133 @@ struct Modular {
     }
 };
 
+namespace IO {
+const int BUFFER_SIZE = 1 << 15;
+
+char input_buffer[BUFFER_SIZE];
+size_t input_pos = 0, input_len = 0;
+
+char output_buffer[BUFFER_SIZE];
+int output_pos = 0;
+
+char number_buffer[100];
+uint8_t lookup[100];
+
+void _update_input_buffer() {
+    input_len = fread(input_buffer, sizeof(char), BUFFER_SIZE, stdin);
+    input_pos = 0;
+
+    if (input_len == 0) input_buffer[0] = EOF;
+}
+
+inline char next_char(bool advance = true) {
+    if (input_pos >= input_len) _update_input_buffer();
+
+    return input_buffer[advance ? input_pos++ : input_pos];
+}
+
+inline bool isspace(char c) {
+    return (unsigned char)(c - '\t') < 5 || c == ' ';
+}
+
+inline void read_char(char &c) {
+    while (isspace(next_char(false))) next_char();
+
+    c = next_char();
+}
+
+template <typename T>
+inline void read_int(T &number) {
+    bool negative = false;
+    number = 0;
+
+    while (!isdigit(next_char(false)))
+        if (next_char() == '-') negative = true;
+
+    do {
+        number = 10 * number + (next_char() - '0');
+    } while (isdigit(next_char(false)));
+
+    if (negative) number = -number;
+}
+
+template <typename T, typename... Args>
+inline void read_int(T &number, Args &... args) {
+    read_int(number);
+    read_int(args...);
+}
+
+inline void read_str(string &str) {
+    while (isspace(next_char(false))) next_char();
+
+    str.clear();
+
+    do {
+        str += next_char();
+    } while (!isspace(next_char(false)));
+}
+
+void _flush_output() {
+    fwrite(output_buffer, sizeof(char), output_pos, stdout);
+    output_pos = 0;
+}
+
+inline void write_char(char c) {
+    if (output_pos == BUFFER_SIZE) _flush_output();
+
+    output_buffer[output_pos++] = c;
+}
+
+template <typename T>
+inline void write_int(T number, char after = '\0') {
+    if (number < 0) {
+        write_char('-');
+        number = -number;
+    }
+
+    int length = 0;
+
+    while (number >= 10) {
+        uint8_t lookup_value = lookup[number % 100];
+        number /= 100;
+        number_buffer[length++] = char((lookup_value & 15) + '0');
+        number_buffer[length++] = char((lookup_value >> 4) + '0');
+    }
+
+    if (number != 0 || length == 0) write_char(char(number + '0'));
+
+    for (int i = length - 1; i >= 0; i--) write_char(number_buffer[i]);
+
+    if (after) write_char(after);
+}
+
+inline void write_str(const string &str, char after = '\0') {
+    for (char c : str) write_char(c);
+
+    if (after) write_char(after);
+}
+
+void IOinit() {
+    // Make sure _flush_output() is called at the end of the program.
+    bool exit_success = atexit(_flush_output) == 0;
+    assert(exit_success);
+
+    for (int i = 0; i < 100; i++) lookup[i] = uint8_t((i / 10 << 4) + i % 10);
+}
+}  // namespace IO
+
+using namespace IO;
+
 using mint = Modular<mod>;
 
 void solve(int) {
     int n;
-    cin >> n;
+    read_int(n);
     vector<vector<int>> g(n);
+
     for (int i = 1; i < n; ++i) {
         int u, v;
-        cin >> u >> v;
+        read_int(u, v);
         --u, --v;
         g[u].push_back(v);
         g[v].push_back(u);
@@ -229,112 +347,126 @@ void solve(int) {
     vector<int> fib(N);
     fib[0] = 1;
     fib[1] = 1;
+    for (int i = 2; i < N; ++i) fib[i] = fib[i - 1] + fib[i - 2];
 
-    // call iff n > 1 else memory alloc issues
-    function<bool(vector<vector<int>>&, int)> works = [&](vector<vector<int>>&g, int f) {
-        
-        if (f == 0 || f == 1) return true;
-
-        int n = g.size();
-        vector<int> siz(n), par(n, -1);
-        
-        function<void(int, int)> get_size = [&](int v, int p) {
+    function<void(int, int, vector<int> &, vector<int> &,
+                  vector<vector<int>> &)>
+        get_size = [&](int v, int p, vector<int> &siz, vector<int> &par,
+                       vector<vector<int>> &g) {
             siz[v] = 1;
             par[v] = p;
             for (auto u : g[v]) {
                 if (u != p) {
-                    get_size(u, v);
+                    get_size(u, v, siz, par, g);
                     siz[v] += siz[u];
                 }
             }
         };
-        
-        get_size(0, -1);
-        
-        for (int i = 0; i < n; ++i) {
-        
-            if (siz[i] == fib[f - 1] || siz[i] == fib[f - 2]) {
-            
-                int fl = f - 1, fr = f - 2;
-                if (siz[i] == fib[f - 2]) swap(fl, fr);
 
-                // create left and right graphs
-                
-                vector<int> subtree(n);
-                
-                function<void(int, int)> dfs = [&](int v, int p) {
-                    subtree[v] = 1;
-                    for (auto u : g[v]) {
-                        if (u != p) {
-                            dfs(u, v);
-                        }
-                    }
-                };
-                
-                dfs(i, par[i]);
-
-                vector<int> map_left(n, -1), map_right(n, -1);
-                int left_idx = 0, right_idx = 0;
-                for (int i = 0; i < n; ++i) {
-                    if (subtree[i]) {
-                        map_left[i] = left_idx++;
-                    } else {
-                        map_right[i] = right_idx++;
-                    }
+    function<void(int, int, vector<int> &, vector<vector<int>> &, int)> dfs =
+        [&](int v, int p, vector<int> &in_larger, vector<vector<int>> &g,
+            int start_idx) {
+            in_larger[v] = start_idx;
+            for (auto u : g[v]) {
+                if (u != p) {
+                    dfs(u, v, in_larger, g, start_idx);
                 }
-                
-                vector<vector<int>> gl(left_idx), gr(right_idx);
-                
-                for (int i = 0; i < n; ++i) {
-                    if (subtree[i]) {
-                        for (auto u : g[i]) {
-                            if (subtree[u]) {
-                                gl[map_left[i]].push_back(map_left[u]);
-                            }
-                        }
-                    } else {
-                        for (auto u : g[i]) {
-                            if (!subtree[u]) {
-                                gr[map_right[i]].push_back(map_right[u]);
-                            }
-                        }
-                    }
-                }
-
-                debug(gl);
-                debug(gr);
-
-                return works(gl, fl) && works(gr, fr);
             }
-        }
+        };
 
-        return false;
-    };
+    // call iff n > 1 else memory alloc issues
+    function<bool(vector<vector<int>> &, int)> works =
+        [&](vector<vector<int>> &g, int f) {
+            if (f <= 3) return true;
+            int n = g.size();
+            vector<int> siz(n), par(n, -1);
+            get_size(0, -1, siz, par, g);
+            for (int i = 0; i < n; ++i) {
+                if (siz[i] == fib[f - 1] || siz[i] == fib[f - 2]) {
+                    const int subtree_larger = siz[i] == fib[f - 1];
+                    const int start_idx = subtree_larger;
+                    const int increment = 2 * subtree_larger - 1;
+                    vector<int> in_larger(n, -increment);
+                    vector<vector<int>> gr(fib[f - 2]);
+                    dfs(i, par[i], in_larger, g, start_idx);
+                    int cur_idx = start_idx;
+                    for (int i = 0; i < n; ++i) {
+                        if (in_larger[i] == start_idx) {
+                            in_larger[i] = cur_idx;
+                            cur_idx += increment;
+                        }
+                    }
+                    if (increment == 1) {
+                        int smaller_idx = 0;
+                        for (int i = 0; i < n; ++i) {
+                            if (in_larger[i] == -1) {
+                                in_larger[i] = -smaller_idx;
+                                smaller_idx++;
+                            }
+                        }
+                    } else {
+                        int larger_idx = 1;
+                        for (int i = 0; i < n; ++i) {
+                            if (in_larger[i] == 1) {
+                                in_larger[i] = larger_idx++;
+                            }
+                        }
+                    }
+                    for (int i = 0; i < n; ++i) {
+                        if (in_larger[i] <= 0) {
+                            auto &adj_i = gr[-in_larger[i]];
+                            for (auto u : g[i]) {
+                                if (in_larger[u] <= 0) {
+                                    adj_i.push_back(-in_larger[u]);
+                                }
+                            }
+                        }
+                    }
+                    auto g_end =
+                        remove_if(begin(g), end(g), [&](const vector<int> &v) {
+                            return in_larger[&v - &*begin(g)] <= 0;
+                        });
+                    g.erase(g_end, end(g));
+                    for (auto &v : g) {
+                        for (auto &x : v) x = in_larger[x] - 1;
+                        auto v_end =
+                            remove_if(begin(v), end(v),
+                                      [&](const int &a) { return a < 0; });
+                        v.erase(v_end, end(v));
+                    }
+                    vector<int>().swap(in_larger);
+                    vector<int>().swap(siz);
+                    vector<int>().swap(par);
+                    return works(g, f - 1) && works(gr, f - 2);
+                }
+            }
+            return false;
+        };
 
     if (n == 1) {
-        cout << "YES\n";
+        write_str("YES\n");
         return;
     }
 
     for (int i = 2; i < N; ++i) {
-        fib[i] = fib[i - 1] + fib[i - 2];
         if (fib[i] == n) {
             if (works(g, i)) {
-                cout << "YES\n";
+                write_str("YES\n");
                 return;
             } else {
-                cout << "NO\n";
+                write_str("NO\n");
                 return;
             }
         }
     }
-    cout << "NO\n";
+    write_str("NO\n");
 }
 
 void brute(int) {}
 
 signed main() {
-    setIO();
+    // setIO();
+    IOinit();
     precompute();
     int t = 1;
     // cin >> t;
