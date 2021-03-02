@@ -340,15 +340,14 @@ struct graph_edge_pointers {
     vector<int> head; // head[i] = index of first edge emanating from vertex i
     vector<edge> edges;
     vector<int> siz;
-    int cur_edges;
 
-    graph_edge_pointers(int n, int m) : head(n, -1), siz(n), cur_edges(0) { edges.reserve(m); }
+    graph_edge_pointers(int n, int m) : head(n, -1), siz(n) { edges.reserve(m); }
 
-    // while adding (u, v), (v, u), we have i, i^1 as corresponding edges
     void add_edge(int u, int v) {
         edges.emplace_back(v, head[u]);
-        head[u] = cur_edges++;
+        head[u] = (int)edges.size() - 1;
     }
+
 };
 
 void solve(int) {
