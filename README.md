@@ -11,12 +11,12 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-892 | [E - A-Z Graph](https://codeforces.com/contest/1494/problem/E) | [GNU C++17 (64)](./codeforces/1494/E.cpp) | `constructive algorithms` `data structures` `graphs` | Mar/02/2021 23:23 | 
-891 | [D - Dogeforces](https://codeforces.com/contest/1494/problem/D) | [GNU C++17 (64)](./codeforces/1494/D.cpp) | `constructive algorithms` `dsu` `greedy` `trees` | Mar/02/2021 22:57 | 
-890 | [C - 1D Sokoban](https://codeforces.com/contest/1494/problem/C) | [GNU C++17 (64)](./codeforces/1494/C.cpp) | `binary search` `implementation` `two pointers` | Mar/02/2021 22:28 | 
-889 | [B - Berland Crossword](https://codeforces.com/contest/1494/problem/B) | [GNU C++17 (64)](./codeforces/1494/B.cpp) | `binary search` `bitmasks` `brute force` `implementation` | Mar/02/2021 21:28 | 
-888 | [A - ABC String](https://codeforces.com/contest/1494/problem/A) | [GNU C++17 (64)](./codeforces/1494/A.cpp) | `bitmasks` `brute force` `implementation` | Mar/02/2021 21:24 | 
-887 | [E - Fib-tree](https://codeforces.com/contest/1491/problem/E) | [GNU C++17 (64)](./codeforces/1491/E.cpp) | `brute force` `dfs and similar` `divide and conquer` `number theory` `trees` `*2400` | Mar/02/2021 13:29 | 
+892 | [E - Fib-tree](https://codeforces.com/contest/1491/problem/E) | [GNU C++17 (64)](./codeforces/1491/E.cpp) | `brute force` `dfs and similar` `divide and conquer` `number theory` `trees` `*2400` | Mar/03/2021 01:08 | 
+891 | [E - A-Z Graph](https://codeforces.com/contest/1494/problem/E) | [GNU C++17 (64)](./codeforces/1494/E.cpp) | `constructive algorithms` `data structures` `graphs` | Mar/02/2021 23:23 | 
+890 | [D - Dogeforces](https://codeforces.com/contest/1494/problem/D) | [GNU C++17 (64)](./codeforces/1494/D.cpp) | `constructive algorithms` `dsu` `greedy` `trees` | Mar/02/2021 22:57 | 
+889 | [C - 1D Sokoban](https://codeforces.com/contest/1494/problem/C) | [GNU C++17 (64)](./codeforces/1494/C.cpp) | `binary search` `implementation` `two pointers` | Mar/02/2021 22:28 | 
+888 | [B - Berland Crossword](https://codeforces.com/contest/1494/problem/B) | [GNU C++17 (64)](./codeforces/1494/B.cpp) | `binary search` `bitmasks` `brute force` `implementation` | Mar/02/2021 21:28 | 
+887 | [A - ABC String](https://codeforces.com/contest/1494/problem/A) | [GNU C++17 (64)](./codeforces/1494/A.cpp) | `bitmasks` `brute force` `implementation` | Mar/02/2021 21:24 | 
 886 | [F - Magnets](https://codeforces.com/contest/1491/problem/F) | [GNU C++17 (64)](./codeforces/1491/F.cpp) | `binary search` `constructive algorithms` `interactive` | Mar/01/2021 14:18 | 
 885 | [D - Zookeeper and The Infinite Zoo](https://codeforces.com/contest/1491/problem/D) | [GNU C++17 (64)](./codeforces/1491/D.cpp) | `bitmasks` `constructive algorithms` `math` | Mar/01/2021 13:01 | 
 884 | [C - Pekora and Trampoline](https://codeforces.com/contest/1491/problem/C) | [GNU C++17 (64)](./codeforces/1491/C.cpp) | `brute force` `data structures` `dp` `graphs` `greedy` `implementation` | Mar/01/2021 12:54 | 
