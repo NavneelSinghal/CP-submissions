@@ -331,11 +331,9 @@ using namespace IO;
 using mint = Modular<mod>;
 
 void solve(int) {
-    
     int n;
     read_int(n);
     vector<vector<int>> g(n);
-    
     for (int i = 1; i < n; ++i) {
         int u, v;
         read_int(u, v);
@@ -343,14 +341,10 @@ void solve(int) {
         g[u].push_back(v);
         g[v].push_back(u);
     }
-    
     const int N = 46;
     vector<int> fib(N);
     fib[0] = 1;
     fib[1] = 1;
-    for (int i = 2; i < N; ++i)
-        fib[i] = fib[i - 1] + fib[i - 2];
-
     // call iff n > 1 else memory alloc issues
     function<bool(vector<vector<int>>&, int)> works = [&](vector<vector<int>>&g, int f) {
         if (f == 0 || f == 1) return true;
@@ -394,26 +388,19 @@ void solve(int) {
                 vector<vector<int>> gl(left_idx), gr(right_idx);
                 for (int i = 0; i < n; ++i) {
                     if (subtree[i]) {
-                        auto &adj_i = gl[map_left[i]];
                         for (auto u : g[i]) {
                             if (subtree[u]) {
-                                adj_i.push_back(map_left[u]);
+                                gl[map_left[i]].push_back(map_left[u]);
                             }
                         }
                     } else {
-                        auto &adj_i = gr[map_right[i]];
                         for (auto u : g[i]) {
                             if (!subtree[u]) {
-                                adj_i.push_back(map_right[u]);
+                                gr[map_right[i]].push_back(map_right[u]);
                             }
                         }
                     }
                 }
-                vector<int>().swap(map_left);
-                vector<int>().swap(map_right);
-                vector<int>().swap(subtree);
-                vector<int>().swap(siz);
-                vector<int>().swap(par);
                 return works(gl, fl) && works(gr, fr);
             }
         }
@@ -426,6 +413,7 @@ void solve(int) {
     }
 
     for (int i = 2; i < N; ++i) {
+        fib[i] = fib[i - 1] + fib[i - 2];
         if (fib[i] == n) {
             if (works(g, i)) {
                 write_str("YES\n");
