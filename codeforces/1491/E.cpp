@@ -409,12 +409,11 @@ void solve(int) {
                         }
                     }
                 }
-                vector<int>().swap(map_left);
-                vector<int>().swap(map_right);
-                vector<int>().swap(subtree);
-                vector<int>().swap(siz);
-                vector<int>().swap(par);
-                vector<vector<int>>().swap(g);
+                // vector<int>().swap(map_left);
+                // vector<int>().swap(map_right);
+                // vector<int>().swap(subtree);
+                // vector<int>().swap(siz);
+                // vector<int>().swap(par);
                 return works(gl, fl) && works(gr, fr);
             }
         }
