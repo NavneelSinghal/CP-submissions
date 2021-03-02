@@ -1,6 +1,6 @@
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx")
-#pragma GCC optimize("unroll-loops")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx")
+// #pragma GCC optimize("unroll-loops")
 
 #include "bits/stdc++.h"
 #include "ext/pb_ds/assoc_container.hpp"
@@ -426,9 +426,10 @@ void solve(int) {
                         }
                     }
 
+                    const auto it = &*begin(g);
                     auto g_end =
                         remove_if(begin(g), end(g), [&](const vector<int> &v) {
-                            return in_larger[&v - &*begin(g)] <= 0;
+                            return in_larger[&v - it] <= 0;
                         });
                     g.erase(g_end, end(g));
 
