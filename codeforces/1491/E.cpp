@@ -371,13 +371,25 @@ void solve(int) {
             get_size(0, -1);
 
             for (int i = 0; i < n; ++i) {
+
                 if (siz[i] == fib[f - 1] || siz[i] == fib[f - 2]) {
-                    const int subtree_larger = siz[i] == fib[f - 1];
-                    const int start_idx = subtree_larger;
-                    const int increment = 2 * subtree_larger - 1;
+                
+                    int subtree_larger = 1;
+                    if (siz[i] == fib[f - 2]) subtree_larger = 0;
+
+                    int start_idx = subtree_larger;
+                    int increment = 2 * subtree_larger - 1;
+
+                    // int start_idx, increment;
+                    // if (subtree_larger == 1) {
+                    //     start_idx = 1;
+                    //     increment = 1;
+                    // } else {
+                    //     start_idx = 0;
+                    //     increment = -1;
+                    // }
 
                     vector<int> in_larger(n, -increment);
-                    vector<vector<int>> gr(fib[f - 2]);
 
                     function<void(int, int)> dfs = [&](int v, int p) {
                         in_larger[v] = start_idx;
@@ -398,8 +410,9 @@ void solve(int) {
                         }
                     }
 
+                    int smaller_idx = 0;
+
                     if (increment == 1) {
-                        int smaller_idx = 0;
                         for (int i = 0; i < n; ++i) {
                             if (in_larger[i] == -1) {
                                 in_larger[i] = -smaller_idx;
@@ -411,9 +424,14 @@ void solve(int) {
                         for (int i = 0; i < n; ++i) {
                             if (in_larger[i] == 1) {
                                 in_larger[i] = larger_idx++;
+                            } else {
+                                smaller_idx++;
                             }
                         }
                     }
+
+                    assert(smaller_idx == fib[f - 2]);
+                    vector<vector<int>> gr(smaller_idx);
 
                     for (int i = 0; i < n; ++i) {
                         if (in_larger[i] <= 0) {
