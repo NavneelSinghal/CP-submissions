@@ -393,27 +393,26 @@ void solve(int) {
                     // left is larger, right is smaller
                     // later on, use 1-based indices, and positive-negative to
                     // optimize space to n instead of 2n
-                    vector<int> map_larger(n);
+                    vector<int> map_larger(n, -1), map_smaller(n, -1);
 
-                    int larger_idx = 1, smaller_idx = 0;
+                    int left_idx = 0, right_idx = 0;
 
                     for (int i = 0; i < n; ++i) {
                         if (in_larger[i]) {
-                            map_larger[i] = larger_idx++;
+                            map_larger[i] = left_idx++;
                         } else {
-                            map_larger[i] = -smaller_idx;
-                            smaller_idx++;
+                            map_smaller[i] = right_idx++;
                         }
                     }
 
-                    vector<vector<int>> gr(smaller_idx);
+                    vector<vector<int>> gr(right_idx);
 
                     for (int i = 0; i < n; ++i) {
                         if (!in_larger[i]) {
-                            auto &adj_i = gr[-map_larger[i]];
+                            auto &adj_i = gr[map_smaller[i]];
                             for (auto u : g[i]) {
                                 if (!in_larger[u]) {
-                                    adj_i.push_back(-map_larger[u]);
+                                    adj_i.push_back(map_smaller[u]);
                                 }
                             }
                         }
@@ -426,14 +425,15 @@ void solve(int) {
                     g.erase(g_end, end(g));
 
                     for (auto &v : g) {
-                        for (auto &x : v) x = map_larger[x] - 1;
+                        for (auto &x : v) x = map_larger[x];
                         auto v_end =
                             remove_if(begin(v), end(v),
-                                      [&](const int &a) { return a < 0; });
+                                      [&](const int &a) { return a == -1; });
                         v.erase(v_end, end(v));
                     }
 
                     vector<int>().swap(map_larger);
+                    vector<int>().swap(map_smaller);
                     vector<int>().swap(in_larger);
                     vector<int>().swap(siz);
                     vector<int>().swap(par);
