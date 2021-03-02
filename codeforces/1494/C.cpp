@@ -331,12 +331,19 @@ using namespace IO;
 using mint = Modular<mod>;
 
 ll work(vector<ll> &a, vector<ll> &b) {
+    sort(begin(a), end(a));
+    sort(begin(b), end(b));
+
     int n = a.size(), m = b.size();
+
     if (n == 0 || m == 0) return 0;
+
     int b_start_id = 0;
     int b_end_id = 0;
     int a_end_id = 0;
+
     vector<int> match_a(n + 1), match_b(m + 1);
+
     int j = m - 1, i = n - 1;
     while (j >= 0 && i >= 0) {
         if (a[i] == b[j]) {
@@ -359,11 +366,19 @@ ll work(vector<ll> &a, vector<ll> &b) {
         match_b[j] = match_b[j + 1];
         --j;
     }
+
+    assert(match_b[0] == match_a[0]);
     int ans = max(match_b[0], match_a[0]);
+
     b_start_id = 0;
     while (b_start_id < m && b[b_start_id] < a[0]) ++b_start_id;
     b_end_id = b_start_id;
+
+    debug(a, b);
+    debug(match_a, match_b);
+
     for (; b_start_id < m; ++b_start_id) {
+        // remax(b_end_id, b_start_id);
         while (a_end_id + 1 < n && a[a_end_id + 1] <= b[b_start_id] + a_end_id) {
             a_end_id++;
         }
@@ -371,6 +386,7 @@ ll work(vector<ll> &a, vector<ll> &b) {
                b[b_end_id] <= b[b_start_id] + a_end_id) {
             b_end_id++;
         }
+        debug(b_start_id, b_end_id, a_end_id + 1);
         remax(ans, b_end_id - b_start_id +
                        min(match_a[a_end_id + 1], match_b[b_end_id]));
     }
@@ -400,8 +416,6 @@ void solve(int) {
             b_right.push_back(x);
         }
     }
-    reverse(begin(a_left), end(a_left));
-    reverse(begin(b_left), end(b_left));
     cout << work(a_left, b_left) + work(a_right, b_right) << '\n';
 }
 
