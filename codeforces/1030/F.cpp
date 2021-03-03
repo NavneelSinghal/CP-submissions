@@ -239,7 +239,7 @@ void solve(int) {
     
     int n, q;
     cin >> n >> q;
-    vector<int> a(n + 1);
+    vector<ll> a(n + 1);
     vector<ll> w(n + 1);
     Fenwick<ll> f(n + 2);
     Fenwick<mint> fmod(n + 2);
