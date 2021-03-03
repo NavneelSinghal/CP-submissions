@@ -239,7 +239,7 @@ void solve(int) {
     
     int n, q;
     cin >> n >> q;
-    vector<ll> a(n + 1);
+    vector<int> a(n + 1);
     vector<ll> w(n + 1);
     Fenwick<ll> f(n + 2);
     Fenwick<mint> fmod(n + 2);
@@ -260,20 +260,20 @@ void solve(int) {
         cin >> x >> y;
         if (x <= 0) {
             x = -x;
-            f.update(x, -w[x]);
-            fmod.update(x, -a[x] * w[x]);
+            f.update(x, y - w[x]);
+            fmod.update(x, a[x] * (y - w[x]));
             w[x] = y;
-            f.update(x, w[x]);
-            fmod.update(x, a[x] * w[x]);
         } else {
             if (x == y) {
                 cout << 0 << '\n';
                 continue;
             }
             int l = x, r = y, best = 0;
+            ll total = f.query(x, y);
             while (l <= r) {
                 int m = l + (r - l) / 2;
-                if (f.query(x, m) >= f.query(m + 1, y)) {
+                ll q = f.query(x, m);
+                if (q >= total - q) {
                     best = m;
                     r = m - 1;
                 } else {
