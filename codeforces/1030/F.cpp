@@ -260,9 +260,11 @@ void solve(int) {
         cin >> x >> y;
         if (x <= 0) {
             x = -x;
-            f.update(x, y - w[x]);
-            fmod.update(x, a[x] * (y - w[x]));
+            f.update(x, -w[x]);
+            fmod.update(x, -a[x] * w[x]);
             w[x] = y;
+            f.update(x, w[x]);
+            fmod.update(x, a[x] * w[x]);
         } else {
             if (x == y) {
                 cout << 0 << '\n';

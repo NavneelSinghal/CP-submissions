@@ -383,6 +383,22 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF109036172": {
+    "contest_id": 1030,
+    "language": "GNU C++17",
+    "path": "codeforces/1030/F.cpp",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Putting Boxes Together",
+    "problem_url": "https://codeforces.com/contest/1030/problem/F",
+    "submission_id": "CF109036172",
+    "submission_url": "https://codeforces.com/contest/1030/submission/109036172",
+    "tags": [
+      "data structures",
+      "*2500"
+    ],
+    "timestamp": "Mar/04/2021 00:45"
+  },
   "CF109036401": {
     "contest_id": 1030,
     "language": "GNU C++17 (64)",
