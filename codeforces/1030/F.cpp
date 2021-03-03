@@ -271,11 +271,9 @@ void solve(int) {
                 continue;
             }
             int l = x, r = y, best = 0;
-            ll total = f.query(x, y);
             while (l <= r) {
                 int m = l + (r - l) / 2;
-                ll q = f.query(x, m);
-                if (q >= total - q) {
+                if (f.query(x, m) >= f.query(m + 1, y)) {
                     best = m;
                     r = m - 1;
                 } else {
