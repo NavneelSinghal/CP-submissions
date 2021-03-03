@@ -383,6 +383,24 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF109031259": {
+    "contest_id": 1100,
+    "language": "GNU C++17",
+    "path": "codeforces/1100/D.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D",
+    "problem_name": "Dasha and Chess",
+    "problem_url": "https://codeforces.com/contest/1100/problem/D",
+    "submission_id": "CF109031259",
+    "submission_url": "https://codeforces.com/contest/1100/submission/109031259",
+    "tags": [
+      "constructive algorithms",
+      "games",
+      "interactive",
+      "*2500"
+    ],
+    "timestamp": "Mar/03/2021 23:25"
+  },
   "CF109033861": {
     "contest_id": 1030,
     "language": "GNU C++17",
