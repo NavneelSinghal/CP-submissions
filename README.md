@@ -11,10 +11,11 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-900 | [E - Modernization of Treeland](https://codeforces.com/contest/1297/problem/E) | [Kotlin](./codeforces/1297/E.kt) | `*special problem` `dfs and similar` `trees` | Mar/08/2021 03:27 | 
-899 | [B - Cartoons](https://codeforces.com/contest/1297/problem/B) | [Kotlin](./codeforces/1297/B.kt) | `*special problem` `implementation` `sortings` | Mar/08/2021 03:08 | 
-898 | [A - Likes Display](https://codeforces.com/contest/1297/problem/A) | [Kotlin](./codeforces/1297/A.kt) | `*special problem` `implementation` | Mar/08/2021 02:33 | 
-897 | [F - Boxes Packing](https://codeforces.com/contest/1489/problem/F) | [Kotlin](./codeforces/1489/F.kt) | `*special problem` `implementation` | Mar/06/2021 03:32 | 
+901 | [E - Modernization of Treeland](https://codeforces.com/contest/1297/problem/E) | [Kotlin](./codeforces/1297/E.kt) | `*special problem` `dfs and similar` `trees` | Mar/08/2021 03:27 | 
+900 | [B - Cartoons](https://codeforces.com/contest/1297/problem/B) | [Kotlin](./codeforces/1297/B.kt) | `*special problem` `implementation` `sortings` | Mar/08/2021 03:08 | 
+899 | [A - Likes Display](https://codeforces.com/contest/1297/problem/A) | [Kotlin](./codeforces/1297/A.kt) | `*special problem` `implementation` | Mar/08/2021 02:33 | 
+898 | [F - Boxes Packing](https://codeforces.com/contest/1489/problem/F) | [Kotlin](./codeforces/1489/F.kt) | `*special problem` `implementation` | Mar/06/2021 03:32 | 
+897 | [G - Make It Connected](https://codeforces.com/contest/1489/problem/G) | [Kotlin](./codeforces/1489/G.kt) | `*special problem` `graphs` | Mar/06/2021 03:12 | 
 896 | [F - Putting Boxes Together](https://codeforces.com/contest/1030/problem/F) | [GNU C++17](./codeforces/1030/F.cpp) | `data structures` `*2500` | Mar/04/2021 00:52 | 
 895 | [D - Dasha and Chess](https://codeforces.com/contest/1100/problem/D) | [GNU C++17](./codeforces/1100/D.cpp) | `constructive algorithms` `games` `interactive` `*2500` | Mar/03/2021 23:25 | 
 894 | [D - Nature Reserve](https://codeforces.com/contest/1059/problem/D) | [GNU C++17 (64)](./codeforces/1059/D.cpp) | `binary search` `geometry` `ternary search` `*2200` | Mar/03/2021 22:53 | 
