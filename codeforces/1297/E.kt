@@ -24,8 +24,8 @@ fun PrintWriter.work() {
 
 fun PrintWriter.solve() {
     val (n, k) = readInts(2)
-    val adj = Array(n + 1) { ArrayList<Int>() }
-    val vis = BooleanArray(n + 1) { false }
+    val adj = Array<ArrayList<Int>>(n + 1) { ArrayList<Int>() }
+    val vis = BooleanArray(n + 1)
     val deg = IntArray(n + 1) { 0 }
     for (i in 1 until n) {
         val (x, y) = readInts(2)
@@ -68,7 +68,11 @@ fun PrintWriter.solve() {
         if (vis[i]) answer.add(i)
     }
     println(answer.size)
-    println(answer.joinToString(" "))
+    for (i in answer) {
+        print(i)
+        print(' ')
+    }
+    println()
 }
 
 @JvmField
