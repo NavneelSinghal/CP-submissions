@@ -383,6 +383,25 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF109507086": {
+    "contest_id": 1488,
+    "language": "Kotlin 1.4",
+    "path": "codeforces/1488/G.kt",
+    "platform": "Codeforces",
+    "problem_index": "G",
+    "problem_name": "Painting Numbers",
+    "problem_url": "https://codeforces.com/contest/1488/problem/G",
+    "submission_id": "CF109507086",
+    "submission_url": "https://codeforces.com/contest/1488/submission/109507086",
+    "tags": [
+      "*special problem",
+      "data structures",
+      "greedy",
+      "number theory",
+      "*2500"
+    ],
+    "timestamp": "Mar/09/2021 22:46"
+  },
   "CF110045696": {
     "contest_id": 1488,
     "language": "Kotlin 1.4",
