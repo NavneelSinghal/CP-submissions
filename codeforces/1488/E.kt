@@ -23,18 +23,29 @@ fun PrintWriter.work() {
 }
 
 fun lcs(A: IntArray, B: IntArray, n: Int) : Int {
+    var a = mutableListOf<Int>()
+    var b = mutableListOf<Int>()
+    a.add(0)
+    b.add(0)
     var tempmatchlist = MutableList<MutableList<Int>>(n + 1) { MutableList<Int>(0){0} }
     var matchlist = MutableList<MutableList<Int>>(n + 1) { MutableList<Int>(0){0} }
-    for (i in n-1 downTo 0) {
-        tempmatchlist[B[i]].add(i + 1)
+    for (i in 0 until n) {
+        a.add(A[i])
+        b.add(B[i])
     }
     for (i in n downTo 1) {
-        for (j in tempmatchlist[A[i - 1]]) {
+        tempmatchlist[b[i]].add(i)
+    }
+    for (i in n downTo 1) {
+        for (j in tempmatchlist[a[i]]) {
             matchlist[i].add(j)
         }
     }
-    var thresh = MutableList<Int>(n + 1){n + 1}
-    thresh[0] = 0
+    var thresh = mutableListOf<Int>()
+    thresh.add(0)
+    for (i in 1..n) {
+        thresh.add(n + 1)
+    }
     var siz = MutableList(n + 1){0}
     for (i in 1..n) {
         for (j in matchlist[i]) {
