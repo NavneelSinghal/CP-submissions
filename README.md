@@ -11,9 +11,10 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-918 | [D - Shipping Center](https://atcoder.jp/contests/abc195/tasks/abc195_d) | [C++ (GCC 9.2.1)](./atcoder/abc195/D.cpp) | `AtCoder` `*400` | Mar/13/2021 19:45 | 
-917 | [F - Coprime Present](https://atcoder.jp/contests/abc195/tasks/abc195_f) | [C++ (GCC 9.2.1)](./atcoder/abc195/F.cpp) | `AtCoder` `*600` | Mar/13/2021 19:32 | 
-916 | [E - Lucky 7 Battle](https://atcoder.jp/contests/abc195/tasks/abc195_e) | [C++ (GCC 9.2.1)](./atcoder/abc195/E.cpp) | `AtCoder` `*500` | Mar/13/2021 18:26 | 
+919 | [D - Shipping Center](https://atcoder.jp/contests/abc195/tasks/abc195_d) | [C++ (GCC 9.2.1)](./atcoder/abc195/D.cpp) | `AtCoder` `*400` | Mar/13/2021 19:45 | 
+918 | [F - Coprime Present](https://atcoder.jp/contests/abc195/tasks/abc195_f) | [C++ (GCC 9.2.1)](./atcoder/abc195/F.cpp) | `AtCoder` `*600` | Mar/13/2021 19:32 | 
+917 | [E - Lucky 7 Battle](https://atcoder.jp/contests/abc195/tasks/abc195_e) | [C++ (GCC 9.2.1)](./atcoder/abc195/E.cpp) | `AtCoder` `*500` | Mar/13/2021 18:26 | 
+916 | [C - Comma](https://atcoder.jp/contests/abc195/tasks/abc195_c) | [C++ (GCC 9.2.1)](./atcoder/abc195/C.cpp) | `AtCoder` `*300` | Mar/13/2021 17:45 | 
 915 | [E - Palindromic Doubles](https://codeforces.com/contest/1488/problem/E) | [Kotlin](./codeforces/1488/E.kt) | `*special problem` `data structures` `dp` | Mar/09/2021 23:10 | 
 914 | [G - Painting Numbers](https://codeforces.com/contest/1488/problem/G) | [Kotlin](./codeforces/1488/G.kt) | `*special problem` `data structures` `greedy` | Mar/09/2021 22:46 | 
 913 | [D - Problemsolving Marathon](https://codeforces.com/contest/1488/problem/D) | [Kotlin](./codeforces/1488/D.kt) | `*special problem` `binary search` `greedy` | Mar/09/2021 21:04 | 
