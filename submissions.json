@@ -1,4 +1,20 @@
 {
+  "AC20906262": {
+    "contest_id": "abc195",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc195/F.cpp",
+    "platform": "AtCoder",
+    "problem_index": "F",
+    "problem_name": "Coprime Present",
+    "problem_url": "https://atcoder.jp/contests/abc195/tasks/abc195_f",
+    "submission_id": "AC20906262",
+    "submission_url": "https://atcoder.jp/contests/abc195/submissions/20906262",
+    "tags": [
+      "AtCoder",
+      "*600"
+    ],
+    "timestamp": "Mar/13/2021 19:32"
+  },
   "AC20907013": {
     "contest_id": "abc195",
     "language": "C++ (GCC 9.2.1)",
