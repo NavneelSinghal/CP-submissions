@@ -6,28 +6,28 @@
 // #pragma GCC optimize("unroll-loops")
 /* optimizing pragmas end */
 
-/*
- * 64-bit bitset that might break stuff
- */
-#include <string>
-#include <bits/cxxabi_forced.h>
-#include <bits/functexcept.h>
-#include <bits/functional_hash.h>
-#include <iosfwd>
-#pragma push_macro("__SIZEOF_LONG__")
-#pragma push_macro("__cplusplus")
-#define __SIZEOF_LONG__ __SIZEOF_LONG_LONG__
-#define unsigned unsigned long
-#define __cplusplus 201102L
-#define __builtin_popcountl __builtin_popcountll
-#define __builtin_ctzl __builtin_ctzll
-#include <bitset>
-#pragma pop_macro("__cplusplus")
-#pragma pop_macro("__SIZEOF_LONG__")
-#undef unsigned
-#undef __builtin_popcountl
-#undef __builtin_ctzl
-/* 64-bit bitset ends */
+// /*
+//  * 64-bit bitset that might break stuff
+//  */
+// #include <string>
+// #include <bits/cxxabi_forced.h>
+// #include <bits/functexcept.h>
+// #include <bits/functional_hash.h>
+// #include <iosfwd>
+// #pragma push_macro("__SIZEOF_LONG__")
+// #pragma push_macro("__cplusplus")
+// #define __SIZEOF_LONG__ __SIZEOF_LONG_LONG__
+// #define unsigned unsigned long
+// #define __cplusplus 201102L
+// #define __builtin_popcountl __builtin_popcountll
+// #define __builtin_ctzl __builtin_ctzll
+// #include <bitset>
+// #pragma pop_macro("__cplusplus")
+// #pragma pop_macro("__SIZEOF_LONG__")
+// #undef unsigned
+// #undef __builtin_popcountl
+// #undef __builtin_ctzl
+// /* 64-bit bitset ends */
 
 /*
  * usual includes
