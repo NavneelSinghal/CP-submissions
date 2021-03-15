@@ -213,9 +213,13 @@ void solve(int) {
     cin >> n >> q;
     vector<vector<int>> t(N << 1);
     auto insert = [&](int l, int r, int x) {
-        for (l += N - 1, r += N; l < r; l >>= 1, r >>= 1) {
+        l += N - 1;
+        r += N;
+        while (l < r) {
             if (l & 1) t[l++].push_back(x);
             if (r & 1) t[--r].push_back(x);
+            l >>= 1;
+            r >>= 1;
         }
     };
     for (int i = 0; i < q; ++i) {
@@ -234,12 +238,12 @@ void solve(int) {
             rec((v << 1) | 1, w);
         }
     })(1, x);
-    int ans = 0;
+    vector<int> ans;
+    ans.reserve(n);
     for (int i = 1; i <= n; ++i)
-        if (y[i]) ans++;
-    cout << ans << '\n';
-    for (int i = 1; i <= n; ++i)
-        if (y[i]) cout << i << ' ';
+        if (y[i]) ans.push_back(i);
+    cout << ans.size() << '\n';
+    for (auto x : ans) cout << x << ' ';
     cout << '\n';
 }
 
