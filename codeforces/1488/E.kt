@@ -23,8 +23,8 @@ fun PrintWriter.work() {
 }
 
 fun lcs(A: IntArray, B: IntArray, n: Int) : Int {
-    val tempmatchlist = MutableList<MutableList<Int>>(n + 1) { MutableList<Int>(0){0} }
-    val matchlist = MutableList<MutableList<Int>>(n + 1) { MutableList<Int>(0){0} }
+    var tempmatchlist = MutableList<MutableList<Int>>(n + 1) { MutableList<Int>(0){0} }
+    var matchlist = MutableList<MutableList<Int>>(n + 1) { MutableList<Int>(0){0} }
     for (i in n-1 downTo 0) {
         tempmatchlist[B[i]].add(i + 1)
     }
@@ -33,9 +33,9 @@ fun lcs(A: IntArray, B: IntArray, n: Int) : Int {
             matchlist[i].add(j)
         }
     }
-    val thresh = MutableList<Int>(n + 1){n + 1}
+    var thresh = MutableList<Int>(n + 1){n + 1}
     thresh[0] = 0
-    val siz = MutableList(n + 1){0}
+    var siz = MutableList(n + 1){0}
     for (i in 1..n) {
         for (j in matchlist[i]) {
             var l = 1
