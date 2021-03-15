@@ -328,7 +328,7 @@ void solve(int) {
     int n, q;
     IO::read_int(n, q);
     vector<vector<int>> t(N << 1);
-    auto insert = [&](int& l, int& r, int& x) {
+    auto insert = [&](int l, int r, int x) {
         for (l += N - 1, r += N; l < r; l >>= 1, r >>= 1) {
             if (l & 1) t[l++].push_back(x);
             if (r & 1) t[--r].push_back(x);
