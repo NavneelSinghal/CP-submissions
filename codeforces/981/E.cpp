@@ -238,12 +238,12 @@ void solve(int) {
             rec((v << 1) | 1, w);
         }
     })(1, x);
-    vector<int> ans;
-    ans.reserve(n);
+    int ans = 0;
     for (int i = 1; i <= n; ++i)
-        if (y[i]) ans.push_back(i);
-    cout << ans.size() << '\n';
-    for (auto x : ans) cout << x << ' ';
+        if (y[i]) ans++;
+    cout << ans << '\n';
+    for (int i = 1; i <= n; ++i)
+        if (y[i]) cout << i << ' ';
     cout << '\n';
 }
 
