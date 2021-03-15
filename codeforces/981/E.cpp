@@ -212,6 +212,7 @@ void solve(int) {
     int n, q;
     cin >> n >> q;
     vector<vector<int>> t(N << 1);
+
     auto insert = [&](int l, int r, int x) {
         l += N - 1;
         r += N;
@@ -222,13 +223,18 @@ void solve(int) {
             r >>= 1;
         }
     };
+
     for (int i = 0; i < q; ++i) {
         int l, r, x;
         cin >> l >> r >> x;
         insert(l, r, x);
     }
+
     bitset<N> x, y;
+    x.reset();
+    y.reset();
     x[0] = 1;
+
     y_combinator([&](auto rec, int v, bitset<N> w) -> void {
         for (auto shift : t[v]) w |= (w << shift);
         if (v >= N)
@@ -238,10 +244,14 @@ void solve(int) {
             rec((v << 1) | 1, w);
         }
     })(1, x);
+
     int ans = 0;
+
     for (int i = 1; i <= n; ++i)
         if (y[i]) ans++;
+
     cout << ans << '\n';
+
     for (int i = 1; i <= n; ++i)
         if (y[i]) cout << i << ' ';
     cout << '\n';
