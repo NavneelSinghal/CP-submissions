@@ -211,7 +211,7 @@ constexpr int N = 10005;
 void solve(int) {
     int n, q;
     cin >> n >> q;
-    vector<vector<int>> t(N << 1);
+    vector<vector<int>> t(N << 2);
 
     auto insert = [&](int l, int r, int x) {
         l += N - 1;
