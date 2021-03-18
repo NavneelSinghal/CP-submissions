@@ -383,6 +383,25 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF110393670": {
+    "contest_id": 1499,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/1499/F.cpp",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Diameter Cuts",
+    "problem_url": "https://codeforces.com/contest/1499/problem/F",
+    "submission_id": "CF110393670",
+    "submission_url": "https://codeforces.com/contest/1499/submission/110393670",
+    "tags": [
+      "combinatorics",
+      "dfs and similar",
+      "dp",
+      "trees",
+      "*2400"
+    ],
+    "timestamp": "Mar/18/2021 23:34"
+  },
   "CF110395036": {
     "contest_id": 1499,
     "language": "GNU C++17 (64)",
