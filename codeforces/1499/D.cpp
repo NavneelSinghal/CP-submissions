@@ -1,9 +1,9 @@
 // clang-format off
 
 /* optimizing pragmas begin - comment for fast compilation */
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx")
-#pragma GCC optimize("unroll-loops")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx")
+// #pragma GCC optimize("unroll-loops")
 /* optimizing pragmas end */
 
 /*
@@ -282,7 +282,9 @@ void precompute() {
 void solve(int) {
     int c, d, x;
     cin >> c >> d >> x;
-    int ans = 0;
+    // gcd(a, b) div x
+    // divisors of x
+    ll ans = 0;
     for (int i = 1; (ll)i * i <= x; ++i) {
         if (x % i == 0) {
             int w = x / i;
