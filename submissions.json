@@ -383,6 +383,22 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF110309193": {
+    "contest_id": 590,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/590/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Median Smoothing",
+    "problem_url": "https://codeforces.com/contest/590/problem/A",
+    "submission_id": "CF110309193",
+    "submission_url": "https://codeforces.com/contest/590/submission/110309193",
+    "tags": [
+      "implementation",
+      "*1700"
+    ],
+    "timestamp": "Mar/18/2021 17:28"
+  },
   "CF110313409": {
     "contest_id": 590,
     "language": "GNU C++17 (64)",
