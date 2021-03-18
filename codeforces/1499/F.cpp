@@ -279,6 +279,8 @@ void solve(int) {
         g[v].push_back(u);
     }
     auto v = y_combinator([&](auto dfs, int u, int p) -> vector<mint> {
+        // dp[i] = number of ways to remove edges in the subtree of u
+        // to get a subtree with dia <= k and depth <= i
         vector<mint> dp(1, 1);
         for (auto v : g[u]) {
             if (v == p) continue;
