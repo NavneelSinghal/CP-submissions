@@ -383,6 +383,24 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF110313409": {
+    "contest_id": 590,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/590/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Three States",
+    "problem_url": "https://codeforces.com/contest/590/problem/C",
+    "submission_id": "CF110313409",
+    "submission_url": "https://codeforces.com/contest/590/submission/110313409",
+    "tags": [
+      "dfs and similar",
+      "graphs",
+      "shortest paths",
+      "*2200"
+    ],
+    "timestamp": "Mar/18/2021 18:13"
+  },
   "CF110315292": {
     "contest_id": 590,
     "language": "GNU C++17 (64)",
