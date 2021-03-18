@@ -284,13 +284,18 @@ void solve(int) {
     cin >> c >> d >> x;
     // gcd(a, b) div x
     // divisors of x
+    auto work = [&](int x, int g) {
+        x /= g;
+        if ((x + d) % c != 0) return 0;
+        ll l = (x + d) / c;
+        return 1 << (cntprimedivs[l]);
+    };
     ll ans = 0;
     for (int i = 1; (ll)i * i <= x; ++i) {
         if (x % i == 0) {
-            int w = x / i;
-            if ((w + d) % c == 0) ans += 1 << cntprimedivs[(w + d) / c];
+            ans += work(x, i);
             if (i != x / i) {
-                if ((i + d) % c == 0) ans += 1 << cntprimedivs[(i + d) / c];
+                ans += work(x, x / i);
             }
         }
     }
