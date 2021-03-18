@@ -1,9 +1,9 @@
 // clang-format off
 
 /* optimizing pragmas begin - comment for fast compilation */
-// #pragma GCC optimize("Ofast")
-// #pragma GCC target("avx")
-// #pragma GCC optimize("unroll-loops")
+#pragma GCC optimize("Ofast")
+#pragma GCC target("avx")
+#pragma GCC optimize("unroll-loops")
 /* optimizing pragmas end */
 
 /*
@@ -266,43 +266,29 @@ using mint = Modular<>;
 const int inf = 1e9;
 
 const int N = 20'000'001;
-
 int cntprimedivs[N + 1];
-int isprime[N + 1];
 
 void precompute() {
-    isprime[0] = 1;
-    isprime[1] = 1;
     for (int i = 2; i <= N; ++i) {
-        if (!isprime[i]) {
+        if (!cntprimedivs[i]) {
             cntprimedivs[i] = 1;
             for (int j = i * 2; j <= N; j += i) {
                 cntprimedivs[j]++;
-                isprime[j] = 1;
             }
         }
     }
-    // for (int i = 0; i < 20; ++i) cout << i << ' ' << cntprimedivs[i] << '\n';
-}
-
-ll work(int c, int d, int x, int g) {
-    x /= g;
-    if ((x + d) % c != 0) return 0;
-    ll l = (x + d) / c;
-    return 1LL << (cntprimedivs[l]);
 }
 
 void solve(int) {
     int c, d, x;
     cin >> c >> d >> x;
-    // gcd(a, b) div x
-    // divisors of x
-    ll ans = 0;
-    for (int i = 1; (ll) i * i <= x; ++i) {
+    int ans = 0;
+    for (int i = 1; (ll)i * i <= x; ++i) {
         if (x % i == 0) {
-            ans += work(c, d, x, i);
+            int w = x / i;
+            if ((w + d) % c == 0) ans += 1 << cntprimedivs[(w + d) / c];
             if (i != x / i) {
-                ans += work(c, d, x, x / i);
+                if ((i + d) % c == 0) ans += 1 << cntprimedivs[(i + d) / c];
             }
         }
     }
