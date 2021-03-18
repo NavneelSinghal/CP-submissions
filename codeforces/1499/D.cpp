@@ -266,6 +266,7 @@ using mint = Modular<>;
 const int inf = 1e9;
 
 const int N = 20'000'001;
+
 int cntprimedivs[N + 1];
 
 void precompute() {
@@ -277,6 +278,14 @@ void precompute() {
             }
         }
     }
+    // for (int i = 0; i < 20; ++i) cout << i << ' ' << cntprimedivs[i] << '\n';
+}
+
+ll work(int c, int d, int x, int g) {
+    x /= g;
+    if ((x + d) % c != 0) return 0;
+    ll l = (x + d) / c;
+    return 1LL << (cntprimedivs[l]);
 }
 
 void solve(int) {
@@ -284,18 +293,12 @@ void solve(int) {
     cin >> c >> d >> x;
     // gcd(a, b) div x
     // divisors of x
-    auto work = [&](int x, int g) {
-        x /= g;
-        if ((x + d) % c != 0) return 0;
-        ll l = (x + d) / c;
-        return 1 << (cntprimedivs[l]);
-    };
     ll ans = 0;
-    for (int i = 1; (ll)i * i <= x; ++i) {
+    for (int i = 1; (ll) i * i <= x; ++i) {
         if (x % i == 0) {
-            ans += work(x, i);
+            ans += work(c, d, x, i);
             if (i != x / i) {
-                ans += work(x, x / i);
+                ans += work(c, d, x, x / i);
             }
         }
     }
@@ -316,4 +319,5 @@ signed main() {
     }
     return 0;
 }
+
 
