@@ -268,13 +268,17 @@ const int inf = 1e9;
 const int N = 20'000'001;
 
 int cntprimedivs[N + 1];
+int isprime[N + 1];
 
 void precompute() {
+    isprime[0] = 1;
+    isprime[1] = 1;
     for (int i = 2; i <= N; ++i) {
-        if (!cntprimedivs[i]) {
+        if (!isprime[i]) {
             cntprimedivs[i] = 1;
             for (int j = i * 2; j <= N; j += i) {
                 cntprimedivs[j]++;
+                isprime[j] = 1;
             }
         }
     }
@@ -319,5 +323,4 @@ signed main() {
     }
     return 0;
 }
-
 
