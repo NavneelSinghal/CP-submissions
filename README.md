@@ -11,7 +11,8 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-930 | [D - Top Secret Task](https://codeforces.com/contest/590/problem/D) | [GNU C++17 (64)](./codeforces/590/D.cpp) | `dp` `*2300` | Mar/18/2021 18:30 | 
+931 | [D - Top Secret Task](https://codeforces.com/contest/590/problem/D) | [GNU C++17 (64)](./codeforces/590/D.cpp) | `dp` `*2300` | Mar/18/2021 18:30 | 
+930 | [C - Three States](https://codeforces.com/contest/590/problem/C) | [GNU C++17 (64)](./codeforces/590/C.cpp) | `dfs and similar` `graphs` `shortest paths` `*2200` | Mar/18/2021 18:13 | 
 929 | [C2 - k-LCM (hard version)](https://codeforces.com/contest/1497/problem/C2) | [GNU C++17 (64)](./codeforces/1497/C2.cpp) | `constructive algorithms` `math` | Mar/18/2021 00:09 | 
 928 | [D - Genius](https://codeforces.com/contest/1497/problem/D) | [GNU C++17 (64)](./codeforces/1497/D.cpp) | `dp` `graphs` | Mar/17/2021 22:15 | 
 927 | [E1 - Square-free division (easy version)](https://codeforces.com/contest/1497/problem/E1) | [GNU C++17 (64)](./codeforces/1497/E1.cpp) | `dp` `greedy` `math` `number theory` | Mar/17/2021 21:02 | 
