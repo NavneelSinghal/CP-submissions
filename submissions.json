@@ -383,6 +383,22 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF110315292": {
+    "contest_id": 590,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/590/D.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D",
+    "problem_name": "Top Secret Task",
+    "problem_url": "https://codeforces.com/contest/590/problem/D",
+    "submission_id": "CF110315292",
+    "submission_url": "https://codeforces.com/contest/590/submission/110315292",
+    "tags": [
+      "dp",
+      "*2300"
+    ],
+    "timestamp": "Mar/18/2021 18:30"
+  },
   "CF110326232": {
     "contest_id": 1499,
     "language": "GNU C++17 (64)",
