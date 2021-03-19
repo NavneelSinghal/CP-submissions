@@ -383,6 +383,23 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF110431910": {
+    "contest_id": 494,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/494/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Obsessive String",
+    "problem_url": "https://codeforces.com/contest/494/problem/B",
+    "submission_id": "CF110431910",
+    "submission_url": "https://codeforces.com/contest/494/submission/110431910",
+    "tags": [
+      "dp",
+      "strings",
+      "*2000"
+    ],
+    "timestamp": "Mar/19/2021 14:19"
+  },
   "CF110439655": {
     "contest_id": 494,
     "language": "GNU C++17 (64)",
