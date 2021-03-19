@@ -297,7 +297,7 @@ void solve(int) {
     // slightly more efficient for cache - replace tout[v] by tin[v] because if
     // tin[v] \in [tin[u], tout[u]] then tout[v] also satisfies
     auto is_ancestor = [&](int u, int v) {
-        return tin[u] <= tin[v] && tout[u] >= tin[v];
+        return tin[u] <= tin[v] && tout[u] >= tout[v];
     };
     auto lca = [&](int u, int v) {
         if (is_ancestor(u, v)) return u;
