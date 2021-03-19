@@ -383,6 +383,24 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF110455956": {
+    "contest_id": 1264,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/1264/D1.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D1",
+    "problem_name": "Beautiful Bracket Sequence (easy version)",
+    "problem_url": "https://codeforces.com/contest/1264/problem/D1",
+    "submission_id": "CF110455956",
+    "submission_url": "https://codeforces.com/contest/1264/submission/110455956",
+    "tags": [
+      "combinatorics",
+      "dp",
+      "probabilities",
+      "*2600"
+    ],
+    "timestamp": "Mar/19/2021 19:06"
+  },
   "CF110840849": {
     "contest_id": 1483,
     "language": "GNU C++17 (64)",
