@@ -279,34 +279,42 @@ void solve(int) {
         g[v].emplace_back(u, w);
     }
 
-    // precompute path lengths and lca
+    // do some precomputation for lca and store path lengths
     const int LOG = __lg(n) + 2;
-    int timer = 0;
-    vector<int> tin(n), tout(n);
-    vector<vector<int>> parent(LOG, vector<int>(n));
     vector<mint> path_length(n);
-    y_combinator([&](const auto dfs, int u, int p, mint cur_path_length) -> void {
-        tin[u] = ++timer;
-        parent[0][u] = p;
+    vector<vector<int>> parent(LOG, vector<int>(n));
+    vector<int> depth(n);
+    y_combinator([&](const auto dfs, int u, int p, int cur_depth,
+                     mint cur_path_length) -> void {
         path_length[u] = cur_path_length;
-        for (int i = 1; i < LOG; ++i) parent[i][u] = parent[i - 1][parent[i - 1][u]];
-        for (auto &[v, cost] : g[u])
-            if (v != p) dfs(v, u, cur_path_length + cost);
-        tout[u] = ++timer;
-    })(0, 0, 0);
-    // slightly more efficient for cache - replace tout[v] by tin[v] because if
-    // tin[v] \in [tin[u], tout[u]] then tout[v] also satisfies
-    auto is_ancestor = [&](int u, int v) {
-        return tin[u] <= tin[v] && tout[u] >= tout[v];
-    };
-    auto lca = [&](int u, int v) {
-        if (is_ancestor(u, v)) return u;
-        if (is_ancestor(v, u)) return v;
+        depth[u] = cur_depth;
+        parent[0][u] = p;
+        for (auto &[v, cost] : g[u]) {
+            if (v != p) {
+                dfs(v, u, cur_depth + 1, cur_path_length + cost);
+            }
+        }
+    })(0, 0, 0, 0);
+    for (int i = 1; i < LOG; ++i) {
+        for (int j = 0; j < n; ++j) {
+            parent[i][j] = parent[i - 1][parent[i - 1][j]];
+        }
+    }
+    auto lca = [&](int x, int y) {
         for (int i = LOG - 1; i >= 0; --i)
-            if (!is_ancestor(parent[i][u], v)) u = parent[i][u];
-        return parent[0][u];
+            if (depth[parent[i][x]] >= depth[y]) x = parent[i][x];
+        for (int i = LOG - 1; i >= 0; --i)
+            if (depth[parent[i][y]] >= depth[x]) y = parent[i][y];
+        for (int i = LOG - 1; i >= 0; --i)
+            if (parent[i][x] != parent[i][y]) {
+                x = parent[i][x];
+                y = parent[i][y];
+            }
+        if (x == y) return x;
+        return parent[0][x];
     };
 
+    // compute helper sums for squares
     vector<mint> sum1(n), sum2(n), siz(n);  // for stuff in subtree
     vector<mint> SUM1(n), SUM2(n), SIZ(n);  // for stuff not in subtree
     y_combinator([&](const auto dfs, int u, int p) -> void {
