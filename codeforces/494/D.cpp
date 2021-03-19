@@ -308,9 +308,12 @@ void solve(int) {
         return parent[0][u];
     };
 
-    vector<mint> sum1(n, 0), sum2(n, 0), siz(n, 1);  // for stuff in subtree
+    vector<mint> sum1(n), sum2(n), siz(n);  // for stuff in subtree
     vector<mint> SUM1(n), SUM2(n), SIZ(n);  // for stuff not in subtree
     y_combinator([&](const auto dfs, int u, int p) -> void {
+        sum1[u] = 0;
+        sum2[u] = 0;
+        siz[u] = 1;
         for (auto &[v, cost] : g[u]) {
             if (v == p) continue;
             dfs(v, u);
