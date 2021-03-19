@@ -285,18 +285,17 @@ void solve(int) {
     vector<int> tin(n), tout(n);
     vector<vector<int>> parent(LOG, vector<int>(n));
     vector<mint> path_length(n);
-    y_combinator(
-        [&](const auto dfs, int u, int p, mint cur_path_length) -> void {
-            tin[u] = ++timer;
-            parent[0][u] = p;
-            path_length[u] = cur_path_length;
-            for (auto &[v, cost] : g[u])
-                if (v != p) dfs(v, u, cur_path_length + cost);
-            tout[u] = ++timer;
-        })(0, 0, 0);
-    for (int i = 1; i < LOG; ++i)
-        for (int j = 0; j < n; ++j)
-            parent[i][j] = parent[i - 1][parent[i - 1][j]];
+    y_combinator([&](const auto dfs, int u, int p, mint cur_path_length) -> void {
+        tin[u] = ++timer;
+        parent[0][u] = p;
+        path_length[u] = cur_path_length;
+        for (int i = 1; i < LOG; ++i) parent[i][u] = parent[i - 1][parent[i - 1][u]];
+        for (auto &[v, cost] : g[u])
+            if (v != p) dfs(v, u, cur_path_length + cost);
+        tout[u] = ++timer;
+    })(0, 0, 0);
+    // slightly more efficient for cache - replace tout[v] by tin[v] because if
+    // tin[v] \in [tin[u], tout[u]] then tout[v] also satisfies
     auto is_ancestor = [&](int u, int v) {
         return tin[u] <= tin[v] && tout[u] >= tin[v];
     };
