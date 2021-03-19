@@ -315,8 +315,7 @@ void solve(int) {
     };
 
     // compute helper sums for squares
-    vector<mint> sum1(n), sum2(n), siz(n);  // for stuff in subtree
-    vector<mint> SUM1(n), SUM2(n), SIZ(n);  // for stuff not in subtree
+    vector<mint> sum1(n), sum2(n), siz(n);
     y_combinator([&](const auto dfs, int u, int p) -> void {
         sum1[u] = 0;
         sum2[u] = 0;
@@ -329,30 +328,30 @@ void solve(int) {
             sum2[u] += sum2[v] + 2 * cost * sum1[v] + cost * cost * siz[v];
         }
     })(0, 0);
+
+    vector<mint> SUM1(n), SUM2(n), SIZ(n);
     y_combinator([&](const auto dfs, int u, int p, mint cur_size, mint cur_sum1,
                      mint cur_sum2) -> void {
-        cur_size += 1;
-        SIZ[u] = cur_size;
-        SUM1[u] = cur_sum1;
-        SUM2[u] = cur_sum2;
-        for (auto &[v, cost] : g[u]) {
-            if (v == p) continue;
-            cur_size += siz[v];
-            cur_sum1 += sum1[v] + cost * siz[v];
-            cur_sum2 += sum2[v] + 2 * cost * sum1[v] + cost * cost * siz[v];
-        }
-        for (auto &[v, cost] : g[u]) {
-            if (v == p) continue;
-            mint removed_sum1 = cur_sum1 - (sum1[v] + cost * siz[v]);
-            mint removed_sum2 = cur_sum2 - (sum2[v] + 2 * cost * sum1[v] +
-                                            cost * cost * siz[v]);
-            mint child_size = cur_size - siz[v];
-            mint child_sum1 = removed_sum1 + cost * child_size;
-            mint child_sum2 = removed_sum2 + 2 * cost * removed_sum1 +
-                              cost * cost * child_size;
-            dfs(v, u, child_size, child_sum1, child_sum2);
-        }
-    })(0, 0, 0, 0, 0);
+            cur_size += 1;
+            SIZ[u] = cur_size;
+            SUM1[u] = cur_sum1;
+            SUM2[u] = cur_sum2;
+            for (auto &[v, cost] : g[u]) {
+                if (v == p) continue;
+                cur_size += siz[v];
+                cur_sum1 += sum1[v] + cost * siz[v];
+                cur_sum2 += sum2[v] + 2 * cost * sum1[v] + cost * cost * siz[v];
+            }
+            for (auto &[v, cost] : g[u]) {
+                if (v == p) continue;
+                mint g1 = cur_sum1 - (sum1[v] + cost * siz[v]);
+                mint g2 = cur_sum2 - (sum2[v] + 2 * cost * sum1[v] + cost * cost * siz[v]);
+                mint z = cur_size - siz[v];
+                mint z1 = g1 + cost * z;
+                mint z2 = g2 + 2 * cost * g1 + cost * cost * z;
+                dfs(v, u, z, z1, z2);
+            }
+    })(0, -1, 0, 0, 0);
 
     int q;
     cin >> q;
@@ -360,16 +359,19 @@ void solve(int) {
         int u, v;
         cin >> u >> v;
         --u, --v;
-        mint total = sum2[u] + SUM2[u];
+        swap(u, v);
+        mint total = sum2[v] + SUM2[v];
+        mint ans;
         int l = lca(u, v);
-        mint d = path_length[v] + path_length[u] - 2 * path_length[l];
-        if (l == v)
-            cout << total -
-                        2 * (SUM2[v] + 2 * SUM1[v] * d + (SIZ[v] - 1) * d * d)
-                 << '\n';
-        else
-            cout << 2 * (sum2[v] + 2 * sum1[v] * d + siz[v] * d * d) - total
-                 << '\n';
+        if (l == u) {
+            mint d = path_length[v] - path_length[u];
+            ans =
+                total - 2 * (SUM2[u] + 2 * SUM1[u] * d + (SIZ[u] - 1) * d * d);
+        } else {
+            mint d = path_length[v] + path_length[u] - 2 * path_length[l];
+            ans = 2 * (sum2[u] + 2 * sum1[u] * d + siz[u] * d * d) - total;
+        }
+        cout << ans << '\n';
     }
 }
 
