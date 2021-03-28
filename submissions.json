@@ -1,4 +1,20 @@
 {
+  "AC21349939": {
+    "contest_id": "arc116",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc116/A.cpp",
+    "platform": "AtCoder",
+    "problem_index": "A",
+    "problem_name": "Odd vs Even",
+    "problem_url": "https://atcoder.jp/contests/arc116/tasks/arc116_a",
+    "submission_id": "AC21349939",
+    "submission_url": "https://atcoder.jp/contests/arc116/submissions/21349939",
+    "tags": [
+      "AtCoder",
+      "*300"
+    ],
+    "timestamp": "Mar/28/2021 17:31"
+  },
   "AC21352725": {
     "contest_id": "arc116",
     "language": "C++ (GCC 9.2.1)",
