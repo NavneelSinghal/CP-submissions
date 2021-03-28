@@ -11,9 +11,10 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-966 | [A - Is it rated - 2](https://codeforces.com/contest/1505/problem/A) | [GNU C++17 (64)](./codeforces/1505/A.cpp) | `implementation` `interactive` | Apr/01/2021 20:06 | 
-965 | [D - I Wanna Win The Game](https://atcoder.jp/contests/arc116/tasks/arc116_d) | [C++ (GCC 9.2.1)](./atcoder/arc116/D.cpp) | `AtCoder` `*500` | Mar/28/2021 18:53 | 
-964 | [C - Multiple Sequences](https://atcoder.jp/contests/arc116/tasks/arc116_c) | [C++ (GCC 9.2.1)](./atcoder/arc116/C.cpp) | `AtCoder` `*500` | Mar/28/2021 18:13 | 
+967 | [A - Is it rated - 2](https://codeforces.com/contest/1505/problem/A) | [GNU C++17 (64)](./codeforces/1505/A.cpp) | `implementation` `interactive` | Apr/01/2021 20:06 | 
+966 | [D - I Wanna Win The Game](https://atcoder.jp/contests/arc116/tasks/arc116_d) | [C++ (GCC 9.2.1)](./atcoder/arc116/D.cpp) | `AtCoder` `*500` | Mar/28/2021 18:53 | 
+965 | [C - Multiple Sequences](https://atcoder.jp/contests/arc116/tasks/arc116_c) | [C++ (GCC 9.2.1)](./atcoder/arc116/C.cpp) | `AtCoder` `*500` | Mar/28/2021 18:13 | 
+964 | [B - Products of Min-Max](https://atcoder.jp/contests/arc116/tasks/arc116_b) | [C++ (GCC 9.2.1)](./atcoder/arc116/B.cpp) | `AtCoder` `*400` | Mar/28/2021 17:42 | 
 963 | [E - Traveler](https://atcoder.jp/contests/abc197/tasks/abc197_e) | [C++ (GCC 9.2.1)](./atcoder/abc197/E.cpp) | `AtCoder` `*500` | Mar/27/2021 18:10 | 
 962 | [D - Opposite](https://atcoder.jp/contests/abc197/tasks/abc197_d) | [C++ (GCC 9.2.1)](./atcoder/abc197/D.cpp) | `AtCoder` `*400` | Mar/27/2021 17:49 | 
 961 | [C - ORXOR](https://atcoder.jp/contests/abc197/tasks/abc197_c) | [C++ (GCC 9.2.1)](./atcoder/abc197/C.cpp) | `AtCoder` `*300` | Mar/27/2021 17:41 | 
