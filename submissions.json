@@ -1,4 +1,20 @@
 {
+  "AC21361547": {
+    "contest_id": "arc116",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc116/D.cpp",
+    "platform": "AtCoder",
+    "problem_index": "D",
+    "problem_name": "I Wanna Win The Game",
+    "problem_url": "https://atcoder.jp/contests/arc116/tasks/arc116_d",
+    "submission_id": "AC21361547",
+    "submission_url": "https://atcoder.jp/contests/arc116/submissions/21361547",
+    "tags": [
+      "AtCoder",
+      "*500"
+    ],
+    "timestamp": "Mar/28/2021 18:53"
+  },
   "AC21796974": {
     "contest_id": "practice2",
     "language": "C++ (GCC 9.2.1)",
