@@ -138,6 +138,121 @@ void print_treap(treap_node_ptr t) {
 
 }  // namespace treap
 
+namespace IO {
+const int BUFFER_SIZE = 1 << 15;
+
+char input_buffer[BUFFER_SIZE];
+size_t input_pos = 0, input_len = 0;
+
+char output_buffer[BUFFER_SIZE];
+int output_pos = 0;
+
+char number_buffer[100];
+uint8_t lookup[100];
+
+void _update_input_buffer() {
+    input_len = fread(input_buffer, sizeof(char), BUFFER_SIZE, stdin);
+    input_pos = 0;
+
+    if (input_len == 0) input_buffer[0] = EOF;
+}
+
+inline char next_char(bool advance = true) {
+    if (input_pos >= input_len) _update_input_buffer();
+
+    return input_buffer[advance ? input_pos++ : input_pos];
+}
+
+inline bool isspace(char c) {
+    return (unsigned char)(c - '\t') < 5 || c == ' ';
+}
+
+inline void read_char(char &c) {
+    while (isspace(next_char(false))) next_char();
+
+    c = next_char();
+}
+
+template <typename T>
+inline void read_int(T &number) {
+    bool negative = false;
+    number = 0;
+
+    while (!isdigit(next_char(false)))
+        if (next_char() == '-') negative = true;
+
+    do {
+        number = 10 * number + (next_char() - '0');
+    } while (isdigit(next_char(false)));
+
+    if (negative) number = -number;
+}
+
+template <typename T, typename... Args>
+inline void read_int(T &number, Args &... args) {
+    read_int(number);
+    read_int(args...);
+}
+
+inline void read_str(std::string &str) {
+    while (isspace(next_char(false))) next_char();
+
+    str.clear();
+
+    do {
+        str += next_char();
+    } while (!isspace(next_char(false)));
+}
+
+void _flush_output() {
+    fwrite(output_buffer, sizeof(char), output_pos, stdout);
+    output_pos = 0;
+}
+
+inline void write_char(char c) {
+    if (output_pos == BUFFER_SIZE) _flush_output();
+
+    output_buffer[output_pos++] = c;
+}
+
+template <typename T>
+inline void write_int(T number, char after = '\0') {
+    if (number < 0) {
+        write_char('-');
+        number = -number;
+    }
+
+    int length = 0;
+
+    while (number >= 10) {
+        uint8_t lookup_value = lookup[number % 100];
+        number /= 100;
+        number_buffer[length++] = char((lookup_value & 15) + '0');
+        number_buffer[length++] = char((lookup_value >> 4) + '0');
+    }
+
+    if (number != 0 || length == 0) write_char(char(number + '0'));
+
+    for (int i = length - 1; i >= 0; i--) write_char(number_buffer[i]);
+
+    if (after) write_char(after);
+}
+
+inline void write_str(const std::string &str, char after = '\0') {
+    for (char c : str) write_char(c);
+
+    if (after) write_char(after);
+}
+
+void IOinit() {
+    // Make sure _flush_output() is called at the end of the program.
+    bool exit_success = atexit(_flush_output) == 0;
+    assert(exit_success);
+
+    for (int i = 0; i < 100; i++) lookup[i] = uint8_t((i / 10 << 4) + i % 10);
+}
+}  // namespace IO
+
 struct curve {
     treap::treap_node_ptr t;
     int last_added;
@@ -186,14 +301,16 @@ struct curve {
 };
 
 int main() {
-    std::ios_base::sync_with_stdio(0);
-    std::cin.tie(0);
-    std::cin.exceptions(std::cin.failbit | std::cin.badbit);
+    // std::ios_base::sync_with_stdio(0);
+    // std::cin.tie(0);
+    // std::cin.exceptions(std::cin.failbit | std::cin.badbit);
 
+    IO::IOinit();
     int n;
-    std::cin >> n;
+    IO::read_int(n);
+    // std::cin >> n;
     std::vector<std::pair<int, int>> cards(2 * n);
-    for (auto &[x, y] : cards) std::cin >> x >> y;
+    for (auto &[x, y] : cards) IO::read_int(x, y); // std::cin >> x >> y;
 
     auto normalize_value = [&](int x) {
         if (x < 0)
@@ -259,7 +376,8 @@ int main() {
         cycle.emplace_back(cycle_start);
 
         if (cycle.size() % 2 == 1) {
-            std::cout << "NO\n";
+            IO::write_str("NO\n");
+            // std::cout << "NO\n";
             return 0;
         }
 
@@ -294,7 +412,8 @@ int main() {
         }
 
         if (abs(cnt1 - cnt0) != 2) {
-            std::cout << "NO\n";
+            IO::write_str("NO\n");
+            // std::cout << "NO\n";
             return 0;
         }
 
@@ -324,6 +443,24 @@ int main() {
             vertices.push_back(edges[i][1]);
         std::string orientations;
         for (auto &[x, y, z] : edges) orientations += '0' + (char)z;
+        std::vector<int> matching_location(edges.size(), -1);
+
+        std::stack<int> matching_stack;
+        for (int i = 1; i + 1 < (int)orientations.size(); ++i) {
+            if (matching_stack.empty()) {
+                matching_stack.push(i);
+            } else {
+                if (orientations[matching_stack.top()] == orientations[i]) {
+                    matching_stack.push(i);
+                } else {
+                    int other = matching_stack.top();
+                    matching_stack.pop();
+                    matching_location[i] = other;
+                    matching_location[other] = i;
+                }
+            }
+        }
+
         curve *ret =
             y_combinator([&](auto solve, int v_start, int v_end) -> curve * {
                 if (v_start == v_end) {
@@ -333,33 +470,13 @@ int main() {
                 }
                 char last_orientation = orientations[v_end];
                 char first_orientation = orientations[v_start + 1];
-                if (last_orientation == first_orientation) {
-                    int left_bal = 0;
-                    int right_bal = 0;
-                    int used = -1;
-                    int left_ptr = v_start;
-                    int right_ptr = v_end;
-                    while (left_ptr < v_end && right_ptr > v_start) {
-                        left_bal += 2 * (orientations[left_ptr + 1] == '0') - 1;
-                        left_ptr++;
-                        if (left_bal == 0) {
-                            used = 0;
-                            break;
-                        }
-                        right_bal += 2 * (orientations[right_ptr] == '0') - 1;
-                        right_ptr--;
-                        if (right_bal == 0) {
-                            used = 1;
-                            break;
-                        }
-                    }
-
-                    int mid_ptr = used ? right_ptr : left_ptr;
-                    auto left_curve = solve(v_start, mid_ptr);
-                    auto right_curve = solve(mid_ptr, v_end);
+                if (last_orientation == first_orientation ||
+                    (matching_location[v_start + 1] != v_end)) {
+                    int first_match_end = matching_location[v_start + 1];
+                    auto left_curve = solve(v_start, first_match_end);
+                    auto right_curve = solve(first_match_end, v_end);
                     left_curve->insert_middle(*right_curve);
                     return left_curve;
-
                 } else {
                     auto x = vertices[v_start];
                     auto y = vertices[v_end];
@@ -383,9 +500,13 @@ int main() {
         for (auto i : indices_order) answer.push_back(i);
     }
 
-    std::cout << "YES\n";
-    for (auto i : answer)
-        std::cout << cards[i].first << ' ' << cards[i].second << '\n';
+    IO::write_str("YES\n");
+    // std::cout << "YES\n";
+    for (auto i : answer) {
+        IO::write_int(cards[i].first, ' ');
+        IO::write_int(cards[i].second, '\n');
+        // std::cout << cards[i].first << ' ' << cards[i].second << '\n';
+    }
 
     return 0;
 }
