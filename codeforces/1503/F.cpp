@@ -28,116 +28,6 @@ decltype(auto) y_combinator(Fun &&fun) {
     return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun));
 }
 
-namespace treap {
-
-std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
-const int INF = 1e9;
-
-struct treap_node {
-    int priority, value, cnt;
-    bool is_reversed;
-    treap_node *left_child, *right_child;
-    treap_node(int v)
-        : value(v),
-          cnt(1),
-          left_child(nullptr),
-          right_child(nullptr),
-          priority(std::uniform_int_distribution<int>(0, INF)(rng)) {}
-};
-
-using treap_node_ptr = treap_node *;
-
-int cnt(treap_node_ptr t) { return t ? t->cnt : 0; }
-
-void update_cnt(treap_node_ptr t) {
-    if (t) {
-        t->cnt = cnt(t->left_child) + cnt(t->right_child) + 1;
-    }
-}
-
-void push(treap_node_ptr t) {
-    if (t && t->is_reversed) {
-        t->is_reversed = false;
-        std::swap(t->left_child, t->right_child);
-        if (t->left_child) t->left_child->is_reversed ^= true;
-        if (t->right_child) t->right_child->is_reversed ^= true;
-    }
-}
-
-void merge(treap_node_ptr &t, treap_node_ptr l, treap_node_ptr r) {
-    push(l);
-    push(r);
-    if (!l || !r) {
-        t = (l ? l : r);
-    } else if (l->priority > r->priority) {
-        merge(l->right_child, l->right_child, r);
-        t = l;
-    } else {
-        merge(r->left_child, l, r->left_child);
-        t = r;
-    }
-    update_cnt(t);
-}
-
-void split(treap_node_ptr t, treap_node_ptr &l, treap_node_ptr &r, int key,
-           int add = 0) {
-    if (!t) {
-        l = r = 0;
-        return;
-    }
-    push(t);
-    int cur_key = add + cnt(t->left_child);
-    if (key <= cur_key) {
-        split(t->left_child, l, t->left_child, key, add);
-        r = t;
-    } else {
-        split(t->right_child, t->right_child, r, key,
-              add + 1 + cnt(t->left_child));
-        l = t;
-    }
-    update_cnt(t);
-}
-
-void insert(treap_node_ptr &t, int pos, int v) {
-    treap_node_ptr t1, t2;
-    split(t, t1, t2, pos - 1);
-    merge(t1, t1, new treap_node(v));
-    merge(t, t1, t2);
-}
-
-void erase(treap_node_ptr &t, int pos) {
-    treap_node_ptr t1, t2, t3;
-    split(t, t1, t2, pos - 1);
-    split(t2, t2, t3, 1);
-    merge(t, t1, t3);
-}
-
-void reverse(treap_node_ptr t, int l, int r) {
-    treap_node_ptr t1, t2, t3;
-    split(t, t1, t2, l - 1);  // one-indexed
-    split(t2, t2, t3, r - l + 1);
-    t2->is_reversed ^= true;
-    merge(t, t1, t2);
-    merge(t, t, t3);
-}
-
-void inorder_traversal(treap_node_ptr t, std::vector<int> &a) {
-    if (!t) return;
-    push(t);
-    inorder_traversal(t->left_child, a);
-    a.push_back(t->value);
-    inorder_traversal(t->right_child, a);
-}
-
-void print_treap(treap_node_ptr t) {
-    std::vector<int> v;
-    inorder_traversal(t, v);
-    for (auto x : v) std::cerr << x << ' ';
-    std::cerr << '\n';
-}
-
-}  // namespace treap
-
 namespace IO {
 const int BUFFER_SIZE = 1 << 15;
 
@@ -254,49 +144,41 @@ void IOinit() {
 }  // namespace IO
 
 struct curve {
-    treap::treap_node_ptr t;
-    int last_added;
+    std::list<int> a, b;
+    std::list<int>::iterator last_added_a, last_added_b;
 
-    curve() : t(nullptr), last_added(0) {}
+    curve() : a(), b(), last_added_a(std::end(a)), last_added_b(std::end(b)) {}
 
     void insert_back(int x, bool is_last) {
-        if (t == nullptr) {
-            t = new treap::treap_node(x);
-        } else {
-            treap::insert(t, treap::cnt(t) + 1, x);
-        }
+        a.push_back(x);
+        b.push_front(x);
         if (!is_last) return;
-        last_added = treap::cnt(t);
+        last_added_a = std::prev(a.end());
+        last_added_b = b.begin();
     }
 
     void insert_front(int x, bool is_last) {
-        if (t == nullptr) {
-            t = new treap::treap_node(x);
-        } else {
-            treap::insert(t, 1, x);
-        }
+        a.push_front(x);
+        b.push_back(x);
         if (!is_last) return;
-        last_added = 1;
+        last_added_a = a.begin();
+        last_added_b = std::prev(b.end());
     }
 
     void insert_middle(curve &c) {
-        if (t == nullptr) {
-            t = c.t;
-            last_added = c.last_added;
-            return;
-        }
-        treap::treap_node_ptr t1, t2, t3;
-        treap::split(t, t1, t2, last_added - 1);
-        treap::split(t2, t2, t3, 1);
-        treap::merge(t1, t1, c.t);
-        treap::merge(t, t1, t3);
-        last_added = last_added - 1 + c.last_added;
+        a.splice(last_added_a, c.a);
+        a.erase(last_added_a);
+        b.splice(last_added_b, c.b);
+        b.erase(last_added_b);
+        std::swap(last_added_a, c.last_added_a);
+        std::swap(last_added_b, c.last_added_b);
+        c.a.clear();
+        c.b.clear();
     }
 
     void reverse() {
-        int cnt_t = treap::cnt(t);
-        treap::reverse(t, 1, cnt_t);
-        last_added = cnt_t + 1 - last_added;
+        a.swap(b);
+        std::swap(last_added_a, last_added_b);
     }
 };
 
@@ -304,8 +186,9 @@ int main() {
     // std::ios_base::sync_with_stdio(0);
     // std::cin.tie(0);
     // std::cin.exceptions(std::cin.failbit | std::cin.badbit);
-
+    
     IO::IOinit();
+
     int n;
     IO::read_int(n);
     // std::cin >> n;
@@ -376,8 +259,8 @@ int main() {
         cycle.emplace_back(cycle_start);
 
         if (cycle.size() % 2 == 1) {
-            IO::write_str("NO\n");
             // std::cout << "NO\n";
+            IO::write_str("NO\n");
             return 0;
         }
 
@@ -494,14 +377,15 @@ int main() {
             })(0, (int)vertices.size() - 1);
 
         std::vector<int> indices_order{edges[0][0]};
-        treap::inorder_traversal(ret->t, indices_order);
+        std::vector<int> alternative_order;
+        for (auto x : ret->a) indices_order.push_back(x);
         if (cards[indices_order[0]].first < 0)
             std::reverse(std::begin(indices_order), std::end(indices_order));
         for (auto i : indices_order) answer.push_back(i);
     }
 
-    IO::write_str("YES\n");
     // std::cout << "YES\n";
+    IO::write_str("YES\n");
     for (auto i : answer) {
         IO::write_int(cards[i].first, ' ');
         IO::write_int(cards[i].second, '\n');
