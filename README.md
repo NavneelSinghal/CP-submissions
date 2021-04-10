@@ -11,17 +11,18 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-980 | [E - Colorings and Dominoes](https://codeforces.com/contest/1511/problem/E) | [GNU C++17 (64)](./codeforces/1511/E.cpp) | `combinatorics` `dp` | Apr/12/2021 22:12 | 
-979 | [D - Min Cost String](https://codeforces.com/contest/1511/problem/D) | [GNU C++17 (64)](./codeforces/1511/D.cpp) | `constructive algorithms` `dfs and similar` `graphs` `greedy` | Apr/12/2021 21:08 | 
-978 | [C - Yet Another Card Deck](https://codeforces.com/contest/1511/problem/C) | [GNU C++17 (64)](./codeforces/1511/C.cpp) | `data structures` `implementation` `trees` | Apr/12/2021 20:31 | 
-977 | [B - GCD Length](https://codeforces.com/contest/1511/problem/B) | [GNU C++17 (64)](./codeforces/1511/B.cpp) | `constructive algorithms` `math` | Apr/12/2021 20:19 | 
-976 | [A - Review Site](https://codeforces.com/contest/1511/problem/A) | [GNU C++17 (64)](./codeforces/1511/A.cpp) | `greedy` | Apr/12/2021 20:09 | 
-975 | [E - Cost Equilibrium](https://codeforces.com/contest/1513/problem/E) | [GNU C++17 (64)](./codeforces/1513/E.cpp) | `combinatorics` `constructive algorithms` `math` `sortings` | Apr/11/2021 22:03 | 
-974 | [D - GCD and MST](https://codeforces.com/contest/1513/problem/D) | [GNU C++17 (64)](./codeforces/1513/D.cpp) | `constructive algorithms` `data structures` `graphs` `implementation` `number theory` `sortings` | Apr/11/2021 21:16 | 
-973 | [C - Add One](https://codeforces.com/contest/1513/problem/C) | [GNU C++17 (64)](./codeforces/1513/C.cpp) | `dp` `matrices` | Apr/11/2021 20:39 | 
-972 | [B - AND Sequences](https://codeforces.com/contest/1513/problem/B) | [GNU C++17 (64)](./codeforces/1513/B.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `math` | Apr/11/2021 20:17 | 
-971 | [A - Array and Peaks](https://codeforces.com/contest/1513/problem/A) | [GNU C++17 (64)](./codeforces/1513/A.cpp) | `constructive algorithms` `implementation` | Apr/11/2021 20:10 | 
-970 | [F - Education](https://codeforces.com/contest/1512/problem/F) | [GNU C++17 (64)](./codeforces/1512/F.cpp) | `brute force` `dp` `greedy` `implementation` | Apr/11/2021 00:08 | 
+981 | [E - Colorings and Dominoes](https://codeforces.com/contest/1511/problem/E) | [GNU C++17 (64)](./codeforces/1511/E.cpp) | `combinatorics` `dp` | Apr/12/2021 22:12 | 
+980 | [D - Min Cost String](https://codeforces.com/contest/1511/problem/D) | [GNU C++17 (64)](./codeforces/1511/D.cpp) | `constructive algorithms` `dfs and similar` `graphs` `greedy` | Apr/12/2021 21:08 | 
+979 | [C - Yet Another Card Deck](https://codeforces.com/contest/1511/problem/C) | [GNU C++17 (64)](./codeforces/1511/C.cpp) | `data structures` `implementation` `trees` | Apr/12/2021 20:31 | 
+978 | [B - GCD Length](https://codeforces.com/contest/1511/problem/B) | [GNU C++17 (64)](./codeforces/1511/B.cpp) | `constructive algorithms` `math` | Apr/12/2021 20:19 | 
+977 | [A - Review Site](https://codeforces.com/contest/1511/problem/A) | [GNU C++17 (64)](./codeforces/1511/A.cpp) | `greedy` | Apr/12/2021 20:09 | 
+976 | [E - Cost Equilibrium](https://codeforces.com/contest/1513/problem/E) | [GNU C++17 (64)](./codeforces/1513/E.cpp) | `combinatorics` `constructive algorithms` `math` `sortings` | Apr/11/2021 22:03 | 
+975 | [D - GCD and MST](https://codeforces.com/contest/1513/problem/D) | [GNU C++17 (64)](./codeforces/1513/D.cpp) | `constructive algorithms` `data structures` `graphs` `implementation` `number theory` `sortings` | Apr/11/2021 21:16 | 
+974 | [C - Add One](https://codeforces.com/contest/1513/problem/C) | [GNU C++17 (64)](./codeforces/1513/C.cpp) | `dp` `matrices` | Apr/11/2021 20:39 | 
+973 | [B - AND Sequences](https://codeforces.com/contest/1513/problem/B) | [GNU C++17 (64)](./codeforces/1513/B.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `math` | Apr/11/2021 20:17 | 
+972 | [A - Array and Peaks](https://codeforces.com/contest/1513/problem/A) | [GNU C++17 (64)](./codeforces/1513/A.cpp) | `constructive algorithms` `implementation` | Apr/11/2021 20:10 | 
+971 | [F - Education](https://codeforces.com/contest/1512/problem/F) | [GNU C++17 (64)](./codeforces/1512/F.cpp) | `brute force` `dp` `greedy` `implementation` | Apr/11/2021 00:08 | 
+970 | [E - Permutation by Sum](https://codeforces.com/contest/1512/problem/E) | [GNU C++17 (64)](./codeforces/1512/E.cpp) | `brute force` `greedy` `math` | Apr/11/2021 00:02 | 
 969 | [F - Balance the Cards](https://codeforces.com/contest/1503/problem/F) | [GNU C++17 (64)](./codeforces/1503/F.cpp) | `constructive algorithms` `data structures` `divide and conquer` `geometry` `graphs` | Apr/03/2021 23:13 | 
 968 | [A - Is it rated - 2](https://codeforces.com/contest/1505/problem/A) | [GNU C++17 (64)](./codeforces/1505/A.cpp) | `implementation` `interactive` | Apr/01/2021 20:06 | 
 967 | [D - I Wanna Win The Game](https://atcoder.jp/contests/arc116/tasks/arc116_d) | [C++ (GCC 9.2.1)](./atcoder/arc116/D.cpp) | `AtCoder` `*500` | Mar/28/2021 18:53 | 
