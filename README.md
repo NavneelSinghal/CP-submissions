@@ -11,7 +11,8 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-989 | [C - Complete the MST](https://codeforces.com/contest/1508/problem/C) | [GNU C++17 (64)](./codeforces/1508/C.cpp) | `dfs and similar` `greedy` `math` | Apr/16/2021 23:21 | 
+990 | [C - Complete the MST](https://codeforces.com/contest/1508/problem/C) | [GNU C++17 (64)](./codeforces/1508/C.cpp) | `dfs and similar` `greedy` `math` | Apr/16/2021 23:21 | 
+989 | [B - Almost Sorted](https://codeforces.com/contest/1508/problem/B) | [GNU C++17 (64)](./codeforces/1508/B.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `math` | Apr/16/2021 23:18 | 
 988 | [F - Swapping Problem](https://codeforces.com/contest/1513/problem/F) | [Ocaml](./codeforces/1513/F.ml) | `brute force` `constructive algorithms` `data structures` `sortings` | Apr/15/2021 04:16 | 
 987 | [D - Segment Intersections](https://codeforces.com/contest/1389/problem/D) | [GNU C++17 (64)](./codeforces/1389/D.cpp) | `brute force` `greedy` `implementation` `math` `*2100` | Apr/13/2021 15:08 | 
 986 | [E - Colorings and Dominoes](https://codeforces.com/contest/1511/problem/E) | [GNU C++17 (64)](./codeforces/1511/E.cpp) | `combinatorics` `dp` | Apr/12/2021 22:12 | 
