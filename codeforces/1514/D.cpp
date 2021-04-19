@@ -31,7 +31,7 @@
 // #include <ext/rope>
 
 #define int int_fast32_t
-// #define unsigned uint_fast32_t
+#define unsigned uint_fast32_t
 #define ll int_fast64_t
 #define ull uint_fast64_t
 #define ld long double
@@ -440,6 +440,82 @@ using namespace __gnu_pbds;
 
 /* main code starts */
 
+// https://ideone.com/SM1bnE publicly available before contest:
+// https://codeforces.com/blog/entry/46425
+
+const int MAXA = 300005;
+const int MAXN = 300005;
+const int MAXQ = 300005;
+
+int a[MAXN];
+typedef tuple<int, int, int, int> Query;
+Query query[MAXQ];
+
+inline void moAlgorithm(const int n,
+                        const int a[],
+                        const int q,
+                        tuple<int, int, int, int> query[]) {
+    const int blockSize = 1000;
+
+    const auto getLeft = [](const Query &q) { return get<0>(q); };
+    const auto getRight = [](const Query &q) { return get<1>(q); };
+    const auto getBlockIndex = [=](const Query &q) {
+        return getLeft(q) / blockSize;
+    };
+
+    sort(query, query + q, [=](const Query &a, const Query &b) {
+        return getBlockIndex(a) < getBlockIndex(b) ||
+               getBlockIndex(a) == getBlockIndex(b) &&
+                   getRight(a) > getRight(b);
+    });
+
+    static int count[MAXA + 1];
+    memset(count, 0, sizeof(count));
+    static int numberOfValuesWithCount[MAXN + 1];
+    memset(numberOfValuesWithCount, 0,
+           sizeof(*numberOfValuesWithCount) * (n + 1));
+    int maxCount = 0;
+
+    const auto remove = [&](const int index) {
+        --numberOfValuesWithCount[count[a[index]]];
+        if (count[a[index]] == maxCount &&
+            numberOfValuesWithCount[count[a[index]]] == 0) {
+            --maxCount;
+        }
+        --count[a[index]];
+        ++numberOfValuesWithCount[count[a[index]]];
+    };
+    const auto add = [&](const int index) {
+        --numberOfValuesWithCount[count[a[index]]];
+        if (count[a[index]] == maxCount) {
+            ++maxCount;
+        }
+        ++count[a[index]];
+        ++numberOfValuesWithCount[count[a[index]]];
+    };
+
+    int left = 0, right = -1;
+
+    for (int i = 0; i < q; ++i) {
+        for (; left < getLeft(query[i]); ++left) {
+            remove(left);
+        }
+        for (; left > getLeft(query[i]);) {
+            add(--left);
+        }
+        for (; right < getRight(query[i]);) {
+            add(++right);
+        }
+        for (; right > getRight(query[i]); --right) {
+            remove(right);
+        }
+        get<3>(query[i]) = maxCount;
+    }
+
+    sort(query, query + q,
+         [=](const Query &a, const Query &b) { return get<2>(a) < get<2>(b); });
+}
+
 auto main() -> signed {
     setIO();
     int TESTS = 1;
@@ -451,117 +527,21 @@ auto main() -> signed {
         ignore_unused(t);
         int n, q;
         cin >> n >> q;
-        vector<int> a(n);
-        for (auto &x : a)
-            cin >> x;
-
-        struct node {
-            int val, freq, l, r;
-            bool operator==(node n) {
-                return n.val == val && n.freq == freq && n.l == l && n.r == r;
-            }
-        };
-
-        struct SegTree {
-            using T = int;
-            // change this
-
-            node ID = {-1, -1, -1, -1};
-
-            vector<vector<int>> loc;
-
-            int get_freq(int id, int l, int r) {
-                return lower_bound(begin(loc[id]), end(loc[id]), r + 1) -
-                       lower_bound(begin(loc[id]), end(loc[id]), l);
-            };
-
-            node combine(node n1, node n2) {
-                if (n1 == ID)
-                    return n2;
-                if (n2 == ID)
-                    return n1;
-                int l = n1.l;
-                int r = n2.r;
-                if (n1.val == n2.val)
-                    return {n1.val, n1.freq + n2.freq, l, r};
-                n1.l = l;
-                n2.l = l;
-                n1.r = r;
-                n2.r = r;
-                n1.freq = get_freq(n1.val, l, r);
-                n2.freq = get_freq(n2.val, l, r);
-                if (n1.freq > n2.freq)
-                    return n1;
-                return n2;
-            }
-
-            node make_node(T val, int i) { return {val, 1, i, i}; }
-
-            vector<node> t;
-            int n;
-
-            SegTree(vector<T> &a) {
-                this->n = a.size();
-                this->loc.resize(n + 1);
-                for (int i = 0; i < this->n; ++i)
-                    this->loc[a[i]].push_back(i);
-                this->t.resize(4 * a.size() + 4);
-                _build(1, 0, n - 1, a);
-            }
-
-            void update(int i, T val) { _update(1, 0, n - 1, i, val); }
-            node query(int l, int r) { return _query(1, 0, n - 1, l, r); }
-
-            void _build(int v, int l, int r, vector<T> &a) {
-                if (l == r) {
-                    t[v] = make_node(a[l], l);
-                    return;
-                }
-                int mid = (l + r) >> 1;
-                _build(v << 1, l, mid, a);
-                _build((v << 1) | 1, mid + 1, r, a);
-                t[v] = combine(t[(v << 1)], t[(v << 1) | 1]);
-            }
-
-            void _update(int v, int l, int r, int idx, T val) {
-                if (l == r) {
-                    t[v] = make_node(val, l);
-                    return;
-                }
-                int mid = (l + r) >> 1;
-                if (idx <= mid)
-                    _update(v << 1, l, mid, idx, val);
-                else
-                    _update((v << 1) | 1, mid + 1, r, idx, val);
-                t[v] = combine(t[v << 1], t[(v << 1) | 1]);
-            }
-
-            node _query(int v, int tl, int tr, int l, int r) {
-                if (l == tl && r == tr)
-                    return t[v];
-                int tm = (tl + tr) >> 1;
-                if (l > tm)
-                    return _query((v << 1) | 1, tm + 1, tr, l, r);
-                if (tm + 1 > r)
-                    return _query(v << 1, tl, tm, l, r);
-                return combine(_query(v << 1, tl, tm, l, tm),
-                               _query((v << 1) | 1, tm + 1, tr, tm + 1, r));
-            }
-        };
-
-        SegTree st(a);
-
+        for (int i = 0; i < n; ++i) cin >> a[i];
         for (int i = 0; i < q; ++i) {
-            int l, r;
-            cin >> l >> r;
-            --l, --r;
-            node nd = st.query(l, r);
-            int len = r - l + 1;
-            if (nd.freq <= (len + 1) / 2) {
-                cout << 1 << '\n';
-            } else {
-                cout << 2 * nd.freq - len << '\n';
-            }
+            cin >> get<0>(query[i]) >> get<1>(query[i]);
+            get<0>(query[i])--;
+            get<1>(query[i])--;
+            get<2>(query[i]) = i;
+        }
+        moAlgorithm(n, a, q, query);
+        for (int i = 0; i < q; ++i) {
+            int w = get<3>(query[i]);
+            int l = get<0>(query[i]);
+            int r = get<1>(query[i]);
+            int c = (r - l + 2) / 2;
+            if (w <= c) cout << 1 << '\n';
+            else cout << 2 * w - (r - l + 1) << '\n';
         }
     };
 
