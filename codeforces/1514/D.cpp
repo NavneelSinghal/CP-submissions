@@ -440,7 +440,7 @@ using namespace __gnu_pbds;
 
 /* main code starts */
 
-static char buf[200 << 20];
+static char buf[450 << 20];
 void* operator new(size_t s) {
 	static size_t i = sizeof buf;
 	assert(s < i);
