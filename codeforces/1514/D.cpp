@@ -440,101 +440,6 @@ using namespace __gnu_pbds;
 
 /* main code starts */
 
-template <typename T>
-struct wavelet_tree {
-    struct node {
-        T lo, hi;
-        node *left_child, *right_child;
-        std::vector<int> b;
-        using iter = typename std::vector<T>::iterator;
-
-        // numbers are in range [x, y]
-        // array indices are [from, to)
-        node(iter from, iter to, T x, T y) {
-            lo = x, hi = y;
-            left_child = nullptr;
-            right_child = nullptr;
-            if (lo == hi || from >= to)
-                return;
-            T mid = lo + (hi - lo) / 2;
-            auto f = [mid](T e) { return e <= mid; };
-            b.reserve(to - from + 1);
-            b.push_back(0);
-            for (auto it = from; it != to; it++)
-                b.push_back(b.back() + f(*it));
-            auto pivot = std::stable_partition(from, to, f);
-            left_child = new node(from, pivot, lo, mid);
-            right_child = new node(pivot, to, mid + 1, hi);
-        }
-
-        // kth smallest element in [l, r]
-        T kth_smallest(int l, int r, int k) {
-            if (l > r)
-                return 0;
-            if (lo == hi)
-                return lo;
-            // how many in the first (l-1) numbers that go left
-            int lb = b[l - 1];
-            // how many in first (r) numbers that go left
-            int rb = b[r];
-            int inLeft = rb - lb;
-            if (k <= inLeft)
-                return this->left_child->kth_smallest(lb + 1, rb, k);
-            return this->right_child->kth_smallest(l - lb, r - rb, k - inLeft);
-        }
-
-        // count of numbers in [l, r] less than or equal to k
-        int count_less_equal(int l, int r, T k) {
-            if (l > r or k < lo)
-                return 0;
-            if (hi <= k)
-                return r - l + 1;
-            int lb = b[l - 1], rb = b[r];
-            return this->left_child->count_less_equal(lb + 1, rb, k) +
-                   this->right_child->count_less_equal(l - lb, r - rb, k);
-        }
-
-        // count of numbers in [l, r] equal to k
-        int count_equal(int l, int r, T k) {
-            if (l > r || k < lo || k > hi)
-                return 0;
-            if (lo == hi)
-                return r - l + 1;
-            int lb = b[l - 1], rb = b[r], mid = lo + (hi - lo) / 2;
-            if (k <= mid)
-                return this->left_child->count_equal(lb + 1, rb, k);
-            return this->right_child->count_equal(l - lb, r - rb, k);
-        }
-        ~node() {
-            delete left_child;
-            delete right_child;
-        }
-    };
-    vector<T> a;
-    node *nd;
-    wavelet_tree(vector<T> &A) {
-        this->a = A;
-        auto minmax_iterators =
-            minmax_element(std::begin(this->a), std::end(this->a));
-        this->nd =
-            new node(std::begin(this->a), std::end(this->a),
-                     *(minmax_iterators.first), *(minmax_iterators.second));
-    }
-    T kth_smallest(int l, int r, int k) {
-        ++l, ++r;
-        return nd->kth_smallest(l, r, k);
-    }
-    int count_less_equal(int l, int r, T k) {
-        ++l, ++r;
-        return nd->count_less_equal(l, r, k);
-    }
-    int count_equal(int l, int r, T k) {
-        ++l, ++r;
-        return nd->count_equal(l, r, k);
-    }
-    ~wavelet_tree() { delete this->nd; }
-};
-
 auto main() -> signed {
     setIO();
     int TESTS = 1;
@@ -550,44 +455,112 @@ auto main() -> signed {
         for (auto &x : a)
             cin >> x;
 
-        vector<vector<int>> loc(n + 1);
-        for (int i = 0; i < n; ++i) {
-            loc[a[i]].push_back(i);
-        }
-
-        auto get_freq = [&](int x, int l, int r) {
-            return int(lower_bound(begin(loc[x]), end(loc[x]), r + 1) -
-                       lower_bound(begin(loc[x]), end(loc[x]), l));
+        struct node {
+            int val, freq, l, r;
+            bool operator==(node n) {
+                return n.val == val && n.freq == freq && n.l == l && n.r == r;
+            }
         };
 
-        wavelet_tree<int> wv(a);
+        struct SegTree {
+            using T = int;
+            // change this
+
+            node ID = {-1, -1, -1, -1};
+
+            vector<vector<int>> loc;
+
+            int get_freq(int id, int l, int r) {
+                return lower_bound(begin(loc[id]), end(loc[id]), r + 1) -
+                       lower_bound(begin(loc[id]), end(loc[id]), l);
+            };
+
+            node combine(node n1, node n2) {
+                if (n1 == ID)
+                    return n2;
+                if (n2 == ID)
+                    return n1;
+                int l = n1.l;
+                int r = n2.r;
+                if (n1.val == n2.val)
+                    return {n1.val, n1.freq + n2.freq, l, r};
+                n1.l = l;
+                n2.l = l;
+                n1.r = r;
+                n2.r = r;
+                n1.freq = get_freq(n1.val, l, r);
+                n2.freq = get_freq(n2.val, l, r);
+                if (n1.freq > n2.freq)
+                    return n1;
+                return n2;
+            }
+
+            node make_node(T val, int i) { return {val, 1, i, i}; }
+
+            vector<node> t;
+            int n;
+
+            SegTree(vector<T> &a) {
+                this->n = a.size();
+                this->loc.resize(n + 1);
+                for (int i = 0; i < this->n; ++i)
+                    this->loc[a[i]].push_back(i);
+                this->t.resize(4 * a.size() + 4);
+                _build(1, 0, n - 1, a);
+            }
+
+            void update(int i, T val) { _update(1, 0, n - 1, i, val); }
+            node query(int l, int r) { return _query(1, 0, n - 1, l, r); }
+
+            void _build(int v, int l, int r, vector<T> &a) {
+                if (l == r) {
+                    t[v] = make_node(a[l], l);
+                    return;
+                }
+                int mid = (l + r) >> 1;
+                _build(v << 1, l, mid, a);
+                _build((v << 1) | 1, mid + 1, r, a);
+                t[v] = combine(t[(v << 1)], t[(v << 1) | 1]);
+            }
+
+            void _update(int v, int l, int r, int idx, T val) {
+                if (l == r) {
+                    t[v] = make_node(val, l);
+                    return;
+                }
+                int mid = (l + r) >> 1;
+                if (idx <= mid)
+                    _update(v << 1, l, mid, idx, val);
+                else
+                    _update((v << 1) | 1, mid + 1, r, idx, val);
+                t[v] = combine(t[v << 1], t[(v << 1) | 1]);
+            }
+
+            node _query(int v, int tl, int tr, int l, int r) {
+                if (l == tl && r == tr)
+                    return t[v];
+                int tm = (tl + tr) >> 1;
+                if (l > tm)
+                    return _query((v << 1) | 1, tm + 1, tr, l, r);
+                if (tm + 1 > r)
+                    return _query(v << 1, tl, tm, l, r);
+                return combine(_query(v << 1, tl, tm, l, tm),
+                               _query((v << 1) | 1, tm + 1, tr, tm + 1, r));
+            }
+        };
+
+        SegTree st(a);
 
         for (int i = 0; i < q; ++i) {
             int l, r;
             cin >> l >> r;
             --l, --r;
+            node nd = st.query(l, r);
             int len = r - l + 1;
-            if (l % 2 == r % 2) {
-                int mid = (l + r) / 2;
-                debug(l, r, mid - l + 1);
-                cout << max(int(1),
-                            2 * get_freq(wv.kth_smallest(l, r, mid - l + 1), l,
-                                         r) -
-                                len)
-                     << '\n';
+            if (nd.freq <= (len + 1) / 2) {
+                cout << 1 << '\n';
             } else {
-                int mid1 = (l + r) / 2;
-                int mid2 = (l + r) / 2 + 1;
-                debug(l, r, mid1 - l + 1);
-                debug(l, r, mid2 - l + 1);
-                cout
-                    << max(int(1),
-                           2 * max(get_freq(wv.kth_smallest(l, r, mid1 - l + 1),
-                                            l, r),
-                                   get_freq(wv.kth_smallest(l, r, mid2 - l + 1),
-                                            l, r)) -
-                               len)
-                    << '\n';
+                cout << 2 * nd.freq - len << '\n';
             }
         }
     };
