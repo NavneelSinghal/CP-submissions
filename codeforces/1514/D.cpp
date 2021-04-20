@@ -441,12 +441,12 @@ using namespace __gnu_pbds;
 /* main code starts */
 
 static char buf[200 << 20];
-void *operator new(size_t s) {
-    static size_t i = sizeof buf;
-    assert(s < i);
-    return (void *)&buf[i -= s];
+void* operator new(size_t s) {
+	static size_t i = sizeof buf;
+	assert(s < i);
+	return (void*)&buf[i -= s];
 }
-void operator delete(void *) {}
+void operator delete(void*) {}
 
 template <typename T>
 struct wavelet_tree {
@@ -575,12 +575,28 @@ auto main() -> signed {
             cin >> l >> r;
             --l, --r;
             int len = r - l + 1;
-            int mid = (l + r) / 2;
-            debug(l, r, mid - l + 1);
-            cout << max(int(1),
-                        2 * get_freq(wv.kth_smallest(l, r, mid - l + 1), l, r) -
-                            len)
-                 << '\n';
+            if (l % 2 == r % 2) {
+                int mid = (l + r) / 2;
+                debug(l, r, mid - l + 1);
+                cout << max(int(1),
+                            2 * get_freq(wv.kth_smallest(l, r, mid - l + 1), l,
+                                         r) -
+                                len)
+                     << '\n';
+            } else {
+                int mid1 = (l + r) / 2;
+                int mid2 = (l + r) / 2 + 1;
+                debug(l, r, mid1 - l + 1);
+                debug(l, r, mid2 - l + 1);
+                cout
+                    << max(int(1),
+                           2 * max(get_freq(wv.kth_smallest(l, r, mid1 - l + 1),
+                                            l, r),
+                                   get_freq(wv.kth_smallest(l, r, mid2 - l + 1),
+                                            l, r)) -
+                               len)
+                    << '\n';
+            }
         }
     };
 
