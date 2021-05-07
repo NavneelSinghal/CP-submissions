@@ -36,8 +36,8 @@
 using ll = int_fast64_t;
 using ull = uint_fast64_t;
 using ld = long double;
-// using ulll = __uint128_t;
-// using lll = __int128;
+using ulll = __uint128_t;
+using lll = __int128;
 
 template <typename T>
 void ignore_unused(const T &) {}
