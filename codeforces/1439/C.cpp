@@ -561,8 +561,6 @@ struct LazySegTree {
         if (v < (int)lazy.size()) lazy[v] = compose_updates(u, lazy[v]);
     }
     void _pushDown(int v) {
-        // for optimizing, try removing this maybe
-        if (lazy[v] == id_update()) return;
         _updateNode(2 * v, lazy[v]);
         _updateNode(2 * v + 1, lazy[v]);
         lazy[v] = id_update();
@@ -809,4 +807,3 @@ auto main() -> signed {
     }
     return 0;
 }
-
