@@ -603,8 +603,7 @@ struct LazySegTree {
     // find least R in [l, r] such that f(combine(a[ql..R])) is false
     // and f(combine(a[ql..R-1])) = true. -1 if not found
     // Requires f to be contiguous (possibly empty) segments of true and false
-    // b = whether pushing is needed or not
-    template <bool b = true, typename F>
+    template <bool b, typename F>
     int _first_false_right(int v, int l, int r, int ql, int qr, const F &f,
                            node_t &acc) {
         if (r <= ql) return -1;
