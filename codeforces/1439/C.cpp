@@ -615,6 +615,20 @@ struct LazySegTree {
                 acc = new_acc;
                 return -1;
             }
+            while (r - l > 1) {
+                int mid = (r + l) / 2;
+                if constexpr (b) _pushDown(v);
+                new_acc = combine(acc, t[2 * v]);
+                if (!f(new_acc)) {
+                    v *= 2;
+                    r = mid;
+                } else {
+                    acc = std::move(new_acc);
+                    v = 2 * v + 1;
+                    l = mid;
+                }
+            }
+            return l;
         }
         if (l == r - 1) return l;
         if constexpr (b) _pushDown(v);
