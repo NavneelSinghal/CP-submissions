@@ -11,6 +11,7 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
+1004 | [C - Greedy Shopping](https://codeforces.com/contest/1439/problem/C) | [GNU C++17 (64)](./codeforces/1439/C.cpp) | `binary search` `data structures` `divide and conquer` `greedy` `implementation` `*2600` | May/09/2021 02:52 | 
 1003 | [D - Maximum Sum of Products](https://codeforces.com/contest/1519/problem/D) | [PyPy 3](./codeforces/1519/D.py) | `brute force` `dp` `implementation` `math` `two pointers` | Apr/30/2021 00:03 | 
 1002 | [C - Berland Regional](https://codeforces.com/contest/1519/problem/C) | [GNU C++17 (64)](./codeforces/1519/C.cpp) | `brute force` `data structures` `greedy` `sortings` `two pointers` | Apr/29/2021 20:31 | 
 1001 | [A - Red and Blue Beans](https://codeforces.com/contest/1519/problem/A) | [GNU C++17 (64)](./codeforces/1519/A.cpp) | `math` | Apr/29/2021 20:24 | 
