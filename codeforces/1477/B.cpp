@@ -1,268 +1,700 @@
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx")
-#pragma GCC optimize("unroll-loops")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC target("avx")
+// #pragma GCC optimize("unroll-loops")
 
-#include <bits/stdc++.h>
+// clang-format off
+#define BITSET64 0
+#if BITSET64
+    #include <string>
+    #include <bits/functexcept.h>
+    #include <iosfwd>
+    #include <bits/cxxabi_forced.h>
+    #include <bits/functional_hash.h>
+    #pragma push_macro("__SIZEOF_LONG__")
+    #pragma push_macro("__cplusplus")
+    #define __SIZEOF_LONG__ __SIZEOF_LONG_LONG__
+    #define unsigned unsigned long
+    #define __cplusplus 201102L
+    #define __builtin_popcountl __builtin_popcountll
+    #define __builtin_ctzl __builtin_ctzll
+    #include <bitset>
+    #pragma pop_macro("__cplusplus")
+    #pragma pop_macro("__SIZEOF_LONG__")
+    #undef unsigned
+    #undef __builtin_popcountl
+    #undef __builtin_ctzl
+#endif
+// clang-format on
 
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+#include "bits/stdc++.h"
+#include "ext/pb_ds/assoc_container.hpp"
+#include "ext/pb_ds/tree_policy.hpp"
+// #include <ext/rope>
 
-using namespace __gnu_pbds;
-using namespace std;
-
-template <typename X, typename Y>
-X &remin(X &x, const Y &y) {
-    return x = (y < x) ? y : x;
-}
-
-template <typename X, typename Y>
-X &remax(X &x, const Y &y) {
-    return x = (x < y) ? y : x;
-}
-
-template <typename X, typename Y>
-[[nodiscard]] bool ckmin(X &x, const Y &y) {
-    return (y < x) ? (x = y, 1) : 0;
-}
-
-template <typename X, typename Y>
-[[nodiscard]] bool ckmax(X &x, const Y &y) {
-    return (x < y) ? (x = y, 1) : 0;
-}
-
-template <typename T> void ignore_unused(const T&) {}
-
-void setIO(string name = "") {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    cout << setprecision(10) << fixed;
-    if (name.size() == 0) return;
-    FILE *fin = freopen((name + ".in").c_str(), "r", stdin);
-    FILE *fout = freopen((name + ".out").c_str(), "w", stdout);
-    ignore_unused(fin);
-    ignore_unused(fout);
-}
-
-// constexpr int mod = 998244353;
-constexpr int mod = 1e9 + 7;
-constexpr int64_t linf = 3e18;
-
-[[nodiscard]] int64_t pwr_mod(int64_t a, int64_t n) {
-    int64_t ans = 1;
-    while (n) {
-        if (n & 1) ans = (ans * a) % mod;
-        a = (a * a) % mod;
-        n >>= 1;
-    }
-    return ans;
-}
-
-// when using integers, keep overflow in mind
 template <typename T>
-T pwr(T a, int64_t n) {
-    T ans = 1;
-    while (n) {
-        if (n & 1) ans *= a;
-        if (n > 1) a *= a;
-        n >>= 1;
-    }
-    return ans;
-}
+void ignore_unused(const T &) {}
 
-// modular int library
+// #define int int_fast32_t
 
-template <int32_t MOD = 998'244'353>
-struct Modular {
-    int32_t value;
-    static const int32_t MOD_value = MOD;
+using ll = long long;
+using ull = unsigned long long;
+using ld = long double;
 
-    Modular(long long v = 0) {
-        value = v % MOD;
-        if (value < 0) value += MOD;
-    }
-    Modular(long long a, long long b) : value(0) {
-        *this += a;
-        *this /= b;
-    }
+using ulll = __uint128_t;
+using lll = __int128;
 
-    Modular& operator+=(Modular const& b) {
-        value += b.value;
-        if (value >= MOD) value -= MOD;
-        return *this;
-    }
-    Modular& operator-=(Modular const& b) {
-        value -= b.value;
-        if (value < 0) value += MOD;
-        return *this;
-    }
-    Modular& operator*=(Modular const& b) {
-        value = (long long)value * b.value % MOD;
-        return *this;
-    }
-
-    friend Modular mexp(Modular a, long long e) {
-        Modular res = 1;
-        while (e) {
-            if (e & 1) res *= a;
-            a *= a;
-            e >>= 1;
+namespace ExtendedIO {
+#ifdef __SIZEOF_INT128__
+    std::ostream &operator<<(std::ostream &os, __int128 const &value) {
+        static char buffer[64];
+        int index = 0;
+        __uint128_t T = (value < 0) ? (-(value + 1)) + __uint128_t(1) : value;
+        if (value < 0)
+            os << '-';
+        else if (T == 0)
+            return os << '0';
+        for (; T > 0; ++index) {
+            buffer[index] = static_cast<char>('0' + (T % 10));
+            T /= 10;
         }
-        return res;
+        while (index > 0) os << buffer[--index];
+        return os;
     }
-    friend Modular inverse(Modular a) { return mexp(a, MOD - 2); }
+    std::istream &operator>>(std::istream &is, __int128 &T) {
+        static char buffer[64];
+        is >> buffer;
+        std::size_t len = strlen(buffer), index = 0;
+        T = 0;
+        int mul = 1;
+        if (buffer[index] == '-') ++index, mul *= -1;
+        for (; index < len; ++index)
+            T = T * 10 + static_cast<int>(buffer[index] - '0');
+        T *= mul;
+        return is;
+    }
+#endif
+}  // namespace ExtendedIO
 
-    Modular& operator/=(Modular const& b) { return *this *= inverse(b); }
-    friend Modular operator+(Modular a, Modular const b) { return a += b; }
-    friend Modular operator-(Modular a, Modular const b) { return a -= b; }
-    friend Modular operator-(Modular const a) { return 0 - a; }
-    friend Modular operator*(Modular a, Modular const b) { return a *= b; }
-    friend Modular operator/(Modular a, Modular const b) { return a /= b; }
-    friend std::ostream& operator<<(std::ostream& os, Modular const& a) {
-        return os << a.value;
+using namespace ExtendedIO;
+
+namespace Debug {
+
+#define SFINAE(x, ...)             \
+    template <class, class = void> \
+    struct x : std::false_type {}; \
+    template <class T>             \
+    struct x<T, std::void_t<__VA_ARGS__>> : std::true_type {}
+
+    SFINAE(DefaultIO, decltype(std::cout << std::declval<T &>()));
+    SFINAE(IsTuple, typename std::tuple_size<T>::type);
+    SFINAE(Iterable, decltype(std::begin(std::declval<T>())));
+
+    template <class T>
+    constexpr char Space(const T &) {
+        return (Iterable<T>::value or IsTuple<T>::value) ? '\n' : ' ';
     }
-    friend bool operator==(Modular const& a, Modular const& b) {
-        return a.value == b.value;
+
+    template <auto &os>
+    struct Writer {
+        template <class T>
+        void Impl(T const &t) const {
+            if constexpr (DefaultIO<T>::value)
+                os << t;
+            else if constexpr (Iterable<T>::value) {
+                int i = 0;
+                for (auto &&x : t)
+                    ((i++) ? (os << Space(x), Impl(x)) : Impl(x));
+            } else if constexpr (IsTuple<T>::value)
+                std::apply(
+                    [this](auto const &... args) {
+                        int i = 0;
+                        (((i++) ? (os << ' ', Impl(args)) : Impl(args)), ...);
+                    },
+                    t);
+            else
+                static_assert(IsTuple<T>::value, "No matching type for print");
+        }
+        template <class F, class... Ts>
+        auto &operator()(F const &f, Ts const &... ts) const {
+            return Impl(f), ((os << ' ', Impl(ts)), ...), os << '\n', *this;
+        }
+    };
+
+    template <auto &is>
+    struct Reader {
+        template <class T>
+        auto &Rd(T &t) const {
+            if constexpr (DefaultIO<T>::value)
+                is >> t;
+            else if constexpr (Iterable<T>::value)
+                for (auto &x : t) Rd(x);
+            else if constexpr (IsTuple<T>::value)
+                std::apply([this](auto &... args) { (Rd(args), ...); }, t);
+            else
+                static_assert(IsTuple<T>::value, "No matching type for read");
+            return *this;
+        }
+        template <class T>
+        auto operator()(T t) const {
+            Rd(t);
+            return t;
+        }
+    };
+
+#ifdef DEBUG
+    #define debug(args...)                               \
+        {                                                \
+            std::string _s = #args;                      \
+            replace(_s.begin(), _s.end(), ',', ' ');     \
+            std::stringstream _ss(_s);                   \
+            std::istream_iterator<std::string> _it(_ss); \
+            std::cerr << "Line " << __LINE__ << "\n";    \
+            err(_it, args);                              \
+        }
+
+    void err(std::istream_iterator<std::string> it) { ignore_unused(it); }
+
+    template <typename T, typename... Args>
+    void err(std::istream_iterator<std::string> it, T a, Args... args) {
+        std::cerr << "\033[0;31m" << *it << " = ";
+        Writer<std::cerr>{}(a);
+        std::cerr << "\033[0m";
+        err(++it, args...);
     }
-    friend bool operator!=(Modular const& a, Modular const& b) {
-        return a.value != b.value;
+
+    #define ASSERT(...) \
+        if (not(__VA_ARGS__)) throw runtime_error(#__VA_ARGS__)
+#else
+    #define debug(...) 0
+    #define ASSERT(...) 0
+#endif
+
+    constexpr Writer<std::cout> print;
+    constexpr Reader<std::cin> read;
+
+}  // namespace Debug
+
+using namespace Debug;
+
+namespace CPPDS {
+
+#ifdef PB_DS_ASSOC_CNTNR_HPP
+    #define unordered_map gp_hash_table
+#endif
+
+#ifdef PB_DS_TREE_POLICY_HPP
+    template <typename T>
+    using ordered_set =
+        __gnu_pbds::tree<T, __gnu_pbds::null_type, std::less<T>,
+                         __gnu_pbds::rb_tree_tag,
+                         __gnu_pbds::tree_order_statistics_node_update>;
+    template <typename T>
+    using ordered_multiset =
+        __gnu_pbds::tree<T, __gnu_pbds::null_type, std::less_equal<T>,
+                         __gnu_pbds::rb_tree_tag,
+                         __gnu_pbds::tree_order_statistics_node_update>;
+    template <class key, class value, class cmp = std::less<key>>
+    using ordered_map =
+        __gnu_pbds::tree<key, value, cmp, __gnu_pbds::rb_tree_tag,
+                         __gnu_pbds::tree_order_statistics_node_update>;
+    // find_by_order(k)  returns iterator to kth element starting from 0;
+    // order_of_key(k) returns count of elements strictly smaller than k;
+    // for ordered_multiset, lower_bound and upper_bound swap roles
+#endif
+    template <class T>
+    using min_heap = std::priority_queue<T, std::vector<T>, std::greater<T>>;
+}  // namespace CPPDS
+
+using namespace CPPDS;
+
+namespace Utility {
+
+    void setIO(std::string name = "") {
+        std::ios_base::sync_with_stdio(0);
+        std::cin.tie(0);
+        std::cout.tie(0);
+        std::cin.exceptions(std::cin.failbit);
+        std::cout << std::setprecision(20) << std::fixed;
+        if (name.size() == 0) return;
+        ignore_unused(freopen((name + ".in").c_str(), "r", stdin));
+        ignore_unused(freopen((name + ".out").c_str(), "w", stdout));
     }
+
+    constexpr int mod = int(1e9) + 7;
+    constexpr int nttmod = 998244353;
+    constexpr int inf = int(1e9);
+    constexpr ll linf = ll(3e18L);
+    constexpr ld eps = 1e-9;
+    ld pi = acosl(-1.0);
+
+    std::mt19937 rng(
+        std::chrono::steady_clock::now().time_since_epoch().count());
+
+    template <typename C = std::chrono::steady_clock,
+              typename T1 = std::chrono::nanoseconds,
+              typename T2 = std::chrono::milliseconds>
+    struct Stopwatch {
+        std::string name;
+        std::chrono::time_point<C> last_played;
+        T1 elapsed_time;
+        bool running;
+        Stopwatch(const std::string &s) : name(s), running(true) { reset(); }
+        Stopwatch() : Stopwatch("Time") {}
+        void reset() {
+            last_played = C::now();
+            elapsed_time = T1::zero();
+        }
+        void pause() {
+            if (!running) return;
+            running = false;
+            elapsed_time +=
+                std::chrono::duration_cast<T1>(C::now() - last_played);
+        }
+        void play() {
+            if (running) return;
+            running = true;
+            last_played = C::now();
+        }
+        int_fast64_t elapsed() const {
+            return std::chrono::duration_cast<T2>(
+                       elapsed_time + (running ? std::chrono::duration_cast<T1>(
+                                                     C::now() - last_played)
+                                               : T1::zero()))
+                .count();
+        }
+        void print() const {
+#ifdef TIMING
+            std::cerr << name << ": " << elapsed() << " ms\n";
+#endif
+        }
+        ~Stopwatch() { print(); }
+    };
+
+    template <class T, class U = T>
+    bool ckmin(T &a, U &&b) {
+        return b < a ? a = std::forward<U>(b), true : false;
+    }
+
+    template <class T, class U = T>
+    bool ckmax(T &a, U &&b) {
+        return a < b ? a = std::forward<U>(b), true : false;
+    }
+
+    template <typename T>
+    inline T sq(T a) {
+        return a * a;
+    }
+
+    template <typename T>
+    inline T sq_dist(std::pair<T, T> &a, std::pair<T, T> &b) {
+        return sq(a.first - b.first) + sq(a.second - b.second);
+    }
+
+    template <typename T>
+    inline ld dist(std::pair<T, T> &a, std::pair<T, T> &b) {
+        return sqrtl(sq_dist(a, b));
+    }
+
+    inline ll isqrt(ll n) {
+        ll sq = (ll)sqrtl((ld)n) - 2;
+        sq = std::max(sq, ll(0));
+        while (sq * sq < n) sq++;
+        if ((sq * sq) == n) return sq;
+        return sq - 1;
+    }
+
+    inline bool is_sq(ll n) {
+        ll w = isqrt(n);
+        return w * w == n;
+    }
+
+    struct custom_hash {
+        // http://xorshift.di.unimi.it/splitmix64.c
+        static ull splitmix64(ull x) {
+            x += 0x9e3779b97f4a7c15;
+            x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+            x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+            return x ^ (x >> 31);
+        }
+
+        size_t operator()(ull x) const {
+            static const ull FIXED_RANDOM =
+                std::chrono::steady_clock::now().time_since_epoch().count();
+            return splitmix64(x + FIXED_RANDOM);
+        }
+
+        size_t operator()(std::pair<int, int> p) const {
+            static const ull FIXED_RANDOM =
+                std::chrono::steady_clock::now().time_since_epoch().count();
+            return splitmix64(p.first * 31 + p.second + FIXED_RANDOM);
+        }
+    };
+
+    template <class Fun>
+    class y_combinator_result {
+        Fun fun_;
+
+       public:
+        template <class T>
+        explicit y_combinator_result(T &&fun) : fun_(std::forward<T>(fun)) {}
+        template <class... Args>
+        decltype(auto) operator()(Args &&... args) {
+            return fun_(std::ref(*this), std::forward<Args>(args)...);
+        }
+    };
+
+    template <class Fun>
+    decltype(auto) y_combinator(Fun &&fun) {
+        return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun));
+    }
+
+    template <typename T>
+    struct Range {
+        struct It {
+            T i;
+            const T skip;
+            void operator++() { i += skip; }
+            T operator*() const { return i; }
+            bool operator!=(It o) const {
+                return (skip >= 0) ? (i < *o) : (i > *o);
+            }
+        };
+        const T l_, r_, skip_;
+        Range(T l, T r, T skip = 1) : l_(l), r_(r), skip_(skip) {
+#ifdef DEBUG
+            assert(skip != 0);
+#endif
+        }
+        Range(T n) : Range(T(0), n, T(1)) {}
+        It begin() const {
+            return (skip_ >= 0) ? It{l_, skip_} : It{r_ - 1, skip_};
+        }
+        It end() const {
+            return (skip_ >= 0) ? It{r_, skip_} : It{l_ - 1, skip_};
+        }
+    };
+
+    // when using integers, keep overflow in mind
+    template <typename T>
+    [[nodiscard]] T pwr(T a, ll n) {
+        T ans(1);
+        while (n) {
+            if (n & 1) ans *= a;
+            if (n > 1) a *= a;
+            n >>= 1;
+        }
+        return ans;
+    }
+
+    template <typename I, typename P, bool b>
+    I bin_search_split(I l, I r, const P &predicate) {
+        --l, ++r;
+        while (r - l > 1) {
+            // auto mid = std::midpoint(l, r);
+            auto mid = l + (r - l) / 2;
+            if (predicate(mid))
+                r = mid;
+            else
+                l = mid;
+        }
+        if constexpr (b)
+            return r;
+        else
+            return l;
+    }
+
+    // returns first i in [l, r], p(i) true, and if none found, returns r + 1
+    template <typename I, typename P>
+    I first_true(I l, I r, const P &p) {
+        return bin_search_split<I, P, true>(l, r, p);
+    }
+
+    // returns last i in [l, r], p(i) false, and if none found, returns l - 1
+    template <typename I, typename P>
+    I last_false(I l, I r, const P &p) {
+        return bin_search_split<I, P, false>(l, r, p);
+    }
+
+}  // namespace Utility
+
+using namespace Utility;
+
+/* structs start */
+
+template <uint32_t Modulus>
+class Modular {
+    using M = Modular;
+
+   public:
+    static_assert(int(Modulus) >= 1, "Modulus must be in the range [1, 2^31)");
+    static constexpr int modulus() { return Modulus; }
+    static M raw(uint32_t v) { return *reinterpret_cast<M *>(&v); }
+    Modular() : v_(0) {}
+    Modular(int64_t v) : v_((v %= Modulus) < 0 ? v + Modulus : v) {}
+    template <class T>
+    explicit operator T() const {
+        return v_;
+    }
+    M &operator++() { return v_ = ++v_ == Modulus ? 0 : v_, *this; }
+    M &operator--() { return --(v_ ? v_ : v_ = Modulus), *this; }
+    M &operator*=(M o) { return v_ = uint64_t(v_) * o.v_ % Modulus, *this; }
+    M &operator/=(M o) {
+        auto [inv, gcd] = extgcd(o.v_, Modulus);
+        assert(gcd == 1);
+        return *this *= inv;
+    }
+    M &operator+=(M o) {
+        return v_ = int(v_ += o.v_ - Modulus) < 0 ? v_ + Modulus : v_, *this;
+    }
+    M &operator-=(M o) {
+        return v_ = int(v_ -= o.v_) < 0 ? v_ + Modulus : v_, *this;
+    }
+    friend M operator++(M &a, int) { return exchange(a, ++M(a)); }
+    friend M operator--(M &a, int) { return exchange(a, --M(a)); }
+    friend M operator+(M a) { return a; }
+    friend M operator-(M a) { return a.v_ = a.v_ ? Modulus - a.v_ : 0, a; }
+    friend M operator*(M a, M b) { return a *= b; }
+    friend M operator/(M a, M b) { return a /= b; }
+    friend M operator+(M a, M b) { return a += b; }
+    friend M operator-(M a, M b) { return a -= b; }
+    friend std::istream &operator>>(std::istream &is, M &x) {
+        int64_t v;
+        return is >> v, x = v, is;
+    }
+    friend std::ostream &operator<<(std::ostream &os, M x) {
+        return os << x.v_;
+    }
+    friend bool operator==(M a, M b) { return a.v_ == b.v_; }
+    friend bool operator!=(M a, M b) { return a.v_ != b.v_; }
+
+   private:
+    static std::pair<int, int> extgcd(int a, int b) {
+        std::array<int, 2> x{1, 0};
+        while (b) std::swap(x[0] -= a / b * x[1], x[1]), std::swap(a %= b, b);
+        return {x[0], a};
+    }
+    uint32_t v_;
 };
 
 using mint = Modular<mod>;
 
-void precompute() {
-}
+/* structs end */
 
-const int N = 200100;
+using namespace std;
+using namespace __gnu_pbds;
+// using namespace __gnu_cxx;
 
-struct node {
-    // heads = number of 1, lazy = what we need to assign, -1 if none
-    int heads, lazy;
-    node() { heads = 0, lazy = -1; }
-    node(int h, int l) {heads = h, lazy = l;}
-};
+/* main code starts */
 
-// how to combine two nodes
-node merge(node& a, node& b) {
-    node x;
-    x.heads = a.heads + b.heads;
-    return x;
-}
+template <bool is_lazy = true>
+struct LazySegTree {
+    struct node_t {
+        int sum;
+        int sz;
+    };
 
-// how to update a given node
-void assign(node& a, int l, int r, int val) {
-    a.heads = (r - l + 1) * val;
-    a.lazy = val;
-}
+    using base_t = int;
+    using update_t = int;
 
-node t[4 * N];
-
-void push(int v, int tl, int tm, int tr) {
-    if (t[v].lazy >= 0) {
-        assign(t[v << 1], tl, tm, t[v].lazy);
-        assign(t[v << 1 | 1], tm + 1, tr, t[v].lazy);
+    // combining two nodes
+    node_t combine(const node_t &n1, const node_t &n2) {
+        return node_t{n1.sum + n2.sum, n1.sz + n2.sz};
     }
-    t[v].lazy = -1;
-}
 
-void build(int v, int l, int r, string& a) {
-    if (l == r) {
-        t[v] = node(a[l] - '0', -1);
-        return;
+    // create node from base value and indices l, r
+    node_t make_node(const base_t &val, int l, int r) { return {val, 1}; }
+
+    // node corresponding to empty interval
+    node_t id_node() { return {0, 0}; }
+
+    // for simple segment tree
+    node_t apply_update_single(const update_t &u, const node_t &nd) {
+        // something
+        return {};
     }
-    int mid = (l + r) >> 1;
-    build(v << 1, l, mid, a);
-    build((v << 1) | 1, mid + 1, r, a);
-    t[v] = merge(t[(v << 1)], t[(v << 1) | 1]);
-}
 
-void update(int v, int tl, int tr, int l, int r, int val) {
-    if (l > r) return;
-    if (l == tl && r == tr) {
-        assign(t[v], tl, tr, val);
-        return;
+    // identity update - for lazy
+    update_t id_update() { return -1; }
+
+    // apply update u to the whole node n - for lazy
+    node_t apply_update(const update_t &u, const node_t &nd) {
+        if (u == id_update()) return nd;  // id
+        return {u * nd.sz, nd.sz};
     }
-    int tm = (tl + tr) >> 1;
-    push(v, tl, tm, tr);
-    update(v << 1, tl, tm, l, min(r, tm), val);
-    update(v << 1 | 1, tm + 1, tr, max(l, tm + 1), r, val);
-    t[v] = merge(t[v << 1], t[v << 1 | 1]);
-}
 
-int query(int v, int tl, int tr, int l, int r) {
-    if (l > r) return 0;
-    if (l <= tl && tr <= r) return t[v].heads;
-    int tm = (tl + tr) >> 1;
-    push(v, tl, tm, tr);
-    return query(v << 1, tl, tm, l, min(r, tm)) +
-           query(v << 1 | 1, tm + 1, tr, max(l, tm + 1), r);
-}
-
-void solve(int) {
-    
-    int n, q;
-    cin >> n >> q;
-    string s;
-    cin >> s;
-    string f;
-    cin >> f;
-    
-    vector<pair<int, int>> v(q);
-    for (auto &[x, y] : v) {
-        cin >> x >> y;
-        --x, --y;
+    // effective update if v is applied to node, followed by u - for lazy
+    update_t compose_updates(const update_t &u, const update_t &v) {
+        if (u == id_update()) return v;
+        return u;
     }
-    
-    build(1, 0, n - 1, f);
-    
-    for (int i = q - 1; i >= 0; --i) {
-        int l = v[i].first;
-        int r = v[i].second;
-        int s = query(1, 0, n - 1, l, r);
-        if (2 * s == r - l + 1) {
-            cout << "NO\n";
-            return;
-        } else if (2 * s < r - l + 1) {
-            update(1, 0, n - 1, l, r, 0);
-        } else {
-            update(1, 0, n - 1, l, r, 1);
+
+    std::vector<node_t> t;
+    std::vector<update_t> lazy;
+    int n;
+
+    LazySegTree(std::vector<base_t> &a) {
+        this->n = a.size();
+        if (this->n == 0) return;
+        this->t.assign(4 * a.size(), id_node());
+        if constexpr (is_lazy) {
+            this->lazy.assign(2 * a.size(), id_update());
+        }
+        _build(1, 0, n, a);
+    }
+
+    // half open
+    void update(int l, int r, const update_t &u) {
+        if constexpr (!is_lazy) assert(l == r - 1);
+        _update(1, 0, n, l, r, u);
+    }
+    node_t query(int l, int r) { return _query(1, 0, n, l, r); }
+
+    // find least R in [l, n] such that f(combine(a[l..r])) is false
+    // and f(combine(a[l..r-1])) = true
+    // Requires f to be contiguous (possibly empty) segments of true and false
+    // b is true if stuff needs to be pushed, and false otherwise
+    template <bool b = is_lazy, typename F>
+    int first_false_right(int l, const F &f) {
+        auto acc = id_node();
+        assert(f(acc));
+        auto i = _first_false_right<b, F>(1, 0, n, l, n, f, acc);
+        if (i == -1) return n;
+        return i;
+    }
+
+    // helper functions
+    void _pullUp(int v) { t[v] = combine(t[2 * v], t[2 * v + 1]); }
+    void _updateNode(int v, const update_t &u) {
+        if constexpr (is_lazy) {
+            t[v] = apply_update(u, t[v]);
+            if (v < (int)lazy.size()) lazy[v] = compose_updates(u, lazy[v]);
+        } else
+            t[v] = apply_update_single(u, t[v]);
+    }
+    void _pushDown(int v) {
+        if constexpr (is_lazy) {
+            // for optimizing, try removing this maybe
+            if (lazy[v] == id_update()) return;
+            _updateNode(2 * v, lazy[v]);
+            _updateNode(2 * v + 1, lazy[v]);
+            lazy[v] = id_update();
         }
     }
-    
-    string ss;
-    for (int i = 0; i < n; ++i) {
-        ss += '0' + query(1, 0, n - 1, i, i);
-    }
-    
-    if (ss == s) {
-        cout << "YES\n";
-    } else {
-        cout << "NO\n";
-    }
-}
 
-void brute(int) {
-}
+    // actual functions
+    void _build(int v, int l, int r, const std::vector<base_t> &a) {
+        if (l == r - 1) {
+            t[v] = make_node(a[l], l, r);
+            return;
+        }
+        int mid = (l + r) / 2;
+        _build(2 * v, l, mid, a);
+        _build(2 * v + 1, mid, r, a);
+        _pullUp(v);
+    }
 
-signed main() {
+    void _update(int v, int l, int r, int ql, int qr, const update_t &u) {
+        if (qr <= l || r <= ql) return;  // empty intersection
+        if (ql <= l && r <= qr) {        // completely inside query
+            _updateNode(v, u);
+            return;
+        }
+        _pushDown(v);
+        int mid = (l + r) / 2;
+        _update(2 * v, l, mid, ql, qr, u);
+        _update(2 * v + 1, mid, r, ql, qr, u);
+        _pullUp(v);
+    }
+
+    node_t _query(int v, int l, int r, int ql, int qr) {
+        if (qr <= l || r <= ql) return id_node();  // empty intersection
+        if (ql <= l && r <= qr) return t[v];       // completely inside query
+        _pushDown(v);
+        int mid = (l + r) / 2;
+        return combine(_query(2 * v, l, mid, ql, qr),
+                       _query(2 * v + 1, mid, r, ql, qr));
+    }
+
+    // find least R in [l, r] such that f(combine(a[ql..R])) is false
+    // and f(combine(a[ql..R-1])) = true. -1 if not found
+    // Requires f to be contiguous (possibly empty) segments of true and false
+    // b = whether pushing is needed or not
+    template <bool b = true, typename F>
+    int _first_false_right(int v, int l, int r, int ql, int qr, const F &f,
+                           node_t &acc) {
+        if (r <= ql) return -1;
+        if (qr <= l) return l;
+        auto new_acc = combine(acc, t[v]);
+        if (ql <= l && r <= qr && f(new_acc)) {
+            acc = new_acc;
+            return -1;
+        }
+        if (l == r - 1) return l;
+        if constexpr (b) _pushDown(v);
+        int mid = (r + l) / 2;
+        auto res = _first_false_right<b, F>(2 * v, l, mid, ql, qr, f, acc);
+        if (res != -1)
+            return res;
+        else
+            return _first_false_right<b, F>(2 * v + 1, mid, r, ql, qr, f, acc);
+    }
+};
+
+auto main() -> signed {
+#ifdef CUSTOM_IO
+    IO::IOinit();
+#else
     setIO();
+#endif
+    int TESTS = 1;
+    cin >> TESTS;
+
+    auto precompute = [&]() -> void {
+    };
+
+    auto solve = [&](int) -> void {
+        Stopwatch stopwatch;
+        int n, q;
+        cin >> n >> q;
+        string s, f;
+        cin >> s >> f;
+        vector<pair<int, int>> v(q);
+        for (auto &[x, y] : v) {
+            cin >> x >> y;
+            --x;
+        }
+        vector<int> a(n);
+        for (auto i : Range(n)) a[i] = f[i] - '0';
+        LazySegTree<> st(a);
+        for (auto i : Range(0, q, -1)) {
+            auto [l, r] = v[i];
+            int s = st.query(l, r).sum;
+            if (2 * s == r - l) {
+                cout << "NO\n";
+                return;
+            } else if (2 * s < r - l) {
+                st.update(l, r, 0);
+            } else {
+                st.update(l, r, 1);
+            }
+        }
+        string ans;
+        for (auto i : Range(n))
+            ans += '0' + st.query(i, i + 1).sum;
+        if (s == ans) cout << "YES\n";
+        else cout << "NO\n";
+    };
+
+    auto brute = [&]() -> void {
+    };
+
+    ignore_unused(brute);
     precompute();
-    int t = 1;
-    cin >> t;
-    for (int _t = 1; _t <= t; _t++) {
+    for (int _t = 1; _t <= TESTS; ++_t) {
         // cout << "Case #" << _t << ": ";
         solve(_t);
-        //brute(_t);
+        // brute();
     }
     return 0;
 }
-
-/* stuff you should look for
- * int overflow, array bounds
- * special cases (n = 1?)
- * do smth instead of nothing and stay organized
- * WRITE STUFF DOWN
- * DON'T GET STUCK ON ONE APPROACH
- */
 
