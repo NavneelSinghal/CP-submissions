@@ -542,13 +542,9 @@ struct LazySegTree {
     // half open
     void update(int l, int r, const update_t &u) {
         if constexpr (!is_lazy) assert(l == r - 1);
-        ql = l, qr = r;
-        _update(1, 0, n, u);
+        _update(1, 0, n, l, r, u);
     }
-    node_t query(int l, int r) {
-        ql = l, qr = r;
-        return _query(1, 0, n);
-    }
+    node_t query(int l, int r) { return _query(1, 0, n, l, r); }
 
     // find least R in [l, n] such that f(combine(a[l..r])) is false
     // and f(combine(a[l..r-1])) = true
@@ -558,14 +554,11 @@ struct LazySegTree {
     int first_false_right(int l, const F &f) {
         auto acc = id_node();
         // assert(f(acc));
-        ql = l, qr = n;
-        auto i = _first_false_right<b, F>(1, 0, n, f, acc);
+        auto i = _first_false_right<b, F>(1, 0, n, l, n, f, acc);
         if (i == -1) return n;
         return i;
     }
 
-   private:
-    int ql, qr;
     // helper functions
     void _pullUp(int v) { t[v] = combine(t[2 * v], t[2 * v + 1]); }
     void _updateNode(int v, const update_t &u) {
@@ -594,7 +587,7 @@ struct LazySegTree {
         _pullUp(v);
     }
 
-    void _update(int v, int l, int r, const update_t &u) {
+    void _update(int v, int l, int r, int ql, int qr, const update_t &u) {
         if (qr <= l || r <= ql) return;  // empty intersection
         if (ql <= l && r <= qr) {        // completely inside query
             _updateNode(v, u);
@@ -602,18 +595,18 @@ struct LazySegTree {
         }
         _pushDown(v);
         int mid = (l + r) / 2;
-        _update(2 * v, l, mid, u);
-        _update(2 * v + 1, mid, r, u);
+        _update(2 * v, l, mid, ql, qr, u);
+        _update(2 * v + 1, mid, r, ql, qr, u);
         _pullUp(v);
     }
 
-    node_t _query(int v, int l, int r) {
+    node_t _query(int v, int l, int r, int ql, int qr) {
         if (qr <= l || r <= ql) return id_node();  // empty intersection
         if (ql <= l && r <= qr) return t[v];       // completely inside query
         _pushDown(v);
         int mid = (l + r) / 2;
-        return combine(_query(2 * v, l, mid),
-                       _query(2 * v + 1, mid, r));
+        return combine(_query(2 * v, l, mid, ql, qr),
+                       _query(2 * v + 1, mid, r, ql, qr));
     }
 
     // find least R in [l, r] such that f(combine(a[ql..R])) is false
@@ -621,7 +614,7 @@ struct LazySegTree {
     // Requires f to be contiguous (possibly empty) segments of true and false
     // b = whether pushing is needed or not
     template <bool b = true, typename F>
-    int _first_false_right(int v, int l, int r, const F &f,
+    int _first_false_right(int v, int l, int r, int ql, int qr, const F &f,
                            node_t &acc) {
         if (r <= ql) return -1;
         if (qr <= l) return l;
@@ -635,11 +628,11 @@ struct LazySegTree {
         if (l == r - 1) return l;
         if constexpr (b) _pushDown(v);
         int mid = (r + l) / 2;
-        auto res = _first_false_right<b, F>(2 * v, l, mid, f, acc);
+        auto res = _first_false_right<b, F>(2 * v, l, mid, ql, qr, f, acc);
         if (res != -1)
             return res;
         else
-            return _first_false_right<b, F>(2 * v + 1, mid, r, f, acc);
+            return _first_false_right<b, F>(2 * v + 1, mid, r, ql, qr, f, acc);
     }
 };
 
@@ -705,3 +698,4 @@ auto main() -> signed {
     }
     return 0;
 }
+
