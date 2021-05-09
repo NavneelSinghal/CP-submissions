@@ -497,6 +497,10 @@ struct LazySegTree {
     using base_t = int;
     using update_t = int;
 
+    // struct update_t {
+    //     long long remx;
+    // };
+
     // combining two nodes
     node_t combine(const node_t &n1, const node_t &n2) {
         return node_t{std::min(n1.mn, n2.mn), n1.sum + n2.sum, n1.sz + n2.sz};
@@ -573,6 +577,7 @@ struct LazySegTree {
     }
     void _pushDown(int v) {
         if constexpr (!is_lazy) return;
+        // for optimizing, try removing this maybe
         if (lazy[v] == id_update()) return;
         _updateNode(2 * v, lazy[v]);
         _updateNode(2 * v + 1, lazy[v]);
@@ -606,7 +611,7 @@ struct LazySegTree {
 
     node_t _query(int v, int l, int r) {
         // if (qr <= l || r <= ql) return id_node();  // empty intersection
-        if (ql <= l && r <= qr) return t[v];  // completely inside query
+        if (ql <= l && r <= qr) return t[v];       // completely inside query
         _pushDown(v);
         int mid = (l + r) / 2;
         if (mid >= qr) return _query(2 * v, l, mid);
@@ -616,14 +621,18 @@ struct LazySegTree {
 
     // find least R in [l, r] such that f(combine(a[ql..R])) is false
     // and f(combine(a[ql..R-1])) = true. -1 if not found
+    // Requires f to be contiguous (possibly empty) segments of true and false
+    // b = whether pushing is needed or not
     template <bool b = true, typename F>
     int _first_false_right(int v, int l, int r, const F &f, node_t &acc) {
         if (r <= ql) return -1;
         if (qr <= l) return l;
         auto new_acc = combine(acc, t[v]);
-        if (ql <= l && r <= qr && f(new_acc)) {
-            acc = new_acc;
-            return -1;
+        if (ql <= l && r <= qr) {
+            if (f(new_acc)) {
+                acc = new_acc;
+                return -1;
+            }
         }
         if (l == r - 1) return l;
         if constexpr (b) _pushDown(v);
