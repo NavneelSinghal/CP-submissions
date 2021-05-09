@@ -498,30 +498,30 @@ struct LazySegTree {
     using update_t = int;
 
     // combining two nodes
-    inline node_t combine(const node_t &n1, const node_t &n2) const {
+    node_t combine(const node_t &n1, const node_t &n2) const {
         return node_t{std::min(n1.mn, n2.mn), n1.sum + n2.sum, n1.sz + n2.sz};
     }
 
     // create node from base value and index i
-    inline node_t make_node(const base_t &val, int i) const { return {val, val, 1}; }
+    node_t make_node(const base_t &val, int i) const { return {val, val, 1}; }
 
     // node corresponding to empty interval
-    inline node_t id_node() const { return {inf + 1, 0, 0}; }
+    node_t id_node() const { return {inf + 1, 0, 0}; }
 
     // apply update u to the whole node n
-    inline node_t apply_update(const update_t &u, const node_t &nd) const {
+    node_t apply_update(const update_t &u, const node_t &nd) const {
         // assume that updates are applied as assignments
         if (u == 0) return nd;  // id
         return {u, 1LL * u * nd.sz, nd.sz};
     }
 
     // effective update if v is applied to node, followed by u
-    inline update_t compose_updates(const update_t &u, const update_t &v) const {
+    update_t compose_updates(const update_t &u, const update_t &v) const {
         return {std::max(u, v)};
     }
 
     // identity update
-    inline update_t id_update() const { return 0; }
+    update_t id_update() const { return 0; }
 
     std::vector<node_t> t;
     std::vector<update_t> lazy;
@@ -550,7 +550,7 @@ struct LazySegTree {
 
     // find least R in [l, n] such that f(combine(a[l..r])) is false
     // and f(combine(a[l..r-1])) = true
-    // f = [true, true, ...., false, false] (number of true, false can be 0)
+    // Requires f to be contiguous (possibly empty) segments of true and false
     // b is true if stuff needs to be pushed, and false otherwise
     template <bool b = is_lazy, typename F>
     int first_false_right(int l, const F &f) {
@@ -592,8 +592,8 @@ struct LazySegTree {
         _pullUp(v, l, m);
     }
 
-    // only go down branches with at non-empty intersection, same for _query
     void _update(int v, int l, int r, const update_t &u) {
+        // if (qr <= l || r <= ql) return;  // empty intersection
         if (ql <= l && r <= qr) {  // completely inside query
             _updateNode(v, u);
             return;
@@ -606,6 +606,7 @@ struct LazySegTree {
     }
 
     node_t _query(int v, int l, int r) {
+        // if (qr <= l || r <= ql) return id_node();  // empty intersection
         if (ql <= l && r <= qr) return t[v];  // completely inside query
         int m = (l + r) / 2;
         _pushDown(v, l, m);
