@@ -654,7 +654,7 @@ auto main() -> signed {
     };
 
     auto solve = [&](int) -> void {
-        Stopwatch stopwatch;
+        // Stopwatch stopwatch;
         int n, q;
         cin >> n >> q;
         vector<int> a(n);
