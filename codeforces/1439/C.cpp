@@ -506,8 +506,8 @@ struct LazySegTree {
         return node_t{std::min(n1.mn, n2.mn), n1.sum + n2.sum, n1.sz + n2.sz};
     }
 
-    // create node from base value and index i
-    node_t make_node(const base_t &val, int i) { return {val, val, 1}; }
+    // create node from base value and indices l, r
+    node_t make_node(const base_t &val, int l, int r) { return {val, val, 1}; }
 
     // node corresponding to empty interval
     node_t id_node() { return {inf + 1, 0, 0}; }
@@ -543,12 +543,10 @@ struct LazySegTree {
     void update(int l, int r, const update_t &u) {
         if constexpr (!is_lazy) assert(l == r - 1);
         ql = l, qr = r;
-        if (l >= r) return;
         _update(1, 0, n, u);
     }
     node_t query(int l, int r) {
         ql = l, qr = r;
-        if (l >= r) return id_node();
         return _query(1, 0, n);
     }
 
@@ -587,7 +585,7 @@ struct LazySegTree {
     // actual functions
     void _build(int v, int l, int r, const std::vector<base_t> &a) {
         if (l == r - 1) {
-            t[v] = make_node(a[l], l);
+            t[v] = make_node(a[l], l, r);
             return;
         }
         int mid = (l + r) / 2;
@@ -597,26 +595,25 @@ struct LazySegTree {
     }
 
     void _update(int v, int l, int r, const update_t &u) {
-        // if (qr <= l || r <= ql) return;  // empty intersection
-        if (ql <= l && r <= qr) {  // completely inside query
+        if (qr <= l || r <= ql) return;  // empty intersection
+        if (ql <= l && r <= qr) {        // completely inside query
             _updateNode(v, u);
             return;
         }
         _pushDown(v);
         int mid = (l + r) / 2;
-        if (ql < mid) _update(2 * v, l, mid, u);
-        if (mid < qr) _update(2 * v + 1, mid, r, u);
+        _update(2 * v, l, mid, u);
+        _update(2 * v + 1, mid, r, u);
         _pullUp(v);
     }
 
     node_t _query(int v, int l, int r) {
-        // if (qr <= l || r <= ql) return id_node();  // empty intersection
+        if (qr <= l || r <= ql) return id_node();  // empty intersection
         if (ql <= l && r <= qr) return t[v];       // completely inside query
         _pushDown(v);
         int mid = (l + r) / 2;
-        if (mid >= qr) return _query(2 * v, l, mid);
-        if (mid <= ql) return _query(2 * v + 1, mid, r);
-        return combine(_query(2 * v, l, mid), _query(2 * v + 1, mid, r));
+        return combine(_query(2 * v, l, mid),
+                       _query(2 * v + 1, mid, r));
     }
 
     // find least R in [l, r] such that f(combine(a[ql..R])) is false
@@ -624,7 +621,8 @@ struct LazySegTree {
     // Requires f to be contiguous (possibly empty) segments of true and false
     // b = whether pushing is needed or not
     template <bool b = true, typename F>
-    int _first_false_right(int v, int l, int r, const F &f, node_t &acc) {
+    int _first_false_right(int v, int l, int r, const F &f,
+                           node_t &acc) {
         if (r <= ql) return -1;
         if (qr <= l) return l;
         auto new_acc = combine(acc, t[v]);
