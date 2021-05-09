@@ -390,12 +390,12 @@ namespace Utility {
     I bin_search_split(I l, I r, const P &predicate) {
         --l, ++r;
         while (r - l > 1) {
-            // auto mid = std::midpoint(l, r);
-            auto mid = l + (r - l) / 2;
-            if (predicate(mid))
-                r = mid;
+            // auto m = std::mpoint(l, r);
+            auto m = l + (r - l) / 2;
+            if (predicate(m))
+                r = m;
             else
-                l = mid;
+                l = m;
         }
         if constexpr (b)
             return r;
@@ -486,6 +486,7 @@ using namespace __gnu_pbds;
 
 /* main code starts */
 
+template <bool is_lazy = true>
 struct LazySegTree {
     struct node_t {
         int mn;
@@ -496,267 +497,149 @@ struct LazySegTree {
     using base_t = int;
     using update_t = int;
 
-    // struct update_t {
-    //     long long remx;
-    // };
-
     // combining two nodes
-    node_t combine(const node_t &n1, const node_t &n2) {
+    inline node_t combine(const node_t &n1, const node_t &n2) const {
         return node_t{std::min(n1.mn, n2.mn), n1.sum + n2.sum, n1.sz + n2.sz};
     }
 
-    // create node from base value and indices l, r
-    node_t make_node(const base_t &val, int l, int r) { return {val, val, 1}; }
+    // create node from base value and index i
+    inline node_t make_node(const base_t &val, int i) const {
+        return {val, val, 1};
+    }
 
     // node corresponding to empty interval
-    node_t id_node() { return {inf + 1, 0, 0}; }
+    inline node_t id_node() const { return {inf + 1, 0, 0}; }
 
     // apply update u to the whole node n
-    node_t apply_update(const update_t &u, const node_t &nd) {
+    inline node_t apply_update(const update_t &u, const node_t &nd) const {
         // assume that updates are applied as assignments
         if (u == 0) return nd;  // id
         return {u, 1LL * u * nd.sz, nd.sz};
     }
 
     // effective update if v is applied to node, followed by u
-    update_t compose_updates(const update_t &u, const update_t &v) {
+    inline update_t compose_updates(const update_t &u,
+                                    const update_t &v) const {
         return {std::max(u, v)};
     }
 
     // identity update
-    update_t id_update() { return 0; }
+    inline update_t id_update() const { return 0; }
 
     std::vector<node_t> t;
     std::vector<update_t> lazy;
     int n;
 
     LazySegTree(std::vector<base_t> &a) {
-        this->n = a.size();
+        this->n = (int)a.size();
         if (this->n == 0) return;
-        this->t.assign(4 * a.size(), id_node());
-        this->lazy.assign(2 * a.size(), id_update());
-        _build(1, 0, n, a);
+        this->t.assign(2 * a.size() - 1, id_node());
+        if constexpr (is_lazy) this->lazy.assign(2 * a.size() - 1, id_update());
+        _build(0, 0, n, a);
     }
 
     // half open
-    void update(int l, int r, const update_t &u) { _update(1, 0, n, l, r, u); }
-    node_t query(int l, int r) { return _query(1, 0, n, l, r); }
+    void update(int l, int r, const update_t &u) {
+        if constexpr (!is_lazy) assert(l == r - 1);
+        ql = l, qr = r;
+        if (l >= r) return;
+        _update(0, 0, n, u);
+    }
+    node_t query(int l, int r) {
+        ql = l, qr = r;
+        if (l >= r) return id_node();
+        return _query(0, 0, n);
+    }
 
     // find least R in [l, n] such that f(combine(a[l..r])) is false
     // and f(combine(a[l..r-1])) = true
-    // Requires f to be contiguous (possibly empty) segments of true and false
-    template <bool b, typename F>
+    // f = [true, true, ...., false, false] (number of true, false can be 0)
+    // b is true if stuff needs to be pushed, and false otherwise
+    template <bool b = is_lazy, typename F>
     int first_false_right(int l, const F &f) {
         auto acc = id_node();
         // assert(f(acc));
-        auto i = _first_false_right<b, F>(1, 0, n, l, n, f, acc);
+        ql = l, qr = n;
+        auto i = _first_false_right<b, F>(0, 0, n, f, acc);
         if (i == -1) return n;
         return i;
     }
 
+   private:
+    int ql, qr;
     // helper functions
-    void _pullUp(int v) { t[v] = combine(t[2 * v], t[2 * v + 1]); }
-    void _updateNode(int v, const update_t &u) {
-        t[v] = apply_update(u, t[v]);
-        if (v < (int)lazy.size()) lazy[v] = compose_updates(u, lazy[v]);
+    inline void _pullUp(int v, int l, int m) {
+        t[v] = combine(t[v + 1], t[v + ((m - l) << 1)]);
     }
-    void _pushDown(int v) {
-        _updateNode(2 * v, lazy[v]);
-        _updateNode(2 * v + 1, lazy[v]);
+    inline void _updateNode(int v, const update_t &u) {
+        t[v] = apply_update(u, t[v]);
+        if constexpr (is_lazy) lazy[v] = compose_updates(u, lazy[v]);
+    }
+    inline void _pushDown(int v, int l, int m) {
+        if constexpr (!is_lazy) return;
+        if (lazy[v] == id_update()) return;
+        _updateNode(v + 1, lazy[v]);
+        _updateNode(v + ((m - l) << 1), lazy[v]);
         lazy[v] = id_update();
     }
 
     // actual functions
     void _build(int v, int l, int r, const std::vector<base_t> &a) {
         if (l == r - 1) {
-            t[v] = make_node(a[l], l, r);
+            t[v] = make_node(a[l], l);
             return;
         }
-        int mid = (l + r) / 2;
-        _build(2 * v, l, mid, a);
-        _build(2 * v + 1, mid, r, a);
-        _pullUp(v);
+        int m = (l + r) / 2;
+        _build(v + 1, l, m, a);
+        _build(v + ((m - l) << 1), m, r, a);
+        _pullUp(v, l, m);
     }
 
-    void _update(int v, int l, int r, int ql, int qr, const update_t &u) {
-        if (qr <= l || r <= ql) return;  // empty intersection
-        if (ql <= l && r <= qr) {        // completely inside query
+    // only go down branches with at non-empty intersection, same for _query
+    void _update(int v, int l, int r, const update_t &u) {
+        if (ql <= l && r <= qr) {  // completely inside query
             _updateNode(v, u);
             return;
         }
-        _pushDown(v);
-        int mid = (l + r) / 2;
-        _update(2 * v, l, mid, ql, qr, u);
-        _update(2 * v + 1, mid, r, ql, qr, u);
-        _pullUp(v);
+        int m = (l + r) / 2;
+        _pushDown(v, l, m);
+        if (ql < m) _update(v + 1, l, m, u);
+        if (m < qr) _update(v + ((m - l) << 1), m, r, u);
+        _pullUp(v, l, m);
     }
 
-    node_t _query(int v, int l, int r, int ql, int qr) {
-        if (qr <= l || r <= ql) return id_node();  // empty intersection
-        if (ql <= l && r <= qr) return t[v];       // completely inside query
-        _pushDown(v);
-        int mid = (l + r) / 2;
-        return combine(_query(2 * v, l, mid, ql, qr),
-                       _query(2 * v + 1, mid, r, ql, qr));
+    node_t _query(int v, int l, int r) {
+        if (ql <= l && r <= qr) return t[v];  // completely inside query
+        int m = (l + r) / 2;
+        _pushDown(v, l, m);
+        if (m >= qr) return _query(v + 1, l, m);
+        if (m <= ql) return _query(v + ((m - l) << 1), m, r);
+        return combine(_query(v + 1, l, m), _query(v + ((m - l) << 1), m, r));
     }
 
     // find least R in [l, r] such that f(combine(a[ql..R])) is false
     // and f(combine(a[ql..R-1])) = true. -1 if not found
-    // Requires f to be contiguous (possibly empty) segments of true and false
-    template <bool b, typename F>
-    int _first_false_right(int v, int l, int r, int ql, int qr, const F &f,
-                           node_t &acc) {
+    template <bool b = true, typename F>
+    int _first_false_right(int v, int l, int r, const F &f, node_t &acc) {
         if (r <= ql) return -1;
         if (qr <= l) return l;
         auto new_acc = combine(acc, t[v]);
-        if (ql <= l && r <= qr) {
-            if (f(new_acc)) {
-                acc = new_acc;
-                return -1;
-            }
-            while (r - l > 1) {
-                int mid = (r + l) / 2;
-                if constexpr (b) _pushDown(v);
-                new_acc = combine(acc, t[2 * v]);
-                if (!f(new_acc)) {
-                    v *= 2;
-                    r = mid;
-                } else {
-                    acc = std::move(new_acc);
-                    v = 2 * v + 1;
-                    l = mid;
-                }
-            }
-            return l;
+        if (ql <= l && r <= qr && f(new_acc)) {
+            acc = new_acc;
+            return -1;
         }
         if (l == r - 1) return l;
-        if constexpr (b) _pushDown(v);
-        int mid = (r + l) / 2;
-        auto res = _first_false_right<b, F>(2 * v, l, mid, ql, qr, f, acc);
-        if (res != -1)
-            return res;
-        else
-            return _first_false_right<b, F>(2 * v + 1, mid, r, ql, qr, f, acc);
+        int m = (r + l) / 2;
+        if constexpr (b) _pushDown(v, l, m);
+        if (ql < m) {
+            auto res = _first_false_right<b, F>(v + 1, l, m, f, acc);
+            if (res != -1) return res;
+        }
+        if (m < qr)
+            return _first_false_right<b, F>(v + ((m - l) << 1), m, r, f, acc);
+        return -1;
     }
 };
-
-namespace IO {
-#define CUSTOM_IO
-    using namespace std;
-    const int BUFFER_SIZE = 1 << 15;
-
-    char input_buffer[BUFFER_SIZE];
-    size_t input_pos = 0, input_len = 0;
-
-    char output_buffer[BUFFER_SIZE];
-    int output_pos = 0;
-
-    char number_buffer[100];
-    uint8_t lookup[100];
-
-    void _update_input_buffer() {
-        input_len = fread(input_buffer, sizeof(char), BUFFER_SIZE, stdin);
-        input_pos = 0;
-
-        if (input_len == 0) input_buffer[0] = EOF;
-    }
-
-    inline char next_char(bool advance = true) {
-        if (input_pos >= input_len) _update_input_buffer();
-
-        return input_buffer[advance ? input_pos++ : input_pos];
-    }
-
-    inline bool isspace(char c) {
-        return (unsigned char)(c - '\t') < 5 || c == ' ';
-    }
-
-    inline void read_char(char &c) {
-        while (isspace(next_char(false))) next_char();
-
-        c = next_char();
-    }
-
-    template <typename T>
-    inline void read_int(T &number) {
-        bool negative = false;
-        number = 0;
-
-        while (!isdigit(next_char(false)))
-            if (next_char() == '-') negative = true;
-
-        do {
-            number = 10 * number + (next_char() - '0');
-        } while (isdigit(next_char(false)));
-
-        if (negative) number = -number;
-    }
-
-    template <typename T, typename... Args>
-    inline void read_int(T &number, Args &... args) {
-        read_int(number);
-        read_int(args...);
-    }
-
-    inline void read_str(string &str) {
-        while (isspace(next_char(false))) next_char();
-
-        str.clear();
-
-        do {
-            str += next_char();
-        } while (!isspace(next_char(false)));
-    }
-
-    void _flush_output() {
-        fwrite(output_buffer, sizeof(char), output_pos, stdout);
-        output_pos = 0;
-    }
-
-    inline void write_char(char c) {
-        if (output_pos == BUFFER_SIZE) _flush_output();
-
-        output_buffer[output_pos++] = c;
-    }
-
-    template <typename T>
-    inline void write_int(T number, char after = '\0') {
-        if (number < 0) {
-            write_char('-');
-            number = -number;
-        }
-
-        int length = 0;
-
-        while (number >= 10) {
-            uint8_t lookup_value = lookup[number % 100];
-            number /= 100;
-            number_buffer[length++] = char((lookup_value & 15) + '0');
-            number_buffer[length++] = char((lookup_value >> 4) + '0');
-        }
-
-        if (number != 0 || length == 0) write_char(char(number + '0'));
-
-        for (int i = length - 1; i >= 0; i--) write_char(number_buffer[i]);
-
-        if (after) write_char(after);
-    }
-
-    inline void write_str(const string &str, char after = '\0') {
-        for (char c : str) write_char(c);
-
-        if (after) write_char(after);
-    }
-
-    void IOinit() {
-        // Make sure _flush_output() is called at the end of the program.
-        bool exit_success = atexit(_flush_output) == 0;
-        assert(exit_success);
-
-        for (int i = 0; i < 100; i++)
-            lookup[i] = uint8_t((i / 10 << 4) + i % 10);
-    }
-}  // namespace IO
 
 auto main() -> signed {
 #ifdef CUSTOM_IO
@@ -773,17 +656,17 @@ auto main() -> signed {
     auto solve = [&](int) -> void {
         Stopwatch stopwatch;
         int n, q;
-        IO::read_int(n, q);
+        cin >> n >> q;
         vector<int> a(n);
-        for (auto &x : a) IO::read_int(x);
-        LazySegTree st(a);
+        for (auto &x : a) cin >> x;
+        LazySegTree<> st(a);
         while (q--) {
             int t, x, y;
-            IO::read_int(t, x, y);
+            cin >> t >> x >> y;
             --x;
             if (t == 1) {
                 int start = st.first_false_right<false>(
-                    0, [&](const LazySegTree::node_t &node) {
+                    0, [&](const LazySegTree<>::node_t &node) {
                         return node.mn >= y;
                     });
                 if (start <= x) st.update(start, x + 1, y);
@@ -791,19 +674,19 @@ auto main() -> signed {
                 int ans = 0;
                 while (y > 0 && x < n) {
                     x = st.first_false_right<false>(
-                        x, [&](const LazySegTree::node_t &node) {
+                        x, [&](const LazySegTree<>::node_t &node) {
                             return node.mn > y;
                         });
                     if (x == n) break;
                     int endpoint = st.first_false_right<true>(
-                        x, [&](const LazySegTree::node_t &node) {
+                        x, [&](const LazySegTree<>::node_t &node) {
                             return node.sum <= y;
                         });
                     ans += endpoint - x;
                     y -= st.query(x, endpoint).sum;
                     x = endpoint;
                 }
-                IO::write_int(ans, '\n');
+                cout << ans << '\n';
             }
         }
     };
