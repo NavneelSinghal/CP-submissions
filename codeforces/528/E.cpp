@@ -1,60 +1,46 @@
+// not mine
+// https://codeforces.com/contest/528/submission/116226510
+
+#pragma GCC optimize("Ofast")
+#pragma GCC target("avx2")
+// writer: w33z8kqrqk8zzzx33
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-#define int ll
-typedef long double ld;
-#define double ld
-typedef pair<double, double> pd;
-#define MAX 3456
-#define F first
-#define S second
+
+#define iter(i, a, b) for (int i = (a); i < (b); i++)
+#define rep(i, a) iter(i, 0, a)
+#define rep1(i, a) iter(i, 1, (a) + 1)
+#define all(a) a.begin(), a.end()
+#define fi first
+#define se second
+#define pb push_back
 #define mp make_pair
-using namespace std;
 
-int a[MAX], b[MAX], c[MAX], rnk[MAX];
+using ll = long long;
+using pii = pair<int, int>;
 
-bool comp(int &x, int &y){
-  return ((double)atan2(b[x], -a[x])) > ((double)atan2(b[y], -a[y]));
+const int MOD = 1000000007;
+using db = double;
+__attribute__((always_inline)) inline db cal(db a, db b, db c, db d, db e, db f,
+                                             db g, db h, db i) {
+    double z =
+        (a * (e * i - f * h) - b * (d * i - f * g) - c * (e * g - d * h));
+    return abs(z * z /
+               (2 * (a * e - b * d) * (a * h - b * g) * (d * h - e * g)));
 }
-
-pd intersect(int u, int v){
-  double d=a[u]*b[v]-a[v]*b[u];
-	return make_pair((double)(b[v]*c[u]-b[u]*c[v])/d,(double)(a[u]*c[v]-a[v]*c[u])/d);
-}
-
-signed main(){
-  ios::sync_with_stdio(0); 
-  cin.tie(0); 
-  cout.tie(0);
-  cout<<fixed<<setprecision(11);
-
-  int n;
-  cin>>n;
-
-  for(int i = 0; i<n; i++){
-    cin>>a[i]>>b[i]>>c[i];
-    if(a[i]<0){
-      a[i]*=-1; 
-      b[i]*=-1;
-      c[i]*=-1;
-    }
-    rnk[i] = i;
-  }
-
-  sort(rnk, rnk+n, comp);
-  double ans = 0.0;
-
-  for(int i = 0; i<n; i++){
-    int l = rnk[i];
-    pd sum = mp(0.0, 0.0);
-    for(int j = 1; j<n; j++){
-      int m = rnk[(i+j)%n];
-      pd point = intersect(l, m);
-      ans += (double) 3.0/n/(n-1)/(n-2)*(sum.F*point.S - sum.S*point.F);
-      sum.F += point.F;
-      sum.S += point.S;
-    }
-  }
-  
-  cout<<fabs(ans);
+db A[3005], B[3005], C[3005];
+signed main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    int n;
+    cin >> n;
+    rep(i, n) cin >> A[i] >> B[i] >> C[i];
+    double s = 0;
+    rep(i, n)
+        iter(j, i + 1, n)
+#pragma GCC unroll 8
+            iter(k, j + 1, n) s +=
+        cal(A[i], B[i], C[i], A[j], B[j], C[j], A[k], B[k], C[k]);
+    cout << fixed << setprecision(10) << (s / (1ll * n * (n - 1) * (n - 2) / 6))
+         << endl;
 }
