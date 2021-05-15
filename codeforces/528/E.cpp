@@ -36,7 +36,9 @@ signed main() {
     cin >> n;
     rep(i, n) cin >> A[i] >> B[i] >> C[i];
     double s = 0;
+#pragma GCC unroll 8
     rep(i, n)
+#pragma GCC unroll 8
         iter(j, i + 1, n)
 #pragma GCC unroll 8
             iter(k, j + 1, n) s +=
