@@ -635,9 +635,9 @@ struct fast_sieve_sumdiv {
                 is_prime[k] = false;
                 spf[k] = p;
                 if (spfi == p) {
-                    int t = pw[k] = pw[i] * p;
-                    if (k == t) func[k] = func[i] * p + 1;
-                    else func[k] = func[k / t] * func[t];
+                    pw[k] = pw[i] * p;
+                    if (k == pw[k]) func[k] = func[i] * p + 1;
+                    else func[k] = func[k / pw[k]] * func[pw[k]];
                     break;
                 } else {
                     func[k] = func[i] * func[p];
@@ -665,6 +665,8 @@ auto main() -> signed {
         for (int i = 0; i < 10'000'001; ++i)
             if (f.func[i] <= 10'000'000 && smallest[f.func[i]] == -1)
                 smallest[f.func[i]] = i;
+        // for (auto i : Range(1, 13)) cerr << i << ": " << f.func[i] << '\n';
+        for (auto i : Range(1, 13)) cerr << i << ": " << f.spf[i] << '\n';
     };
 
     auto solve = [&](int) -> void {
