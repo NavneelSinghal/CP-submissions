@@ -607,12 +607,12 @@ namespace IO {
 using namespace IO;
 
 template <int n = 1'000'000>
-struct fast_sieve_sumdiv {
+struct fast_sieve_func_spf {
     vector<int> primes, spf;
     vector<ll> func;
     vector<int> pw;
     vector<char> is_prime;
-    fast_sieve_sumdiv() {
+    fast_sieve_func_spf() {
         is_prime.assign(n + 1, true);
         is_prime[0] = is_prime[1] = false;
         spf.resize(n + 1);
@@ -625,6 +625,7 @@ struct fast_sieve_sumdiv {
         for (int i = 2; i <= n; ++i) {
             if (is_prime[i]) {
                 primes.push_back(i), spf[i] = i;
+                // handle the case of primes by updating func[i]
                 func[i] = 1 + i;
                 pw[i] = i;
             }
@@ -635,11 +636,14 @@ struct fast_sieve_sumdiv {
                 is_prime[k] = false;
                 spf[k] = p;
                 if (spfi == p) {
+                    // p divides i
+                    // see how to update here
                     pw[k] = pw[i] * p;
                     if (k == pw[k]) func[k] = func[i] * p + 1;
                     else func[k] = func[k / pw[k]] * func[pw[k]];
-                    break;
                 } else {
+                    // p and i are coprime
+                    // see how to update here
                     func[k] = func[i] * func[p];
                     pw[k] = p;
                 }
@@ -659,7 +663,7 @@ auto main() -> signed {
     cin >> TESTS;
 
     vector<int> smallest;
-    fast_sieve_sumdiv<10'000'001> f;
+    fast_sieve_func_spf<10'000'001> f;
     auto precompute = [&]() -> void {
         smallest.assign(10'000'001, -1);
         for (int i = 0; i < 10'000'001; ++i)
