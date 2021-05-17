@@ -610,7 +610,6 @@ template <int n = 1'000'000>
 struct fast_sieve_func_spf {
     vector<int> primes, spf;
     vector<ll> func;
-    vector<int> pw;
     vector<char> is_prime;
     fast_sieve_func_spf() {
         is_prime.assign(n + 1, true);
@@ -619,15 +618,12 @@ struct fast_sieve_func_spf {
 
         func.resize(n + 1);
         func[1] = 1;
-        pw.resize(n + 1);
-        pw[1] = 1;
 
         for (int i = 2; i <= n; ++i) {
             if (is_prime[i]) {
                 primes.push_back(i), spf[i] = i;
                 // handle the case of primes by updating func[i]
                 func[i] = 1 + i;
-                pw[i] = i;
             }
             int spfi = spf[i];
             for (const auto p : primes) {
@@ -638,14 +634,17 @@ struct fast_sieve_func_spf {
                 if (spfi == p) {
                     // p divides i
                     // see how to update here
-                    pw[k] = pw[i] * p;
-                    if (k == pw[k]) func[k] = func[i] * p + 1;
-                    else func[k] = func[k / pw[k]] * func[pw[k]];
+                    int w = i, pwi = p;
+                    while (w % p == 0) pwi *= p, w /= p;
+                    if (w == 1)
+                        func[k] = 1 + p * func[i];
+                    else
+                        func[k] = func[w] * func[pwi];
+                    break;
                 } else {
                     // p and i are coprime
                     // see how to update here
                     func[k] = func[i] * func[p];
-                    pw[k] = p;
                 }
             }
         }
