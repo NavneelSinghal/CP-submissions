@@ -19,7 +19,7 @@ struct Bitset {
     }
     void set(int x) { bits[x >> 6] |= (1ULL << (x & 63)); }
     bool get(int x) { return (bits[x >> 6] >> (x & 63)) & 1; }
-    Bitset bitset_and(Bitset &o) const {
+    Bitset bitset_and(Bitset &o) {
         Bitset res(N);
         for (int i = 0; i < CAPACITY; ++i) res.bits[i] = (bits[i] & o.bits[i]);
         return res;
@@ -62,7 +62,7 @@ int main() {
 
     const int sz = useful.size();
 
-    auto rec = [&](const auto &self, const Bitset &b, int i, unsigned mask) -> unsigned {
+    auto rec = [&](const auto &self, Bitset &b, int i, unsigned mask) -> unsigned {
         if (i == sz) return mask;
         Bitset other = b.bitset_and(bitsets[i]);
         unsigned ans = mask;
