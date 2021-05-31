@@ -260,7 +260,7 @@ auto main() -> signed {
         vector<int> shuf(n);
         iota(begin(shuf), end(shuf), 0);
         shuffle(begin(shuf), end(shuf), rng);
-        int iter = min(n, 30);
+        int iter = min(n, 200);
         int best = 0;
         string ans(m, '0');
         while (iter--) {
