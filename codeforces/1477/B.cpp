@@ -234,72 +234,99 @@ struct lazy_segtree {
 
 using namespace std;
 
-int main() {
-    cin.tie(nullptr)->sync_with_stdio(false);
-    int t;
-    cin >> t;
-    while (t--) {
-        int n, q;
-        cin >> n >> q;
-        string s;
-        cin >> s;
-        std::vector<char> v_s(n);
-        for (auto& x : v_s) cin >> x;
-        vector<pair<int, int>> v(q);
-        for (auto& [x, y] : v) {
-            cin >> x >> y;
-            --x, --y;
-        }
-        // id_node, make_node, combine, id_update, apply_update, compose_updates
-        struct Node {
-            int sum, size;
-        };
-        const Node id_node = {0, 0};
-        auto make_node = [](const char c, int i) {
-            return Node{c - '0', 1};
-        };
-        auto combine = [](const Node& n1, const Node& n2) {
-            return Node{n1.sum + n2.sum, n1.size + n2.size};
-        };
-        using Update = int;
-        const Update id_update = -1;
-        auto apply_update = [](const Update& u, const Node& nd) {
-            if (u == -1)
-                return nd;
-            else if (u == 0)
-                return Node{0, nd.size};
-            return Node{nd.size, nd.size};
-        };
-        auto compose_updates = [](const Update& u, const Update& v) {
-            if (u == -1) return v;
-            return u;
-        };
-        lazy_segtree seg(v_s, id_node, make_node, combine, id_update,
-                         apply_update, compose_updates);
-        static_assert(decltype(seg)::is_lazy);
-        bool answered = false;
-        for (int i = q - 1; i >= 0; --i) {
-            auto [l, r] = v[i];
-            int s = seg.query(l, r + 1).sum;
-            if (2 * s == r - l + 1) {
-                cout << "NO\n";
-                answered = true;
-                break;
-            } else if (2 * s < r - l + 1) {
-                seg.update(l, r + 1, 0);
-            } else {
-                seg.update(l, r + 1, 1);
-            }
-        }
-        if (answered) continue;
-        string ss;
-        for (int i = 0; i < n; ++i) {
-            ss += '0' + seg.get(i).sum;
-        }
-        if (ss == s) {
-            cout << "YES\n";
-        } else {
+void setIO(string name = "") {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    cout << setprecision(10) << fixed;
+    if (name.size() == 0) return;
+    FILE* fin = freopen((name + ".in").c_str(), "r", stdin);
+    FILE* fout = freopen((name + ".out").c_str(), "w", stdout);
+    ignore = fin;
+    ignore = fout;
+}
+
+void precompute() {}
+
+void solve(int) {
+    int n, q;
+    cin >> n >> q;
+    string s;
+    cin >> s;
+
+    std::vector<char> v_s(n);
+    for (auto& x : v_s) cin >> x;
+
+    vector<pair<int, int>> v(q);
+    for (auto& [x, y] : v) {
+        cin >> x >> y;
+        --x, --y;
+    }
+
+    // id_node, make_node, combine, id_update, apply_update, compose_updates
+    struct Node {
+        int sum, size;
+    };
+
+    const Node id_node = {0, 0};
+    auto make_node = [](const char c, int i) {
+        return Node{c - '0', 1};
+    };
+    auto combine = [](const Node& n1, const Node& n2) {
+        return Node{n1.sum + n2.sum, n1.size + n2.size};
+    };
+
+    using Update = int;
+    const Update id_update = -1;
+    auto apply_update = [](const Update& u, const Node& nd) {
+        if (u == -1)
+            return nd;
+        else if (u == 0)
+            return Node{0, nd.size};
+        return Node{nd.size, nd.size};
+    };
+    auto compose_updates = [](const Update& u, const Update& v) {
+        if (u == -1) return v;
+        return u;
+    };
+
+    lazy_segtree seg(v_s, id_node, make_node, combine, id_update, apply_update,
+                     compose_updates);
+
+    for (int i = q - 1; i >= 0; --i) {
+        auto [l, r] = v[i];
+        int s = seg.query(l, r + 1).sum;
+        if (2 * s == r - l + 1) {
             cout << "NO\n";
+            return;
+        } else if (2 * s < r - l + 1) {
+            seg.update(l, r + 1, 0);
+        } else {
+            seg.update(l, r + 1, 1);
         }
     }
+
+    string ss;
+    for (int i = 0; i < n; ++i) {
+        ss += '0' + seg.get(i).sum;
+    }
+
+    if (ss == s) {
+        cout << "YES\n";
+    } else {
+        cout << "NO\n";
+    }
+}
+void brute(int) {}
+signed main() {
+    setIO();
+    precompute();
+    int t = 1;
+    cin >> t;
+    for (int _t = 1; _t <= t; _t++) {
+        // cout << "Case #" << _t << ": ";
+        solve(_t);
+        // brute(_t);
+    }
+    return 0;
 }
