@@ -25,12 +25,12 @@ A repository to keep track of problem solving practice, containing solutions fro
 1010 | [B - Prinzessin der Verurteilung](https://codeforces.com/contest/1536/problem/B) | [GNU C++17 (64)](./codeforces/1536/B.cpp) | `brute force` `constructive algorithms` `strings` `*1200` | Jun/09/2021 17:55 | 
 1009 | [C - Diluc and Kaeya](https://codeforces.com/contest/1536/problem/C) | [GNU C++17 (64)](./codeforces/1536/C.cpp) | `data structures` `dp` `hashing` `number theory` `*1500` | Jun/09/2021 17:43 | 
 1008 | [D - Cut and Stick](https://codeforces.com/contest/1514/problem/D) | [GNU C++17 (64)](./codeforces/1514/D.cpp) | `binary search` `data structures` `greedy` `implementation` `sortings` `*2000` | Jun/09/2021 02:48 | 
-1007 | [C - Trees of Tranquillity](https://codeforces.com/contest/1528/problem/C) | [GNU C++17 (64)](./codeforces/1528/C.cpp) | `brute force` `data structures` `dfs and similar` `greedy` `trees` `*2300` | May/29/2021 02:54 | 
-1006 | [A - Eshag Loves Big Arrays](https://codeforces.com/contest/1529/problem/A) | [GNU C++17 (64)](./codeforces/1529/A.cpp) | `constructive algorithms` `greedy` `math` `*800` | May/29/2021 02:11 | 
-1005 | [G - Short Task](https://codeforces.com/contest/1512/problem/G) | [GNU C++17 (64)](./codeforces/1512/G.cpp) | `brute force` `dp` `math` `number theory` `*1700` | May/18/2021 01:31 | 
-1004 | [E - Triangles 3000](https://codeforces.com/contest/528/problem/E) | [GNU C++17 (64)](./codeforces/528/E.cpp) |  | May/15/2021 12:04 | 
-1003 | [C - Greedy Shopping](https://codeforces.com/contest/1439/problem/C) | [GNU C++17 (64)](./codeforces/1439/C.cpp) | `binary search` `data structures` `divide and conquer` `greedy` `implementation` `*2600` | May/09/2021 21:28 | 
-1002 | [B - Nezzar and Binary String](https://codeforces.com/contest/1477/problem/B) | [GNU C++17 (64)](./codeforces/1477/B.cpp) | `data structures` `greedy` `*1900` | May/09/2021 04:24 | 
+1007 | [B - Nezzar and Binary String](https://codeforces.com/contest/1477/problem/B) | [GNU C++17 (64)](./codeforces/1477/B.cpp) | `data structures` `greedy` `*1900` | Jun/09/2021 00:10 | 
+1006 | [C - Trees of Tranquillity](https://codeforces.com/contest/1528/problem/C) | [GNU C++17 (64)](./codeforces/1528/C.cpp) | `brute force` `data structures` `dfs and similar` `greedy` `trees` `*2300` | May/29/2021 02:54 | 
+1005 | [A - Eshag Loves Big Arrays](https://codeforces.com/contest/1529/problem/A) | [GNU C++17 (64)](./codeforces/1529/A.cpp) | `constructive algorithms` `greedy` `math` `*800` | May/29/2021 02:11 | 
+1004 | [G - Short Task](https://codeforces.com/contest/1512/problem/G) | [GNU C++17 (64)](./codeforces/1512/G.cpp) | `brute force` `dp` `math` `number theory` `*1700` | May/18/2021 01:31 | 
+1003 | [E - Triangles 3000](https://codeforces.com/contest/528/problem/E) | [GNU C++17 (64)](./codeforces/528/E.cpp) |  | May/15/2021 12:04 | 
+1002 | [C - Greedy Shopping](https://codeforces.com/contest/1439/problem/C) | [GNU C++17 (64)](./codeforces/1439/C.cpp) | `binary search` `data structures` `divide and conquer` `greedy` `implementation` `*2600` | May/09/2021 21:28 | 
 1001 | [C - Circular RMQ](https://codeforces.com/contest/52/problem/C) | [GNU C++17 (64)](./codeforces/52/C.cpp) | `data structures` `*2200` | May/08/2021 05:11 | 
 1000 | [A - GCD Sum](https://codeforces.com/contest/1498/problem/A) | [GNU C++17 (64)](./codeforces/1498/A.cpp) | `brute force` `math` `*800` | May/04/2021 22:02 | 
 999 | [D - Maximum Sum of Products](https://codeforces.com/contest/1519/problem/D) | [PyPy 3](./codeforces/1519/D.py) | `brute force` `dp` `implementation` `math` `two pointers` | Apr/30/2021 00:03 | 
