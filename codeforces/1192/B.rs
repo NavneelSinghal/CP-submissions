@@ -1,7 +1,6 @@
 #[allow(unused_imports)]
 use std::cmp::{max, min};
 use std::io::{stdin, stdout, BufWriter, Write};
-const BITS: usize = 19;
 
 #[derive(Default)]
 struct Scanner {
@@ -29,7 +28,6 @@ struct Node(i64, i64, i64, i64, i64);
 struct LazySegTree {
     t: Vec<Node>,
     lazy: Vec<i64>,
-    n: usize,
     size: usize,
     log: usize,
 }
@@ -88,7 +86,6 @@ impl LazySegTree {
         let mut ret = LazySegTree {
             t: vec![LazySegTree::id_node(); 2 * size],
             lazy: vec![LazySegTree::id_update(); size],
-            n: n,
             size: size,
             log: log,
         };
@@ -130,17 +127,6 @@ impl LazySegTree {
                 r >>= 1;
             }
             LazySegTree::combine(left, right)
-        }
-    }
-
-    fn update_single(&mut self, p: usize, w: i64) {
-        let mut p = p + self.size;
-        for i in (1usize..self.log + 1usize).rev() {
-            self.push(p >> i);
-        }
-        self.t[p] = LazySegTree::apply_update(w, self.t[p]);
-        for i in 1usize..self.log + 1usize {
-            self.pull(p >> i);
         }
     }
 
@@ -244,7 +230,7 @@ fn main() {
         timer = timer + 1;
         par[u] = p;
         for i in &g[u] {
-            let Edge(mut uu, mut vv, _ww) = edges[*i];
+            let Edge(uu, vv, _ww) = edges[*i];
             let v;
             if uu == u {
                 v = vv;
@@ -273,7 +259,7 @@ fn main() {
 
     let mut seg = LazySegTree::new(2 * n - 1);
     for i in 1..n {
-        let Edge(mut u, mut v, mut w) = edges[i - 1];
+        let Edge(u, mut v, w) = edges[i - 1];
         if v == par[u] {
             v = u
         }
@@ -286,7 +272,7 @@ fn main() {
         let e = scan.next::<i64>();
         let edge_index = ((d as i64 + last) % ((n - 1) as i64)) as usize;
         let new_edge_weight = (e + last) % w;
-        let Edge(mut u, mut v, mut old_edge_weight) = edges[edge_index];
+        let Edge(u, mut v, old_edge_weight) = edges[edge_index];
         edges[edge_index] = Edge(u, v, new_edge_weight);
         if v == par[u] {
             v = u;
