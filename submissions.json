@@ -1295,6 +1295,22 @@
     ],
     "timestamp": "Mar/28/2021 18:53"
   },
+  "AC23364938": {
+    "contest_id": "arc122",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc122/A.cpp",
+    "platform": "AtCoder",
+    "problem_index": "A",
+    "problem_name": "Many Formulae",
+    "problem_url": "https://atcoder.jp/contests/arc122/tasks/arc122_a",
+    "submission_id": "AC23364938",
+    "submission_url": "https://atcoder.jp/contests/arc122/submissions/23364938",
+    "tags": [
+      "AtCoder",
+      "*400"
+    ],
+    "timestamp": "Jun/12/2021 17:36"
+  },
   "AC23366778": {
     "contest_id": "arc122",
     "language": "C++ (GCC 9.2.1)",
