@@ -1,4 +1,20 @@
 {
+  "AC23366778": {
+    "contest_id": "arc122",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc122/B.cpp",
+    "platform": "AtCoder",
+    "problem_index": "B",
+    "problem_name": "Insurance",
+    "problem_url": "https://atcoder.jp/contests/arc122/tasks/arc122_b",
+    "submission_id": "AC23366778",
+    "submission_url": "https://atcoder.jp/contests/arc122/submissions/23366778",
+    "tags": [
+      "AtCoder",
+      "*500"
+    ],
+    "timestamp": "Jun/12/2021 17:57"
+  },
   "AC24337246": {
     "contest_id": "dp",
     "language": "C++ (GCC 9.2.1)",
