@@ -11,20 +11,21 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-1035 | [G - How Many Paths?](https://codeforces.com/contest/1547/problem/G) | [GNU C++17 (64)](./codeforces/1547/G.cpp) | `dfs and similar` `dp` `graphs` `trees` `*2100` | Jul/10/2021 22:40 | 
-1034 | [E - Counter Attack](https://codeforces.com/contest/190/problem/E) | [GNU C++17 (64)](./codeforces/190/E.cpp) | `data structures` `dsu` `graphs` `hashing` `sortings` `*2100` | Jul/06/2021 23:18 | 
-1033 | [E - Connected Components?](https://codeforces.com/contest/920/problem/E) | [GNU C++17 (64)](./codeforces/920/E.cpp) | `data structures` `dfs and similar` `dsu` `graphs` `*2100` | Jul/06/2021 23:10 | 
-1032 | [F - Yet Another Substring Reverse](https://codeforces.com/contest/1234/problem/F) | [GNU C++17 (64)](./codeforces/1234/F.cpp) | `bitmasks` `dp` `*2200` | Jul/05/2021 22:36 | 
-1031 | [E2 - Abnormal Permutation Pairs (hard version)](https://codeforces.com/contest/1542/problem/E2) | [GNU C++17 (64)](./codeforces/1542/E2.cpp) | `combinatorics` `dp` `fft` `math` `*2700` | Jul/03/2021 22:58 | 
-1030 | [D - Cut and Stick](https://codeforces.com/contest/1514/problem/D) | [GNU C++17 (64)](./codeforces/1514/D.cpp) | `binary search` `data structures` `greedy` `implementation` `sortings` `*2000` | Jul/01/2021 14:31 | 
-1029 | [H - Submatrices](https://codeforces.com/contest/1533/problem/H) | [Kotlin](./codeforces/1533/H.kt) | `*special problem` `bitmasks` `data structures` `dp` | Jun/29/2021 23:02 | 
-1028 | [F - Binary String Partition](https://codeforces.com/contest/1533/problem/F) | [Kotlin](./codeforces/1533/F.kt) | `*special problem` `binary search` `greedy` | Jun/29/2021 22:02 | 
-1027 | [E - Chess Team Forming](https://codeforces.com/contest/1533/problem/E) | [Kotlin](./codeforces/1533/E.kt) | `*special problem` `binary search` `data structures` `greedy` | Jun/29/2021 21:46 | 
-1026 | [D - String Searching](https://codeforces.com/contest/1533/problem/D) | [Kotlin](./codeforces/1533/D.kt) | `*special problem` `hashing` | Jun/29/2021 21:23 | 
-1025 | [C - Sweets](https://codeforces.com/contest/1533/problem/C) | [Kotlin](./codeforces/1533/C.kt) | `*special problem` `data structures` `implementation` | Jun/29/2021 20:22 | 
-1024 | [B - Nearest Point Function](https://codeforces.com/contest/1533/problem/B) | [Kotlin](./codeforces/1533/B.kt) | `*special problem` `implementation` | Jun/29/2021 20:11 | 
-1023 | [A - Travel to Bertown](https://codeforces.com/contest/1533/problem/A) | [Kotlin](./codeforces/1533/A.kt) | `*special problem` `implementation` `math` | Jun/29/2021 20:09 | 
-1022 | [F - Prefixes and Suffixes](https://codeforces.com/contest/1532/problem/F) | [Kotlin](./codeforces/1532/F.kt) | `*special problem` `strings` | Jun/24/2021 13:04 | 
+1036 | [G - How Many Paths?](https://codeforces.com/contest/1547/problem/G) | [GNU C++17 (64)](./codeforces/1547/G.cpp) | `dfs and similar` `dp` `graphs` `trees` `*2100` | Jul/10/2021 22:40 | 
+1035 | [E - Counter Attack](https://codeforces.com/contest/190/problem/E) | [GNU C++17 (64)](./codeforces/190/E.cpp) | `data structures` `dsu` `graphs` `hashing` `sortings` `*2100` | Jul/06/2021 23:18 | 
+1034 | [E - Connected Components?](https://codeforces.com/contest/920/problem/E) | [GNU C++17 (64)](./codeforces/920/E.cpp) | `data structures` `dfs and similar` `dsu` `graphs` `*2100` | Jul/06/2021 23:10 | 
+1033 | [F - Yet Another Substring Reverse](https://codeforces.com/contest/1234/problem/F) | [GNU C++17 (64)](./codeforces/1234/F.cpp) | `bitmasks` `dp` `*2200` | Jul/05/2021 22:36 | 
+1032 | [E2 - Abnormal Permutation Pairs (hard version)](https://codeforces.com/contest/1542/problem/E2) | [GNU C++17 (64)](./codeforces/1542/E2.cpp) | `combinatorics` `dp` `fft` `math` `*2700` | Jul/03/2021 22:58 | 
+1031 | [D - Cut and Stick](https://codeforces.com/contest/1514/problem/D) | [GNU C++17 (64)](./codeforces/1514/D.cpp) | `binary search` `data structures` `greedy` `implementation` `sortings` `*2000` | Jul/01/2021 14:31 | 
+1030 | [H - Submatrices](https://codeforces.com/contest/1533/problem/H) | [Kotlin](./codeforces/1533/H.kt) | `*special problem` `bitmasks` `data structures` `dp` | Jun/29/2021 23:02 | 
+1029 | [F - Binary String Partition](https://codeforces.com/contest/1533/problem/F) | [Kotlin](./codeforces/1533/F.kt) | `*special problem` `binary search` `greedy` | Jun/29/2021 22:02 | 
+1028 | [E - Chess Team Forming](https://codeforces.com/contest/1533/problem/E) | [Kotlin](./codeforces/1533/E.kt) | `*special problem` `binary search` `data structures` `greedy` | Jun/29/2021 21:46 | 
+1027 | [D - String Searching](https://codeforces.com/contest/1533/problem/D) | [Kotlin](./codeforces/1533/D.kt) | `*special problem` `hashing` | Jun/29/2021 21:23 | 
+1026 | [C - Sweets](https://codeforces.com/contest/1533/problem/C) | [Kotlin](./codeforces/1533/C.kt) | `*special problem` `data structures` `implementation` | Jun/29/2021 20:22 | 
+1025 | [B - Nearest Point Function](https://codeforces.com/contest/1533/problem/B) | [Kotlin](./codeforces/1533/B.kt) | `*special problem` `implementation` | Jun/29/2021 20:11 | 
+1024 | [A - Travel to Bertown](https://codeforces.com/contest/1533/problem/A) | [Kotlin](./codeforces/1533/A.kt) | `*special problem` `implementation` `math` | Jun/29/2021 20:09 | 
+1023 | [F - Prefixes and Suffixes](https://codeforces.com/contest/1532/problem/F) | [Kotlin](./codeforces/1532/F.kt) | `*special problem` `strings` | Jun/24/2021 13:04 | 
+1022 | [E - Good Array](https://codeforces.com/contest/1532/problem/E) | [Kotlin](./codeforces/1532/E.kt) | `*special problem` | Jun/24/2021 12:33 | 
 1021 | [B - Dynamic Diameter](https://codeforces.com/contest/1192/problem/B) | [Rust](./codeforces/1192/B.rs) | `*special problem` `data structures` `dfs and similar` `divide and conquer` `trees` | Jun/12/2021 04:24 | 
 1020 | [E - Funny Substrings](https://codeforces.com/contest/1538/problem/E) | [GNU C++17 (64)](./codeforces/1538/E.cpp) | `brute force` `data structures` `hashing` `implementation` `strings` | Jun/11/2021 01:58 | 
 1019 | [G - Gift Set](https://codeforces.com/contest/1538/problem/G) | [GNU C++17 (64)](./codeforces/1538/G.cpp) | `binary search` `greedy` `math` `ternary search` | Jun/11/2021 01:40 | 
