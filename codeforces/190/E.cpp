@@ -40,9 +40,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -203,7 +201,8 @@ int main() {
             auto it = not_visited.begin();
             while (true) {
                 int v = *it;
-                if (!binary_search(begin(g[u]), end(g[u]), v)) self(self, v);
+                auto in_g = lower_bound(begin(g[u]), end(g[u]), v);
+                if (in_g == end(g[u]) || *in_g != v) self(self, v);
                 it = not_visited.upper_bound(v);
                 if (it == not_visited.end()) break;
             }
@@ -215,7 +214,7 @@ int main() {
             }
         }
         cout << components.size() << '\n';
-        for (auto& component : components) {
+        for (auto &component : components) {
             cout << component.size() << ' ';
             for (auto x : component) cout << x + 1 << ' ';
             cout << '\n';
