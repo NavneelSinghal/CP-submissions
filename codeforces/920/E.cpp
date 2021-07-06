@@ -17,16 +17,15 @@ int main() {
     while (t--) {
         int n, m;
         cin >> n >> m;
-        vector<vector<int>> g(n);
+        vector<set<int>> g(n);
         set<int> not_visited;
         for (int i = 0; i < n; ++i) not_visited.insert(i);
         for (int i = 0, u, v; i < m; ++i) {
             cin >> u >> v;
             --u, --v;
-            g[u].push_back(v);
-            g[v].push_back(u);
+            g[u].insert(v);
+            g[v].insert(u);
         }
-        for (auto& x : g) sort(begin(x), end(x));
         vector<vector<int>> components;
         const auto dfs = [&](const auto& self, int u) {
             components.back().push_back(u);
@@ -35,8 +34,7 @@ int main() {
             auto it = not_visited.begin();
             while (true) {
                 int v = *it;
-                auto in_g = lower_bound(begin(g[u]), end(g[u]), v);
-                if (in_g == end(g[u]) || *in_g != v) self(self, v);
+                if (g[u].find(v) == g[u].end()) self(self, v);
                 it = not_visited.upper_bound(v);
                 if (it == not_visited.end()) break;
             }
