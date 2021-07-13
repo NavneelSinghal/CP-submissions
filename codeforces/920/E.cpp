@@ -199,7 +199,7 @@ int main() {
             not_visited.erase(u);
             int v = -1;
             decltype(not_visited.end()) it;
-            while ((it = not_visited.upper_bound(v)) != not_visited.end()) {
+            while (it = not_visited.upper_bound(v), it != not_visited.end()) {
                 v = *it;
                 auto in_g = lower_bound(begin(g[u]), end(g[u]), v);
                 if (in_g == end(g[u]) || *in_g != v) self(self, v);
