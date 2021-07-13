@@ -53,8 +53,8 @@ uint32_t lg(T a) {
 
 // split [l, r]
 template <class Integer, class Predicate, bool type>
-__attribute__((target("bmi"))) Integer find_bin_split(Integer l, Integer r,
-                                                      const Predicate &pred) {
+// __attribute__((target("bmi")))
+Integer find_bin_split(Integer l, Integer r, const Predicate &pred) {
     if (l > r) {
         if constexpr (type)
             return r;
