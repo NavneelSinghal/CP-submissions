@@ -6,10 +6,6 @@
 
 #include <ext/pb_ds/assoc_container.hpp>
 
-using namespace std;
-
-using ll = int64_t;
-
 namespace IO {
     constexpr bool UNSAFE = false;
     constexpr int GLOB_BUF_SIZE = 1 << 15;
@@ -176,6 +172,10 @@ namespace IO {
 #endif
 }  // namespace IO
 
+using namespace std;
+
+using ll = int64_t;
+
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int t = 1;
@@ -194,17 +194,15 @@ int main() {
         }
         for (auto& x : g) sort(begin(x), end(x));
         vector<vector<int>> components;
-        const auto dfs = [&](const auto& self, int u) {
+        const auto dfs = [&](const auto& self, int u) -> void {
             components.back().push_back(u);
             not_visited.erase(u);
-            if (not_visited.empty()) return;
-            auto it = not_visited.begin();
-            while (true) {
-                int v = *it;
+            int v = -1;
+            decltype(not_visited.end()) it;
+            while ((it = not_visited.upper_bound(v)) != not_visited.end()) {
+                v = *it;
                 auto in_g = lower_bound(begin(g[u]), end(g[u]), v);
                 if (in_g == end(g[u]) || *in_g != v) self(self, v);
-                it = not_visited.upper_bound(v);
-                if (it == not_visited.end()) break;
             }
         };
         for (int i = 0; i < n; ++i) {
