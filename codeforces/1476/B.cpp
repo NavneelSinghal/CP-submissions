@@ -1,187 +1,112 @@
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx")
-#pragma GCC optimize("unroll-loops")
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt")
 
 #include <bits/stdc++.h>
 
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+using ll = int64_t;
 
-using namespace __gnu_pbds;
+template <class T, bool unsafe = false>
+uint32_t ctz(T a) {
+    if constexpr (!unsafe) {
+        if (!a) return sizeof(T) * 8;
+    }
+    if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+        return (uint32_t)(__builtin_ctz((uint32_t)a));
+    } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+        return (uint32_t)(__builtin_ctzll((uint64_t)a));
+    } else {
+        static_assert(sizeof(T) == sizeof(uint64_t) * 2);
+        uint32_t l = ctz((uint64_t)a);
+        return l != sizeof(uint64_t) * 8
+                   ? l
+                   : l + ctz((uint64_t)(a >> sizeof(uint64_t) * 8));
+    }
+}
+
+template <class T, bool unsafe = false>
+uint32_t clz(T a) {
+    if constexpr (!unsafe) {
+        if (!a) return sizeof(T) * 8;
+    }
+    if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+        return (uint32_t)(__builtin_clz((uint32_t)a));
+    } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+        return (uint32_t)(__builtin_clzll((uint64_t)a));
+    } else {
+        static_assert(sizeof(T) == sizeof(uint64_t) * 2);
+        uint32_t l = clz((uint64_t)(a >> sizeof(uint64_t) * 8));
+        return l != sizeof(uint64_t) * 8 ? l : l + clz((uint64_t)a);
+    }
+}
+
+// -1 for 0
+template <class T, bool unsafe = false>
+uint32_t lg(T a) {
+    if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+        return sizeof(uint32_t) * 8 - 1 - clz<T, unsafe>(a);
+    } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+        return sizeof(uint64_t) * 8 - 1 - clz<T, unsafe>(a);
+    } else {
+        return sizeof(uint64_t) * 16 - 1 - clz<T, unsafe>(a);
+    }
+}
+
+// split [l, r]
+template <class Integer, class Predicate, bool type>
+__attribute__((target("bmi"))) Integer find_bin_split(Integer l, Integer r,
+                                                      const Predicate &pred) {
+    if (l > r) {
+        if constexpr (type)
+            return r;
+        else
+            return r + 1;
+    }
+    ++r;
+    Integer w = Integer(1) << lg<Integer, true>(r - l);
+    --l;
+    if (pred(l + w)) l = r - w;
+    for (w >>= 1; w >= Integer(1); w >>= 1)
+        if (pred(l + w)) l += w;
+    if constexpr (type)
+        return l;
+    else
+        return l + 1;
+}
+
+template <class Integer, class Predicate>
+Integer find_first_false(Integer l, Integer r, const Predicate &pred) {
+    return find_bin_split<Integer, Predicate, false>(l, r, pred);
+}
+
+template <class Integer, class Predicate>
+Integer find_last_true(Integer l, Integer r, const Predicate &pred) {
+    return find_bin_split<Integer, Predicate, true>(l, r, pred);
+}
+
 using namespace std;
 
-template <typename X, typename Y>
-X &remin(X &x, const Y &y) {
-    return x = (y < x) ? y : x;
-}
-
-template <typename X, typename Y>
-X &remax(X &x, const Y &y) {
-    return x = (x < y) ? y : x;
-}
-
-template <typename X, typename Y>
-[[nodiscard]] bool ckmin(X &x, const Y &y) {
-    return (y < x) ? (x = y, 1) : 0;
-}
-
-template <typename X, typename Y>
-[[nodiscard]] bool ckmax(X &x, const Y &y) {
-    return (x < y) ? (x = y, 1) : 0;
-}
-
-template <typename T> void ignore_unused(const T&) {}
-
-void setIO(string name = "") {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    cout << setprecision(10) << fixed;
-    if (name.size() == 0) return;
-    FILE *fin = freopen((name + ".in").c_str(), "r", stdin);
-    FILE *fout = freopen((name + ".out").c_str(), "w", stdout);
-    ignore_unused(fin);
-    ignore_unused(fout);
-}
-
-// constexpr int mod = 998244353;
-constexpr int mod = 1e9 + 7;
-constexpr int64_t linf = 3e18;
-
-[[nodiscard]] int64_t pwr_mod(int64_t a, int64_t n) {
-    int64_t ans = 1;
-    while (n) {
-        if (n & 1) ans = (ans * a) % mod;
-        a = (a * a) % mod;
-        n >>= 1;
-    }
-    return ans;
-}
-
-// when using integers, keep overflow in mind
-template <typename T>
-T pwr(T a, int64_t n) {
-    T ans = 1;
-    while (n) {
-        if (n & 1) ans *= a;
-        if (n > 1) a *= a;
-        n >>= 1;
-    }
-    return ans;
-}
-
-// modular int library
-
-template <int32_t MOD = 998'244'353>
-struct Modular {
-    int32_t value;
-    static const int32_t MOD_value = MOD;
-
-    Modular(long long v = 0) {
-        value = v % MOD;
-        if (value < 0) value += MOD;
-    }
-    Modular(long long a, long long b) : value(0) {
-        *this += a;
-        *this /= b;
-    }
-
-    Modular& operator+=(Modular const& b) {
-        value += b.value;
-        if (value >= MOD) value -= MOD;
-        return *this;
-    }
-    Modular& operator-=(Modular const& b) {
-        value -= b.value;
-        if (value < 0) value += MOD;
-        return *this;
-    }
-    Modular& operator*=(Modular const& b) {
-        value = (long long)value * b.value % MOD;
-        return *this;
-    }
-
-    friend Modular mexp(Modular a, long long e) {
-        Modular res = 1;
-        while (e) {
-            if (e & 1) res *= a;
-            a *= a;
-            e >>= 1;
-        }
-        return res;
-    }
-    friend Modular inverse(Modular a) { return mexp(a, MOD - 2); }
-
-    Modular& operator/=(Modular const& b) { return *this *= inverse(b); }
-    friend Modular operator+(Modular a, Modular const b) { return a += b; }
-    friend Modular operator-(Modular a, Modular const b) { return a -= b; }
-    friend Modular operator-(Modular const a) { return 0 - a; }
-    friend Modular operator*(Modular a, Modular const b) { return a *= b; }
-    friend Modular operator/(Modular a, Modular const b) { return a /= b; }
-    friend std::ostream& operator<<(std::ostream& os, Modular const& a) {
-        return os << a.value;
-    }
-    friend bool operator==(Modular const& a, Modular const& b) {
-        return a.value == b.value;
-    }
-    friend bool operator!=(Modular const& a, Modular const& b) {
-        return a.value != b.value;
-    }
-};
-
-using mint = Modular<mod>;
-
-void precompute() {
-}
-
-void solve(int) {
-    int n, k;
-    cin >> n >> k;
-    vector<long long> p(n);
-    for (auto &x : p) cin >> x;
-    long long l = 0, r = 1e15, ans = 1e15;
-    while (l <= r) {
-        long long mid = l + (r - l) / 2;
-        long long price = mid + p[0];
-        bool works = true;
-        for (int i = 1; i < n; ++i) {
-            if (price * k < 100 * p[i]) {
-                works = false;
-                break;
-            }
-            price += p[i];
-        }
-        if (works) {
-            ans = mid;
-            r = mid - 1;
-        } else {
-            l = mid + 1;
-        }
-    }
-    cout << ans << '\n';
-}
-
-void brute(int) {
-}
-
-signed main() {
-    setIO();
-    precompute();
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
     int t = 1;
     cin >> t;
-    for (int _t = 1; _t <= t; _t++) {
-        // cout << "Case #" << _t << ": ";
-        solve(_t);
-        //brute(_t);
+    for (int test = 1; test <= t; test++) {
+        // cout << "Case #" << test << ": ";
+        int n, k;
+        cin >> n >> k;
+        vector<ll> p(n);
+        for (auto &x : p) cin >> x;
+        ll l = 0, r = 1e15;
+        cout << find_first_false(l, r, [&](ll m) {
+            ll price = m + p[0];
+            bool works = true;
+            for (int i = 1; i < n; ++i) {
+                if (price * k < 100 * p[i]) {
+                    works = false;
+                    break;
+                }
+                price += p[i];
+            }
+            return !works;
+        }) << '\n';
     }
-    return 0;
 }
-
-/* stuff you should look for
- * int overflow, array bounds
- * special cases (n = 1?)
- * do smth instead of nothing and stay organized
- * WRITE STUFF DOWN
- * DON'T GET STUCK ON ONE APPROACH
- */
-
