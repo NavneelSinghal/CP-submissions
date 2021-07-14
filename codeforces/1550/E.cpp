@@ -1,3 +1,5 @@
+#define PROBLEM "https://judge.yosupo.jp/problem/general_weighted_matching"
+
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt")
 
