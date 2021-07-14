@@ -4,7 +4,6 @@
 #include <bits/stdc++.h>
 
 using ll = int64_t;
-
 using namespace std;
 
 template <class T>
@@ -75,14 +74,14 @@ struct lazy_segtree {
         for (int i = 1; i <= log; ++i) update(p >> i);
     }
 
-    Node get(int p) {
+    Node get(int p) const {
         p += size;
         if constexpr (is_lazy)
             for (int i = log; i >= 1; i--) push(p >> i);
         return d[p];
     }
 
-    Node query(int l, int r) {
+    Node query(int l, int r) const {
         if (l == r) return id_node;
         l += size, r += size;
         int l_ctz = __builtin_ctz(l);
@@ -99,7 +98,7 @@ struct lazy_segtree {
         }
         return combine(sml, smr);
     }
-    Node all_query() { return d[1]; }
+    Node all_query() const { return d[1]; }
     void update(int p, Update f) {
         p += size;
         if constexpr (is_lazy)
@@ -130,11 +129,11 @@ struct lazy_segtree {
     }
 
     template <bool (*g)(Node)>
-    int max_right(int l) {
+    int max_right(int l) const {
         return max_right(l, [](Node x) { return g(x); });
     }
     template <class G>
-    int max_right(int l, G g) {
+    int max_right(int l, G g) const {
         // assert(0 <= l && l <= _n);
         // assert(g(id_node));
         if (l == _n) return _n;
@@ -162,11 +161,11 @@ struct lazy_segtree {
     }
 
     template <bool (*g)(Node)>
-    int min_left(int r) {
+    int min_left(int r) const {
         return min_left(r, [](Node x) { return g(x); });
     }
     template <class G>
-    int min_left(int r, G g) {
+    int min_left(int r, G g) const {
         // assert(0 <= r && r <= _n);
         // assert(g(id_node));
         if (r == 0) return 0;
@@ -195,14 +194,14 @@ struct lazy_segtree {
 
    private:
     int _n, size, log;
-    std::vector<Node> d;
-    std::vector<Update> lz;
-    const MakeNode make_node;
-    const CombineNodes combine;
-    const Node id_node;
-    const ApplyUpdate apply_update;
-    const Update id_update;
-    const ComposeUpdates compose_updates;
+    mutable std::vector<Node> d;
+    mutable std::vector<Update> lz;
+    MakeNode make_node;
+    CombineNodes combine;
+    Node id_node;
+    ApplyUpdate apply_update;
+    Update id_update;
+    ComposeUpdates compose_updates;
 
     void update(int k) { d[k] = combine(d[2 * k], d[2 * k + 1]); }
     void all_apply(int k, Update f) {
@@ -228,80 +227,53 @@ int main() {
         cin >> n;
         vector<int> a(n);
         for (auto& x : a) cin >> x;
-        vector<int> nxt_ge(n, n);
-        vector<int> nxt_le(n, n);
+
+        vector<int> prv_ge(n, -1);
+        vector<int> prv_le(n, -1);
+
         stack<int> s;
-        for (int i = n - 1; i >= 0; --i) {
+        for (int i = 0; i < n; ++i) {
             while (!s.empty() && a[s.top()] < a[i]) s.pop();
-            if (!s.empty()) nxt_ge[i] = s.top();
+            if (!s.empty()) prv_ge[i] = s.top();
             s.push(i);
         }
         stack<int>().swap(s);
-        for (int i = n - 1; i >= 0; --i) {
+        for (int i = 0; i < n; ++i) {
             while (!s.empty() && a[s.top()] > a[i]) s.pop();
-            if (!s.empty()) nxt_le[i] = s.top();
+            if (!s.empty()) prv_le[i] = s.top();
             s.push(i);
         }
-        vector<int> closest_ge(n, n);
-        vector<int> closest_le(n, n);
-        const auto rec = [&](const auto& self, int l, int r) -> void {
-            if (l >= r) return;
-            int m = (l + r + 1) / 2;
-            if (l < m - 1) self(self, l, m - 1);
-            if (m < r) self(self, m, r);
-            vector<int> temp(a.begin() + l, a.begin() + r + 1);
-            auto [compressed, vals] = compress(temp);
-            int sz = temp.size();
-            vector<int> min_nxt_le(sz, n);
-            vector<int> min_nxt_ge(sz, n);
-            for (int i = m; i <= r; ++i) {
-                int loc =
-                    lower_bound(begin(vals), end(vals), a[i]) - begin(vals);
-                min_nxt_le[loc] = min(min_nxt_le[loc], nxt_le[i]);
-                min_nxt_ge[loc] = min(min_nxt_ge[loc], nxt_ge[i]);
-            }
-            for (int i = 1; i < sz; ++i)
-                min_nxt_le[i] = min(min_nxt_le[i], min_nxt_le[i - 1]);
-            for (int i = sz - 2; i >= 0; --i)
-                min_nxt_ge[i] = min(min_nxt_ge[i], min_nxt_ge[i + 1]);
-            for (int i = l; i < m; ++i) {
-                int loc =
-                    lower_bound(begin(vals), end(vals), a[i]) - begin(vals);
-                closest_le[i] = min(closest_le[i], min_nxt_le[loc]);
-                closest_ge[i] = min(closest_ge[i], min_nxt_ge[loc]);
-            }
-        };
-        rec(rec, 0, n - 1);
+
         ll ans = 0;
 
-        vector<pair<int, int>> v(n);
-        for (int i = 0; i < n; ++i) v[i] = {closest_le[i], closest_ge[i]};
-        using Base = pair<int, int>;
-        struct Node {
-            int le, ge;
+        vector<int> v(n, -1);
+        using Base = int;
+        using Node = int;
+        const Node id_node = -1;
+        auto make_node = [](const Base& b, int i) -> Node {
+            return b;
         };
-        const Node id_node = Node{n, n};
-        auto make_node = [](const Base& b, int i) {
-            return Node{b.first, b.second};
+        auto combine = [](const Node& n, const Node& m) -> Node {
+            return max(n, m);
         };
-        auto combine = [](const Node& n, const Node& m) {
-            return Node{min(n.le, m.le), min(n.ge, m.ge)};
+        using Update = Base;
+        const Update id_update = -1;
+        auto apply_update = [](const Update& u, const Node& n) -> Node {
+            if (u == id_update) return n;
+            return u;
         };
-        using Update = int;
-        const Update id_update = 0;
-        auto apply_update = [](const Update& u, const Node& n) {
-            return n;
-        };
-        lazy_segtree st(v, id_node, make_node, combine, id_update,
-                        apply_update);
-        int r = 0;
+        lazy_segtree smaller(v, id_node, make_node, combine, id_update,
+                             apply_update);
+        lazy_segtree larger = smaller;
+        auto [compressed, vals] = compress(a);
+        int l = 0;
         for (int i = 0; i < n; ++i) {
-            while (r < n) {
-                auto nd = st.query(i, r);
-                if (!(nd.le > r && nd.ge > r)) break;
-                ++r;
-            }
-            ans += r - i;
+            auto closest_smaller = smaller.query(0, compressed[i] + 1) + 1;
+            auto closest_larger = larger.query(compressed[i], n) + 1;
+            l = max({l, closest_larger, closest_smaller});
+            ans += i - l + 1;
+            smaller.update(compressed[i], prv_le[i]);
+            larger.update(compressed[i], prv_ge[i]);
         }
         cout << ans << '\n';
     }
