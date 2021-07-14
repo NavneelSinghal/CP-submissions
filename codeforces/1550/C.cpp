@@ -75,14 +75,14 @@ struct lazy_segtree {
         for (int i = 1; i <= log; ++i) update(p >> i);
     }
 
-    Node get(int p) const {
+    Node get(int p) {
         p += size;
         if constexpr (is_lazy)
             for (int i = log; i >= 1; i--) push(p >> i);
         return d[p];
     }
 
-    Node query(int l, int r) const {
+    Node query(int l, int r) {
         if (l == r) return id_node;
         l += size, r += size;
         int l_ctz = __builtin_ctz(l);
@@ -130,11 +130,11 @@ struct lazy_segtree {
     }
 
     template <bool (*g)(Node)>
-    int max_right(int l) const {
+    int max_right(int l) {
         return max_right(l, [](Node x) { return g(x); });
     }
     template <class G>
-    int max_right(int l, G g) const {
+    int max_right(int l, G g) {
         // assert(0 <= l && l <= _n);
         // assert(g(id_node));
         if (l == _n) return _n;
@@ -162,11 +162,11 @@ struct lazy_segtree {
     }
 
     template <bool (*g)(Node)>
-    int min_left(int r) const {
+    int min_left(int r) {
         return min_left(r, [](Node x) { return g(x); });
     }
     template <class G>
-    int min_left(int r, G g) const {
+    int min_left(int r, G g) {
         // assert(0 <= r && r <= _n);
         // assert(g(id_node));
         if (r == 0) return 0;
@@ -195,8 +195,8 @@ struct lazy_segtree {
 
    private:
     int _n, size, log;
-    mutable std::vector<Node> d;
-    mutable std::vector<Update> lz;
+    std::vector<Node> d;
+    std::vector<Update> lz;
     MakeNode make_node;
     CombineNodes combine;
     Node id_node;
