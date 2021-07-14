@@ -274,6 +274,16 @@ int main() {
         rec(rec, 0, n - 1);
         ll ans = 0;
 
+        /*
+         *explicit lazy_segtree(const std::vector<Base>& v,
+                          const Node& _id_node,
+                          const MakeNode& _make_node,
+                          const CombineNodes& _combine,
+                          const Update& _id_update,
+                          const ApplyUpdate& _apply_update,
+                          const ComposeUpdates& _compose_updates = nullptr)
+          */
+
         vector<pair<int, int>> v(n);
         for (int i = 0; i < n; ++i) v[i] = {closest_le[i], closest_ge[i]};
         using Base = pair<int, int>;
