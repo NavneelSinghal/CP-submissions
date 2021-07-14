@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 
 using ll = int64_t;
+
 using namespace std;
 
 template <class T>
