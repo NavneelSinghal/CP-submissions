@@ -104,7 +104,7 @@ int main() {
         // cost = hj^2 + hi^2 - 2 * hi * hj + C
         vector<ll> dp(n);
         dp[0] = 0;
-        LiChaoTree<int64_t, int64_t(0), int64_t(1e6), int64_t(1e18), int(4.2e6)>
+        LiChaoTree<int64_t, int64_t(0), int64_t(1e6), int64_t(1e18), int(5e6)>
             lichao;
         lichao.update(-2 * h[0], h[0] * h[0]);
         for (int i = 1; i < n; ++i) {
