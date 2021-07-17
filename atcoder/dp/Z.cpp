@@ -50,11 +50,13 @@ struct LiChaoTree {
         if (t_l <= x_l && t_r <= x_r) {
             return t;
         } else if (t_l >= x_l && t_r >= x_r) {
+            t = newNode(*t);
             t->x = x;
             return t;
         } else {
             T m = (l + r) / 2;
             auto t_m = t->x(m), x_m = x(m);
+            t = newNode(*t);
             if (t_m > x_m) {
                 std::swap(t->x, x);
                 if (x_l >= t_l)
