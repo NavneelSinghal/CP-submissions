@@ -8,9 +8,6 @@
 using ll = int64_t;
 
 // BUF should be enough to store O((N + Q) log (range)) nodes
-// Don't make more than one template specialization for the lichao tree since
-// otherwise the buffer will be pretty huge
-// uses two buffers - one for each template, and this tree is persistent too
 template <class T, T x_low, T x_high, T id, int BUF>
 struct LiChaoTree {
     struct Line {
@@ -33,7 +30,6 @@ struct LiChaoTree {
     Node* newNode(const U& x) {
         static int bufSize = BUF;
         static Node buf[BUF];
-
         assert(bufSize);
         buf[--bufSize] = Node(x);
         return &buf[bufSize];
