@@ -33,6 +33,8 @@ struct LiChaoTree {
     Node* newNode(const U& x) {
         static int bufSize = BUF;
         static Node buf[BUF];
+
+        assert(bufSize);
         buf[--bufSize] = Node(x);
         return &buf[bufSize];
     }
