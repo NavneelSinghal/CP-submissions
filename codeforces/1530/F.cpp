@@ -305,9 +305,10 @@ void mul(vector<mint>& x, vector<mint>& y) {
 }
 
 int main() {
-    cin.tie(nullptr)->sync_with_stdio(false);
+    ios_base::sync_with_stdio(0), cin.tie(0);
 
     mint inv = 1 / mint(10000);
+
     int n;
     cin >> n;
     const int sz = 1 << n;
