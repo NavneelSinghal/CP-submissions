@@ -1,5 +1,5 @@
 #pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math,inline")
-#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,bmi")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2")
 
 #include <bits/stdc++.h>
 
@@ -118,15 +118,12 @@ using mint = ModInt32<mod>;
 
 template <bool inv = false>
 void transform(mint a[], int n) {
-    for (int len = 1, len2 = 2; len < n; len <<= 1, len2 <<= 1) {
-        for (int i = 0; i < n; i += len2) {
+    for (int len = 1; len < n; len <<= 1) {
+        for (int i = 0; i < n; i += len << 1)
             for (int j = i; j < i + len; ++j) {
-                if constexpr (inv)
-                    a[j] -= a[j + len];
-                else
-                    a[j] += a[j + len];
+                auto v = a[j + len];
+                a[j] += inv ? -v : v;
             }
-        }
     }
 }
 
@@ -141,7 +138,7 @@ void mul(vector<mint>& x, vector<mint>& y) {
 int main() {
     ios_base::sync_with_stdio(0), cin.tie(0);
 
-    mint inv = 1 / mint(10000);
+    mint inv = 1/mint(10000);
 
     int n;
     cin >> n;
@@ -154,15 +151,15 @@ int main() {
             j = t * inv;
         }
 
-    const mint One = 1;
-    const mint Zero = 0;
+    mint One = 1;
 
     vector<mint> x, x1, x2, x12;
     for (int j = 0; j < n; ++j) {
         vector<mint> ii(n);
-        for (int i = 0; i < n; ++i) ii[i] = a[i][j] / (One - a[i][j]);
+        for (int i = 0; i < n; ++i)
+            ii[i] = a[i][j] / (One - a[i][j]);
         vector<mint> y(sz), y1, y2, y12;
-        y[0] = One;
+        y[0] = 1;
         for (int i = 0; i < n; ++i) y[0] *= (One - a[i][j]);
         for (int i = 1; i < sz; ++i) {
             int l = __lg(i & -i);
@@ -171,8 +168,8 @@ int main() {
         y[sz - 1] = 0;
         y1 = y2 = y12 = y;
         for (int i = 0; i < sz; ++i) {
-            if (~i >> j & 1) y1[i] = Zero, y12[i] = Zero;
-            if (~i >> (n - j - 1) & 1) y2[i] = Zero, y12[i] = Zero;
+            if (~i >> j & 1) y1[i] = 0, y12[i] = 0;
+            if (~i >> (n - j - 1) & 1) y2[i] = 0, y12[i] = 0;
         }
         trans(y), trans(y1), trans(y2), trans(y12);
         if (j == 0)
