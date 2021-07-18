@@ -26,7 +26,7 @@ T pow_mod(T a, U b, int mod) {
     return r;
 }
 
-constexpr int mod = 31607;
+const int mod = 31607;
 
 template <bool inv = false>
 void transform(int a[], int n) {
@@ -34,10 +34,8 @@ void transform(int a[], int n) {
         for (int i = 0; i < n; i += len << 1)
 #pragma GCC ivdep
             for (int j = i; j < i + len; ++j) {
-                if constexpr (inv)
-                    a[j] -= a[j + len];
-                else
-                    a[j] += a[j + len];
+                int v = a[j + len];
+                a[j] += inv ? -v : v;
             }
         if (len * 2 >= n || len == (1 << 12))
             for (int i = 0; i < n; ++i) a[i] %= mod;
