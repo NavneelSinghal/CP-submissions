@@ -1,4 +1,20 @@
 {
+  "AC24354466": {
+    "contest_id": "arc123",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc123/A.cpp",
+    "platform": "AtCoder",
+    "problem_index": "A",
+    "problem_name": "Arithmetic Sequence",
+    "problem_url": "https://atcoder.jp/contests/arc123/tasks/arc123_a",
+    "submission_id": "AC24354466",
+    "submission_url": "https://atcoder.jp/contests/arc123/submissions/24354466",
+    "tags": [
+      "AtCoder",
+      "*300"
+    ],
+    "timestamp": "Jul/18/2021 17:36"
+  },
   "AC24358258": {
     "contest_id": "arc123",
     "language": "C++ (GCC 9.2.1)",
