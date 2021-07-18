@@ -1295,6 +1295,22 @@
     ],
     "timestamp": "Mar/28/2021 18:53"
   },
+  "AC24358258": {
+    "contest_id": "arc123",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc123/B.cpp",
+    "platform": "AtCoder",
+    "problem_index": "B",
+    "problem_name": "Increasing Triples",
+    "problem_url": "https://atcoder.jp/contests/arc123/tasks/arc123_b",
+    "submission_id": "AC24358258",
+    "submission_url": "https://atcoder.jp/contests/arc123/submissions/24358258",
+    "tags": [
+      "AtCoder",
+      "*400"
+    ],
+    "timestamp": "Jul/18/2021 17:49"
+  },
   "AC24717903": {
     "contest_id": "practice2",
     "language": "C++ (GCC 9.2.1 with AC Library)",
