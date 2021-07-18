@@ -118,8 +118,8 @@ using mint = ModInt32<mod>;
 
 template <bool inv = false>
 void transform(mint a[], int n) {
-    for (int len = 1; len < n; len <<= 1) {
-        for (int i = 0; i < n; i += len << 1) {
+    for (int len = 1, len2 = 2; len < n; len <<= 1, len2 <<= 1) {
+        for (int i = 0; i < n; i += len2) {
             for (int j = i; j < i + len; ++j) {
                 if constexpr (inv)
                     a[j] -= a[j + len];
