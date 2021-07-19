@@ -11,7 +11,8 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-1041 | [G - Bathroom terminal](https://codeforces.com/contest/852/problem/G) | [GNU C++17 (64)](./codeforces/852/G.cpp) | `implementation` `*1700` | Jul/21/2021 02:40 | 
+1042 | [G - Bathroom terminal](https://codeforces.com/contest/852/problem/G) | [GNU C++17 (64)](./codeforces/852/G.cpp) | `implementation` `*1700` | Jul/21/2021 02:40 | 
+1041 | [F - DIY Garland](https://codeforces.com/contest/1283/problem/F) | [GNU C++17 (64)](./codeforces/1283/F.cpp) | `constructive algorithms` `greedy` `trees` `*2200` | Jul/19/2021 10:08 | 
 1040 | [G - How Many Paths?](https://codeforces.com/contest/1547/problem/G) | [GNU C++17 (64)](./codeforces/1547/G.cpp) | `dfs and similar` `dp` `graphs` `trees` `*2100` | Jul/10/2021 22:40 | 
 1039 | [E - Counter Attack](https://codeforces.com/contest/190/problem/E) | [GNU C++17 (64)](./codeforces/190/E.cpp) | `data structures` `dsu` `graphs` `hashing` `sortings` `*2100` | Jul/06/2021 23:18 | 
 1038 | [E - Connected Components?](https://codeforces.com/contest/920/problem/E) | [GNU C++17 (64)](./codeforces/920/E.cpp) | `data structures` `dfs and similar` `dsu` `graphs` `*2100` | Jul/06/2021 23:10 | 
