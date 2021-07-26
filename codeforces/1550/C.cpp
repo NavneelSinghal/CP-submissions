@@ -265,8 +265,8 @@ struct lazy_segtree {
         }
         return combine(sml, smr);
     }
-    
-    Node all_query() const { return d[1]; }
+
+    Node all_query() { return d[1]; }
     
     void update(int p, Update f) {
         p += size;
@@ -279,14 +279,14 @@ struct lazy_segtree {
     void update(int l, int r, Update f) {
         if (l == r) return;
         l += size, r += size;
-        const int l_ctz = __builtin_ctz(l);
-        const int r_ctz = __builtin_ctz(r);
+        int l_ctz = __builtin_ctz(l);
+        int r_ctz = __builtin_ctz(r);
         if constexpr (is_lazy) {
             for (int i = log; i > l_ctz; --i) push(l >> i);
             for (int i = log; i > r_ctz; --i) push((r - 1) >> i);
         }
         {
-            const int l2 = l, r2 = r;
+            int l2 = l, r2 = r;
             while (l < r) {
                 if (l & 1) all_apply(l++, f);
                 if (r & 1) all_apply(--r, f);
@@ -371,6 +371,7 @@ struct lazy_segtree {
         if constexpr (is_lazy)
             if (k < size) lz[k] = compose_updates(f, lz[k]);
     }
+    
     void push(int k) {
         all_apply(2 * k, lz[k]);
         all_apply(2 * k + 1, lz[k]);
