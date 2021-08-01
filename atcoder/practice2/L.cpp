@@ -14,7 +14,7 @@ using namespace std;
 
 namespace IO {
     constexpr bool UNSAFE = false;
-    constexpr int GLOB_BUF_SIZE = 1 << 14;
+    constexpr int GLOB_BUF_SIZE = 1 << 15;
 #ifndef DEBUG
     #define CHANGE_DEFAULT_STREAMS
     static struct FastInput {
