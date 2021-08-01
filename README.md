@@ -1,16 +1,16 @@
 Submissions
+======================
 
 ## Introduction
 
 A repository to keep track of problem solving practice, containing solutions from platforms:
-* Codeforces
-* AtCoder
 
 
 ## Contents
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
+1050 | [L - Lazy Segment Tree](https://atcoder.jp/contests/practice2/tasks/practice2_l) | [C++ (Clang 10.0.0 with AC Library)](./atcoder/practice2/L.cpp) | `AtCoder` `*100` | Aug/01/2021 17:54 | 
 1049 | [C - Manhattan Subarrays](https://codeforces.com/contest/1550/problem/C) | [GNU C++17 (64)](./codeforces/1550/C.cpp) | `brute force` `geometry` `greedy` `implementation` `*1700` | Jul/26/2021 10:23 | 
 1048 | [G - Bathroom terminal](https://codeforces.com/contest/852/problem/G) | [GNU C++17 (64)](./codeforces/852/G.cpp) | `implementation` `*1700` | Jul/21/2021 02:40 | 
 1047 | [F - DIY Garland](https://codeforces.com/contest/1283/problem/F) | [GNU C++17 (64)](./codeforces/1283/F.cpp) | `constructive algorithms` `greedy` `trees` `*2200` | Jul/19/2021 10:08 | 
