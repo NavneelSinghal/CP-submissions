@@ -219,7 +219,7 @@ struct lazy_segtree {
         while ((1 << log) < _n) ++log;
         size = 1 << log;
         d = std::vector<Node>(2 * size, id_node);
-        if constexpr (is_lazy) lz = std::vector<Update>(size, id_update);
+        if constexpr (is_lazy) lz = std::move(std::vector<Update>(size, id_update));
         for (int i = 0; i < _n; i++) d[size + i] = make_node(v[i], i);
         for (int i = size - 1; i >= 1; i--) update(i);
     }
@@ -229,7 +229,7 @@ struct lazy_segtree {
         if constexpr (is_lazy)
             for (int i = log; i >= 1; i--) push(p >> i);
         d[p] = x;
-        for (int i = 1; i <= log; ++i) update(p >>= 1);
+        for (int i = 1; i <= log; ++i) update(p >> i);
     }
 
     Node get(int p) {
@@ -264,7 +264,7 @@ struct lazy_segtree {
         if constexpr (is_lazy)
             for (int i = log; i >= 1; i--) push(p >> i);
         d[p] = apply_update(f, d[p]);
-        for (int i = 1; i <= log; ++i) update(p >>= 1);
+        for (int i = 1; i <= log; ++i) update(p >> i);
     }
     
     void update(int l, int r, Update f) {
