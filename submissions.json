@@ -1,4 +1,20 @@
 {
+  "AC24718342": {
+    "contest_id": "practice2",
+    "language": "C++ (GCC 9.2.1 with AC Library)",
+    "path": "atcoder/practice2/L.cpp",
+    "platform": "AtCoder",
+    "problem_index": "L",
+    "problem_name": "Lazy Segment Tree",
+    "problem_url": "https://atcoder.jp/contests/practice2/tasks/practice2_l",
+    "submission_id": "AC24718342",
+    "submission_url": "https://atcoder.jp/contests/practice2/submissions/24718342",
+    "tags": [
+      "AtCoder",
+      "*100"
+    ],
+    "timestamp": "Aug/01/2021 17:46"
+  },
   "AC24718377": {
     "contest_id": "practice2",
     "language": "C++ (GCC 9.2.1 with AC Library)",
