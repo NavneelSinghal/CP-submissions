@@ -1,6 +1,5 @@
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi2,lzcnt")
-// bmi,bmi2 -> bmi2 might work
 
 #include <bits/stdc++.h>
 
@@ -219,7 +218,7 @@ struct lazy_segtree {
         while ((1 << log) < _n) ++log;
         size = 1 << log;
         d = std::vector<Node>(2 * size, id_node);
-        if constexpr (is_lazy) lz = std::move(std::vector<Update>(size, id_update));
+        if constexpr (is_lazy) lz = std::vector<Update>(size, id_update);
         for (int i = 0; i < _n; i++) d[size + i] = make_node(v[i], i);
         for (int i = size - 1; i >= 1; i--) update(i);
     }
