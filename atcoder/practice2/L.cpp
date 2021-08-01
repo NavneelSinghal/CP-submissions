@@ -1,5 +1,5 @@
 #pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
+#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi2,lzcnt")
 // bmi,bmi2 -> bmi2 might work
 
 #include <bits/stdc++.h>
