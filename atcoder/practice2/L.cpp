@@ -1,6 +1,5 @@
-#pragma GCC optimize("Ofast")
-// #pragma GCC optimize("O3,unroll-loops")
-// #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt")
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt")
 
 #include <bits/stdc++.h>
 
@@ -15,7 +14,7 @@ using namespace std;
 
 namespace IO {
     constexpr bool UNSAFE = false;
-    constexpr int GLOB_BUF_SIZE = 1 << 15;
+    constexpr int GLOB_BUF_SIZE = 1 << 14;
 #ifndef DEBUG
     #define CHANGE_DEFAULT_STREAMS
     static struct FastInput {
