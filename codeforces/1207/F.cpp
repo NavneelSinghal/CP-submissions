@@ -180,17 +180,16 @@ namespace IO {
 #endif
 }  // namespace IO
 
-constexpr int threshold = 300;
-constexpr int n = 500000;
-
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int t = 1;
     // cin >> t;
     for (int test = 1; test <= t; ++test) {
+        int n = 500000;
         vector<int> a(n + 1);
         int q;
         cin >> q;
+        int threshold = 200;
         vector b(threshold + 1, vector<int>(threshold));
         // b[i][j] = sum of stuff at indices j mod i with i <= threshold
         while (q--) {
