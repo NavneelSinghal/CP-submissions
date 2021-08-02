@@ -42,9 +42,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -180,24 +178,24 @@ namespace IO {
 #endif
 }  // namespace IO
 
+
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int t = 1;
     // cin >> t;
     for (int test = 1; test <= t; ++test) {
         int n = 500000;
-        vector<ll> a(n + 1);
+        vector<int> a(n + 1);
         int q;
         cin >> q;
         int threshold = 300;
-        vector b(threshold + 1, vector<ll>(threshold));
+        vector b(threshold + 1, vector<int>(threshold));
         // b[i][j] = sum of stuff at indices j mod i with i <= threshold
         while (q--) {
             int type;
             cin >> type;
             if (type == 1) {
-                int x;
-                ll y;
+                int x, y;
                 cin >> x >> y;
                 a[x] += y;
                 for (int j = 1; j <= threshold; ++j) b[j][x % j] += y;
@@ -207,7 +205,7 @@ int main() {
                 if (x <= threshold) {
                     cout << b[x][y] << '\n';
                 } else {
-                    ll ans = 0;
+                    int ans = 0;
                     if (y == 0) y = x;
                     for (int i = y; i <= n; i += x) ans += a[i];
                     cout << ans << '\n';
