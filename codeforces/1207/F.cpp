@@ -186,17 +186,18 @@ int main() {
     // cin >> t;
     for (int test = 1; test <= t; ++test) {
         int n = 500000;
-        vector<int> a(n + 1);
+        vector<ll> a(n + 1);
         int q;
         cin >> q;
-        int threshold = 200;
-        vector b(threshold + 1, vector<int>(threshold));
+        int threshold = 300;
+        vector b(threshold + 1, vector<ll>(threshold));
         // b[i][j] = sum of stuff at indices j mod i with i <= threshold
         while (q--) {
             int type;
             cin >> type;
             if (type == 1) {
-                int x, y;
+                int x;
+                ll y;
                 cin >> x >> y;
                 a[x] += y;
                 for (int j = 1; j <= threshold; ++j) b[j][x % j] += y;
@@ -206,7 +207,7 @@ int main() {
                 if (x <= threshold) {
                     cout << b[x][y] << '\n';
                 } else {
-                    int ans = 0;
+                    ll ans = 0;
                     if (y == 0) y = x;
                     for (int i = y; i <= n; i += x) ans += a[i];
                     cout << ans << '\n';
