@@ -1,143 +1,217 @@
-#pragma GCC optimize("Ofast")
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
 
-#include <algorithm>
-#include <bitset>
-#include <cassert>
-#include <chrono>
-#include <cmath>
-#include <complex>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
-#include <iostream>
-#include <iterator>
-#include <limits>
-#include <list>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <random>
-#include <ratio>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <utility>
-#include <vector>
-using namespace std;
- 
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#include <ext/rope>
-using namespace __gnu_pbds;
-using namespace __gnu_cxx;
- 
- 
-#define FLSH fflush(stdout)
-#define fileIO(name) \
-    freopen(name".in", "r", stdin); \
-    freopen(name".out", "w", stdout);
-#define PRECISION(x) cout << fixed << setprecision(x); 
-#define FAST_IO ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
- 
- 
-typedef tree<int,null_type,less<int>,rb_tree_tag,
-tree_order_statistics_node_update> indexed_set;
- 
-typedef long long ll;
-typedef long double LD;
-#define int ll
-#define double LD
-#define pb push_back
-#define mp make_pair
-#define REP(i,n) for (int i = 0; i < n; i++)
-#define REP1(i,n) for (int i = 1; i<=n; i++)
-#define FOR(i,a,b) for (int i = a; i < b; i++)
-#define REPD(i,n) for (int i = n-1; i >= 0; i--)
-#define REPD1(i,n) for (int i = n; i > 0; i--)
-#define FORD(i,a,b) for (int i = a; i >= b; i--)
-#define foreach(c,itr) for(__typeof((c).begin()) itr=(c).begin();itr!=(c).end();itr++)
-#define remax(a,b) a = max(a,b)
-#define remin(a,b) a = min(a,b)
-#define all(v) v.begin(),v.end()
-typedef map<int,int> mii;
-typedef vector<int> vi;
-typedef vector<vi> vvi;
-typedef pair<int,int> pii;
-typedef vector<pii> vpii;
-#define F first
-#define S second
-#define PQ(type) priority_queue<type>
-#define PQD(type) priority_queue<type,vector<type>,greater<type> >
-#define ITR :: iterator it
-#define WL(t) while(t --)
-#define SZ(x) ((int)(x).size())
-#define runtime() ((double)clock() / CLOCKS_PER_SEC)
-#define TR(container,it) for(typeof(container.begin()) it=container.begin();it!=container.end();it++)
-#define sqr(x) ((x)*(x))
- 
-const int MAXN = 1000005;
-const int SQRTN = 1003;
-const int LOGN = 22;
-const double PI=acos(-1);
-const int INF = 1000000000;
-const int MOD = 1000000007;
-const int FMOD = 998244353;
-const double eps = 1e-9;
- 
-mt19937 RNG(chrono::steady_clock::now().time_since_epoch().count()); 
-#define SHUF(v) shuffle(all(v), RNG);
- 
-template<typename T> T gcd(T a, T b){return(b?__gcd(a,b):a);}
-template<typename T> T lcm(T a, T b){return(a*(b/gcd(a,b)));}
-int add(int a, int b, int c){int res=a+b;return(res>=c?res-c:res);}
-int mod_neg(int a, int b, int c){int res;if(abs(a-b)<c)res=a-b;else res=(a-b)%c;return(res<0?res+c:res);}
-int mul(int a, int b, int c){ll res=(ll)a*b;return(res>=c?res%c:res);}
-ll mulmod(ll a,ll b, ll m){ll q = (ll)(((LD)a*(LD)b)/(LD)m);ll r=a*b-q*m;if(r>m)r%=m;if(r<0)r+=m;return r;}
-template<typename T>T expo(T e, T n){T x=1,p=e;while(n){if(n&1)x=x*p;p=p*p;n>>=1;}return x;}
-template<typename T>T power(T e, T n, T m){T x=1,p=e;while(n){if(n&1)x=mul(x,p,m);p=mul(p,p,m);n>>=1;}return x;}
-template<typename T>T extended_euclid(T a, T b, T &x, T &y){T xx=0,yy=1;y=0;x=1;while(b){T q=a/b,t=b;b=a%b;a=t;\
-t=xx;xx=x-q*xx;x=t;t=yy;yy=y-q*yy;y=t;}return a;}
-template<typename T>T mod_inverse(T a, T n){T x,y,z=0;T d=extended_euclid(a,n,x,y);return(d>1?-1:mod_neg(x,z,n));}
- 
+#include <bits/stdc++.h>
+
+#ifdef DEBUG
+    #include "../debug/debug.hpp"
+#else
+    #define debug(...) 0
+#endif
+
+using ll = int64_t;
 using namespace std;
 
-const int maxn = 500005;
-const int sq = 700;
+namespace IO {
+    constexpr bool UNSAFE = false;
+    constexpr int GLOB_BUF_SIZE = 1 << 15;
+#ifndef DEBUG
+    #define CHANGE_DEFAULT_STREAMS
+    static struct FastInput {
+        FastInput() {
+            if constexpr (UNSAFE) {
+                chars_read = fread(buf, 1, BUF_SIZE, in);
+                buf_pos = 0;
+                buf[0] = (chars_read == 0 ? -1 : buf[0]);
+            }
+        }
+        static constexpr int BUF_SIZE = GLOB_BUF_SIZE;
+        char buf[BUF_SIZE];
+        size_t chars_read = 0;
+        size_t buf_pos = 0;
+        FILE* in = stdin;
+        char cur = 0;
+        inline char get_char() {
+            if constexpr (!UNSAFE) {
+                if (buf_pos >= chars_read) {
+                    chars_read = fread(buf, 1, BUF_SIZE, in);
+                    buf_pos = 0;
+                    buf[0] = (chars_read == 0 ? -1 : buf[0]);
+                }
+            }
+            return cur = buf[buf_pos++];
+        }
+        template <typename T>
+        inline FastInput* tie(T) {
+            return this;
+        }
+        inline void sync_with_stdio(bool) {}
+        inline explicit operator bool() { return cur != -1; }
+        inline static bool is_blank(char c) { return c <= ' '; }
+        inline bool skip_blanks() {
+            while (is_blank(cur) && cur != -1) get_char();
+            return cur != -1;
+        }
+        inline FastInput& operator>>(char& c) {
+            skip_blanks();
+            c = cur;
+            return *this;
+        }
+        inline FastInput& operator>>(std::string& s) {
+            if (skip_blanks()) {
+                s.clear();
+                do {
+                    s += cur;
+                } while (!is_blank(get_char()));
+            }
+            return *this;
+        }
+        template <typename T>
+        inline FastInput& read_integer(T& n) {
+            // unsafe, doesn't check that characters are actually digits
+            n = 0;
+            if (skip_blanks()) {
+                int sign = +1;
+                if (cur == '-') {
+                    sign = -1;
+                    get_char();
+                }
+                do {
+                    n += n + (n << 3) + cur - '0';
+                } while (!is_blank(get_char()));
+                n *= sign;
+            }
+            return *this;
+        }
+        template <typename T>
+        inline typename std::enable_if<std::is_integral<T>::value,
+                                       FastInput&>::type
+        operator>>(T& n) {
+            return read_integer(n);
+        }
+    #if !defined(_WIN32) || defined(_WIN64)
+        inline FastInput& operator>>(__int128& n) { return read_integer(n); }
+    #endif
+        template <typename T>
+        inline typename std::enable_if<std::is_floating_point<T>::value,
+                                       FastInput&>::type
+        operator>>(T& n) {
+            // not sure if really fast, for compatibility only
+            n = 0;
+            if (skip_blanks()) {
+                std::string s;
+                (*this) >> s;
+                sscanf(s.c_str(), "%lf", &n);
+            }
+            return *this;
+        }
+    } fast_input;
+    #define cin IO::fast_input
+    static struct FastOutput {
+        static constexpr int BUF_SIZE = GLOB_BUF_SIZE;
+        char buf[BUF_SIZE];
+        size_t buf_pos = 0;
+        static constexpr int TMP_SIZE = GLOB_BUF_SIZE;
+        char tmp[TMP_SIZE];
+        FILE* out = stdout;
+        inline void put_char(char c) {
+            buf[buf_pos++] = c;
+            if (buf_pos == BUF_SIZE) {
+                fwrite(buf, 1, buf_pos, out);
+                buf_pos = 0;
+            }
+        }
+        ~FastOutput() { fwrite(buf, 1, buf_pos, out); }
+        inline FastOutput& operator<<(char c) {
+            put_char(c);
+            return *this;
+        }
+        inline FastOutput& operator<<(const char* s) {
+            while (*s) put_char(*s++);
+            return *this;
+        }
+        inline FastOutput& operator<<(const std::string& s) {
+            for (auto x : s) put_char(x);
+            return *this;
+        }
+        template <typename T>
+        inline char* integer_to_string(T n) {
+            // beware of TMP_SIZE
+            char* p = tmp + TMP_SIZE - 1;
+            if (n == 0)
+                *--p = '0';
+            else {
+                bool is_negative = false;
+                if (n < 0) {
+                    is_negative = true;
+                    n = -n;
+                }
+                while (n > 0) {
+                    *--p = (char)('0' + n % 10);
+                    n /= 10;
+                }
+                if (is_negative) *--p = '-';
+            }
+            return p;
+        }
+        template <typename T>
+        inline typename std::enable_if<std::is_integral<T>::value, char*>::type
+        stringify(T n) {
+            return integer_to_string(n);
+        }
+    #if !defined(_WIN32) || defined(_WIN64)
+        inline char* stringify(__int128 n) { return integer_to_string(n); }
+    #endif
+        template <typename T>
+        inline typename std::enable_if<std::is_floating_point<T>::value,
+                                       char*>::type
+        stringify(T n) {
+            sprintf(tmp, "%.17f", n);
+            return tmp;
+        }
+        template <typename T>
+        inline FastOutput& operator<<(const T& n) {
+            auto p = stringify(n);
+            for (; *p != 0; p++) put_char(*p);
+            return *this;
+        }
+    } fast_output;
+    #define cout IO::fast_output
+#endif
+}  // namespace IO
 
-signed main(){
-	FAST_IO
-	PRECISION(10)
-	int t;
-	cin >> t;
-	vi a(maxn);
-	vvi ans(sq+1, vi(sq));
-	while(t--){
-		int q, x, y;
-		cin >> q >> x >> y;
-		if(q == 1){
-			a[x] += y;
-			for(int i = 1; i <= sq; i++){
-				ans[i][x % i] += y;
-			}
-		}
-		else{
-			if(x > sq){
-				int sol = 0;
-				for(int i = y; i <= maxn; i+=x){
-					sol += a[i];
-				}
-				cout << sol << "\n";
-			}
-			else{
-				cout << ans[x][y] << "\n";
-			}
-		}
-	}
+constexpr int threshold = 287;
+constexpr int n = 500000;
+int a[n + 1000];
+int b[threshold + 1][threshold + 1];
+
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    int t = 1;
+    // cin >> t;
+    for (int test = 1; test <= t; ++test) {
+        int q;
+        cin >> q;
+        while (q--) {
+            int type;
+            cin >> type;
+            if (type == 1) {
+                int x, y;
+                cin >> x >> y;
+                a[x] += y;
+                for (int j = 1; j <= threshold; ++j) b[j][x % j] += y;
+            } else {
+                int x, y;
+                cin >> x >> y;
+                if (x <= threshold) {
+                    cout << b[x][y] << '\n';
+                } else {
+                    int ans = 0;
+                    if (y == 0) y = x;
+                    for (int i = y; i <= n; i += x) ans += a[i];
+                    cout << ans << '\n';
+                }
+            }
+        }
+    }
 }
