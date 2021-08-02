@@ -183,7 +183,7 @@ namespace IO {
 constexpr int threshold = 319;
 constexpr int n = 500000;
 int a[n + 1000];
-int b[threshold + 1][threshold + 1];
+int b[threshold + 1][threshold];
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
