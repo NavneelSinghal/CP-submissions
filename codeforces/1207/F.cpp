@@ -21,7 +21,7 @@ int main() {
         vector<int> a(n + 1);
         int q;
         cin >> q;
-        int threshold = 300;
+        int threshold = 700;
         vector b(threshold + 1, vector<int>(threshold));
         // b[i][j] = sum of stuff at indices j mod i with i <= threshold
         while (q--) {
