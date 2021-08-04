@@ -76,12 +76,17 @@ int main() {
                 ll add1 = mid;
                 ll add2 = loc[i];
                 if (add1 > add2) swap(add1, add2);
-                if (add2 < l_max)
-                    remove(0, l_max), add(1, l_max);
-                else if (add1 > r_min)
-                    remove(1, r_min), add(0, r_min);
-                add(add1 > r_min, add1);
-                add(add2 > l_max, add2);
+                if (i == 1) {
+                    add(0, add1);
+                    add(1, add2);
+                } else {
+                    if (add2 < l_max)
+                        remove(0, l_max), add(1, l_max);
+                    else if (add1 > r_min)
+                        remove(1, r_min), add(0, r_min);
+                    add(add1 > r_min, add1);
+                    add(add2 > l_max, add2);
+                }
                 ans[i] += sum[1] - sum[0] - (1LL * (i + 1) * (i + 1)) / 4;
             } else {
                 // odd number of elements
