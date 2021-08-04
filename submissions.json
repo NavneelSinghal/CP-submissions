@@ -9179,6 +9179,23 @@
     ],
     "timestamp": "Jul/26/2021 10:23"
   },
+  "CF124888059": {
+    "contest_id": 1268,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/1268/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "K Integers",
+    "problem_url": "https://codeforces.com/contest/1268/problem/C",
+    "submission_id": "CF124888059",
+    "submission_url": "https://codeforces.com/contest/1268/submission/124888059",
+    "tags": [
+      "binary search",
+      "data structures",
+      "*2300"
+    ],
+    "timestamp": "Aug/04/2021 22:59"
+  },
   "CF125068533": {
     "contest_id": 1180,
     "language": "GNU C++17 (64)",
