@@ -17,6 +17,7 @@ struct Fenwick {
     int n;
     vector<T> t;
     Fenwick(int n) : n(n), t(n + 1) {}
+    // prefix_sum[0..i]
     T query(int i) {
         T s = 0;
         while (i) {
@@ -25,7 +26,9 @@ struct Fenwick {
         }
         return s;
     }
+    // range query
     T query(int l, int r) { return query(r) - query(l - 1); }
+    // increase a[i] by v
     void update(int i, T v) {
         while (i <= n) {
             t[i] += v;
@@ -39,9 +42,10 @@ int main() {
     int t = 1;
     // cin >> t;
     for (int test = 1; test <= t; ++test) {
+        // count inversions
         ll n;
         cin >> n;
-        vector<int> loc(n);
+        vector<ll> loc(n);
         for (int i = 0; i < n; ++i) {
             int x;
             cin >> x;
@@ -50,26 +54,27 @@ int main() {
         vector<ll> ans(n);
         Fenwick<ll> f(n);
         ll cur_inversions = 0;
-        vector<set<int>> s(2);
+        vector<set<ll>> s(2);
         vector<ll> sum(2);
-        auto add = [&](int i, int x) {
+        auto add = [&](int i, ll x) {
             s[i].insert(x);
             sum[i] += x;
         };
-        auto remove = [&](int i, int x) {
+        auto remove = [&](int i, ll x) {
             s[i].erase(x);
             sum[i] -= x;
         };
-        int mid = -1;
+        ll mid = -1;
         for (ll i = 0; i < n; ++i) {
             cur_inversions += i - f.query(loc[i]);
             ans[i] = cur_inversions;
             f.update(loc[i] + 1, 1);
-            int l_max = -1, r_min = 1e9;
+            ll l_max = -1, r_min = 1e9;
             if (i >= 2) l_max = *s[0].rbegin(), r_min = *s[1].begin();
             if (i & 1) {
-                int add1 = mid;
-                int add2 = loc[i];
+                // even number of elements
+                ll add1 = mid;
+                ll add2 = loc[i];
                 if (add1 > add2) swap(add1, add2);
                 if (add2 < l_max)
                     remove(0, l_max), add(1, l_max);
@@ -79,6 +84,7 @@ int main() {
                 add(add2 > l_max, add2);
                 ans[i] += sum[1] - sum[0] - (1LL * (i + 1) * (i + 1)) / 4;
             } else {
+                // odd number of elements
                 if (loc[i] > r_min)
                     mid = r_min, remove(1, r_min), add(1, loc[i]);
                 else if (loc[i] < l_max)
@@ -88,7 +94,7 @@ int main() {
                 ans[i] += sum[1] - sum[0] - (1LL * (i + 1) * (i + 1) - 1) / 4;
             }
         }
-        for (int i = 0; i < n; ++i) cout << ans[i] << " \n"[i == n - 1];
+        for (ll i = 0; i < n; ++i) cout << ans[i] << " \n"[i == n - 1];
     }
 }
 
