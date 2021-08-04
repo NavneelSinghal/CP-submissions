@@ -45,61 +45,90 @@ int main() {
         // count inversions
         ll n;
         cin >> n;
-        vector<ll> loc(n);
-        for (int i = 0; i < n; ++i) {
-            int x;
-            cin >> x;
-            loc[x - 1] = i;
-        }
+        vector<ll> a(n);
+        for (auto& x : a) cin >> x;
         vector<ll> ans(n);
+        vector<ll> loc(n);
+        for (ll i = 0; i < n; ++i) loc[a[i] - 1] = i;
         Fenwick<ll> f(n);
         ll cur_inversions = 0;
-        vector<set<ll>> s(2);
-        vector<ll> sum(2);
-        auto add = [&](int i, ll x) {
-            s[i].insert(x);
-            sum[i] += x;
-        };
-        auto remove = [&](int i, ll x) {
-            s[i].erase(x);
-            sum[i] -= x;
-        };
+        set<ll> l, r;
+        ll l_sum = 0, r_sum = 0;
         ll mid = -1;
         for (ll i = 0; i < n; ++i) {
             cur_inversions += i - f.query(loc[i]);
             ans[i] = cur_inversions;
+            debug(ans[i]);
             f.update(loc[i] + 1, 1);
-            ll l_max = -1, r_min = 1e9;
-            if (i >= 2) l_max = *s[0].rbegin(), r_min = *s[1].begin();
             if (i & 1) {
                 // even number of elements
                 ll add1 = mid;
                 ll add2 = loc[i];
                 if (add1 > add2) swap(add1, add2);
                 if (i == 1) {
-                    add(0, add1);
-                    add(1, add2);
+                    l.insert(add1);
+                    r.insert(add2);
+                    l_sum += add1;
+                    r_sum += add2;
                 } else {
-                    if (add2 < l_max)
-                        remove(0, l_max), add(1, l_max);
-                    else if (add1 > r_min)
-                        remove(1, r_min), add(0, r_min);
-                    add(add1 > r_min, add1);
-                    add(add2 > l_max, add2);
+                    ll l_max = *l.rbegin();
+                    ll r_min = *r.begin();
+                    if (add2 < l_max) {
+                        l.erase(l_max);
+                        l_sum -= l_max;
+                        r.insert(l_max);
+                        r_sum += l_max;
+                        l.insert(add1);
+                        l.insert(add2);
+                        l_sum += add1;
+                        l_sum += add2;
+                    } else if (add1 > r_min) {
+                        r.erase(r_min);
+                        r_sum -= r_min;
+                        l.insert(r_min);
+                        l_sum += r_min;
+                        r.insert(add1);
+                        r.insert(add2);
+                        r_sum += add1;
+                        r_sum += add2;
+                    } else {
+                        l.insert(add1);
+                        r.insert(add2);
+                        l_sum += add1;
+                        r_sum += add2;
+                    }
                 }
-                ans[i] += sum[1] - sum[0] - (1LL * (i + 1) * (i + 1)) / 4;
+                ans[i] += r_sum - l_sum - (1LL * (i + 1) * (i + 1)) / 4;
             } else {
                 // odd number of elements
-                if (loc[i] > r_min)
-                    mid = r_min, remove(1, r_min), add(1, loc[i]);
-                else if (loc[i] < l_max)
-                    mid = l_max, remove(0, l_max), add(0, loc[i]);
-                else
+                if (i == 0) {
                     mid = loc[i];
-                ans[i] += sum[1] - sum[0] - (1LL * (i + 1) * (i + 1) - 1) / 4;
+                } else {
+                    ll l_max = *l.rbegin();
+                    ll r_min = *r.begin();
+                    if (loc[i] > r_min) {
+                        mid = r_min;
+                        r.erase(r_min);
+                        r_sum -= r_min;
+                        r.insert(loc[i]);
+                        r_sum += loc[i];
+                    } else if (loc[i] < l_max) {
+                        mid = l_max;
+                        l.erase(l_max);
+                        l_sum -= l_max;
+                        l.insert(loc[i]);
+                        l_sum += loc[i];
+                    } else {
+                        mid = loc[i];
+                    }
+                }
+                ans[i] += r_sum - l_sum - (1LL * (i + 1) * (i + 1) - 1) / 4;
             }
         }
-        for (ll i = 0; i < n; ++i) cout << ans[i] << " \n"[i == n - 1];
+        for (ll i = 0; i < n; ++i) {
+            cout << ans[i] << ' ';
+        }
+        cout << '\n';
     }
 }
 
