@@ -9179,6 +9179,23 @@
     ],
     "timestamp": "Jul/26/2021 10:23"
   },
+  "CF125082221": {
+    "contest_id": 717,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/717/H.cpp",
+    "platform": "Codeforces",
+    "problem_index": "H",
+    "problem_name": "Pokermon League challenge",
+    "problem_url": "https://codeforces.com/contest/717/problem/H",
+    "submission_id": "CF125082221",
+    "submission_url": "https://codeforces.com/contest/717/submission/125082221",
+    "tags": [
+      "math",
+      "probabilities",
+      "*2400"
+    ],
+    "timestamp": "Aug/07/2021 00:00"
+  },
   "CF125082509": {
     "contest_id": 717,
     "language": "GNU C++17 (64)",
