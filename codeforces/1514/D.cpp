@@ -1,13 +1,16 @@
-#pragma GCC optimize("O3")
-#pragma GCC optimize("unroll-loops")
-#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt")
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
 
 #include <bits/stdc++.h>
 
-using namespace std;
-using ll = long long;
+#ifdef DEBUG
+    #include "../debug/debug.hpp"
+#else
+    #define debug(...) 0
+#endif
 
-constexpr ll inf = 5e9;
+using ll = int64_t;
+using ld = long double;
 
 namespace IO {
     constexpr bool UNSAFE = false;
@@ -39,9 +42,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -52,6 +53,7 @@ namespace IO {
         inline FastInput& operator>>(char& c) {
             skip_blanks();
             c = cur;
+            get_char();
             return *this;
         }
         inline FastInput& operator>>(std::string& s) {
@@ -177,166 +179,150 @@ namespace IO {
 #endif
 }  // namespace IO
 
-template <class T>
-struct wavelet_matrix {
-    using size_type = uint32_t;
-    struct bit_vector {
-        static constexpr size_type wsize = 64;
-        static size_type rank64(uint64_t x, size_type i) {
-            return __builtin_popcountll(x & ((1ULL << i) - 1));
+template <class Node, class AL, class AR, class EL, class ER>
+struct Mo {
+   private:
+    std::vector<Node> ans;
+    Node id_node;
+    AL add_left;
+    AR add_right;
+    EL erase_left;
+    ER erase_right;
+    struct Query {
+        int l, r;
+        int64_t order;
+        Query() {}
+        inline int64_t hilbert_order(int x, int y, int p, int to_rotate) {
+            if (p == 0) return 0;
+            static constexpr int rotate_delta[4] = {3, 0, 0, 1};
+            int hp = 1 << (p - 1);
+            int seg = (x < hp) ? ((y < hp) ? 0 : 3) : ((y < hp) ? 1 : 2);
+            seg = (seg + to_rotate) & 3;
+            int nx = x & (x ^ hp), ny = y & (y ^ hp);
+            int nrot = (to_rotate + rotate_delta[seg]) & 3;
+            int64_t sub_square_size = int64_t(1) << (2 * p - 2);
+            int64_t ans = seg * sub_square_size;
+            int64_t add = hilbert_order(nx, ny, p - 1, nrot);
+            ans += (seg == 1 || seg == 2) ? add : (sub_square_size - add - 1);
+            return ans;
         }
-#pragma pack(4)
-        struct block_t {
-            uint64_t bit;
-            size_type sum;
-        };
-#pragma pack()
-        size_type n, zeros;
-        std::vector<block_t> block;
-        bit_vector(size_type _n = 0) : n(_n), block(n / wsize + 1) {}
-        int operator[](size_type i) const {
-            return block[i / wsize].bit >> i % wsize & 1;
+        Query(int _l, int _r, int lgn) : l(_l), r(_r) {
+            order = hilbert_order(_l, _r, lgn, 0);
         }
-        void set(size_type i) {
-            block[i / wsize].bit |= (uint64_t)1 << i % wsize;
-        }
-        void build() {
-            for (size_type j = 0; j < n / wsize; ++j)
-                block[j + 1].sum =
-                    block[j].sum + __builtin_popcountll(block[j].bit);
-            zeros = rank0(n);
-        }
-        size_type rank0(size_type i) const { return i - rank1(i); }
-        size_type rank1(size_type i) const {
-            auto&& e = block[i / wsize];
-            return e.sum + rank64(e.bit, i % wsize);
-        }
+        bool operator<(const Query& q) const { return order < q.order; }
     };
-    size_type n, lg;
-    std::vector<T> a;
-    std::vector<bit_vector> bv;
-    wavelet_matrix(size_type _n = 0) : n(_n), a(n) {}
-    wavelet_matrix(const std::vector<T>& _a) : n(_a.size()), a(_a) { build(); }
-    T& operator[](size_type i) { return a[i]; }
-    void build() {
-        lg = std::__lg(std::max<T>(
-                 *std::max_element(std::begin(a), std::end(a)), 1)) +
-             1;
-        bv.assign(lg, n);
-        std::vector<T> cur = a, nxt(n);
-        for (auto h = lg; h--;) {
-            for (size_type i = 0; i < n; ++i)
-                if (cur[i] >> h & 1) bv[h].set(i);
-            bv[h].build();
-            std::array it{std::begin(nxt), std::begin(nxt) + bv[h].zeros};
-            for (size_type i = 0; i < n; ++i) *it[bv[h][i]]++ = cur[i];
-            std::swap(cur, nxt);
+    template <class T, bool unsafe = false>
+    __attribute__((target("bmi,bmi2,popcnt,lzcnt"))) constexpr uint32_t clz(
+        T a) {
+        if constexpr (!unsafe) {
+            if (!a) return sizeof(T) * 8;
+        }
+        if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+            return (uint32_t)(__builtin_clz((uint32_t)a));
+        } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+            return (uint32_t)(__builtin_clzll((uint64_t)a));
+        } else {
+            static_assert(sizeof(T) == sizeof(uint64_t) * 2);
+            uint32_t l = clz((uint64_t)(a >> sizeof(uint64_t) * 8));
+            return l != sizeof(uint64_t) * 8 ? l : l + clz((uint64_t)a);
         }
     }
-    // find kth element in [l, r), 0 indexed
-    T kth(size_type l, size_type r, size_type k) const {
-        T res = 0;
-        for (auto h = lg; h--;) {
-            auto l0 = bv[h].rank0(l), r0 = bv[h].rank0(r);
-            if (k < r0 - l0)
-                l = l0, r = r0;
-            else {
-                k -= r0 - l0;
-                res |= (T)1 << h;
-                l += bv[h].zeros - l0;
-                r += bv[h].zeros - r0;
-            }
+    template <class T, bool unsafe = false>
+    __attribute__((target("bmi,bmi2,popcnt,lzcnt"))) constexpr uint32_t lg(
+        T a) {
+        if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+            return sizeof(uint32_t) * 8 - 1 - clz<T, unsafe>(a);
+        } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+            return sizeof(uint64_t) * 8 - 1 - clz<T, unsafe>(a);
+        } else {
+            return sizeof(uint64_t) * 16 - 1 - clz<T, unsafe>(a);
         }
-        return res;
     }
-    // count i in [l..r) satisfying a[i] <= ub
-    size_type count(size_type l, size_type r, T ub) const {
-        if (ub >= (T)1 << lg) return r - l;
-        size_type res = 0;
-        for (auto h = lg; h--;) {
-            auto l0 = bv[h].rank0(l), r0 = bv[h].rank0(r);
-            if (~ub >> h & 1)
-                l = l0, r = r0;
-            else {
-                res += r0 - l0;
-                l += bv[h].zeros - l0;
-                r += bv[h].zeros - r0;
-            }
+
+   public:
+    Mo(int _n, const std::vector<std::pair<int, int>>& _queries,
+       const Node& _id_node, const AL& _add_left, const AR& _add_right,
+       const EL& _erase_left, const ER& _erase_right)
+        : ans(_queries.size()),
+          id_node(_id_node),
+          add_left(_add_left),
+          add_right(_add_right),
+          erase_left(_erase_left),
+          erase_right(_erase_right) {
+        int q = (int)_queries.size();
+        int n = _n;
+        std::vector<Query> queries;
+        queries.reserve(q);
+        int lgn = lg(2 * n - 1);
+        for (int i = 0; i < q; ++i) {
+            auto [l, r] = _queries[i];
+            queries.push_back(Query(l, r, lgn));
         }
-        return res;
+        std::vector<int> id(q);
+        std::iota(id.begin(), id.end(), 0);
+        std::sort(id.begin(), id.end(),
+                  [&queries](int i, int j) { return queries[i] < queries[j]; });
+        int l = 0, r = -1;
+        Node cur = id_node;
+        for (auto i : id) {
+            auto [ql, qr, _] = queries[i];
+            while (l > ql) add_left(--l, cur);
+            while (r < qr) add_right(++r, cur);
+            while (l < ql) erase_left(l++, cur);
+            while (r > qr) erase_right(r--, cur);
+            ans[i] = cur;
+        }
     }
-    size_type count(size_type l, size_type r, T lb, T ub) const {
-        return count(l, r, ub) - count(l, r, lb);
-    }
+    std::vector<Node> get() { return ans; }
 };
-
-template <class T>
-auto zip(const std::vector<T>& a) {
-    int n = size(a);
-    std::vector<std::pair<T, int>> p(n);
-    for (int i = 0; i < n; ++i) p[i] = {a[i], i};
-    std::sort(std::begin(p), std::end(p));
-    std::vector<int> na(n);
-    std::vector<T> v;
-    for (int k = 0, rnk = -1; k < n; ++k) {
-        if (k == 0 or p[k - 1].first < p[k].first)
-            v.push_back(p[k].first), ++rnk;
-        na[p[k].second] = rnk;
-    }
-    return std::make_pair(na, v);
-}
-
-/*
-
-usage sample
 
 using namespace std;
 
 int main() {
-    int n, q;
-    cin >> n >> q;
-    vector<int> a(n);
-    for (auto& x : a) cin >> x;
-    auto [na, v] = zip(a);
-    wavelet_matrix wm(na);
-    while (q--) {
-        int l, r, k;
-        cin >> l >> r >> k;
-        cout << v[wm.kth(l, r, k)] << '\n';
-    }
-}
-
-*/
-
-int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
-    // cout << fixed << setprecision(10) << '\n';
     int t = 1;
     // cin >> t;
-    for (int _t = 1; _t <= t; ++_t) {
+    for (int test = 1; test <= t; ++test) {
         int n, q;
         cin >> n >> q;
         vector<int> a(n);
         for (auto& x : a) cin >> x;
-        vector<vector<int>> loc(n + 1);
-        for (int i = 0; i < n; ++i)
-            loc[a[i]].push_back(i);
-        auto get_freq = [&](int x, int l, int r) {
-            return int(lower_bound(begin(loc[x]), end(loc[x]), r + 1) -
-                       lower_bound(begin(loc[x]), end(loc[x]), l));
+        vector<pair<int, int>> queries(q);
+        for (auto& [x, y] : queries) cin >> x >> y, --x, --y;
+        using Node = int;
+        const Node id_node = 0;
+        vector<int> freq(n + 1);
+        vector<int> freq_of_freq(n + 1);
+        freq_of_freq[0] = n;
+        const auto add_left = [&a, &freq, &freq_of_freq](int i, Node& ans) {
+            // update ans after adding i to the left
+            int& f = freq[a[i]];
+            --freq_of_freq[f];
+            if (f == ans) ++ans;
+            ++f;
+            ++freq_of_freq[f];
         };
-        wavelet_matrix<int> wv(a);
+        const auto add_right = add_left;
+        const auto erase_left = [&a, &freq, &freq_of_freq](int i, Node& ans) {
+            // update ans after removing i from the left
+            int& f = freq[a[i]];
+            --freq_of_freq[f];
+            if (f == ans && freq_of_freq[f] == 0) --ans;
+            --f;
+            ++freq_of_freq[f];
+        };
+        const auto erase_right = erase_left;
+        Mo mo(n, queries, id_node, add_left, add_right, erase_left,
+              erase_right);
+        vector<Node> ans = mo.get();
         for (int i = 0; i < q; ++i) {
-            int l, r;
-            cin >> l >> r;
-            --l, --r;
-            int len = r - l + 1;
-            int mid = (l + r) / 2;
-            cout << max(int(1),
-                        2 * get_freq(wv.kth(l, r + 1, mid - l), l, r) -
-                            len)
-                 << '\n';
+            auto [l, r] = queries[i];
+            int c = (r - l + 2) / 2;
+            if (ans[i] <= c)
+                cout << 1 << '\n';
+            else
+                cout << 2 * ans[i] - (r - l + 1) << '\n';
         }
     }
-    return 0;
 }
+
