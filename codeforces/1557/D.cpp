@@ -44,9 +44,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -398,20 +396,20 @@ int main() {
         cin >> n >> m;
         vector<vector<pair<int, int>>> queries(n);
         vector<int> to_compress;
-        vector<tuple<int, int, int>> v;
-        v.reserve(m);
         for (int i = 0; i < m; ++i) {
             int x, y, z;
             cin >> x >> y >> z;
             --y, --x;
-            v.emplace_back(x, y, z);
+            queries[x].emplace_back(y, z);
             to_compress.push_back(y);
             to_compress.push_back(z);
         }
         auto [compressed, vals] = compress(to_compress);
-        for (int i = 0; i < m; ++i) {
-            auto [I, l, r] = v[i];
-            queries[I].emplace_back(compressed[2 * i], compressed[2 * i + 1]);
+        for (int i = 0; i < n; ++i) {
+            for (auto& [x, y] : queries[i]) {
+                x = lower_bound(begin(vals), end(vals), x) - begin(vals);
+                y = lower_bound(begin(vals), end(vals), y) - begin(vals);
+            }
         }
         using Base = int;
         Base id_base = 0;
