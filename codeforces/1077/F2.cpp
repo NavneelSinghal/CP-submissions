@@ -21,36 +21,32 @@ int main() {
     for (int test = 1; test <= t; ++test) {
         int n, k, x;
         cin >> n >> k >> x;
-        vector<int> a(n);
-        for (auto& x : a) cin >> x;
+        vector<ll> a(n);
+        for (auto& y : a) cin >> y;
         if (x < n / k)
             cout << -1 << '\n';
         else {
-            const ll inf = 1e18;
-            vector dp(n + 1, vector(x + 1, -inf));
-            vector<deque<pair<ll, int>>> max_deque(x + 1);
+            vector dp(n + 1, vector(x + 1, ll(-1)));
             dp[0][x] = 0;
-            for (int i = 1; i <= n; ++i) {
-                for (int remaining = x; remaining >= 0; --remaining) {
-                    ll cur = dp[i - 1][remaining];
-                    auto& cur_deque = max_deque[remaining];
-                    while (!cur_deque.empty() && cur >= cur_deque.back().first)
-                        cur_deque.pop_back();
-                    cur_deque.emplace_back(cur, i - 1);
-                    if (cur_deque.front().second == i - k - 1)
-                        cur_deque.pop_front();
+            for (int remaining = x - 1; remaining >= 0; --remaining) {
+                deque<int> q;
+                q.push_back(0);
+                for (int i = 1; i <= n; ++i) {
+                    while (!q.empty() && q.front() < i - k) q.pop_front();
+                    if (!q.empty() && dp[q.front()][remaining + 1] != -1)
+                        dp[i][remaining] =
+                            dp[q.front()][remaining + 1] + a[i - 1];
+                    while (!q.empty() &&
+                           dp[q.back()][remaining + 1] < dp[i][remaining + 1])
+                        q.pop_back();
+                    q.push_back(i);
                 }
-                for (int remaining = x - 1; remaining >= 0; --remaining)
-                    dp[i][remaining] =
-                        max(dp[i][remaining],
-                            max_deque[remaining + 1].front().first + a[i - 1]);
             }
-            ll ans = -inf;
-            for (int i = n - k + 1; i <= n; ++i) ans = max(ans, dp[i][0]);
-            assert(ans != -inf);
+            ll ans = -1;
+            for (int i = n - k + 1; i <= n; ++i)
+                ans = max(ans, dp[i][0]);
             cout << ans << '\n';
         }
     }
 }
-
 
