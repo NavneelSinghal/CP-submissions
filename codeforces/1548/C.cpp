@@ -42,9 +42,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -307,7 +305,8 @@ int main() {
         fact[0] = 1;
         for (int i = 1; i <= N; ++i) fact[i] = fact[i - 1] * i;
         invfact[N] = fact[N].inv();
-        for (int i = N - 1; i >= 0; --i) invfact[i] = invfact[i + 1] * (i + 1);
+        for (int i = N - 1; i >= 0; --i)
+            invfact[i] = invfact[i + 1] * (i + 1);
         auto C = [&fact, &invfact](int n, int r) -> mint {
             return fact[n] * invfact[n - r] * invfact[r];
         };
@@ -317,10 +316,10 @@ int main() {
         vector<mint> res(N - 2);
         for (int p = N; p >= 3; --p) {
             mint to_remove = a[p];
-            auto m = three * to_remove;
             res[p - 3] = to_remove;
-            a[p - 1] -= m;
-            a[p - 2] -= m;
+            a[p] -= to_remove;
+            a[p - 1] -= three * to_remove;
+            a[p - 2] -= three * to_remove;
         }
         while (q--) {
             int x;
