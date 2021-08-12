@@ -58,9 +58,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -248,7 +246,8 @@ int main() {
                 for (auto v : remaining_to_visit)
                     unvisited_but_unreachable[v] = 0;
                 // size of remaining_to_visit is at most deg(u)
-                // so complexity remains O(V + E)
+                // so complexity remains O(V + E), after sorting the adjacency
+                // lists of course
                 unvisited_vertices = move(remaining_to_visit);
             }
         }
