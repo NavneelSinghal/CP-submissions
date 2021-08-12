@@ -302,7 +302,7 @@ int main() {
     for (int test = 1; test <= t; ++test) {
         int n;
         cin >> n;
-        vector a(2, vector(2, 0LL));
+        vector a(2, vector(2, 0));
         while (n--) {
             int x, y;
             cin >> x >> y;
