@@ -42,9 +42,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -191,6 +189,7 @@ int main() {
         int n, m;
         cin >> n >> m;
         vector<vector<int>> g(n);
+
         for (int i = 0; i < m; ++i) {
             int u, v;
             cin >> u >> v;
@@ -199,12 +198,14 @@ int main() {
             g[v].push_back(u);
         }
 
+        for (auto& x : g) sort(begin(x), end(x));
+
         vector component(n, -1);
         vector<int> component_sz;
         int cur_component = -1;
-        vector<int> unvisited_vertices(n);
-        iota(begin(unvisited_vertices), end(unvisited_vertices), 0);
-        vector<int> in_unvisited_but_unreachable(n);
+        vector<int> unvisited(n);
+        iota(begin(unvisited), end(unvisited), 0);
+
         for (int i = 0; i < n; ++i) {
             if (component[i] != -1) continue;
             // i is unvisited, so it must belong to a new component
@@ -216,24 +217,22 @@ int main() {
             while (!q.empty()) {
                 int u = q.front();
                 q.pop();
+                int ptr = 0;
                 vector<int> remaining_to_visit;
-                for (auto v : g[u])
-                    if (component[v] == -1)
-                        remaining_to_visit.push_back(v),
-                            in_unvisited_but_unreachable[v] = 1;
-                for (auto v : unvisited_vertices) {
-                    if (u == v) continue;
-                    if (in_unvisited_but_unreachable[v]) continue;
-                    component[v] = cur_component;
-                    ++component_sz.back();
-                    q.push(v);
+                for (auto v : unvisited) {
+                    if (v == u) continue;
+                    while (ptr < (int)g[u].size() && g[u][ptr] < v) ++ptr;
+                    if (ptr < (int)g[u].size() && v == g[u][ptr]) {
+                        // can't visit this now
+                        remaining_to_visit.push_back(v);
+                    } else {
+                        // visit v
+                        component[v] = cur_component;
+                        ++component_sz.back();
+                        q.push(v);
+                    }
                 }
-                for (auto v : remaining_to_visit)
-                    in_unvisited_but_unreachable[v] = 0;
-                // size of remaining_to_visit is at most deg(u)
-                // so complexity remains O(V + E), after sorting the adjacency
-                // lists of course
-                unvisited_vertices = move(remaining_to_visit);
+                unvisited = move(remaining_to_visit);
             }
         }
         sort(begin(component_sz), end(component_sz));
