@@ -7,9 +7,9 @@ int main() {
 
     int n, m;
     cin >> n >> m;
+
     using edge = pair<int, int>;
     vector<edge> edges;
-
     for (int i = 0; i < m; ++i) {
         int u, v;
         cin >> u >> v;
@@ -18,7 +18,6 @@ int main() {
         edges.emplace_back(v, u);
     }
 
-    // get sorted adjacency lists by sorting edges
     auto get_sorted_graph = [](auto& edges, int n) {
         vector<int> cnt(n);
         vector<edge> temp(edges.size());
@@ -42,35 +41,34 @@ int main() {
     vector component(n, -1);
     vector<int> component_sz;
     int cur_component = -1;
-
-    vector<int> root(n + 1);
-    iota(begin(root), end(root), 0);
-
-    auto get_root = [&root](const auto& self, int u) -> int {
-        if (root[u] == u) return u;
-        return root[u] = self(self, root[u]);
-    };
-
-    const auto dfs = [&](const auto& self, int u) -> void {
-        root[u] = u + 1;
-        component[u] = cur_component;
-        component_sz.back()++;
-        int ptr = 0;
-        for (int v = get_root(get_root, 0); v < n;
-             v = get_root(get_root, v + 1)) {
-            while (ptr < (int)g[u].size() && g[u][ptr] < v) ++ptr;
-            if (ptr < (int)g[u].size() && g[u][ptr] == v)
-                continue;
-            else
-                self(self, v);
-        }
-    };
+    vector<int> unvisited(n);
+    iota(begin(unvisited), end(unvisited), 0);
 
     for (int i = 0; i < n; ++i) {
         if (component[i] != -1) continue;
+        queue<int> q;
         cur_component++;
-        component_sz.push_back(0);
-        dfs(dfs, i);
+        component_sz.push_back(1);
+        component[i] = cur_component;
+        q.push(i);
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+            int ptr = 0;
+            vector<int> remaining_to_visit;
+            for (auto v : unvisited) {
+                if (v == u) continue;
+                while (ptr < (int)g[u].size() && g[u][ptr] < v) ++ptr;
+                if (ptr < (int)g[u].size() && v == g[u][ptr]) {
+                    remaining_to_visit.push_back(v);
+                } else {
+                    component[v] = cur_component;
+                    ++component_sz.back();
+                    q.push(v);
+                }
+            }
+            unvisited = move(remaining_to_visit);
+        }
     }
 
     sort(begin(component_sz), end(component_sz));
@@ -78,4 +76,3 @@ int main() {
     for (auto x : component_sz) cout << x << ' ';
     cout << '\n';
 }
-
