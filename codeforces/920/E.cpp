@@ -9,7 +9,6 @@ int main() {
     cin >> n >> m;
     using edge = pair<int, int>;
     vector<edge> edges;
-    edges.reserve(2 * m);
 
     for (int i = 0; i < m; ++i) {
         int u, v;
@@ -27,9 +26,15 @@ int main() {
         for (int i = 1; i < n; ++i) cnt[i] += cnt[i - 1];
         for (int i = (int)edges.size() - 1; i >= 0; --i)
             temp[--cnt[edges[i].second]] = edges[i];
-        // copy(begin(temp), end(temp), begin(edges));
+        copy(begin(temp), end(temp), begin(edges));
+        fill(begin(cnt), end(cnt), 0);
+        for (auto [u, v] : edges) cnt[u]++;
+        for (int i = 1; i < n; ++i) cnt[i] += cnt[i - 1];
+        for (int i = (int)edges.size() - 1; i >= 0; --i)
+            temp[--cnt[edges[i].first]] = edges[i];
+        copy(begin(temp), end(temp), begin(edges));
         vector<vector<int>> g(n);
-        for (auto [u, v] : temp) g[u].push_back(v);
+        for (auto [u, v] : edges) g[u].push_back(v);
         return g;
     };
 
@@ -41,16 +46,13 @@ int main() {
     vector<int> root(n + 1);
     iota(begin(root), end(root), 0);
 
-    int compressions = 0;
-
-    auto get_root = [&root, &compressions](const auto& self, int u) -> int {
+    auto get_root = [&root](const auto& self, int u) -> int {
         if (root[u] == u) return u;
-        compressions++;
         return root[u] = self(self, root[u]);
     };
 
     const auto dfs = [&](const auto& self, int u) -> void {
-        root[u] = u + 1;
+        root[u] = get_root(get_root, u + 1);
         component[u] = cur_component;
         component_sz.back()++;
         int ptr = 0;
