@@ -321,6 +321,7 @@ int main() {
             a[p - 1] -= three * to_remove;
             a[p - 2] -= three * to_remove;
         }
+        for (int i = 0; i <= N; ++i) assert(a[i] == 0);
         while (q--) {
             int x;
             cin >> x;
