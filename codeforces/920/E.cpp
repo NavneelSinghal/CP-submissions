@@ -52,7 +52,7 @@ int main() {
     };
 
     const auto dfs = [&](const auto& self, int u) -> void {
-        root[u] = get_root(get_root, u + 1);
+        root[u] = u + 1;
         component[u] = cur_component;
         component_sz.back()++;
         int ptr = 0;
