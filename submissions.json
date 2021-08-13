@@ -383,6 +383,24 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF125738110": {
+    "contest_id": 1132,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/1132/G.cpp",
+    "platform": "Codeforces",
+    "problem_index": "G",
+    "problem_name": "Greedy Subsequences",
+    "problem_url": "https://codeforces.com/contest/1132/problem/G",
+    "submission_id": "CF125738110",
+    "submission_url": "https://codeforces.com/contest/1132/submission/125738110",
+    "tags": [
+      "data structures",
+      "dp",
+      "trees",
+      "*2400"
+    ],
+    "timestamp": "Aug/13/2021 13:47"
+  },
   "CF125746815": {
     "contest_id": 1132,
     "language": "GNU C++17 (64)",
