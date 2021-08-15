@@ -14,200 +14,272 @@ using ld = long double;
 
 using namespace std;
 
-template <class Node, class Update, class CombineNodes, class ApplyUpdate,
-          class ComposeUpdates = std::nullptr_t>
-struct PersistentSegTree {
-    static constexpr bool is_lazy =
-        !std::is_same<ComposeUpdates, std::nullptr_t>::value;
-    CombineNodes combine;
-    Node id_node;
-    Update id_update;
-    ApplyUpdate apply_update;
-    ComposeUpdates compose_updates;
-    using ll = long long;
-    struct STNode_false {
-        Node node;
-        STNode_false *l, *r;
-        STNode_false() {}
-        STNode_false(const Node& _node) : node(_node), l(nullptr), r(nullptr) {}
-    };
-    struct STNode_true {
-        Node node;
-        Update update;
-        STNode_true *l, *r;
-        STNode_true() {}
-        STNode_true(const Node& _node, const Update& _update)
-            : node(_node), update(_update), l(nullptr), r(nullptr) {}
-    };
-    using STNode =
-        typename std::conditional<is_lazy, STNode_true, STNode_false>::type;
-    std::deque<STNode> pool;
-    int pid;
-    ll N;
-    STNode* nil;
-    vector<STNode*> roots;
+namespace IO {
+    constexpr bool UNSAFE = false;
+    constexpr int GLOB_BUF_SIZE = 1 << 15;
+#ifndef DEBUG
+    #define CHANGE_DEFAULT_STREAMS
+    static struct FastInput {
+        FastInput() {
+            if constexpr (UNSAFE) {
+                chars_read = fread(buf, 1, BUF_SIZE, in);
+                buf_pos = 0;
+                buf[0] = (chars_read == 0 ? -1 : buf[0]);
+            }
+        }
+        static constexpr int BUF_SIZE = GLOB_BUF_SIZE;
+        char buf[BUF_SIZE];
+        size_t chars_read = 0;
+        size_t buf_pos = 0;
+        FILE* in = stdin;
+        char cur = 0;
+        inline char get_char() {
+            if constexpr (!UNSAFE) {
+                if (buf_pos >= chars_read) {
+                    chars_read = fread(buf, 1, BUF_SIZE, in);
+                    buf_pos = 0;
+                    buf[0] = (chars_read == 0 ? -1 : buf[0]);
+                }
+            }
+            return cur = buf[buf_pos++];
+        }
+        template <typename T>
+        inline FastInput* tie(T) {
+            return this;
+        }
+        inline void sync_with_stdio(bool) {}
+        inline explicit operator bool() { return cur != -1; }
+        inline static bool is_blank(char c) { return c <= ' '; }
+        inline bool skip_blanks() {
+            while (is_blank(cur) && cur != -1) get_char();
+            return cur != -1;
+        }
+        inline FastInput& operator>>(char& c) {
+            skip_blanks();
+            c = cur;
+            get_char();
+            return *this;
+        }
+        inline FastInput& operator>>(std::string& s) {
+            if (skip_blanks()) {
+                s.clear();
+                do {
+                    s += cur;
+                } while (!is_blank(get_char()));
+            }
+            return *this;
+        }
+        template <typename T>
+        inline FastInput& read_integer(T& n) {
+            // unsafe, doesn't check that characters are actually digits
+            n = 0;
+            if (skip_blanks()) {
+                int sign = +1;
+                if (cur == '-') {
+                    sign = -1;
+                    get_char();
+                }
+                do {
+                    n += n + (n << 3) + cur - '0';
+                } while (!is_blank(get_char()));
+                n *= sign;
+            }
+            return *this;
+        }
+        template <typename T>
+        inline typename std::enable_if<std::is_integral<T>::value,
+                                       FastInput&>::type
+        operator>>(T& n) {
+            return read_integer(n);
+        }
+    #if !defined(_WIN32) || defined(_WIN64)
+        inline FastInput& operator>>(__int128& n) { return read_integer(n); }
+    #endif
+        template <typename T>
+        inline typename std::enable_if<std::is_floating_point<T>::value,
+                                       FastInput&>::type
+        operator>>(T& n) {
+            // not sure if really fast, for compatibility only
+            n = 0;
+            if (skip_blanks()) {
+                std::string s;
+                (*this) >> s;
+                sscanf(s.c_str(), "%lf", &n);
+            }
+            return *this;
+        }
+    } fast_input;
+    #define cin IO::fast_input
+    static struct FastOutput {
+        static constexpr int BUF_SIZE = GLOB_BUF_SIZE;
+        char buf[BUF_SIZE];
+        size_t buf_pos = 0;
+        static constexpr int TMP_SIZE = GLOB_BUF_SIZE;
+        char tmp[TMP_SIZE];
+        FILE* out = stdout;
+        inline void put_char(char c) {
+            buf[buf_pos++] = c;
+            if (buf_pos == BUF_SIZE) {
+                fwrite(buf, 1, buf_pos, out);
+                buf_pos = 0;
+            }
+        }
+        ~FastOutput() { fwrite(buf, 1, buf_pos, out); }
+        inline FastOutput& operator<<(char c) {
+            put_char(c);
+            return *this;
+        }
+        inline FastOutput& operator<<(const char* s) {
+            while (*s) put_char(*s++);
+            return *this;
+        }
+        inline FastOutput& operator<<(const std::string& s) {
+            for (auto x : s) put_char(x);
+            return *this;
+        }
+        template <typename T>
+        inline char* integer_to_string(T n) {
+            // beware of TMP_SIZE
+            char* p = tmp + TMP_SIZE - 1;
+            if (n == 0)
+                *--p = '0';
+            else {
+                bool is_negative = false;
+                if (n < 0) {
+                    is_negative = true;
+                    n = -n;
+                }
+                while (n > 0) {
+                    *--p = (char)('0' + n % 10);
+                    n /= 10;
+                }
+                if (is_negative) *--p = '-';
+            }
+            return p;
+        }
+        template <typename T>
+        inline typename std::enable_if<std::is_integral<T>::value, char*>::type
+        stringify(T n) {
+            return integer_to_string(n);
+        }
+    #if !defined(_WIN32) || defined(_WIN64)
+        inline char* stringify(__int128 n) { return integer_to_string(n); }
+    #endif
+        template <typename T>
+        inline typename std::enable_if<std::is_floating_point<T>::value,
+                                       char*>::type
+        stringify(T n) {
+            sprintf(tmp, "%.17f", n);
+            return tmp;
+        }
+        template <typename T>
+        inline FastOutput& operator<<(const T& n) {
+            auto p = stringify(n);
+            for (; *p != 0; p++) put_char(*p);
+            return *this;
+        }
+    } fast_output;
+    #define cout IO::fast_output
+#endif
+}  // namespace IO
 
-    explicit PersistentSegTree(const std::vector<Node>& v, const Node& _id_node,
-                               const CombineNodes& _combine,
-                               const Update& _id_update,
-                               const ApplyUpdate& _apply_update,
-                               const ComposeUpdates& _compose_updates = nullptr)
-        : N(int(v.size())),
-          pid(0),
-          nil(nullptr),
-          combine(_combine),
-          id_node(_id_node),
-          apply_update(_apply_update),
-          id_update(_id_update),
-          compose_updates(_compose_updates) {
-        pool.resize(16);
-        nil = my_new(id_node);
-        // nil->l = nil->r = nullptr;
-        nil->l = nil->r = nil;
-        roots.push_back(build(v));
-    }
-
-    explicit PersistentSegTree(const ll& _N, const Node& _id_node,
-                               const CombineNodes& _combine,
-                               const Update& _id_update,
-                               const ApplyUpdate& _apply_update,
-                               const ComposeUpdates& _compose_updates = nullptr)
-        : N(_N),
-          pid(0),
-          nil(nullptr),
-          combine(_combine),
-          id_node(_id_node),
-          apply_update(_apply_update),
-          id_update(_id_update),
-          compose_updates(_compose_updates) {
-        pool.resize(16);
-        nil = my_new(id_node);
-        // nil->l = nil->r = nullptr;
-        nil->l = nil->r = nil;
-        roots.push_back(nil);
-    }
-
-    inline void buffer_nodes() {
-        if (pid + 1 >= pool.size()) pool.resize(pool.size() + 1000);
-    }
-
-    STNode* my_new(const Node& node) {
-        pool[pid].node = node;
-        if constexpr (is_lazy) pool[pid].update = id_update;
-        // pool[pid].l = pool[pid].r = nullptr;
-        pool[pid].l = pool[pid].r = nil;
-        buffer_nodes();
-        return &(pool[pid++]);
-    }
-    STNode* merge(STNode* l, STNode* r) {
-        pool[pid].node = combine(l->node, r->node);
-        if constexpr (is_lazy) pool[pid].update = id_update;
-        pool[pid].l = l;
-        pool[pid].r = r;
-        buffer_nodes();
-        return &(pool[pid++]);
-    }
-    STNode* build(const vector<Node>& v) {
-        N = (ll)v.size();
-        return build(0, (ll)v.size(), v);
-    }
-    STNode* build(ll l, ll r, const vector<Node>& v) {
-        if (l + 1 == r) return my_new(v[l]);
-        ll m = (l + r) >> 1;
-        return merge(build(l, m, v), build(m, r, v));
-    }
-
+template <class Node, class AL, class AR, class EL, class ER, class Compute>
+struct Mo {
    private:
-    STNode* new_lazy_child(STNode* n, const Update& u) {
-        pool[pid].node = apply_update(u, n->node);
-        pool[pid].l = n->l;
-        pool[pid].r = n->r;
-        if constexpr (is_lazy) pool[pid].update = compose_updates(u, n->update);
-        buffer_nodes();
-        return &(pool[pid++]);
-    }
-    void pushdown_(STNode* n) {
-        if constexpr (is_lazy) {
-            if (n->update == id_update) return;
-            n->l = new_lazy_child(n->l, n->update);
-            n->r = new_lazy_child(n->r, n->update);
-            n->update = id_update;
+    std::vector<Node> ans;
+    Node id_node;
+    AL add_left;
+    AR add_right;
+    EL erase_left;
+    ER erase_right;
+    Compute compute;
+    struct Query {
+        int l, r;
+        int64_t order;
+        Query() {}
+        inline int64_t hilbert_order(int x, int y, int p, int to_rotate) {
+            if (p == 0) return 0;
+            static constexpr int rotate_delta[4] = {3, 0, 0, 1};
+            int hp = 1 << (p - 1);
+            int seg = (x < hp) ? ((y < hp) ? 0 : 3) : ((y < hp) ? 1 : 2);
+            seg = (seg + to_rotate) & 3;
+            int nx = x & (x ^ hp), ny = y & (y ^ hp);
+            int nrot = (to_rotate + rotate_delta[seg]) & 3;
+            int64_t sub_square_size = int64_t(1) << (2 * p - 2);
+            int64_t ans = seg * sub_square_size;
+            int64_t add = hilbert_order(nx, ny, p - 1, nrot);
+            ans += (seg == 1 || seg == 2) ? add : (sub_square_size - add - 1);
+            return ans;
+        }
+        Query(int _l, int _r, int lgn) : l(_l), r(_r) {
+            order = hilbert_order(_l, _r, lgn, 0);
+        }
+        bool operator<(const Query& q) const { return order < q.order; }
+    };
+    template <class T, bool unsafe = false>
+    __attribute__((target("bmi,bmi2,popcnt,lzcnt"))) constexpr uint32_t clz(
+        T a) {
+        if constexpr (!unsafe) {
+            if (!a) return sizeof(T) * 8;
+        }
+        if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+            return (uint32_t)(__builtin_clz((uint32_t)a));
+        } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+            return (uint32_t)(__builtin_clzll((uint64_t)a));
+        } else {
+            static_assert(sizeof(T) == sizeof(uint64_t) * 2);
+            uint32_t l = clz((uint64_t)(a >> sizeof(uint64_t) * 8));
+            return l != sizeof(uint64_t) * 8 ? l : l + clz((uint64_t)a);
         }
     }
-    STNode* update_(ll a, const Update& x, STNode* n, ll l, ll r) {
-        if (l + 1 == r) return my_new(apply_update(x, n->node));
-        ll m = (l + r) >> 1;
-        if constexpr (is_lazy) pushdown_(n);
-        if (a < m) return merge(update_(a, x, n->l, l, m), n->r);
-        return merge(n->l, update_(a, x, n->r, m, r));
-    }
-    Node query_(ll a, ll b, STNode* n, ll l, ll r) {
-        if (n == nil or r <= a or b <= l)
-            return id_node;  // nullptr never possible
-        if (a <= l and r <= b) return n->node;
-        ll m = (l + r) >> 1;
-        if constexpr (is_lazy) pushdown_(n);
-        return combine(query_(a, b, n->l, l, m), query_(a, b, n->r, m, r));
-    }
-    STNode* update_(ll L, ll R, const Update& x, STNode* n, ll l, ll r) {
-        if (L <= l and r <= R) return my_new(apply_update(x, n->node));
-        ll m = (l + r) >> 1;
-        if constexpr (is_lazy) pushdown_(n);
-        STNode* left = n->l;
-        STNode* right = n->r;
-        if (L < m) left = update_(L, R, x, n->l, l, m);
-        if (m < R) right = update_(L, R, x, n->r, m, r);
-        return merge(left, right);
+    template <class T, bool unsafe = false>
+    __attribute__((target("bmi,bmi2,popcnt,lzcnt"))) constexpr uint32_t lg(
+        T a) {
+        if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+            return sizeof(uint32_t) * 8 - 1 - clz<T, unsafe>(a);
+        } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+            return sizeof(uint64_t) * 8 - 1 - clz<T, unsafe>(a);
+        } else {
+            return sizeof(uint64_t) * 16 - 1 - clz<T, unsafe>(a);
+        }
     }
 
    public:
-    STNode* update(STNode* n, ll k, const Update& x) {
-        STNode* root = update_(k, x, n, 0, N);
-        roots.push_back(root);
-        return root;
+    Mo(int _n, const std::vector<std::pair<int, int>>& _queries,
+       const Node& _id_node, const AL& _add_left, const AR& _add_right,
+       const EL& _erase_left, const ER& _erase_right, const Compute& _compute)
+        : ans(_queries.size()),
+          id_node(_id_node),
+          add_left(_add_left),
+          add_right(_add_right),
+          erase_left(_erase_left),
+          erase_right(_erase_right),
+          compute(_compute) {
+        int q = (int)_queries.size();
+        int n = _n;
+        std::vector<Query> queries;
+        queries.reserve(q);
+        int lgn = lg(2 * n - 1);
+        for (int i = 0; i < q; ++i) {
+            auto [l, r] = _queries[i];
+            queries.push_back(Query(l, r, lgn));
+        }
+        std::vector<int> id(q);
+        std::iota(id.begin(), id.end(), 0);
+        std::sort(id.begin(), id.end(),
+                  [&queries](int i, int j) { return queries[i] < queries[j]; });
+        int l = 0, r = -1;
+        Node cur = id_node;
+        for (auto i : id) {
+            auto [ql, qr, _] = queries[i];
+            while (l > ql) add_left(--l, cur);
+            while (r < qr) add_right(++r, cur);
+            while (l < ql) erase_left(l++, cur);
+            while (r > qr) erase_right(r--, cur);
+            ans[i] = compute(cur);
+        }
     }
-    STNode* update(int t, ll k, const Update& x) {
-        STNode* root = update_(k, x, roots[t], 0, N);
-        roots.push_back(root);
-        return root;
-    }
-    STNode* update(STNode* n, ll a, ll b, const Update& x) {
-        assert(0 <= a && a < b && b <= N);
-        STNode* root = update_(a, b, x, n, 0, N);
-        roots.push_back(root);
-        return root;
-    }
-    STNode* update(int t, ll a, ll b, const Update& x) {
-        assert(0 <= a && a < b && b <= N);
-        STNode* root = update_(a, b, x, roots[t], 0, N);
-        roots.push_back(root);
-        return root;
-    }
-    STNode* update_last(ll k, const Update& x) {
-        STNode* root = update_(k, x, roots.back(), 0, N);
-        roots.push_back(root);
-        return root;
-    }
-    STNode* update_last(ll a, ll b, const Update& x) {
-        assert(0 <= a && a < b && b <= N);
-        STNode* root = update_(a, b, x, roots.back(), 0, N);
-        roots.push_back(root);
-        return root;
-    }
-
-    Node query(STNode* n, ll a, ll b) {
-        assert(0 <= a && a < b && b <= N);
-        return query_(a, b, n, 0, N);
-    }
-    Node query(int t, ll a, ll b) {
-        assert(0 <= a && a < b && b <= N);
-        return query_(a, b, roots[t], 0, N);
-    }
-    Node query_last(ll a, ll b) {
-        assert(0 <= a && a < b && b <= N);
-        return query_(a, b, roots.back(), 0, N);
-    }
-    STNode* new_tree() { return nil; }
+    std::vector<Node> get() { return ans; }
 };
 
 int main() {
@@ -220,65 +292,69 @@ int main() {
         vector<int> a(n);
         for (auto& x : a) cin >> x;
 
-        vector<int> left(n);
-        map<int, int> last;
-        for (int i = 0; i < n; i++) {
-            if (!last.count(a[i]))
-                left[i] = -1;
-            else
-                left[i] = last[a[i]];
-            last[a[i]] = i;
-        }
-
-        const int inf = 1e9;
-        struct Node {
-            int max_prev_idx;
-            int max_prev_at;
-        };
-        const Node id_node{inf, inf};
-        const auto combine = [](const Node& a, const Node& b) -> Node {
-            if (a.max_prev_idx < b.max_prev_idx)
-                return a;
-            else
-                return b;
-        };
-        using Update = pair<int, int>;
-        const Update id_update = {-1, -1};
-        const auto apply_update = [&id_update](const Update& u, const Node& n) {
-            if (u == id_update) return n;
-            return Node{u.first, u.second};
-        };
-        const auto compose_updates = [&id_update](const Update& u,
-                                                  const Update& v) {
-            if (u == id_update) return v;
-            return u;
-        };
-
-        //  PersistentSegTree st(n, id_node, combine, id_update, apply_update,
-        //                       compose_updates);
-
-        PersistentSegTree st(vector<Node>(n, id_node), id_node, combine,
-                             id_update, apply_update);
-
-        vector<decltype(st)::STNode*> roots(n + 1);
-        roots[0] = st.roots[0];
-        for (int i = 0; i < n; ++i) {
-            if (left[i] != -1) st.update_last(left[i], Update{inf, inf});
-            roots[i + 1] = st.update_last(i, Update{left[i], i});
-        }
-
         int q;
         cin >> q;
-        while (q--) {
+        vector<pair<int, int>> queries;
+        for (int i = 0; i < q; ++i) {
             int l, r;
             cin >> l >> r;
-            --l;
-            auto [ans, ans_idx] = st.query(roots[r], l, r);
-            if (ans < l)
-                cout << a[ans_idx] << '\n';
-            else
-                cout << 0 << '\n';
+            --l, --r;
+            queries.emplace_back(l, r);
         }
+
+        constexpr int block_sz = 800;
+        const int A = *max_element(begin(a), end(a));
+
+        vector<int> type(A + 1), active(A + 1), active_in_block(block_sz);
+        int total_unique = 0;
+
+        using Node = int;
+
+        auto add_left = [&](int i, Node x) {
+            auto ai = a[i];
+            ++type[ai];
+            if (type[ai] == 1) {
+                ++active[ai];
+                ++active_in_block[ai / block_sz];
+                ++total_unique;
+            } else if (type[ai] == 2) {
+                --active[ai];
+                --active_in_block[ai / block_sz];
+                --total_unique;
+            }
+        };
+
+        auto add_right = add_left;
+
+        auto erase_left = [&](int i, Node x) {
+            auto ai = a[i];
+            --type[ai];
+            if (type[ai] == 0) {
+                --active[ai];
+                --active_in_block[ai / block_sz];
+                --total_unique;
+            } else if (type[ai] == 1) {
+                ++active[ai];
+                ++active_in_block[ai / block_sz];
+                ++total_unique;
+            }
+        };
+
+        auto erase_right = erase_left;
+
+        auto compute = [&](Node x) {
+            if (total_unique == 0) return 0;
+            for (int i = 0; i < block_sz; ++i)
+                if (active_in_block[i] > 0)
+                    for (int j = i * block_sz;; ++j)
+                        if (active[j]) return j;
+            return 0;
+        };
+
+        Mo mo(n, queries, 0, add_left, add_right, erase_left, erase_right,
+              compute);
+
+        for (auto x : mo.get()) cout << x << '\n';
     }
 }
 
