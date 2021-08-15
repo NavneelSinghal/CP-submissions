@@ -41,7 +41,7 @@ struct PersistentSegTree {
     };
     using STNode =
         typename std::conditional<is_lazy, STNode_true, STNode_false>::type;
-    std::vector<STNode> pool;
+    std::deque<STNode> pool;
     int pid;
     ll N;
     STNode* nil;
@@ -60,7 +60,7 @@ struct PersistentSegTree {
           apply_update(_apply_update),
           id_update(_id_update),
           compose_updates(_compose_updates) {
-        pool.resize(24'000'000);
+        pool.resize(16);
         nil = my_new(id_node);
         // nil->l = nil->r = nullptr;
         nil->l = nil->r = nil;
@@ -80,14 +80,16 @@ struct PersistentSegTree {
           apply_update(_apply_update),
           id_update(_id_update),
           compose_updates(_compose_updates) {
-        pool.resize(24'000'000);
+        pool.resize(16);
         nil = my_new(id_node);
         // nil->l = nil->r = nullptr;
         nil->l = nil->r = nil;
         roots.push_back(nil);
     }
 
-    inline void buffer_nodes() {}
+    inline void buffer_nodes() {
+        if (pid + 1 >= pool.size()) pool.resize(pool.size() + 1000);
+    }
 
     STNode* my_new(const Node& node) {
         pool[pid].node = node;
