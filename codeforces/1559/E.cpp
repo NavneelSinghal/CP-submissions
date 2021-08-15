@@ -1,6 +1,3 @@
-#pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt")
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -17,7 +14,7 @@ using namespace std;
 #define vi vector<int>
 #define vvi vector<vector<int>>
 #define pii pair<int, int>
-constexpr int MOD = 998244353;
+const int MOD = 998244353;
 
 int modpow(int a, int b, int mod) {
     int res = 1;
@@ -38,7 +35,7 @@ int po(int a, int b) {
     return res;
 }
 
-vector dp(50, vector<int>(100001));
+vector<vector<long long int>> dp(50, vector<long long int>(100001));
 
 int solve(int n, int m, vvi a, int div) {}
 std::chrono::steady_clock::time_point endt;
@@ -74,22 +71,12 @@ struct MU {
 
 MU mu;
 
-inline void add(int& a, int b) {
-    a += b;
-    if (a >= MOD) a -= MOD;
-}
-
-inline void sub(int& a, int b) {
-    a += MOD - b;
-    if (a >= MOD) a -= MOD;
-}
-
 void testcases(int test) {
     int n, mm;
     cin >> n >> mm;
     vector<array<int, 2>> aa(n);
     loop(i, 0, n) cin >> aa[i][0] >> aa[i][1];
-    vector<int> num(mm + 1);
+    vector<long long int> num(mm + 1);
     for (auto div : mu.sqfree) {
         int m = mm / div;
         if (m == 0) break;
@@ -103,16 +90,27 @@ void testcases(int test) {
         if (m < 0) continue;
         loop(i, 0, a[0][1] + 1) dp[0][i] = 1;
         loop(i, 1, n) {
-            loop(j, 1, m + 1) add(dp[i - 1][j], dp[i - 1][j - 1]);
+            loop(j, 1, m + 1) {
+                dp[i - 1][j] = (dp[i - 1][j] + dp[i - 1][j - 1]);
+                if (dp[i - 1][j] >= MOD) dp[i - 1][j] -= MOD;
+            }
             loop(j, 0, m + 1) {
                 int r = (j - a[i][1] >= 1) ? dp[i][j - a[i][1] - 1] : 0;
-                dp[i][j] = dp[i - 1][j];
-                sub(dp[i][j], r);
-                if (i == n - 1) add(num[div], dp[n - 1][j]);
+                dp[i][j] = (dp[i - 1][j] - r + MOD);
+                if (dp[i][j] >= MOD) dp[i][j] -= MOD;
+                if (i == n - 1) {
+                    num[div] = (num[div] + dp[n - 1][j]);
+                    if (num[div] >= MOD) num[div] -= MOD;
+                }
             }
         }
     }
-    loopr(i, mm, 1) for (int j = 2 * i; j <= mm; j += i) sub(num[i], num[j]);
+    loopr(i, mm, 1) {
+        for (int j = 2 * i; j <= mm; j += i) {
+            num[i] = (num[i] - num[j] + MOD);
+            if (num[i] >= MOD) num[i] -= MOD;
+        }
+    }
     cout << num[1] << '\n';
 }
 
