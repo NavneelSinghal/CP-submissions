@@ -85,7 +85,7 @@ struct PersistentSegTree {
           compose_updates(_compose_updates) {
         nil = my_new(id_node);
         nil->l = nil->r = nil;
-        if constexpr (RESERVE_ROOTS) roots.reserve(1'100'000);
+        if constexpr (RESERVE_ROOTS) roots.reserve(500'000);
         roots.push_back(build(v));
     }
 
@@ -104,7 +104,7 @@ struct PersistentSegTree {
           compose_updates(_compose_updates) {
         nil = my_new(id_node);
         nil->l = nil->r = nil;
-        if constexpr (RESERVE_ROOTS) roots.reserve(1'100'000);
+        if constexpr (RESERVE_ROOTS) roots.reserve(500'000);
         roots.push_back(nil);
     }
 
