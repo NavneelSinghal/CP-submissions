@@ -38,8 +38,9 @@ int po(int a, int b) {
     return res;
 }
 
-int dp[50][100001];
+vector dp(50, vector<int>(100001));
 
+int solve(int n, int m, vvi a, int div) {}
 std::chrono::steady_clock::time_point endt;
 
 template <int N = 100'000>
