@@ -1,7 +1,7 @@
 // original: https://codeforces.com/contest/1560/submission/126422178
 
 #pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt,fma")
+#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
 
 #include "bits/stdc++.h"
 using namespace std;
