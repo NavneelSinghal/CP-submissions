@@ -10812,6 +10812,24 @@
     ],
     "timestamp": "Aug/19/2021 14:28"
   },
+  "CF126439327": {
+    "contest_id": 509,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/509/C.cpp",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Sums of Digits",
+    "problem_url": "https://codeforces.com/contest/509/problem/C",
+    "submission_id": "CF126439327",
+    "submission_url": "https://codeforces.com/contest/509/submission/126439327",
+    "tags": [
+      "dp",
+      "greedy",
+      "implementation",
+      "*2000"
+    ],
+    "timestamp": "Aug/19/2021 17:14"
+  },
   "CF126557049": {
     "contest_id": 856,
     "language": "GNU C++17 (64)",
