@@ -1,12 +1,9 @@
 // original: https://codeforces.com/contest/1560/submission/126422178
 
-#pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
+#pragma GCC optimize("O3")
 
 #include "bits/stdc++.h"
 using namespace std;
-
-#define int long long
 
 string s;
 int k, x;
@@ -41,7 +38,7 @@ int memo(int i, int mask, int large) {
     return ans;
 }
 
-signed main() {
+int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int t;
     cin >> t;
