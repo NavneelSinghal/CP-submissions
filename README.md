@@ -10,6 +10,7 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
+1057 | [F2 - Nearest Beautiful Number (hard version)](https://codeforces.com/contest/1560/problem/F2) | [GNU C++17 (64)](./codeforces/1560/F2.cpp) | `bitmasks` `brute force` `constructive algorithms` `dp` `greedy` `implementation` | Aug/19/2021 14:28 | 
 1056 | [L - Lazy Segment Tree](https://atcoder.jp/contests/practice2/tasks/practice2_l) | [C++ (Clang 10.0.0 with AC Library)](./atcoder/practice2/L.cpp) | `AtCoder` `*100` | Aug/01/2021 17:54 | 
 1055 | [C - Manhattan Subarrays](https://codeforces.com/contest/1550/problem/C) | [GNU C++17 (64)](./codeforces/1550/C.cpp) | `brute force` `geometry` `greedy` `implementation` `*1700` | Jul/26/2021 10:23 | 
 1054 | [G - Bathroom terminal](https://codeforces.com/contest/852/problem/G) | [GNU C++17 (64)](./codeforces/852/G.cpp) | `implementation` `*1700` | Jul/21/2021 02:40 | 
