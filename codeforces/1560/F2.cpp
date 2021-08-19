@@ -6,17 +6,17 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-using ll = long long;
+#define int long long
 
 string s;
 int k, x;
 vector<int> digit;
-ll pr[10];
-ll dp[11][1025][2];
+int pr[10];
+int dp[11][1025][2];
 
-ll memo(int i, int mask, int large) {
+int memo(int i, int mask, int large) {
     if (i == x) return (__builtin_popcount(mask) <= k);
-    ll& ans = dp[i][mask][large];
+    int& ans = dp[i][mask][large];
     if (ans != -1) return ans;
     ans = 0;
     if (large == 0) {
@@ -53,7 +53,8 @@ signed main() {
         int n = (int)digit.size();
         for (int i = 0; i < n; i++)
             for (int j = 0; j <= 1024; j++) dp[i][j][0] = dp[i][j][1] = -1;
-        ll can = memo(0, 0, 0);
+        int can = memo(0, 0, 0);
+        ignore = can;
         for (int i = 0; i < x; i++) cout << pr[i];
         cout << '\n';
     }
