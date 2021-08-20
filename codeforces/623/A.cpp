@@ -30,6 +30,7 @@ int main() {
         int n, m;
         cin >> n >> m;
         vector<vector<int>> g(n);
+        
         for (int i = 0; i < m; ++i) {
             int u, v;
             cin >> u >> v;
@@ -37,18 +38,22 @@ int main() {
             g[u].push_back(v);
             g[v].push_back(u);
         }
+        
+        debug(g);
+
         string ans(n, 'x');
         for (int i = 0; i < n; ++i)
             if ((int)g[i].size() == n - 1) ans[i] = 'b';
-        vector<vector<int>> G = g;
-        for (int i = 0; i < n; ++i) {
-            if (ans[i] == 'b')
-                G[i].clear();
-            else
-                G[i].erase(remove_if(begin(G[i]), end(G[i]),
-                                     [&](int k) { return ans[k] == 'b'; }),
-                           end(G[i]));
-        }
+        debug(ans);
+        
+        vector<vector<int>> G(n);
+        
+        for (int i = 0; i < n; ++i)
+            if (ans[i] != 'b')
+                for (auto x : g[i])
+                    if (ans[x] != 'b') G[i].push_back(x);
+        debug(G);
+
         vector<vector<int>> components;
         vector<bool> visited(n, false);
         const auto dfs = [&](const auto& self, int u) -> void {
@@ -57,6 +62,7 @@ int main() {
             for (auto v : G[u])
                 if (!visited[v]) self(self, v);
         };
+        bool works = true;
         for (int i = 0; i < n; ++i) {
             if (ans[i] != 'b' && !visited[i]) {
                 components.emplace_back();
@@ -64,18 +70,22 @@ int main() {
                 for (auto j : components.back()) ans[j] = 'b';
             }
         }
+        debug(components);
         if (components.size() > 2) {
             no();
             continue;
         }
+        debug("here");
         for (int i = 0; i < (int)components.size(); ++i) {
             char c = (i == 0 ? 'a' : 'c');
-            for (auto x : components[i]) ans[x] = c;
+            for (auto x : components[i]) {
+                ans[x] = c;
+            }
         }
         decltype(g) check(n);
         for (int i = 0; i < n; ++i) {
             for (int j = i + 1; j < n; ++j) {
-                if (abs(ans[i] - ans[j]) <= 1) {
+                if (ans[i] == ans[j] || abs(ans[i] - ans[j]) == 1) {
                     check[i].push_back(j);
                     check[j].push_back(i);
                 }
@@ -90,3 +100,4 @@ int main() {
         }
     }
 }
+
