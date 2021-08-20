@@ -20,6 +20,12 @@ int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int _tests = 1;
     // cin >> _tests;
+    auto yes = [] {
+        cout << "Yes\n";
+    };
+    auto no = [] {
+        cout << "No\n";
+    };
     for (int _test = 1; _test <= _tests; ++_test) {
         int n, m;
         cin >> n >> m;
@@ -34,7 +40,7 @@ int main() {
         string ans(n, 'x');
         for (int i = 0; i < n; ++i)
             if ((int)g[i].size() == n - 1) ans[i] = 'b';
-        auto G = g;
+        vector<vector<int>> G = g;
         for (int i = 0; i < n; ++i) {
             if (ans[i] == 'b')
                 G[i].clear();
@@ -51,33 +57,36 @@ int main() {
             for (auto v : G[u])
                 if (!visited[v]) self(self, v);
         };
-        string s = "ac";
-        bool works = true;
         for (int i = 0; i < n; ++i) {
             if (ans[i] != 'b' && !visited[i]) {
-                if (components.size() == 2) {
-                    works = false;
-                    break;
-                }
-                char c = s[components.size()];
                 components.emplace_back();
                 dfs(dfs, i);
-                for (auto j : components.back()) ans[j] = c;
+                for (auto j : components.back()) ans[j] = 'b';
             }
         }
-        if (!works) {
-            cout << "No\n";
+        if (components.size() > 2) {
+            no();
             continue;
         }
+        for (int i = 0; i < (int)components.size(); ++i) {
+            char c = (i == 0 ? 'a' : 'c');
+            for (auto x : components[i]) ans[x] = c;
+        }
         decltype(g) check(n);
-        for (int i = 0; i < n; ++i)
-            for (int j = i + 1; j < n; ++j)
-                if (abs(ans[i] - ans[j]) <= 1)
-                    check[i].push_back(j), check[j].push_back(i);
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                if (abs(ans[i] - ans[j]) <= 1) {
+                    check[i].push_back(j);
+                    check[j].push_back(i);
+                }
+            }
+        }
         for (auto& x : g) sort(begin(x), end(x));
-        if (check == g)
-            cout << "Yes\n" << ans << '\n';
-        else
-            cout << "No\n";
+        if (check == g) {
+            yes();
+            cout << ans << '\n';
+        } else {
+            no();
+        }
     }
 }
