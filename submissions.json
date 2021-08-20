@@ -383,6 +383,23 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF126561129": {
+    "contest_id": 623,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/623/A.cpp",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Graph and String",
+    "problem_url": "https://codeforces.com/contest/623/problem/A",
+    "submission_id": "CF126561129",
+    "submission_url": "https://codeforces.com/contest/623/submission/126561129",
+    "tags": [
+      "constructive algorithms",
+      "graphs",
+      "*1800"
+    ],
+    "timestamp": "Aug/20/2021 22:59"
+  },
   "CF126562384": {
     "contest_id": 946,
     "language": "GNU C++17 (64)",
