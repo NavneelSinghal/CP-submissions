@@ -1695,6 +1695,22 @@
     ],
     "timestamp": "Aug/01/2021 17:54"
   },
+  "AC25188112": {
+    "contest_id": "arc124",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc124/E.cpp",
+    "platform": "AtCoder",
+    "problem_index": "E",
+    "problem_name": "Pass to Next",
+    "problem_url": "https://atcoder.jp/contests/arc124/tasks/arc124_e",
+    "submission_id": "AC25188112",
+    "submission_url": "https://atcoder.jp/contests/arc124/submissions/25188112",
+    "tags": [
+      "AtCoder",
+      "*800"
+    ],
+    "timestamp": "Aug/21/2021 14:37"
+  },
   "AC25221368": {
     "contest_id": "arc123",
     "language": "C++ (GCC 9.2.1)",
