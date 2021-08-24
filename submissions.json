@@ -1,4 +1,20 @@
 {
+  "AC25315893": {
+    "contest_id": "arc121",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc121/E.cpp",
+    "platform": "AtCoder",
+    "problem_index": "E",
+    "problem_name": "Directed Tree",
+    "problem_url": "https://atcoder.jp/contests/arc121/tasks/arc121_e",
+    "submission_id": "AC25315893",
+    "submission_url": "https://atcoder.jp/contests/arc121/submissions/25315893",
+    "tags": [
+      "AtCoder",
+      "*700"
+    ],
+    "timestamp": "Aug/24/2021 18:04"
+  },
   "AC25404293": {
     "contest_id": "abc216",
     "language": "C++ (GCC 9.2.1)",
