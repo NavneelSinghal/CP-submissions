@@ -10812,6 +10812,25 @@
     ],
     "timestamp": "Aug/19/2021 14:28"
   },
+  "CF127129475": {
+    "contest_id": 1562,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/1562/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Rescue Niwen!",
+    "problem_url": "https://codeforces.com/contest/1562/problem/E",
+    "submission_id": "CF127129475",
+    "submission_url": "https://codeforces.com/contest/1562/submission/127129475",
+    "tags": [
+      "dp",
+      "greedy",
+      "string suffix structures",
+      "strings",
+      "*2500"
+    ],
+    "timestamp": "Aug/26/2021 23:18"
+  },
   "CF127470922": {
     "contest_id": 1556,
     "language": "GNU C++17 (64)",

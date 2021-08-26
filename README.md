@@ -10,8 +10,9 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-1082 | [E - Ciel and Gondolas](https://codeforces.com/contest/321/problem/E) | [GNU C++17 (64)](./codeforces/321/E.cpp) | `data structures` `divide and conquer` `dp` `*2600` | Sep/02/2021 11:20 | 
-1081 | [F - Sports Betting](https://codeforces.com/contest/1556/problem/F) | [GNU C++17 (64)](./codeforces/1556/F.cpp) | `bitmasks` `combinatorics` `dp` `graphs` `math` `probabilities` `*2500` | Aug/30/2021 23:47 | 
+1083 | [E - Ciel and Gondolas](https://codeforces.com/contest/321/problem/E) | [GNU C++17 (64)](./codeforces/321/E.cpp) | `data structures` `divide and conquer` `dp` `*2600` | Sep/02/2021 11:20 | 
+1082 | [F - Sports Betting](https://codeforces.com/contest/1556/problem/F) | [GNU C++17 (64)](./codeforces/1556/F.cpp) | `bitmasks` `combinatorics` `dp` `graphs` `math` `probabilities` `*2500` | Aug/30/2021 23:47 | 
+1081 | [E - Rescue Niwen!](https://codeforces.com/contest/1562/problem/E) | [GNU C++17 (64)](./codeforces/1562/E.cpp) | `dp` `greedy` `string suffix structures` `strings` `*2500` | Aug/26/2021 23:18 | 
 1080 | [F2 - Nearest Beautiful Number (hard version)](https://codeforces.com/contest/1560/problem/F2) | [GNU C++17 (64)](./codeforces/1560/F2.cpp) | `bitmasks` `brute force` `constructive algorithms` `dp` `greedy` `implementation` | Aug/19/2021 14:28 | 
 1079 | [F - Omkar and Landslide](https://codeforces.com/contest/1392/problem/F) | [GNU C++17 (64)](./codeforces/1392/F.cpp) | `binary search` `constructive algorithms` `data structures` `greedy` `math` `*2400` | Aug/17/2021 03:51 | 
 1078 | [E - Mocha and Stars](https://codeforces.com/contest/1559/problem/E) | [GNU C++17 (64)](./codeforces/1559/E.cpp) | `combinatorics` `dp` `fft` `math` `number theory` | Aug/16/2021 01:54 | 
