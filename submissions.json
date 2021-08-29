@@ -1,4 +1,20 @@
 {
+  "AC25427728": {
+    "contest_id": "abc216",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc216/E.cpp",
+    "platform": "AtCoder",
+    "problem_index": "E",
+    "problem_name": "Amusement Park",
+    "problem_url": "https://atcoder.jp/contests/abc216/tasks/abc216_e",
+    "submission_id": "AC25427728",
+    "submission_url": "https://atcoder.jp/contests/abc216/submissions/25427728",
+    "tags": [
+      "AtCoder",
+      "*500"
+    ],
+    "timestamp": "Aug/29/2021 18:06"
+  },
   "AC25436276": {
     "contest_id": "abc216",
     "language": "C++ (GCC 9.2.1)",
