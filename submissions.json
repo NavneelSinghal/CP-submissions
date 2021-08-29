@@ -1695,6 +1695,22 @@
     ],
     "timestamp": "Aug/01/2021 17:54"
   },
+  "AC25410244": {
+    "contest_id": "abc216",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc216/C.cpp",
+    "platform": "AtCoder",
+    "problem_index": "C",
+    "problem_name": "Many Balls",
+    "problem_url": "https://atcoder.jp/contests/abc216/tasks/abc216_c",
+    "submission_id": "AC25410244",
+    "submission_url": "https://atcoder.jp/contests/abc216/submissions/25410244",
+    "tags": [
+      "AtCoder",
+      "*300"
+    ],
+    "timestamp": "Aug/29/2021 17:37"
+  },
   "AC25417674": {
     "contest_id": "abc216",
     "language": "C++ (GCC 9.2.1)",
