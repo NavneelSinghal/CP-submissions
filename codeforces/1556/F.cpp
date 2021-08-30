@@ -155,9 +155,8 @@ int main() {
                 for (int j = 0; j < n; ++j) p[i][j] = s[i] / (s[i] + s[j]);
         }
         vector<mint> scc_prob(1 << n, 1);
-        vector win_against_mask_prob(1 << n, array<mint, 14>{});
+        vector win_against_mask_prob(1 << n, vector<mint>(n, 1));
         for (int i = 0; i < n; ++i) {
-            win_against_mask_prob[0][i] = 1;
             for (int mask = 1; mask < (1 << n); ++mask) {
                 int j = __lg(mask);
                 win_against_mask_prob[mask][i] =
