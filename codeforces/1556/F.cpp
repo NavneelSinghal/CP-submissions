@@ -146,8 +146,7 @@ int main() {
         // cout << "Case #" << _test << ": ";
         int n;
         cin >> n;
-        const auto max_mask = 1 << n;
-        vector<int> a(max_mask);
+        vector<int> a(1 << n);
         vector p(n, vector<mint>(n));
         {
             vector<mint> s(n);
@@ -155,23 +154,23 @@ int main() {
             for (int i = 0; i < n; ++i)
                 for (int j = 0; j < n; ++j) p[i][j] = s[i] / (s[i] + s[j]);
         }
-        vector<mint> scc_prob(max_mask, 1);
-        vector win_against_mask_prob(max_mask, array<mint, 14>{});
+        vector<mint> scc_prob(1 << n, 1);
+        vector win_against_mask_prob(1 << n, array<mint, 14>{});
         for (int i = 0; i < n; ++i) {
             win_against_mask_prob[0][i] = 1;
-            for (int mask = 1; mask < max_mask; ++mask) {
+            for (int mask = 1; mask < (1 << n); ++mask) {
                 int j = __lg(mask);
                 win_against_mask_prob[mask][i] =
                     win_against_mask_prob[mask ^ (1 << j)][i] * p[i][j];
             }
         }
         mint ans = 0;
-        for (int mask = 1; mask < max_mask; ++mask) {
+        for (int mask = 1; mask < (1 << n); ++mask) {
             for (int i = 0; i < n; ++i)
                 if (mask >> i & 1)
                     for (int j = 0; j < n; ++j)
                         if (!(mask >> j & 1)) scc_prob[mask] *= p[i][j];
-            int unmask = mask ^ (max_mask - 1);
+            int unmask = mask ^ ((1 << n) - 1);
             const auto& to_multiply = win_against_mask_prob[unmask];
             for (int submask = (mask - 1) & mask; submask;
                  (--submask) &= mask) {
