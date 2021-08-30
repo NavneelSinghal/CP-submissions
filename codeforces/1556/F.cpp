@@ -1,6 +1,6 @@
 #ifndef LOCAL
     #pragma GCC optimize("O3,unroll-loops")
-    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
+// #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
 #endif
 
 #include "bits/stdc++.h"
@@ -155,29 +155,19 @@ int main() {
                 for (int j = 0; j < n; ++j) p[i][j] = s[i] / (s[i] + s[j]);
         }
         vector<mint> scc_prob(1 << n, 1);
-        vector win_against_mask_prob(n, vector<mint>(1 << n, 1));
-        for (int i = 0; i < n; ++i) {
-            for (int mask = 1; mask < (1 << n); ++mask) {
-                // take one element
-                int j = __lg(mask);
-                win_against_mask_prob[i][mask] =
-                    win_against_mask_prob[i][mask ^ (1 << j)] * p[i][j];
-            }
-        }
         mint ans = 0;
         for (int mask = 1; mask < (1 << n); ++mask) {
             for (int i = 0; i < n; ++i)
                 if (mask >> i & 1)
                     for (int j = 0; j < n; ++j)
                         if (!(mask >> j & 1)) scc_prob[mask] *= p[i][j];
-
             for (int submask = (mask - 1) & mask; submask;
                  (--submask) &= mask) {
                 mint winprob = scc_prob[submask];
                 for (int i = 0; i < n; ++i)
                     if ((mask >> i & 1) && !(submask >> i & 1))
-                        winprob *=
-                            win_against_mask_prob[i][mask ^ ((1 << n) - 1)];
+                        for (int j = 0; j < n; ++j)
+                            if (!(mask >> j & 1)) winprob *= p[i][j];
                 scc_prob[mask] -= winprob;
             }
             ans += scc_prob[mask] * __builtin_popcount(mask);
