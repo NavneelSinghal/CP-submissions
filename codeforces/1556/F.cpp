@@ -155,12 +155,13 @@ int main() {
                 for (int j = 0; j < n; ++j) p[i][j] = s[i] / (s[i] + s[j]);
         }
         vector<mint> scc_prob(1 << n, 1);
-        vector win_against_mask_prob(1 << n, vector<mint>(n, 1));
+        vector win_against_mask_prob(n, vector<mint>(1 << n, 1));
         for (int i = 0; i < n; ++i) {
             for (int mask = 1; mask < (1 << n); ++mask) {
+                // take one element
                 int j = __lg(mask);
-                win_against_mask_prob[mask][i] =
-                    win_against_mask_prob[mask ^ (1 << j)][i] * p[i][j];
+                win_against_mask_prob[i][mask] =
+                    win_against_mask_prob[i][mask ^ (1 << j)] * p[i][j];
             }
         }
         mint ans = 0;
@@ -169,14 +170,14 @@ int main() {
                 if (mask >> i & 1)
                     for (int j = 0; j < n; ++j)
                         if (!(mask >> j & 1)) scc_prob[mask] *= p[i][j];
-            int unmask = mask ^ ((1 << n) - 1);
-            const auto& to_multiply = win_against_mask_prob[unmask];
+
             for (int submask = (mask - 1) & mask; submask;
                  (--submask) &= mask) {
                 mint winprob = scc_prob[submask];
                 for (int i = 0; i < n; ++i)
                     if ((mask >> i & 1) && !(submask >> i & 1))
-                        winprob *= to_multiply[i];
+                        winprob *=
+                            win_against_mask_prob[i][mask ^ ((1 << n) - 1)];
                 scc_prob[mask] -= winprob;
             }
             ans += scc_prob[mask] * __builtin_popcount(mask);
