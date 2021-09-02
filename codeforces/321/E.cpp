@@ -201,8 +201,7 @@ int main() {
             for (int j = 1; j <= n; ++j) {
                 char c;
                 cin >> c;
-                sum[i][j] = (c - '0') + sum[i][j - 1] + sum[i - 1][j] -
-                            sum[i - 1][j - 1];
+                sum[i][j] = (c - '0') + sum[i][j - 1] + sum[i - 1][j] - sum[i - 1][j - 1];
             }
         }
         auto cost = [&sum](int i, int j) {
@@ -217,12 +216,11 @@ int main() {
             for (int j = n; j >= 1; --j) {
                 opt[i][n + 1] = n;
                 dp[i][j] = 1e9;
-                int low = opt[i - 1][j];
-                int high = opt[i][j + 1];
-                auto& curdp = dp[i][j];
-                auto& curopt = opt[i][j];
-                for (int x = low; x <= high; ++x)
-                    if (ckmin(curdp, dp[i - 1][x] + cost(x + 1, j))) curopt = x;
+                for (int x = opt[i - 1][j]; x <= opt[i][j + 1]; ++x) {
+                    if (ckmin(dp[i][j], dp[i - 1][x] + cost(x + 1, j))) {
+                        opt[i][j] = x;
+                    }
+                }
             }
         }
         cout << dp[k - 1][n] / 2 << '\n';
