@@ -199,9 +199,8 @@ int main() {
         vector sum(n + 1, vector(n + 1, 0));
         for (int i = 1; i <= n; ++i) {
             for (int j = 1; j <= n; ++j) {
-                char c;
-                cin >> c;
-                sum[i][j] = (c - '0') + sum[i][j - 1] + sum[i - 1][j] - sum[i - 1][j - 1];
+                cin >> sum[i][j];
+                sum[i][j] += sum[i][j - 1] + sum[i - 1][j] - sum[i - 1][j - 1];
             }
         }
         auto cost = [&sum](int i, int j) {
