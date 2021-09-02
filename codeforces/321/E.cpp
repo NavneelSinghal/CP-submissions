@@ -207,7 +207,7 @@ int main() {
         }
         auto cost = [&sum](int i, int j) {
             --i;
-            return sum[j][j] - sum[j][i] + sum[i][i] - sum[i][j];
+            return sum[j][j] + sum[i][i] - sum[i][j] - sum[j][i];
         };
         // using the fact that opt[i - 1][j] <= opt[i][j] <= opt[i][j + 1]
         vector dp(k, vector(n + 1, 0));
@@ -216,8 +216,8 @@ int main() {
         for (int i = 1; i < k; ++i) {
             opt[i][n + 1] = n;
             for (int j = n; j >= 1; --j) {
-                const int low = opt[i - 1][j];
-                const int high = opt[i][j + 1];
+                int low = opt[i - 1][j];
+                int high = opt[i][j + 1];
                 auto& curdp = dp[i][j];
                 auto& curopt = opt[i][j];
                 curdp = 1e9;
