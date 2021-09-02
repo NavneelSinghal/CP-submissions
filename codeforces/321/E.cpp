@@ -1,6 +1,6 @@
 #ifndef LOCAL
-//    #pragma GCC optimize("O3")
-//    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
+    #pragma GCC optimize("O3")
+    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
 #endif
 
 #include "bits/stdc++.h"
@@ -214,13 +214,13 @@ int main() {
         vector opt(k, vector(n + 2, 0));
         for (int i = 0; i <= n; ++i) dp[0][i] = cost(1, i);
         for (int i = 1; i < k; ++i) {
-            opt[i][n + 1] = n;
             for (int j = n; j >= 1; --j) {
+                opt[i][n + 1] = n;
+                dp[i][j] = 1e9;
                 int low = opt[i - 1][j];
                 int high = opt[i][j + 1];
                 auto& curdp = dp[i][j];
                 auto& curopt = opt[i][j];
-                curdp = 1e9;
                 for (int x = low; x <= high; ++x)
                     if (ckmin(curdp, dp[i - 1][x] + cost(x + 1, j))) curopt = x;
             }
