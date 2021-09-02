@@ -189,10 +189,6 @@ using namespace std;
 using ll = int64_t;
 using ld = long double;
 
-constexpr int N = 4004;
-constexpr int M = 808;
-int sum[N][N], dp[M][N], opt[M][N];
-
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int _tests = 1;
@@ -200,6 +196,7 @@ int main() {
     for (int _test = 1; _test <= _tests; ++_test) {
         int n, k;
         cin >> n >> k;
+        vector sum(n + 1, vector(n + 1, 0));
         for (int i = 1; i <= n; ++i) {
             for (int j = 1; j <= n; ++j) {
                 char c;
@@ -208,11 +205,13 @@ int main() {
                             sum[i - 1][j - 1];
             }
         }
-        auto cost = [](int i, int j) {
+        auto cost = [&sum](int i, int j) {
             --i;
             return sum[j][j] - sum[j][i] + sum[i][i] - sum[i][j];
         };
         // using the fact that opt[i - 1][j] <= opt[i][j] <= opt[i][j + 1]
+        vector dp(k, vector(n + 1, 0));
+        vector opt(k, vector(n + 2, 0));
         for (int i = 0; i <= n; ++i) dp[0][i] = cost(1, i);
         for (int i = 1; i < k; ++i) {
             opt[i][n + 1] = n;
