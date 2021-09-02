@@ -1,6 +1,6 @@
 #ifndef LOCAL
-    #pragma GCC optimize("O3")
-    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
+//    #pragma GCC optimize("O3")
+//    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
 #endif
 
 #include "bits/stdc++.h"
@@ -211,6 +211,7 @@ int main() {
             s[i] = 0;
             for (int j = i + 1; j <= n; ++j) s[j] = s[j - 1] + cost[i][j];
             for (int j = i + 1; j <= n; ++j) cost[i][j] = s[j] + cost[i + 1][j];
+            for (int j = i + 1; j <= n; ++j) cost[j][i] = cost[i][j];
         }
         // using the fact that opt[i - 1][j] <= opt[i][j] <= opt[i][j + 1]
         for (int i = 1; i <= n; ++i) dp[0][i] = cost[1][i];
@@ -221,11 +222,14 @@ int main() {
                 const int high = opt[i][j + 1];
                 auto& curdp = dp[i][j];
                 auto& curopt = opt[i][j];
+                auto& prevdp = dp[i - 1];
+                auto& curcost = cost[j];
                 curdp = 1e9;
                 for (int x = low; x <= high; ++x)
-                    if (ckmin(curdp, dp[i - 1][x] + cost[x + 1][j])) curopt = x;
+                    if (ckmin(curdp, prevdp[x] + curcost[x + 1])) curopt = x;
             }
         }
         cout << dp[k - 1][n] << '\n';
     }
 }
+
