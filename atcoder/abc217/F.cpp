@@ -135,7 +135,7 @@ struct ModInt32 {
 
 using mint = ModInt32<nttmod>;
 
-constexpr int N = 300;
+const int N = 1e6;
 
 vector<mint> fact(N + 1);
 vector<mint> ifact(N + 1);
