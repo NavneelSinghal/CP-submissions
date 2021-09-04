@@ -16,6 +16,7 @@ using namespace std;
 using ll = int64_t;
 using ld = long double;
 
+constexpr int mod = int(1e9) + 7;
 constexpr int nttmod = 998'244'353;
 
 template <std::uint32_t P>
@@ -176,10 +177,10 @@ int main() {
             if (l > r) return mint(1);
             return dp[l][r];
         };
-        for (int len = 2; len <= 2 * n; len += 2) {
+        for (int len = 2; len <= 2 * n; ++len) {
             for (int i = 0; i + len <= 2 * n; ++i) {
                 int j = i + len - 1;
-                for (int k = i + 1; k <= j; k += 2) {
+                for (int k = i + 1; k <= j; ++k) {
                     if (a[i][k]) {
                         int pairs_left = (k - i + 1) / 2;
                         int pairs_right = (j - k) / 2;
