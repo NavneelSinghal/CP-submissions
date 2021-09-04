@@ -163,8 +163,7 @@ int main() {
         precompute_facts();
         int n, m;
         cin >> n >> m;
-        const int n2 = 2 * n;
-        vector a(n2, vector(n2, 0));
+        vector a(2 * n, vector(2 * n, 0));
         for (int i = 0; i < m; ++i) {
             int u, v;
             cin >> u >> v;
@@ -172,24 +171,24 @@ int main() {
             if (u > v) swap(u, v);
             a[u][v] = 1;
         }
-        vector dp(n2 + 1, vector(n2, mint(0)));
-        for (int i = 0; i < n2; ++i) dp[i + 1][i] = 1;
+        vector dp(2 * n, vector(2 * n, mint(0)));
         auto get = [&dp](int l, int r) {
+            if (l > r) return mint(1);
             return dp[l][r];
         };
-        for (int len = 2; len <= n2; len += 2) {
-            for (int i = 0; i + len <= n2; ++i) {
+        for (int len = 2; len <= 2 * n; len += 2) {
+            for (int i = 0; i + len <= 2 * n; ++i) {
                 int j = i + len - 1;
                 for (int k = i + 1; k <= j; k += 2) {
                     if (a[i][k]) {
                         int pairs_left = (k - i + 1) / 2;
                         int pairs_right = (j - k) / 2;
-                        dp[i][j] += dp[i + 1][k - 1] * dp[k + 1][j] *
+                        dp[i][j] += get(i + 1, k - 1) * get(k + 1, j) *
                                     C(pairs_left + pairs_right, pairs_right);
                     }
                 }
             }
         }
-        cout << dp[0][n2 - 1] << '\n';
+        cout << dp[0][2 * n - 1] << '\n';
     }
 }
