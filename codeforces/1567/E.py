@@ -9,7 +9,7 @@ if sys.version_info[0] < 3:
     from future_builtins import ascii, filter, hex, map, oct, zip
 
 
-BUFSIZE = 100000
+BUFSIZE = 8192
 
 class FastIO(IOBase):
     newlines = 0
@@ -88,7 +88,7 @@ class Node:
 def id_node():
     return Node(0, 0, 0, 0, 0, 0)
 
-def combine(a, b):
+def combine(a: Node, b: Node):
     if a.length == 0:
         return b
     if b.length == 0:
@@ -121,6 +121,7 @@ def main():
         segtree[size + i] = Node(a[i], a[i], 1, 1, 1, 1)
     for i in range(size - 1, 0, -1):
         segtree[i] = combine(segtree[i << 1], segtree[i << 1 | 1])
+    answers = []
     for _ in range(q):
         t, l, r = tuple(map(int, input().split()))
         l -= 1
@@ -144,6 +145,7 @@ def main():
                     smr = combine(segtree[r], smr)
                 l >>= 1
                 r >>= 1
-            print(combine(sml, smr).ans)
+            answers.append(combine(sml, smr).ans)
+    print('\n'.join(map(str, answers)))
 if __name__ == '__main__':
     main()
