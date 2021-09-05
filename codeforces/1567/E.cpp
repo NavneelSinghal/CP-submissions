@@ -201,11 +201,24 @@ struct Node {
 Node combine(const Node& a, const Node& b) {
     if (a.len == 0) return b;
     if (b.len == 0) return a;
-    Node x{a.first, b.last, b.suf, a.pre, a.len + b.len, a.ans + b.ans};
+    Node x;
+    x.first = a.first;
+    x.last = b.last;
+    x.len = a.len + b.len;
+    x.ans = a.ans + b.ans;
     if (a.last <= b.first) {
-        if (a.len == a.suf) x.pre += b.pre;
-        if (b.len == b.suf) x.suf += a.suf;
+        if (a.len == a.suf)
+            x.pre = b.pre + a.len;
+        else
+            x.pre = a.pre;
+        if (b.len == b.suf)
+            x.suf = a.suf + b.len;
+        else
+            x.suf = b.suf;
         x.ans += 1LL * a.suf * b.pre;
+    } else {
+        x.pre = a.pre;
+        x.suf = b.suf;
     }
     return x;
 }
@@ -221,7 +234,8 @@ int main() {
     while ((1 << lg) < n) ++lg;
     sz = 1 << lg;
     for (int i = 0; i < n; ++i) t[i + sz] = Node(a[i]);
-    for (int i = sz - 1; i >= 1; --i) t[i] = combine(t[i << 1], t[i << 1 | 1]);
+    for (int i = sz - 1; i >= 1; --i)
+        t[i] = combine(t[i << 1], t[i << 1 | 1]);
     while (q--) {
         int type, l, r;
         cin >> type >> l >> r;
