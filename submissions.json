@@ -11327,6 +11327,25 @@
     ],
     "timestamp": "Sep/02/2021 11:20"
   },
+  "CF127918633": {
+    "contest_id": 1389,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/1389/F.cpp",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Bicolored Segments",
+    "problem_url": "https://codeforces.com/contest/1389/problem/F",
+    "submission_id": "CF127918633",
+    "submission_url": "https://codeforces.com/contest/1389/submission/127918633",
+    "tags": [
+      "data structures",
+      "dp",
+      "graph matchings",
+      "sortings",
+      "*2600"
+    ],
+    "timestamp": "Sep/05/2021 19:13"
+  },
   "CF127921361": {
     "contest_id": 1371,
     "language": "GNU C++17 (64)",
