@@ -196,7 +196,7 @@ struct Node {
     Node(int f, int l, int s, int p, int le, ll a)
         : first(f), last(l), suf(s), pre(p), len(le), ans(a) {}
     Node(int x) : first(x), last(x), suf(1), pre(1), len(1), ans(1) {}
-} t[N * 3];
+} t[N * 4];
 
 Node combine(const Node& a, const Node& b) {
     if (a.len == 0) return b;
