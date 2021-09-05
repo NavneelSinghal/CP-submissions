@@ -121,17 +121,15 @@ def main():
         segtree[size + i] = Node(a[i], a[i], 1, 1, 1, 1)
     for i in range(size - 1, 0, -1):
         segtree[i] = combine(segtree[i << 1], segtree[i << 1 | 1])
-    answers = []
     for _ in range(q):
         t, l, r = tuple(map(int, input().split()))
         l -= 1
         if t == 1:
             l += size
             segtree[l] = Node(r, r, 1, 1, 1, 1)
-            l >>= 1
-            while l:
-                segtree[l] = combine(segtree[l << 1], segtree[l << 1 | 1])
+            while l > 1:
                 l >>= 1
+                segtree[l] = combine(segtree[l << 1], segtree[l << 1 | 1])
         else:
             l += size
             r += size
@@ -145,7 +143,7 @@ def main():
                     smr = combine(segtree[r], smr)
                 l >>= 1
                 r >>= 1
-            answers.append(combine(sml, smr).ans)
-    print('\n'.join(map(str, answers)))
+            print(combine(sml, smr).ans)
+
 if __name__ == '__main__':
     main()
