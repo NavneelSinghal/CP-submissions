@@ -146,16 +146,22 @@ int main() {
         // cout << "Case #" << _test << ": ";
         ll n, m;
         cin >> n >> m;
-        mint ans = mint(n) * mint(m);
-        if (n < m) m = n;
+        mint ans = 0;
+        if (n < m) {
+            ans += mint(m - n) * n;
+            m = n;
+        }
         mint half = mint(2).inv();
         for (ll i = 1, last; i <= m; i = last + 1) {
             ll d = n / i;
-            last = min(n / d, m);
+            last = n / d;
+            last = min(last, m);
             // j in [i, last]
             // n - j * (n / j) = n - j * (n / i)
             // contribution = n * total - total * mean * (n / i)
-            ans -= mint(last - i + 1) * (last + i) * half * d;
+            mint total = last - i + 1;
+            mint sum = total * (last + i) * half;
+            ans += total * n - sum * d;
         }
         cout << ans << '\n';
     }
