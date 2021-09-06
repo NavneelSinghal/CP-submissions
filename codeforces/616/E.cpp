@@ -154,7 +154,8 @@ int main() {
         mint half = mint(2).inv();
         for (ll i = 1, last; i <= m; i = last + 1) {
             ll d = n / i;
-            last = min(n / d, m);
+            last = n / d;
+            last = min(last, m);
             // j in [i, last]
             // n - j * (n / j) = n - j * (n / i)
             // contribution = n * total - total * mean * (n / i)
