@@ -1,6 +1,6 @@
 #ifndef LOCAL
-    #pragma GCC optimize("O3,unroll-loops")
-    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
+//    #pragma GCC optimize("O3,unroll-loops")
+//    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
 #endif
 
 #include "bits/stdc++.h"
@@ -17,6 +17,7 @@ using ll = int64_t;
 using ld = long double;
 
 constexpr int mod = int(1e9) + 7;
+constexpr int nttmod = 998'244'353;
 
 template <std::uint32_t P>
 struct ModInt32 {
@@ -153,15 +154,14 @@ int main() {
         }
         mint half = mint(2).inv();
         for (ll i = 1, last; i <= m; i = last + 1) {
-            ll d = n / i;
-            last = n / d;
+            last = n / (n / i);
             last = min(last, m);
             // j in [i, last]
             // n - j * (n / j) = n - j * (n / i)
             // contribution = n * total - total * mean * (n / i)
             mint total = last - i + 1;
             mint sum = total * (last + i) * half;
-            ans += total * n - sum * d;
+            ans += total * n - sum * (n / i);
         }
         cout << ans << '\n';
     }
