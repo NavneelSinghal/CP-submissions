@@ -152,7 +152,6 @@ int main() {
             ans += mint(m - n) * n;
             m = n;
         }
-        mint half = mint(2).inv();
         for (ll i = 1, last; i <= m; i = last + 1) {
             last = n / (n / i);
             last = min(last, m);
@@ -160,7 +159,7 @@ int main() {
             // n - j * (n / j) = n - j * (n / i)
             // contribution = n * total - total * mean * (n / i)
             mint total = last - i + 1;
-            mint sum = total * (last + i) * half;
+            mint sum = total * (last + i) / mint(2);
             ans += total * n - sum * (n / i);
         }
         cout << ans << '\n';
