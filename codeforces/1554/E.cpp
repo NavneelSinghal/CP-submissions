@@ -19,52 +19,52 @@ signed main() {
 }
 
 struct mod_int {
-    static constexpr int MOD = 998244353;
+    static const int MOD = 998244353;
     int value;
 
     mod_int(int i = 0) : value(i) {}
 
-    mod_int operator+(const mod_int& m) const {
+    mod_int operator+(mod_int m) const {
         mod_int lhs = *this;
         lhs += m;
         return lhs;
     }
 
-    mod_int operator+=(const mod_int& m) {
+    mod_int operator+=(mod_int m) {
         value += m.value;
         if (value >= MOD) value -= MOD;
         return value;
     }
 
-    mod_int operator-(const mod_int& m) const {
+    mod_int operator-(mod_int m) const {
         mod_int lhs = *this;
         lhs -= m;
         return lhs;
     }
 
-    mod_int operator-=(const mod_int& m) {
+    mod_int operator-=(mod_int m) {
         value -= (m.value - MOD);
         if (value >= MOD) value -= MOD;
         return value;
     }
 
-    mod_int operator*(const mod_int& m) const { return (value * 1LL * m.value) % MOD; }
+    mod_int operator*(mod_int m) const { return (value * 1LL * m.value) % MOD; }
 
-    mod_int operator*=(const mod_int& m) {
+    mod_int operator*=(mod_int m) {
         value = (value * 1LL * m.value) % MOD;
         return value;
     }
 
-    mod_int power(int exp) const {
+    mod_int power(int exp) {
         if (exp == 0) return 1;
         mod_int res = (exp & 1 ? value : 1);
         mod_int half = power(exp >> 1);
         return res * half * half;
     }
 
-    mod_int operator/(const mod_int& m) const { return *this * m.power(MOD - 2); }
+    mod_int operator/(mod_int m) const { return *this * m.power(MOD - 2); }
 
-    mod_int operator/=(const mod_int& m) { return *this *= m.power(MOD - 2); }
+    mod_int operator/=(mod_int m) { return *this *= m.power(MOD - 2); }
 
     friend std::istream& operator>>(std::istream& is, mod_int& m) {
         is >> m.value;
@@ -98,7 +98,7 @@ void solve() {
     ans[1] = mod_int(2).power(n - 1);
     for (auto d : divisors) {
         vector<bool> right(n), minus(n);
-        auto dfs = [&tree, &right, &minus, &d](auto&& dfs, int cur, int prev) -> void {
+        auto dfs = [&](auto&& dfs, int cur, int prev) -> void {
             int cnt = 0;
             for (auto next : tree[cur]) {
                 if (next != prev) {
@@ -107,9 +107,8 @@ void solve() {
                     if (right[next]) cnt++;
                 }
             }
-            const int D = cnt % d;
-            if (D == 0) right[cur] = true;
-            if (D == d - 1) minus[cur] = true;
+            if (cnt % d == 0) right[cur] = true;
+            if (cnt % d == d - 1) minus[cur] = true;
         };
         dfs(dfs, 0, 0);
         if (right[0]) ans[d] = 1;
