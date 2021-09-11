@@ -48,14 +48,23 @@ struct mod_int {
         return value;
     }
 
-    mod_int operator*(const mod_int& m) const {
-        return (value * 1LL * m.value) % MOD;
-    }
+    mod_int operator*(const mod_int& m) const { return (value * 1LL * m.value) % MOD; }
 
     mod_int operator*=(const mod_int& m) {
         value = (value * 1LL * m.value) % MOD;
         return value;
     }
+
+    mod_int power(int exp) const {
+        if (exp == 0) return 1;
+        mod_int res = (exp & 1 ? value : 1);
+        mod_int half = power(exp >> 1);
+        return res * half * half;
+    }
+
+    mod_int operator/(const mod_int& m) const { return *this * m.power(MOD - 2); }
+
+    mod_int operator/=(const mod_int& m) { return *this *= m.power(MOD - 2); }
 
     friend std::istream& operator>>(std::istream& is, mod_int& m) {
         is >> m.value;
@@ -70,17 +79,6 @@ struct mod_int {
     explicit operator int() const { return value; }
 };
 
-template <class T, class F = multiplies<T>>
-T pwr(T a, long long n, F op = multiplies<T>(), T e = {1}) {
-    // assert(n >= 0);
-    T res = e;
-    while (n) {
-        if (n & 1) res = op(res, a);
-        if (n >>= 1) a = op(a, a);
-    }
-    return res;
-}
-
 void solve() {
     int n;
     cin >> n;
@@ -93,22 +91,21 @@ void solve() {
         tree[v].push_back(u);
     }
     vector<int> divisors;
-    for (int i = 2; i <= n; ++i)
+    for (int i = 2; i <= n; ++i) {
         if ((n - 1) % i == 0) divisors.push_back(i);
+    }
     vector<mod_int> ans(n + 1);
-    ans[1] = pwr(mod_int(2), n - 1);
+    ans[1] = mod_int(2).power(n - 1);
     for (auto d : divisors) {
         vector<bool> right(n), minus(n);
-        auto dfs = [&tree, &right, &minus, &d](auto&& self, int cur,
-                                               int prev) -> void {
+        auto dfs = [&tree, &right, &minus, &d](auto&& dfs, int cur, int prev) -> void {
             int cnt = 0;
             for (auto next : tree[cur]) {
-                if (next == prev) continue;
-                self(self, next, cur);
-                if (right[next])
-                    cnt++;
-                else if (!minus[next])
-                    return;
+                if (next != prev) {
+                    dfs(dfs, next, cur);
+                    if (!right[next] && !minus[next]) return;
+                    if (right[next]) cnt++;
+                }
             }
             const int D = cnt % d;
             if (D == 0) right[cur] = true;
@@ -118,9 +115,15 @@ void solve() {
         if (right[0]) ans[d] = 1;
     }
     vector<vector<int>> dividers(n + 1);
-    for (int i = 1; i <= n; ++i)
-        for (int j = 2 * i; j <= n; j += i) dividers[j].push_back(i);
-    for (int i = n; i > 0; --i)
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 2 * i; j <= n; j += i) {
+            dividers[j].push_back(i);
+        }
+    }
+    for (int i = n; i > 0; --i) {
         for (auto d : dividers[i]) ans[d] -= ans[i];
-    for (int i = 1; i <= n; ++i) cout << ans[i] << '\n';
+    }
+    for (int i = 1; i < ans.size(); ++i) {
+        cout << ans[i] << '\n';
+    }
 }
