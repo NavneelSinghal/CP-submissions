@@ -83,6 +83,7 @@ int main() {
         vector<vector<int>> divs(N);
         for (int i = 1; i < N; ++i)
             for (int j = i; j < N; j += i) divs[j].push_back(i);
+        set<int> s;
         vector<binaryTrie> trie(N);
         int q;
         cin >> q;
@@ -92,7 +93,11 @@ int main() {
             if (t == 1) {
                 int u;
                 cin >> u;
-                for (auto d : divs[u]) trie[d].insert(u);
+                if (s.find(u) == s.end()) {
+                    s.insert(u);
+                    debug(divs[u]);
+                    for (auto d : divs[u]) trie[d].insert(u);
+                }
             } else {
                 int x, k, b;
                 cin >> x >> k >> b;
