@@ -98,7 +98,7 @@ void solve() {
     ans[1] = mod_int(2).power(n - 1);
     for (auto d : divisors) {
         vector<bool> right(n), minus(n);
-        auto dfs = [&](const auto& dfs, int cur, int prev) -> void {
+        auto dfs = [&](auto dfs, int cur, int prev) -> void {
             int cnt = 0;
             for (auto next : tree[cur]) {
                 if (next != prev) {
