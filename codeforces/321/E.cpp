@@ -1,6 +1,6 @@
 #ifndef LOCAL
-    #pragma GCC optimize("O3")
-    #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,bmi,bmi2,lzcnt")
+    #pragma GCC optimize("O3,unroll-loops")
+    #pragma GCC target("avx2,bmi2")
 #endif
 
 #include "bits/stdc++.h"
@@ -199,27 +199,30 @@ int main() {
         vector sum(n + 1, vector(n + 1, 0));
         for (int i = 1; i <= n; ++i) {
             for (int j = 1; j <= n; ++j) {
-                cin >> sum[i][j];
-                sum[i][j] += sum[i][j - 1] + sum[i - 1][j] - sum[i - 1][j - 1];
+                char c;
+                cin >> c;
+                sum[i][j] = (c - '0') + sum[i][j - 1] + sum[i - 1][j] -
+                            sum[i - 1][j - 1];
             }
         }
         auto cost = [&sum](int i, int j) {
             --i;
-            return sum[j][j] + sum[i][i] - sum[i][j] - sum[j][i];
+            return sum[j][j] - sum[j][i] + sum[i][i] - sum[i][j];
         };
         // using the fact that opt[i - 1][j] <= opt[i][j] <= opt[i][j + 1]
         vector dp(k, vector(n + 1, 0));
         vector opt(k, vector(n + 2, 0));
         for (int i = 0; i <= n; ++i) dp[0][i] = cost(1, i);
         for (int i = 1; i < k; ++i) {
+            opt[i][n + 1] = n;
             for (int j = n; j >= 1; --j) {
-                opt[i][n + 1] = n;
-                dp[i][j] = 1e9;
-                for (int x = opt[i - 1][j]; x <= opt[i][j + 1]; ++x) {
-                    if (ckmin(dp[i][j], dp[i - 1][x] + cost(x + 1, j))) {
-                        opt[i][j] = x;
-                    }
-                }
+                const int low = opt[i - 1][j];
+                const int high = opt[i][j + 1];
+                auto& curdp = dp[i][j];
+                auto& curopt = opt[i][j];
+                curdp = 1e9;
+                for (int x = low; x <= high; ++x)
+                    if (ckmin(curdp, dp[i - 1][x] + cost(x + 1, j))) curopt = x;
             }
         }
         cout << dp[k - 1][n] / 2 << '\n';
