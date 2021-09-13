@@ -10,10 +10,11 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-1112 | [F - Sports Betting](https://codeforces.com/contest/1556/problem/F) | [GNU C++17 (64)](./codeforces/1556/F.cpp) | `bitmasks` `combinatorics` `dp` `graphs` `math` `probabilities` `*2500` | Sep/25/2021 20:54 | 
-1111 | [F - Maximum White Subtree](https://codeforces.com/contest/1324/problem/F) | [GNU C++17 (64)](./codeforces/1324/F.cpp) | `dfs and similar` `dp` `graphs` `trees` `*1800` | Sep/24/2021 22:00 | 
-1110 | [D - The Strongest Build](https://codeforces.com/contest/1574/problem/D) | [GNU C++17 (64)](./codeforces/1574/D.cpp) | `binary search` `brute force` `data structures` `dfs and similar` `graphs` `greedy` `hashing` `implementation` `*2000` | Sep/21/2021 14:14 | 
-1109 | [G - Shortest Path Problem?](https://codeforces.com/contest/845/problem/G) | [GNU C++17 (64)](./codeforces/845/G.cpp) | `dfs and similar` `graphs` `math` `*2300` | Sep/14/2021 00:27 | 
+1113 | [F - Sports Betting](https://codeforces.com/contest/1556/problem/F) | [GNU C++17 (64)](./codeforces/1556/F.cpp) | `bitmasks` `combinatorics` `dp` `graphs` `math` `probabilities` `*2500` | Sep/25/2021 20:54 | 
+1112 | [F - Maximum White Subtree](https://codeforces.com/contest/1324/problem/F) | [GNU C++17 (64)](./codeforces/1324/F.cpp) | `dfs and similar` `dp` `graphs` `trees` `*1800` | Sep/24/2021 22:00 | 
+1111 | [D - The Strongest Build](https://codeforces.com/contest/1574/problem/D) | [GNU C++17 (64)](./codeforces/1574/D.cpp) | `binary search` `brute force` `data structures` `dfs and similar` `graphs` `greedy` `hashing` `implementation` `*2000` | Sep/21/2021 14:14 | 
+1110 | [G - Shortest Path Problem?](https://codeforces.com/contest/845/problem/G) | [GNU C++17 (64)](./codeforces/845/G.cpp) | `dfs and similar` `graphs` `math` `*2300` | Sep/14/2021 00:27 | 
+1109 | [E - Buds Re-hanging](https://codeforces.com/contest/1566/problem/E) | [GNU C++17 (64)](./codeforces/1566/E.cpp) | `constructive algorithms` `dfs and similar` `dp` `greedy` `trees` `*2000` | Sep/13/2021 21:39 | 
 1108 | [E - Sum of Remainders](https://codeforces.com/contest/616/problem/E) | [GNU C++17 (64)](./codeforces/616/E.cpp) | `implementation` `math` `number theory` `*2200` | Sep/07/2021 01:04 | 
 1107 | [E - Non-Decreasing Dilemma](https://codeforces.com/contest/1567/problem/E) | [GNU C++17 (64)](./codeforces/1567/E.cpp) | `data structures` `divide and conquer` | Sep/06/2021 00:29 | 
 1106 | [E - Tests for problem D](https://codeforces.com/contest/1278/problem/E) | [GNU C++17 (64)](./codeforces/1278/E.cpp) | `constructive algorithms` `dfs and similar` `divide and conquer` `trees` `*2200` | Sep/05/2021 22:00 | 
