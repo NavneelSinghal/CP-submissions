@@ -11,6 +11,11 @@
     #define debug(...) 0
 #endif
 
+using namespace std;
+
+using ll = int64_t;
+using ld = long double;
+
 namespace IO {
     constexpr bool UNSAFE = false;
     constexpr int GLOB_BUF_SIZE = 1 << 15;
@@ -178,15 +183,12 @@ namespace IO {
 #endif
 }  // namespace IO
 
-using ll = int64_t;
-using ld = long double;
-
 // MergeInto : Aggregate * Value * Vertex(int) * EdgeIndex(int) -> Aggregate
 template <class Aggregate, class Value, class MergeInto>
-auto exclusive(const std::basic_string<Value>& a, const Aggregate& base,
+auto exclusive(const std::vector<Value>& a, const Aggregate& base,
                const MergeInto& merge_into, int vertex) {
     int n = (int)std::size(a);
-    std::basic_string<Aggregate> b(n, base);
+    std::vector<Aggregate> b(n, base);
     for (int bit = (int)std::__lg(n); bit >= 0; --bit) {
         for (int i = n - 1; i >= 0; --i) b[i] = b[i >> 1];
         int sz = n - (n & !bit);
@@ -203,13 +205,13 @@ auto exclusive(const std::basic_string<Value>& a, const Aggregate& base,
 // FinalizeMerge : Aggregate * Vertex(int) -> Value
 template <class Aggregate, class Value, class MergeInto, class FinalizeMerge,
           class Base>
-auto rerooter(const std::vector<std::basic_string<int>>& g, const Value& default_val,
+auto rerooter(const std::vector<std::vector<int>>& g, const Value& default_val,
               const Aggregate&, const Base& base, const MergeInto& merge_into,
               const FinalizeMerge& finalize_merge) {
     int n = (int)std::size(g);
 
     std::vector<Value> root_dp(n, default_val);
-    std::vector<std::basic_string<Value>> edge_dp(n);
+    std::vector<std::vector<Value>> edge_dp(n);
 
     std::vector<Value> dp(n, default_val);
 
@@ -254,15 +256,13 @@ auto rerooter(const std::vector<std::basic_string<int>>& g, const Value& default
     return make_pair(root_dp, edge_dp);
 }
 
-using namespace std;
-
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int n;
     cin >> n;
     std::vector<int> color(n);
     for (auto& x : color) cin >> x;
-    std::vector<std::basic_string<int>> g(n);
+    std::vector<std::vector<int>> g(n);
     for (int i = 1; i < n; ++i) {
         int u, v;
         cin >> u >> v;
@@ -285,4 +285,4 @@ int main() {
     for (auto& x : root_dp) cout << x << ' ';
     cout << '\n';
 }
- 
+
