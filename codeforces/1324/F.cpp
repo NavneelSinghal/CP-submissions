@@ -41,9 +41,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -184,31 +182,30 @@ using ll = int64_t;
 using ld = long double;
 
 // MergeInto : Aggregate * Value * Vertex(int) * EdgeIndex(int) -> Aggregate
+template <class Aggregate, class Value, class MergeInto>
+auto exclusive(const std::basic_string<Value>& a, const Aggregate& base,
+               const MergeInto& merge_into, int vertex) {
+    int n = (int)std::size(a);
+    std::vector<Aggregate> b(n, base);
+    for (int bit = (int)std::__lg(n); bit >= 0; --bit) {
+        for (int i = n - 1; i >= 0; --i) b[i] = b[i >> 1];
+        int sz = n - (n & !bit);
+        for (int i = 0; i < sz; ++i) {
+            int index = (i >> bit) ^ 1;
+            b[index] = merge_into(b[index], a[i], vertex, i);
+        }
+    }
+    return b;
+}
+
+// MergeInto : Aggregate * Value * Vertex(int) * EdgeIndex(int) -> Aggregate
 // Base : Vertex(int) -> Aggregate
 // FinalizeMerge : Aggregate * Vertex(int) -> Value
 template <class Aggregate, class Value, class MergeInto, class FinalizeMerge,
           class Base>
-auto rerooter(const std::vector<std::basic_string<int>>& g,
-              const Value& default_val, const Aggregate&, const Base& base,
-              const MergeInto& merge_into,
+auto rerooter(const std::vector<std::basic_string<int>>& g, const Value& default_val,
+              const Aggregate&, const Base& base, const MergeInto& merge_into,
               const FinalizeMerge& finalize_merge) {
-
-    auto exclusive = [](const std::basic_string<Value>& a,
-                        const Aggregate& base, const MergeInto& merge_into,
-                        int vertex) {
-        int n = (int)std::size(a);
-        std::vector<Aggregate> b(n, base);
-        for (int bit = (int)std::__lg(n); bit >= 0; --bit) {
-            for (int i = n - 1; i >= 0; --i) b[i] = b[i >> 1];
-            int sz = n - (n & !bit);
-            for (int i = 0; i < sz; ++i) {
-                int index = (i >> bit) ^ 1;
-                b[index] = merge_into(b[index], a[i], vertex, i);
-            }
-        }
-        return b;
-    };
-
     int n = (int)std::size(g);
 
     std::vector<Value> root_dp(n, default_val);
