@@ -231,6 +231,8 @@ auto rerooter(const std::vector<std::basic_string<int>>& g,
     int n = (int)std::size(g);
 
     std::vector<Value> root_dp(n, default_val);
+    std::vector<std::basic_string<Value>> edge_dp(n);
+
     std::vector<Value> dp(n, default_val);
 
     std::vector<int> bfs(n), parent(n, -1);
@@ -260,23 +262,24 @@ auto rerooter(const std::vector<std::basic_string<int>>& g,
 
     for (auto u : bfs) {
         dp[parent[u]] = dp[u];
-        std::basic_string<Aggregate> edge_dp;
-        for (auto v : g[u]) edge_dp += dp[v];
+        edge_dp[u].reserve(g[u].size());
+        for (auto v : g[u]) edge_dp[u].push_back(dp[v]);
         std::basic_string<Aggregate> dp_exclusive;
         if constexpr (std::is_same_v<MergeInverse, std::nullptr_t>) {
             dp_exclusive = exclusive(edge_dp[u], base(u), merge_into, u);
         } else {
-            dp_exclusive = exclusive_with_inverse(edge_dp, base(u), merge_into,
-                                                  merge_inv, u);
+            dp_exclusive = exclusive_with_inverse(edge_dp[u], base(u),
+                                                  merge_into, merge_inv, u);
         }
         for (int i = 0; i < (int)dp_exclusive.size(); ++i) {
             auto v = g[u][i];
             dp[v] = finalize_merge(dp_exclusive[i], u);
         }
-        root_dp[u] = finalize_merge(merge_into(dp_exclusive[0], edge_dp[0]), u);
+        root_dp[u] =
+            finalize_merge(merge_into(dp_exclusive[0], edge_dp[u][0]), u);
     }
 
-    return root_dp;
+    return make_pair(root_dp, edge_dp);
 }
 
 int main() {
@@ -305,7 +308,7 @@ int main() {
     auto merge_inv = [](int vertex_dp, int neighbor_dp) {
         return vertex_dp - max(0, neighbor_dp);
     };
-    auto root_dp =
+    auto [root_dp, edge_dp] =
         rerooter(g, 0, 0, base, merge_into, finalize_merge, merge_inv);
     for (auto& x : root_dp) cout << x << ' ';
     cout << '\n';
