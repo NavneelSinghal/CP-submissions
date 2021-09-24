@@ -1,3 +1,4 @@
+#include <algorithm>
 #ifndef LOCAL
     #pragma GCC optimize("O3,unroll-loops")
     #pragma GCC target("avx2,bmi2")
@@ -44,9 +45,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -186,14 +185,14 @@ namespace IO {
 using namespace std;
 
 template <class Aggregate, class Value, class MergeInto, class MergeInverse>
-auto exclusive_with_inverse(const std::basic_string<Value>& a,
-                            const Aggregate& base, const MergeInto& merge_into,
+auto exclusive_with_inverse(const std::basic_string<Value>& a, const Aggregate& base,
+                            const MergeInto& merge_into,
                             const MergeInverse& merge_inv, int vertex) {
     int n = (int)std::size(a);
     Aggregate all = base;
-    for (int i = 0; i < n; ++i) all = merge_into(all, a[i]);
+    for (int i = 0; i < n; ++i) all = merge_into(all, a[i], vertex, i);
     std::basic_string<Aggregate> b(n, all);
-    for (int i = 0; i < n; ++i) b[i] = merge_inv(b[i], a[i]);
+    for (int i = 0; i < n; ++i) b[i] = merge_inv(b[i], a[i], vertex, i);
     return b;
 }
 
@@ -210,7 +209,7 @@ auto exclusive(const std::vector<Value>& a, const Aggregate& base,
         int sz = n - (n & !bit);
         for (int i = 0; i < sz; ++i) {
             int index = (i >> bit) ^ 1;
-            b[index] = merge_into(b[index], a[i]);
+            b[index] = merge_into(b[index], a[i], vertex, i);
         }
     }
     return b;
@@ -224,9 +223,9 @@ auto exclusive(const std::vector<Value>& a, const Aggregate& base,
 // FinalizeMerge -> finalize the merge (update the vertex with child aggregates)
 template <class Aggregate, class Value, class MergeInto, class FinalizeMerge,
           class Base, class MergeInverse = std::nullptr_t>
-auto rerooter(const std::vector<std::basic_string<int>>& g,
-              const Value& default_val, const Aggregate&, const Base& base,
-              const MergeInto& merge_into, const FinalizeMerge& finalize_merge,
+auto rerooter(const std::vector<std::basic_string<int>>& g, const Value& default_val,
+              const Aggregate&, const Base& base, const MergeInto& merge_into,
+              const FinalizeMerge& finalize_merge,
               const MergeInverse& merge_inv = nullptr) {
     int n = (int)std::size(g);
 
@@ -255,7 +254,7 @@ auto rerooter(const std::vector<std::basic_string<int>>& g,
         for (auto v : g[u]) {
             ++edge_index;
             if (v == p) continue;
-            aggregate = merge_into(aggregate, dp[v]);
+            aggregate = merge_into(aggregate, dp[v], u, edge_index);
         }
         dp[u] = finalize_merge(aggregate, u);
     }
@@ -276,7 +275,7 @@ auto rerooter(const std::vector<std::basic_string<int>>& g,
             dp[v] = finalize_merge(dp_exclusive[i], u);
         }
         root_dp[u] =
-            finalize_merge(merge_into(dp_exclusive[0], edge_dp[u][0]), u);
+            finalize_merge(merge_into(dp_exclusive[0], edge_dp[u][0], u, 0), u);
     }
 
     return make_pair(root_dp, edge_dp);
@@ -296,7 +295,8 @@ int main() {
         g[u].push_back(v);
         g[v].push_back(u);
     }
-    auto merge_into = [](int vertex_dp, int neighbor_dp) {
+    auto merge_into = [](int vertex_dp, int neighbor_dp, int vertex,
+                         int edge_index) {
         return vertex_dp + max(0, neighbor_dp);
     };
     auto finalize_merge = [&color](int vertex_dp, int vertex) {
@@ -305,7 +305,8 @@ int main() {
     auto base = [](int) {
         return 0;
     };
-    auto merge_inv = [](int vertex_dp, int neighbor_dp) {
+    auto merge_inv = [](int vertex_dp, int neighbor_dp, int vertex,
+                        int edge_index) {
         return vertex_dp - max(0, neighbor_dp);
     };
     auto [root_dp, edge_dp] =
@@ -313,4 +314,3 @@ int main() {
     for (auto& x : root_dp) cout << x << ' ';
     cout << '\n';
 }
-
