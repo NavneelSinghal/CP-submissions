@@ -34,8 +34,8 @@ auto exclusive(const std::vector<Arg>& a, const Aggregate& base, Fold fold,
 }
 
 // Fold : Aggregate * Arg * Vertex(int) * EdgeIndex(int) -> Aggregate
-template <class Arg, class Aggregate, class Fold, class CombineWithRoot>
-auto rerooter(const std::vector<std::basic_string<int>>& g, const Arg& arg_base,
+template <class Aggregate, class Arg, class Fold, class CombineWithRoot>
+auto rerooter(const std::vector<std::vector<int>>& g, const Arg& arg_base,
               const std::vector<Aggregate>& base, Fold fold,
               CombineWithRoot combine_with_root) {
     int n = (int)std::size(g);
@@ -88,7 +88,7 @@ int main() {
     cin >> n;
     std::vector<int> color(n);
     for (auto& x : color) cin >> x;
-    std::vector<std::basic_string<int>> g(n);
+    std::vector<std::vector<int>> g(n);
     for (int i = 1; i < n; ++i) {
         int u, v;
         cin >> u >> v;
@@ -96,23 +96,15 @@ int main() {
         g[u].push_back(v);
         g[v].push_back(u);
     }
-    struct Arg {
-        int x;
+    auto fold = [](int vertex_dp, int neighbor_dp, int vertex, int edge_index) {
+        return vertex_dp + max(0, neighbor_dp);
     };
-    struct Aggregate {
-        int x;
-    };
-    auto fold = [](Aggregate vertex_dp, Arg neighbor_dp, int vertex,
-                   int edge_index) -> Aggregate {
-        return Aggregate{vertex_dp.x + max(0, neighbor_dp.x)};
-    };
-    auto combine_with_root = [&color](Aggregate vertex_dp, int vertex) -> Arg {
-        return Arg{vertex_dp.x + 2 * color[vertex] - 1};
+    auto combine_with_root = [&color](int vertex_dp, int vertex) {
+        return vertex_dp + 2 * color[vertex] - 1;
     };
     auto [root_dp, edge_dp] =
-        rerooter(g, Arg{0}, std::vector<Aggregate>(n, Aggregate{0}), fold,
-                 combine_with_root);
-    for (auto& x : root_dp) cout << x.x << ' ';
+        rerooter(g, 0, std::vector<int>(n, 0), fold, combine_with_root);
+    for (auto& x : root_dp) cout << x << ' ';
     cout << '\n';
 }
 
