@@ -11,11 +11,6 @@
     #define debug(...) 0
 #endif
 
-using namespace std;
-
-using ll = int64_t;
-using ld = long double;
-
 namespace IO {
     constexpr bool UNSAFE = false;
     constexpr int GLOB_BUF_SIZE = 1 << 15;
@@ -46,7 +41,9 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) { return this; }
+        inline FastInput* tie(T) {
+            return this;
+        }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -183,54 +180,69 @@ namespace IO {
 #endif
 }  // namespace IO
 
-// MergeInto : Aggregate * Value * Vertex(int) * EdgeIndex(int) -> Aggregate
-template <class Aggregate, class Value, class MergeInto>
-auto exclusive(const std::vector<Value>& a, const Aggregate& base,
-               const MergeInto& merge_into, int vertex) {
-    int n = (int)std::size(a);
-    std::vector<Aggregate> b(n, base);
-    for (int bit = (int)std::__lg(n); bit >= 0; --bit) {
-        for (int i = n - 1; i >= 0; --i) b[i] = b[i >> 1];
-        int sz = n - (n & !bit);
-        for (int i = 0; i < sz; ++i) {
-            int index = (i >> bit) ^ 1;
-            b[index] = merge_into(b[index], a[i], vertex, i);
-        }
-    }
-    return b;
-}
+using ll = int64_t;
+using ld = long double;
 
 // MergeInto : Aggregate * Value * Vertex(int) * EdgeIndex(int) -> Aggregate
 // Base : Vertex(int) -> Aggregate
 // FinalizeMerge : Aggregate * Vertex(int) -> Value
 template <class Aggregate, class Value, class MergeInto, class FinalizeMerge,
           class Base>
-auto rerooter(const std::vector<std::vector<int>>& g, const Value& default_val,
-              const Aggregate&, const Base& base, const MergeInto& merge_into,
+auto rerooter(const std::vector<std::basic_string<int>>& g,
+              const Value& default_val, const Aggregate&, const Base& base,
+              const MergeInto& merge_into,
               const FinalizeMerge& finalize_merge) {
+
+    auto exclusive = [](const std::basic_string<Value>& a,
+                        const Aggregate& base, const MergeInto& merge_into,
+                        int vertex) {
+        int n = (int)std::size(a);
+        std::vector<Aggregate> b(n, base);
+        for (int bit = (int)std::__lg(n); bit >= 0; --bit) {
+            for (int i = n - 1; i >= 0; --i) b[i] = b[i >> 1];
+            int sz = n - (n & !bit);
+            for (int i = 0; i < sz; ++i) {
+                int index = (i >> bit) ^ 1;
+                b[index] = merge_into(b[index], a[i], vertex, i);
+            }
+        }
+        return b;
+    };
+
     int n = (int)std::size(g);
 
     std::vector<Value> root_dp(n, default_val);
-    std::vector<std::vector<Value>> edge_dp(n);
+    std::vector<std::basic_string<Value>> edge_dp(n);
 
     std::vector<Value> dp(n, default_val);
 
-    const auto dfs_compute = [&](auto self, int u, int p) -> void {
-        Aggregate aggregate = base(u);
-        int edge_index = -1;
+    std::vector<int> bfs(n), parent(n, -1);
+    int cnt = 1;
+    parent[0] = 0;
+    for (int i = 0; i < n; ++i) {
+        int u = bfs[i];
         for (auto v : g[u]) {
-            edge_index++;
+            if (parent[v] != -1) continue;
+            parent[v] = u;
+            bfs[cnt++] = v;
+        }
+    }
+
+    for (int i = n - 1; i >= 0; --i) {
+        int u = bfs[i];
+        int edge_index = -1;
+        int p = parent[u];
+        Aggregate aggregate = base(u);
+        for (auto v : g[u]) {
+            ++edge_index;
             if (v == p) continue;
-            self(self, v, u);
             aggregate = merge_into(aggregate, dp[v], u, edge_index);
         }
         dp[u] = finalize_merge(aggregate, u);
-    };
+    }
 
-    dfs_compute(dfs_compute, 0, -1);
-
-    const auto dfs_reroot = [&](auto self, int u, int p) -> void {
-        dp[p] = dp[u];
+    for (auto u : bfs) {
+        dp[parent[u]] = dp[u];
         edge_dp[u].reserve(g[u].size());
         for (auto v : g[u]) edge_dp[u].push_back(dp[v]);
         auto dp_exclusive = exclusive(edge_dp[u], base(u), merge_into, u);
@@ -240,14 +252,12 @@ auto rerooter(const std::vector<std::vector<int>>& g, const Value& default_val,
         }
         root_dp[u] =
             finalize_merge(merge_into(dp_exclusive[0], edge_dp[u][0], u, 0), u);
-        for (auto v : g[u])
-            if (v != p) self(self, v, u);
-    };
-
-    dfs_reroot(dfs_reroot, 0, 0);
+    }
 
     return make_pair(root_dp, edge_dp);
 }
+
+using namespace std;
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
@@ -255,7 +265,7 @@ int main() {
     cin >> n;
     std::vector<int> color(n);
     for (auto& x : color) cin >> x;
-    std::vector<std::vector<int>> g(n);
+    std::vector<std::basic_string<int>> g(n);
     for (int i = 1; i < n; ++i) {
         int u, v;
         cin >> u >> v;
