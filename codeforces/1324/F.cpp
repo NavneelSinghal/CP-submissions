@@ -41,9 +41,7 @@ namespace IO {
             return cur = buf[buf_pos++];
         }
         template <typename T>
-        inline FastInput* tie(T) {
-            return this;
-        }
+        inline FastInput* tie(T) { return this; }
         inline void sync_with_stdio(bool) {}
         inline explicit operator bool() { return cur != -1; }
         inline static bool is_blank(char c) { return c <= ' '; }
@@ -186,7 +184,7 @@ using ld = long double;
 // MergeInto : Aggregate * Value * Vertex(int) * EdgeIndex(int) -> Aggregate
 template <class Aggregate, class Value, class MergeInto>
 auto exclusive(const std::basic_string<Value>& a, const Aggregate& base,
-               const MergeInto& merge_into) {
+               const MergeInto& merge_into, int vertex) {
     int n = (int)std::size(a);
     std::basic_string<Aggregate> b(n, base);
     for (int bit = (int)std::__lg(n); bit >= 0; --bit) {
@@ -194,7 +192,7 @@ auto exclusive(const std::basic_string<Value>& a, const Aggregate& base,
         int sz = n - (n & !bit);
         for (int i = 0; i < sz; ++i) {
             int index = (i >> bit) ^ 1;
-            b[index] = merge_into(b[index], a[i]);
+            b[index] = merge_into(b[index], a[i], vertex, i);
         }
     }
     return b;
@@ -205,13 +203,13 @@ auto exclusive(const std::basic_string<Value>& a, const Aggregate& base,
 // FinalizeMerge : Aggregate * Vertex(int) -> Value
 template <class Aggregate, class Value, class MergeInto, class FinalizeMerge,
           class Base>
-auto rerooter(const std::vector<std::basic_string<int>>& g,
-              const Value& default_val, const Aggregate&, const Base& base,
-              const MergeInto& merge_into,
+auto rerooter(const std::vector<std::basic_string<int>>& g, const Value& default_val,
+              const Aggregate&, const Base& base, const MergeInto& merge_into,
               const FinalizeMerge& finalize_merge) {
     int n = (int)std::size(g);
 
     std::vector<Value> root_dp(n, default_val);
+    std::vector<std::basic_string<Value>> edge_dp(n);
 
     std::vector<Value> dp(n, default_val);
 
@@ -229,28 +227,31 @@ auto rerooter(const std::vector<std::basic_string<int>>& g,
 
     for (int i = n - 1; i >= 0; --i) {
         int u = bfs[i];
+        int edge_index = -1;
         int p = parent[u];
         Aggregate aggregate = base(u);
         for (auto v : g[u]) {
+            ++edge_index;
             if (v == p) continue;
-            aggregate = merge_into(aggregate, dp[v]);
+            aggregate = merge_into(aggregate, dp[v], u, edge_index);
         }
         dp[u] = finalize_merge(aggregate, u);
     }
 
     for (auto u : bfs) {
         dp[parent[u]] = dp[u];
-        std::basic_string<Aggregate> edge_dp;
-        for (auto v : g[u]) edge_dp.push_back(dp[v]);
-        auto dp_exclusive = exclusive(edge_dp, base(u), merge_into);
+        edge_dp[u].reserve(g[u].size());
+        for (auto v : g[u]) edge_dp[u].push_back(dp[v]);
+        auto dp_exclusive = exclusive(edge_dp[u], base(u), merge_into, u);
         for (int i = 0; i < (int)dp_exclusive.size(); ++i) {
             auto v = g[u][i];
             dp[v] = finalize_merge(dp_exclusive[i], u);
         }
-        root_dp[u] = finalize_merge(merge_into(dp_exclusive[0], edge_dp[0]), u);
+        root_dp[u] =
+            finalize_merge(merge_into(dp_exclusive[0], edge_dp[u][0], u, 0), u);
     }
 
-    return root_dp;
+    return make_pair(root_dp, edge_dp);
 }
 
 using namespace std;
@@ -269,7 +270,8 @@ int main() {
         g[u].push_back(v);
         g[v].push_back(u);
     }
-    auto merge_into = [](int vertex_dp, int neighbor_dp) {
+    auto merge_into = [](int vertex_dp, int neighbor_dp, int vertex,
+                         int edge_index) {
         return vertex_dp + max(0, neighbor_dp);
     };
     auto finalize_merge = [&color](int vertex_dp, int vertex) {
@@ -278,8 +280,9 @@ int main() {
     auto base = [](int) {
         return 0;
     };
-    auto root_dp = rerooter(g, 0, 0, base, merge_into, finalize_merge);
+    auto [root_dp, edge_dp] =
+        rerooter(g, 0, 0, base, merge_into, finalize_merge);
     for (auto& x : root_dp) cout << x << ' ';
     cout << '\n';
 }
-
+ 
