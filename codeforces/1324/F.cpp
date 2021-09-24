@@ -229,6 +229,7 @@ auto rerooter(const std::vector<std::basic_string<int>>& g, const Arg& arg_base,
         edge_dp[u].reserve(g[u].size());
         for (auto v : g[u]) edge_dp[u].push_back(dp[v]);
         auto dp_exclusive = exclusive(edge_dp[u], base[u], fold, u);
+        assert(dp_exclusive.size() == g[u].size());
         for (int i = 0; i < (int)dp_exclusive.size(); ++i) {
             auto v = g[u][i];
             dp[v] = combine_with_root(dp_exclusive[i], u);
