@@ -198,6 +198,25 @@ auto exclusive_with_inverse(const std::basic_string<Value>& a,
 }
 
 // MergeInto : Aggregate * Value * Vertex(int) * EdgeIndex(int) -> Aggregate
+// MergeInto is an accumulator used for fold_left
+// This function assumes order-invariance
+template <class Aggregate, class Value, class MergeInto>
+auto exclusive(const std::vector<Value>& a, const Aggregate& base,
+               const MergeInto& merge_into, int vertex) {
+    int n = (int)std::size(a);
+    std::basic_string<Aggregate> b(n, base);
+    for (int bit = (int)std::__lg(n); bit >= 0; --bit) {
+        for (int i = n - 1; i >= 0; --i) b[i] = b[i >> 1];
+        int sz = n - (n & !bit);
+        for (int i = 0; i < sz; ++i) {
+            int index = (i >> bit) ^ 1;
+            b[index] = merge_into(b[index], a[i]);
+        }
+    }
+    return b;
+}
+
+// MergeInto : Aggregate * Value * Vertex(int) * EdgeIndex(int) -> Aggregate
 // Base : Vertex(int) -> Aggregate
 // FinalizeMerge : Aggregate * Vertex(int) -> Value
 
@@ -209,7 +228,6 @@ auto rerooter(const std::vector<std::basic_string<int>>& g,
               const Value& default_val, const Aggregate&, const Base& base,
               const MergeInto& merge_into, const FinalizeMerge& finalize_merge,
               const MergeInverse& merge_inv = nullptr) {
-    static_assert(!std::is_same_v<MergeInverse, std::nullptr_t>);
     int n = (int)std::size(g);
 
     std::vector<Value> root_dp(n, default_val);
@@ -245,12 +263,16 @@ auto rerooter(const std::vector<std::basic_string<int>>& g,
         std::basic_string<Aggregate> edge_dp;
         for (auto v : g[u]) edge_dp += dp[v];
         std::basic_string<Aggregate> dp_exclusive;
-        dp_exclusive =
-            exclusive_with_inverse(edge_dp, base(u), merge_into, merge_inv, u);
-        int sz = (int)g[u].size();
-        auto& gu = g[u];
-        for (int i = 0; i < sz; ++i)
-            dp[gu[i]] = finalize_merge(dp_exclusive[i], u);
+        if constexpr (std::is_same_v<MergeInverse, std::nullptr_t>) {
+            dp_exclusive = exclusive(edge_dp[u], base(u), merge_into, u);
+        } else {
+            dp_exclusive = exclusive_with_inverse(edge_dp, base(u), merge_into,
+                                                  merge_inv, u);
+        }
+        for (int i = 0; i < (int)dp_exclusive.size(); ++i) {
+            auto v = g[u][i];
+            dp[v] = finalize_merge(dp_exclusive[i], u);
+        }
         root_dp[u] = finalize_merge(merge_into(dp_exclusive[0], edge_dp[0]), u);
     }
 
