@@ -215,33 +215,22 @@ auto rerooter(const std::vector<std::vector<int>>& g, const Value& default_val,
 
     std::vector<Value> dp(n, default_val);
 
-    std::vector<int> bfs(n), parent(n, -1);
-    int cnt = 1;
-    parent[0] = 0;
-    for (int i = 0; i < n; ++i) {
-        int u = bfs[i];
-        for (auto v : g[u]) {
-            if (parent[v] != -1) continue;
-            parent[v] = u;
-            bfs[cnt++] = v;
-        }
-    }
-
-    for (int i = n - 1; i >= 0; --i) {
-        int u = bfs[i];
-        int edge_index = -1;
-        int p = parent[u];
+    const auto dfs_compute = [&](auto self, int u, int p) -> void {
         Aggregate aggregate = base(u);
+        int edge_index = -1;
         for (auto v : g[u]) {
-            ++edge_index;
+            edge_index++;
             if (v == p) continue;
+            self(self, v, u);
             aggregate = merge_into(aggregate, dp[v], u, edge_index);
         }
         dp[u] = finalize_merge(aggregate, u);
-    }
+    };
 
-    for (auto u : bfs) {
-        dp[parent[u]] = dp[u];
+    dfs_compute(dfs_compute, 0, -1);
+
+    const auto dfs_reroot = [&](auto self, int u, int p) -> void {
+        dp[p] = dp[u];
         edge_dp[u].reserve(g[u].size());
         for (auto v : g[u]) edge_dp[u].push_back(dp[v]);
         auto dp_exclusive = exclusive(edge_dp[u], base(u), merge_into, u);
@@ -251,7 +240,11 @@ auto rerooter(const std::vector<std::vector<int>>& g, const Value& default_val,
         }
         root_dp[u] =
             finalize_merge(merge_into(dp_exclusive[0], edge_dp[u][0], u, 0), u);
-    }
+        for (auto v : g[u])
+            if (v != p) self(self, v, u);
+    };
+
+    dfs_reroot(dfs_reroot, 0, 0);
 
     return make_pair(root_dp, edge_dp);
 }
