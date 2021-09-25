@@ -10,8 +10,8 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-1115 | [F - Sports Betting](https://codeforces.com/contest/1556/problem/F) | [GNU C++17 (64)](./codeforces/1556/F.cpp) | `bitmasks` `combinatorics` `dp` `graphs` `math` `probabilities` `*2500` | Sep/25/2021 20:54 | 
-1114 | [F - Maximum White Subtree](https://codeforces.com/contest/1324/problem/F) | [GNU C++17 (64)](./codeforces/1324/F.cpp) | `dfs and similar` `dp` `graphs` `trees` `*1800` | Sep/24/2021 22:00 | 
+1115 | [F - Maximum White Subtree](https://codeforces.com/contest/1324/problem/F) | [GNU C++17 (64)](./codeforces/1324/F.cpp) | `dfs and similar` `dp` `graphs` `trees` `*1800` | Sep/26/2021 03:21 | 
+1114 | [F - Sports Betting](https://codeforces.com/contest/1556/problem/F) | [GNU C++17 (64)](./codeforces/1556/F.cpp) | `bitmasks` `combinatorics` `dp` `graphs` `math` `probabilities` `*2500` | Sep/25/2021 20:54 | 
 1113 | [D - The Strongest Build](https://codeforces.com/contest/1574/problem/D) | [GNU C++17 (64)](./codeforces/1574/D.cpp) | `binary search` `brute force` `data structures` `dfs and similar` `graphs` `greedy` `hashing` `implementation` `*2000` | Sep/21/2021 14:14 | 
 1112 | [G - Shortest Path Problem?](https://codeforces.com/contest/845/problem/G) | [GNU C++17 (64)](./codeforces/845/G.cpp) | `dfs and similar` `graphs` `math` `*2300` | Sep/14/2021 00:27 | 
 1111 | [E - Buds Re-hanging](https://codeforces.com/contest/1566/problem/E) | [GNU C++17 (64)](./codeforces/1566/E.cpp) | `constructive algorithms` `dfs and similar` `dp` `greedy` `trees` `*2000` | Sep/13/2021 21:39 | 
