@@ -10,24 +10,25 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-1132 | [E - Stringforces](https://codeforces.com/contest/1550/problem/E) | [GNU C++20 (64)](./codeforces/1550/E.cpp) | `binary search` `bitmasks` `brute force` `dp` `strings` `two pointers` `*2500` | Oct/16/2021 22:23 | 
-1131 | [C - Molly's Chemicals](https://codeforces.com/contest/776/problem/C) | [GNU C++17 (64)](./codeforces/776/C.cpp) | `binary search` `brute force` `data structures` `implementation` `math` `*1800` | Oct/15/2021 15:40 | 
-1130 | [J - Robot Factory](https://codeforces.com/contest/1600/problem/J) | [GNU C11](./codeforces/1600/J.cpp) | `bitmasks` `dfs and similar` `*1400` | Oct/11/2021 09:38 | 
-1129 | [C - Delete Two Elements](https://codeforces.com/contest/1598/problem/C) | [Go](./codeforces/1598/C.go) | `data structures` `dp` `implementation` `math` `two pointers` `*1200` | Oct/11/2021 08:23 | 
-1128 | [E - Fix the String](https://codeforces.com/contest/1571/problem/E) | [Kotlin 1.4](./codeforces/1571/E.kt) | `*special problem` `bitmasks` `dp` `greedy` | Oct/07/2021 23:14 | 
-1127 | [F - Kotlinforces](https://codeforces.com/contest/1571/problem/F) | [Kotlin 1.4](./codeforces/1571/F.kt) | `*special problem` `constructive algorithms` `dp` | Oct/07/2021 21:44 | 
-1126 | [D - Sweepstake](https://codeforces.com/contest/1571/problem/D) | [Kotlin 1.4](./codeforces/1571/D.kt) | `*special problem` `brute force` `constructive algorithms` `implementation` `math` | Oct/07/2021 20:42 | 
-1125 | [C - Rhyme](https://codeforces.com/contest/1571/problem/C) | [Kotlin 1.4](./codeforces/1571/C.kt) | `*special problem` `implementation` | Oct/07/2021 20:29 | 
-1124 | [B - Epic Novel](https://codeforces.com/contest/1571/problem/B) | [Kotlin 1.4](./codeforces/1571/B.kt) | `*special problem` `math` | Oct/07/2021 20:13 | 
-1123 | [A - Sequence of Comparisons](https://codeforces.com/contest/1571/problem/A) | [Kotlin 1.4](./codeforces/1571/A.kt) | `*special problem` | Oct/07/2021 20:08 | 
-1122 | [E - Enemy is weak](https://codeforces.com/contest/61/problem/E) | [GNU C++17 (64)](./codeforces/61/E.cpp) | `data structures` `trees` `*1900` | Oct/06/2021 21:30 | 
-1121 | [H - Function Composition](https://codeforces.com/contest/1218/problem/H) | [GNU C++17 (64)](./codeforces/1218/H.cpp) | `dfs and similar` `*2900` | Oct/05/2021 19:23 | 
-1120 | [G - XOR Guessing](https://codeforces.com/contest/1570/problem/G) | [Kotlin 1.4](./codeforces/1570/G.kt) | `*special problem` `interactive` | Oct/02/2021 02:02 | 
-1119 | [F - Square Filling](https://codeforces.com/contest/1570/problem/F) | [Kotlin 1.4](./codeforces/1570/F.kt) | `*special problem` | Oct/02/2021 01:47 | 
-1118 | [E - Erasing Zeroes](https://codeforces.com/contest/1570/problem/E) | [Kotlin 1.4](./codeforces/1570/E.kt) | `*special problem` `strings` | Oct/02/2021 01:33 | 
-1117 | [D - Reachable Numbers](https://codeforces.com/contest/1570/problem/D) | [Kotlin 1.4](./codeforces/1570/D.kt) | `*special problem` `implementation` | Oct/02/2021 01:28 | 
-1116 | [C - Shooting](https://codeforces.com/contest/1570/problem/C) | [Kotlin 1.4](./codeforces/1570/C.kt) | `*special problem` `greedy` `implementation` | Oct/02/2021 01:22 | 
-1115 | [B - Yellow Cards](https://codeforces.com/contest/1570/problem/B) | [Kotlin 1.4](./codeforces/1570/B.kt) | `*special problem` `math` | Oct/02/2021 01:14 | 
+1133 | [E - Stringforces](https://codeforces.com/contest/1550/problem/E) | [GNU C++20 (64)](./codeforces/1550/E.cpp) | `binary search` `bitmasks` `brute force` `dp` `strings` `two pointers` `*2500` | Oct/16/2021 22:23 | 
+1132 | [C - Molly's Chemicals](https://codeforces.com/contest/776/problem/C) | [GNU C++17 (64)](./codeforces/776/C.cpp) | `binary search` `brute force` `data structures` `implementation` `math` `*1800` | Oct/15/2021 15:40 | 
+1131 | [J - Robot Factory](https://codeforces.com/contest/1600/problem/J) | [GNU C11](./codeforces/1600/J.cpp) | `bitmasks` `dfs and similar` `*1400` | Oct/11/2021 09:38 | 
+1130 | [C - Delete Two Elements](https://codeforces.com/contest/1598/problem/C) | [Go](./codeforces/1598/C.go) | `data structures` `dp` `implementation` `math` `two pointers` `*1200` | Oct/11/2021 08:23 | 
+1129 | [E - Fix the String](https://codeforces.com/contest/1571/problem/E) | [Kotlin 1.4](./codeforces/1571/E.kt) | `*special problem` `bitmasks` `dp` `greedy` | Oct/07/2021 23:14 | 
+1128 | [F - Kotlinforces](https://codeforces.com/contest/1571/problem/F) | [Kotlin 1.4](./codeforces/1571/F.kt) | `*special problem` `constructive algorithms` `dp` | Oct/07/2021 21:44 | 
+1127 | [D - Sweepstake](https://codeforces.com/contest/1571/problem/D) | [Kotlin 1.4](./codeforces/1571/D.kt) | `*special problem` `brute force` `constructive algorithms` `implementation` `math` | Oct/07/2021 20:42 | 
+1126 | [C - Rhyme](https://codeforces.com/contest/1571/problem/C) | [Kotlin 1.4](./codeforces/1571/C.kt) | `*special problem` `implementation` | Oct/07/2021 20:29 | 
+1125 | [B - Epic Novel](https://codeforces.com/contest/1571/problem/B) | [Kotlin 1.4](./codeforces/1571/B.kt) | `*special problem` `math` | Oct/07/2021 20:13 | 
+1124 | [A - Sequence of Comparisons](https://codeforces.com/contest/1571/problem/A) | [Kotlin 1.4](./codeforces/1571/A.kt) | `*special problem` | Oct/07/2021 20:08 | 
+1123 | [E - Enemy is weak](https://codeforces.com/contest/61/problem/E) | [GNU C++17 (64)](./codeforces/61/E.cpp) | `data structures` `trees` `*1900` | Oct/06/2021 21:30 | 
+1122 | [H - Function Composition](https://codeforces.com/contest/1218/problem/H) | [GNU C++17 (64)](./codeforces/1218/H.cpp) | `dfs and similar` `*2900` | Oct/05/2021 19:23 | 
+1121 | [G - XOR Guessing](https://codeforces.com/contest/1570/problem/G) | [Kotlin 1.4](./codeforces/1570/G.kt) | `*special problem` `interactive` | Oct/02/2021 02:02 | 
+1120 | [F - Square Filling](https://codeforces.com/contest/1570/problem/F) | [Kotlin 1.4](./codeforces/1570/F.kt) | `*special problem` | Oct/02/2021 01:47 | 
+1119 | [E - Erasing Zeroes](https://codeforces.com/contest/1570/problem/E) | [Kotlin 1.4](./codeforces/1570/E.kt) | `*special problem` `strings` | Oct/02/2021 01:33 | 
+1118 | [D - Reachable Numbers](https://codeforces.com/contest/1570/problem/D) | [Kotlin 1.4](./codeforces/1570/D.kt) | `*special problem` `implementation` | Oct/02/2021 01:28 | 
+1117 | [C - Shooting](https://codeforces.com/contest/1570/problem/C) | [Kotlin 1.4](./codeforces/1570/C.kt) | `*special problem` `greedy` `implementation` | Oct/02/2021 01:22 | 
+1116 | [B - Yellow Cards](https://codeforces.com/contest/1570/problem/B) | [Kotlin 1.4](./codeforces/1570/B.kt) | `*special problem` `math` | Oct/02/2021 01:14 | 
+1115 | [A - A+B (Trial Problem)](https://codeforces.com/contest/1570/problem/A) | [Kotlin 1.4](./codeforces/1570/A.kt) | `*special problem` | Oct/02/2021 00:53 | 
 1114 | [F - Maximum White Subtree](https://codeforces.com/contest/1324/problem/F) | [GNU C++17 (64)](./codeforces/1324/F.cpp) | `dfs and similar` `dp` `graphs` `trees` `*1800` | Sep/26/2021 03:21 | 
 1113 | [F - Sports Betting](https://codeforces.com/contest/1556/problem/F) | [GNU C++17 (64)](./codeforces/1556/F.cpp) | `bitmasks` `combinatorics` `dp` `graphs` `math` `probabilities` `*2500` | Sep/25/2021 20:54 | 
 1112 | [D - The Strongest Build](https://codeforces.com/contest/1574/problem/D) | [GNU C++17 (64)](./codeforces/1574/D.cpp) | `binary search` `brute force` `data structures` `dfs and similar` `graphs` `greedy` `hashing` `implementation` `*2000` | Sep/21/2021 14:14 | 
