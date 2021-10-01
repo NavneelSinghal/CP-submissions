@@ -383,6 +383,22 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF130503508": {
+    "contest_id": 1570,
+    "language": "Kotlin 1.4",
+    "path": "codeforces/1570/E.kt",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Erasing Zeroes",
+    "problem_url": "https://codeforces.com/contest/1570/problem/E",
+    "submission_id": "CF130503508",
+    "submission_url": "https://codeforces.com/contest/1570/submission/130503508",
+    "tags": [
+      "*special problem",
+      "strings"
+    ],
+    "timestamp": "Oct/02/2021 01:33"
+  },
   "CF130504207": {
     "contest_id": 1570,
     "language": "Kotlin 1.4",
