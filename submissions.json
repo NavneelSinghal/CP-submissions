@@ -12643,6 +12643,21 @@
     ],
     "timestamp": "Sep/26/2021 03:21"
   },
+  "CF130504207": {
+    "contest_id": 1570,
+    "language": "Kotlin 1.4",
+    "path": "codeforces/1570/F.kt",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Square Filling",
+    "problem_url": "https://codeforces.com/contest/1570/problem/F",
+    "submission_id": "CF130504207",
+    "submission_url": "https://codeforces.com/contest/1570/submission/130504207",
+    "tags": [
+      "*special problem"
+    ],
+    "timestamp": "Oct/02/2021 01:47"
+  },
   "CF130504994": {
     "contest_id": 1570,
     "language": "Kotlin 1.4",
