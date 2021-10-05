@@ -383,6 +383,22 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "CF130896799": {
+    "contest_id": 1218,
+    "language": "GNU C++17 (64)",
+    "path": "codeforces/1218/H.cpp",
+    "platform": "Codeforces",
+    "problem_index": "H",
+    "problem_name": "Function Composition",
+    "problem_url": "https://codeforces.com/contest/1218/problem/H",
+    "submission_id": "CF130896799",
+    "submission_url": "https://codeforces.com/contest/1218/submission/130896799",
+    "tags": [
+      "dfs and similar",
+      "*2900"
+    ],
+    "timestamp": "Oct/05/2021 19:23"
+  },
   "CF130994018": {
     "contest_id": 61,
     "language": "GNU C++17 (64)",
