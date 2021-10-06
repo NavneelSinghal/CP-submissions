@@ -17,85 +17,82 @@ using ld = long double;
 
 using namespace std;
 
-template <class T, class Combine, class Subtract>
+// 1-based indexing
+template <typename T>
 struct Fenwick {
-    Fenwick(int _n, const T& _id_node, const Combine& _combine,
-            const Subtract& _subtract)
-        : n(_n),
-          t(_n + 1, _id_node),
-          id_node(_id_node),
-          combine(_combine),
-          subtract(_subtract) {}
-
-    Fenwick(const std::vector<T>& v, const T& _id_node, const Combine& _combine,
-            const Subtract& _subtract)
-        : n((int)v.size()),
-          t(n + 1),
-          id_node(_id_node),
-          combine(_combine),
-          subtract(_subtract) {
-        std::copy(std::begin(v), std::end(v), std::begin(t) + 1);
-        build();
-    }
-
-    void build() {
-        for (int i = 1, j = 2; i <= n; ++i, j = (i & -i) + i)
-            if (j <= n) t[j] = combine(t[j], t[i]);
-    }
-
-    // prefix_sum[0..i)
-    T query(int i) {
-        T s = id_node;
-        for (; i; i -= (i & -i)) s = combine(s, t[i]);
-        return s;
-    }
-
-    // range query [l, r)
-    // more efficient if subtraction is relatively slow
-    T query_single_subtraction(int l, int r) {
-        T s_l = id_node, s_r = id_node;
-        for (; r; r -= (r & -r)) s_r = combine(s_r, t[r]);
-        for (; l; l -= (l & -l)) s_l = combine(s_l, t[l]);
-        return subtract(s_r, s_l);
-    }
-
-    // range query [l, r)
-    T query(int l, int r) {
-        T s = id_node;
-        for (; r; r -= (r & -r)) s = combine(s, t[r]);
-        for (; l; l -= (l & -l)) s = subtract(s, t[l]);
-        return s;
-    }
-
-    // increase a[i] by v
-    void update(int i, const T& v) {
-        for (++i; i <= n; i += i & (-i)) t[i] = combine(t[i], v);
-    }
-
-    // call build after all the calls to set/add
-    void set(int i, const T& v) { t[i + 1] = v; }
-    void add(int i, const T& v) { t[i + 1] = combine(t[i + 1], v); }
-
-   private:
     int n;
-    std::vector<T> t;
-    const T id_node;
-    Combine combine;
-    Subtract subtract;
+    vector<T> t;
+    Fenwick(int n) : n(n), t(n + 1) {}
+    // prefix_sum[0..i]
+    T query(int i) {
+        T s = 0;
+        while (i) {
+            s += t[i];
+            i -= i & (-i);
+        }
+        return s;
+    }
+    // range query
+    T query(int l, int r) { return query(r) - query(l - 1); }
+    // increase a[i] by v
+    void update(int i, T v) {
+        while (i <= n) {
+            t[i] += v;
+            i += i & (-i);
+        }
+    }
+    // if next = true, returns index of first element that is > or >=
+    // if next = false, returns index of last element that is < or <=
+    // returns -1 if not found
+    template <bool next, bool strict>
+    int search(T v) {
+        if (v == 0) {
+            if constexpr (!next)
+                return -int(strict);
+            else if constexpr (!strict)
+                return 0;
+        } else if (v < 0) {
+            return int(next) - 1;
+        }
+        T sum = 0;
+        int pos = 0;
+        for (int i = __lg(n); i >= 0; --i) {
+            if (pos + (1 << i) <= n) {
+                bool b = false;
+                T s = sum + t[pos + (1 << i)];
+                if constexpr (next != strict) {
+                    b = s < v;
+                } else {
+                    b = s <= v;
+                }
+                if (b) {
+                    sum = s;
+                    pos += (1 << i);
+                }
+            }
+        }
+        if constexpr (next)
+            return pos + 1;
+        else
+            return pos;
+    }
 };
 
 template <class T>
 auto compress(const vector<T>& a) {
     int n = int(size(a));
     vector<pair<T, int>> p(n);
+#pragma GCC ivdep
     for (int i = 0; i < n; ++i) p[i] = {a[i], i};
     sort(begin(p), end(p));
     vector<int> compressed(n);
+    vector<T> vals;
     for (int k = 0, rnk = -1; k < n; ++k) {
-        if (k == 0 or p[k - 1].first < p[k].first) ++rnk;
+        if (k == 0 or p[k - 1].first < p[k].first)
+            vals.push_back(p[k].first), ++rnk;
         compressed[p[k].second] = rnk;
     }
-    return compressed;
+    return make_pair(compressed, vals);
 }
 
 int main() {
@@ -109,22 +106,13 @@ int main() {
         cin >> n;
         vector<int> a(n);
         for (auto& x : a) cin >> x;
-        a = compress(a);
-        using Node = int64_t;
-        const Node id_node = 0;
-        auto combine = [](const Node& a, const Node& b) {
-            return a + b;
-        };
-        auto subtract = [](const Node& a, const Node& b) {
-            return a - b;
-        };
-        Fenwick left(n, id_node, combine, subtract);
-        Fenwick right(n, id_node, combine, subtract);
-        for (int i = 0; i < n; ++i) right.add(a[i], 1);
-        right.build();
+        a = compress(a).first;
+        for (auto& x : a) ++x;
+        Fenwick<ll> left(n), right(n);
+        for (int i = 0; i < n; ++i) right.update(a[i], 1);
         ll ans = 0;
         for (int i = 0; i < n; ++i) {
-            ans += 1LL * (i - left.query(a[i] + 1)) * right.query(a[i]);
+            ans += 1LL * (i - left.query(a[i])) * right.query(a[i] - 1);
             left.update(a[i], 1);
             right.update(a[i], -1);
         }
