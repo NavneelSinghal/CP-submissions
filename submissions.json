@@ -12643,6 +12643,21 @@
     ],
     "timestamp": "Sep/26/2021 03:21"
   },
+  "CF131077193": {
+    "contest_id": 1571,
+    "language": "Kotlin 1.4",
+    "path": "codeforces/1571/A.kt",
+    "platform": "Codeforces",
+    "problem_index": "A",
+    "problem_name": "Sequence of Comparisons",
+    "problem_url": "https://codeforces.com/contest/1571/problem/A",
+    "submission_id": "CF131077193",
+    "submission_url": "https://codeforces.com/contest/1571/submission/131077193",
+    "tags": [
+      "*special problem"
+    ],
+    "timestamp": "Oct/07/2021 20:08"
+  },
   "CF131077874": {
     "contest_id": 1571,
     "language": "Kotlin 1.4",
