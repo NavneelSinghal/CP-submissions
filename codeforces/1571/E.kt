@@ -26,42 +26,110 @@ fun PrintWriter.solve() {
     val s = read()
     val t = read()
     for (i in 0 .. n - 4) {
-        if ((i >= 1 && t[i] == '1' && t[i - 1] == '1') ||
-            (i >= 3 && t[i] == '1' && t[i - 1] == '1')) {
-            println(-1)
-            return
+        if ((i >= 1)) {
+            if ((t[i] == '1') and (t[i - 1] == '1')) {
+                println(-1)
+                return
+            }
+        }
+        if ((i >= 3)) {
+            if ((t[i] == '1') and (t[i - 3] == '1')) {
+                println(-1)
+                return
+            }
         }
     }
     var a = CharArray(n) { _ -> '0' }
-    for (i in 0 .. n - 4)
-        if (t[i] == '1')
-            a[i] = '('
     for (i in 0 .. n - 4) {
-        if (t[i] != '1') continue
-        if (i >= 2 && t[i - 2] == '1') {
-            a[i - 2] = '('
-            a[i - 1] = ')'
-            a[i - 0] = '('
-            a[i + 1] = ')'
-            a[i + 2] = '('
-            a[i + 3] = ')'
-        } else if (i + 2 <= n - 4 && t[i + 2] == '1') {
-            continue
-        } else {
-            a[i + 0] = '('
-            a[i + 3] = ')'
-            if (s[i + 1] == '(') {
-                a[i + 1] = '('
-                a[i + 2] = ')'
+        if (t[i] == '1') {
+            a[i] = '('
+        }
+    }
+    for (i in 0 .. n - 4) {
+        if (t[i] == '1') {
+            if ((i >= 2)) {
+                if ((t[i - 2] == '1')) {
+                    a[i - 2] = '('
+                    a[i - 1] = ')'
+                    a[i + 0] = '('
+                    a[i + 1] = ')'
+                    a[i + 2] = '('
+                    a[i + 3] = ')'
+                } else {
+                    a[i] = '('
+                a[i + 3] = ')'
+                // )() or ())
+                if (s[i + 1] == ')') {
+                    if (s[i + 2] == '(') {
+                        a[i + 1] = ')'
+                        a[i + 2] = '('
+                    } else {
+                        a[i + 1] = ')'
+                        a[i + 2] = '('
+                    }
+                } else {
+                    if (s[i + 2] == '(') {
+                        a[i + 1] = '('
+                        a[i + 2] = ')'
+                    } else {
+                        a[i + 1] = '('
+                        a[i + 2] = ')'
+                    }
+                }
+                }
+            } else if ((i + 2 <= n - 4)) {
+                if ((t[i + 2] == '1')) {
+                    continue
+                } else {
+                    a[i] = '('
+                a[i + 3] = ')'
+                // )() or ())
+                if (s[i + 1] == ')') {
+                    if (s[i + 2] == '(') {
+                        a[i + 1] = ')'
+                        a[i + 2] = '('
+                    } else {
+                        a[i + 1] = ')'
+                        a[i + 2] = '('
+                    }
+                } else {
+                    if (s[i + 2] == '(') {
+                        a[i + 1] = '('
+                        a[i + 2] = ')'
+                    } else {
+                        a[i + 1] = '('
+                        a[i + 2] = ')'
+                    }
+                }
+                }
             } else {
-                a[i + 1] = ')'
-                a[i + 2] = '('
+                a[i] = '('
+                a[i + 3] = ')'
+                // )() or ())
+                if (s[i + 1] == ')') {
+                    if (s[i + 2] == '(') {
+                        a[i + 1] = ')'
+                        a[i + 2] = '('
+                    } else {
+                        a[i + 1] = ')'
+                        a[i + 2] = '('
+                    }
+                } else {
+                    if (s[i + 2] == '(') {
+                        a[i + 1] = '('
+                        a[i + 2] = ')'
+                    } else {
+                        a[i + 1] = '('
+                        a[i + 2] = ')'
+                    }
+                }
             }
         }
     }
     var ans = 0
-    for (i in 0 .. n - 1)
-        if (a[i] != s[i] && a[i] != '0') ans++
+    for (i in 0 .. n - 1) {
+        if ((a[i] != s[i]) and (a[i] != '0')) ans++
+    }
     println(ans)
 }
 
