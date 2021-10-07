@@ -12643,6 +12643,23 @@
     ],
     "timestamp": "Sep/26/2021 03:21"
   },
+  "CF131088193": {
+    "contest_id": 1571,
+    "language": "Kotlin 1.4",
+    "path": "codeforces/1571/F.kt",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Kotlinforces",
+    "problem_url": "https://codeforces.com/contest/1571/problem/F",
+    "submission_id": "CF131088193",
+    "submission_url": "https://codeforces.com/contest/1571/submission/131088193",
+    "tags": [
+      "*special problem",
+      "constructive algorithms",
+      "dp"
+    ],
+    "timestamp": "Oct/07/2021 21:44"
+  },
   "CF131093242": {
     "contest_id": 1571,
     "language": "Kotlin 1.4",
