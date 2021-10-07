@@ -12643,6 +12643,24 @@
     ],
     "timestamp": "Sep/26/2021 03:21"
   },
+  "CF131093242": {
+    "contest_id": 1571,
+    "language": "Kotlin 1.4",
+    "path": "codeforces/1571/E.kt",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Fix the String",
+    "problem_url": "https://codeforces.com/contest/1571/problem/E",
+    "submission_id": "CF131093242",
+    "submission_url": "https://codeforces.com/contest/1571/submission/131093242",
+    "tags": [
+      "*special problem",
+      "bitmasks",
+      "dp",
+      "greedy"
+    ],
+    "timestamp": "Oct/07/2021 23:14"
+  },
   "CF131508603": {
     "contest_id": 1598,
     "language": "Go",
