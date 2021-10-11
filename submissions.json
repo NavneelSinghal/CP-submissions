@@ -12643,6 +12643,26 @@
     ],
     "timestamp": "Sep/26/2021 03:21"
   },
+  "CF131508603": {
+    "contest_id": 1598,
+    "language": "Go",
+    "path": "codeforces/1598/C.go",
+    "platform": "Codeforces",
+    "problem_index": "C",
+    "problem_name": "Delete Two Elements",
+    "problem_url": "https://codeforces.com/contest/1598/problem/C",
+    "submission_id": "CF131508603",
+    "submission_url": "https://codeforces.com/contest/1598/submission/131508603",
+    "tags": [
+      "data structures",
+      "dp",
+      "implementation",
+      "math",
+      "two pointers",
+      "*1200"
+    ],
+    "timestamp": "Oct/11/2021 08:23"
+  },
   "CF131512345": {
     "contest_id": 1600,
     "language": "GNU C11",
