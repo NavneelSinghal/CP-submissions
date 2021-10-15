@@ -2,7 +2,7 @@
     #pragma GCC optimize("O3,unroll-loops")
     #pragma GCC target("avx2,bmi2,lzcnt,popcnt")
 #endif
-#define USE_AES 1
+#define USE_AES 0
 #if USE_AES
     #pragma GCC target("aes")
     #include <immintrin.h>
