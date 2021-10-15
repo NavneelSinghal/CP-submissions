@@ -2,7 +2,6 @@
     #pragma GCC optimize("O3,unroll-loops")
     #pragma GCC target("avx2,bmi2,lzcnt,popcnt")
 #endif
-
 #define USE_AES 1
 #if USE_AES
     #pragma GCC target("aes")
@@ -39,10 +38,7 @@ namespace hashing {
 
 #if USE_AES
     std::mt19937 rd(FIXED_RANDOM);
-    const __m128i KEY1{(ll)rd(), (ll)rd()};
-    const __m128i KEY2{(ll)rd(), (ll)rd()};
-    const __m128i KEY3{(ll)rd(), (ll)rd()};
-    const __m128i KEY4{(ll)rd(), (ll)rd()};
+    const __m128i KEY{(ll)rd(), (ll)rd()};
 #endif
 
     template <class T, class D = void>
@@ -62,11 +58,10 @@ namespace hashing {
         ull operator()(T v) const {
 #if USE_AES
             __m128i m{ll(v), (ll)FIXED_RANDOM};
-            __m128i y = _mm_aesenc_si128(m, KEY1);
-            __m128i z = _mm_aesenc_si128(y, KEY2);
-            __m128i a = _mm_aesenc_si128(z, KEY3);
-            __m128i b = _mm_aesenclast_si128(a, KEY3);
-            return b[0];
+            __m128i y = _mm_aesenc_si128(m, KEY);
+            __m128i z = _mm_aesenc_si128(y, KEY);
+            __m128i a = _mm_aesenc_si128(z, KEY);
+            return a[0];
 #else
             ull x = v + 0x9e3779b97f4a7c15 + FIXED_RANDOM;
             x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
