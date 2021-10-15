@@ -61,10 +61,10 @@ namespace hashing {
         T, typename std::enable_if<std::is_integral<T>::value>::type> {
         ull operator()(T v) const {
 #if USE_AES
-            ull w = ull(v) * 0xbf58476d1ce4e5b9;
-            __m128i m{ll(w), (ll)FIXED_RANDOM};
+            __m128i m{ll(v), (ll)FIXED_RANDOM};
             __m128i y = _mm_aesenc_si128(m, KEY1);
-            __m128i a = _mm_aesenclast_si128(y, KEY3);
+            __m128i z = _mm_aesenc_si128(y, KEY2);
+            __m128i a = _mm_aesenclast_si128(z, KEY3);
             return a[0];
 #else
             ull x = v + 0x9e3779b97f4a7c15 + FIXED_RANDOM;
