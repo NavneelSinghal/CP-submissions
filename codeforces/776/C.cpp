@@ -62,9 +62,9 @@ namespace hashing {
             __m128i m{ll(v), (ll)FIXED_RANDOM};
             __m128i y = _mm_aesenc_si128(m, KEY);
             m = _mm_aesenc_si128(y, KEY);
-            // return m[0];
-            y = _mm_aesenc_si128(m, KEY);
-            return y[0];
+            return m[0];
+            // y = _mm_aesenc_si128(m, KEY);
+            // return y[0];
 #else
             ull x = v + 0x9e3779b97f4a7c15 + FIXED_RANDOM;
             x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
