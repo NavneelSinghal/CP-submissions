@@ -479,17 +479,17 @@ int main() {
             }
         }
         ll ans = 0;
-        pbds::unordered_map<ll, int, hashing::custom_hash<ll>> mp;
-        mp.resize(1 << 16);
-        ll pre = 0;
-        mp[0]++;
-        for (int i = 0; i < n; ++i) {
-            pre += a[i];
-            for (auto p : powers) {
+        for (auto p : powers) {
+            pbds::unordered_map<ll, int, hashing::custom_hash<ll>> mp;
+            mp.resize(1 << 16);
+            ll pre = 0;
+            mp[0]++;
+            for (int i = 0; i < n; ++i) {
+                pre += a[i];
                 auto it = mp.find(pre - p);
                 if (it != mp.end()) ans += it->second;
+                mp[pre]++;
             }
-            mp[pre]++;
         }
         cout << ans << '\n';
     }
