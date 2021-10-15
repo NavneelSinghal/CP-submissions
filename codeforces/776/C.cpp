@@ -62,7 +62,7 @@ namespace hashing {
             __m128i m{ll(v), (ll)FIXED_RANDOM};
             __m128i y = _mm_aesenc_si128(m, KEY);
             m = _mm_aesenc_si128(y, KEY);
-            return m[0];
+            // return m[0];
             y = _mm_aesenc_si128(m, KEY);
             return y[0];
 #else
