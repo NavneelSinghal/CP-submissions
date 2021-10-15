@@ -479,7 +479,7 @@ int main() {
         }
         ll ans = 0;
         pbds::unordered_map<ll, int, hashing::custom_hash<ll>> mp;
-        mp.resize(1 << 18);
+        mp.resize(1 << 16);
         ll pre = 0;
         mp[0]++;
         for (int i = 0; i < n; ++i) {
