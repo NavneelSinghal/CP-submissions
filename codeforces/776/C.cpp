@@ -39,8 +39,7 @@ namespace hashing {
 
 #if USE_AES
     std::mt19937 rd(FIXED_RANDOM);
-    const __m128i KEY1{(ll)rd(), (ll)rd()};
-    const __m128i KEY2{(ll)rd(), (ll)rd()};
+    const __m128i KEY{(ll)rd(), (ll)rd()};
 #endif
 
     template <class T, class D = void>
@@ -59,11 +58,11 @@ namespace hashing {
         T, typename std::enable_if<std::is_integral<T>::value>::type> {
         ull operator()(T v) const {
 #if USE_AES
-            ull w = ull(v) * 0xbf58476d1ce4e5b9;
-            __m128i m{ll(w), (ll)FIXED_RANDOM};
-            __m128i y = _mm_aesenc_si128(m, KEY1);
-            __m128i a = _mm_aesenc_si128(y, KEY2);
-            return a[0];
+            __m128i m{ll(((ull(v) * 0xbf58476d1ce4e5b9) >> 17) ^
+                         ull(v + FIXED_RANDOM)),
+                      (ll)0};
+            __m128i y = _mm_aesenc_si128(m, KEY);
+            return y[0];
 #else
             ull x = v + 0x9e3779b97f4a7c15 + FIXED_RANDOM;
             x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
