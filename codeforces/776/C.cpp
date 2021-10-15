@@ -24,6 +24,14 @@ using namespace std;
 
 namespace hashing {
 
+    /* append to top
+    #define USE_AES 1
+    #if USE_AES
+        #pragma GCC target("aes")
+        #include <immintrin.h>
+    #endif
+    */
+
     using ll = std::int64_t;
     using ull = std::uint64_t;
     static const ull FIXED_RANDOM =
