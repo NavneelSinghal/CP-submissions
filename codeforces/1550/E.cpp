@@ -7,9 +7,10 @@ using namespace std;
 using ll = int64_t;
 
 template <bool b>
-auto binsearch(auto l, auto r, const auto& pred) {
+auto binsearch(auto l, auto r, auto&& pred) {
     --l, ++r;
-    for (decltype(l) m; m = midpoint(l, r), r > l + 1;) (pred(m) ? l : r) = m;
+    for (decltype(l) m; m = std::midpoint(l, r), r > l + 1;)
+        (pred(m) ? l : r) = m;
     return (b ? l : r);
 }
 
