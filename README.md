@@ -10,9 +10,10 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-1134 | [E - Clear the Multiset](https://codeforces.com/contest/1400/problem/E) | [GNU C++20 (64)](./codeforces/1400/E.cpp) | `data structures` `divide and conquer` `dp` `greedy` `*2200` | Nov/04/2021 22:37 | 
-1133 | [C - Molly's Chemicals](https://codeforces.com/contest/776/problem/C) | [GNU C++20 (64)](./codeforces/776/C.cpp) | `binary search` `brute force` `data structures` `implementation` `math` `*1800` | Oct/27/2021 04:39 | 
-1132 | [E - Stringforces](https://codeforces.com/contest/1550/problem/E) | [GNU C++20 (64)](./codeforces/1550/E.cpp) | `binary search` `bitmasks` `brute force` `dp` `strings` `two pointers` `*2500` | Oct/19/2021 14:13 | 
+1135 | [E - Clear the Multiset](https://codeforces.com/contest/1400/problem/E) | [GNU C++20 (64)](./codeforces/1400/E.cpp) | `data structures` `divide and conquer` `dp` `greedy` `*2200` | Nov/04/2021 22:37 | 
+1134 | [C - Molly's Chemicals](https://codeforces.com/contest/776/problem/C) | [GNU C++20 (64)](./codeforces/776/C.cpp) | `binary search` `brute force` `data structures` `implementation` `math` `*1800` | Oct/27/2021 04:39 | 
+1133 | [E - Stringforces](https://codeforces.com/contest/1550/problem/E) | [GNU C++20 (64)](./codeforces/1550/E.cpp) | `binary search` `bitmasks` `brute force` `dp` `strings` `two pointers` `*2500` | Oct/19/2021 14:13 | 
+1132 | [J - Lonely Numbers](https://codeforces.com/contest/1424/problem/J) | [GNU C++17 (64)](./codeforces/1424/J.cpp) | `math` `*1600` | Oct/17/2021 01:29 | 
 1131 | [J - Robot Factory](https://codeforces.com/contest/1600/problem/J) | [GNU C11](./codeforces/1600/J.cpp) | `bitmasks` `dfs and similar` `*1400` | Oct/11/2021 09:38 | 
 1130 | [C - Delete Two Elements](https://codeforces.com/contest/1598/problem/C) | [Go](./codeforces/1598/C.go) | `data structures` `dp` `implementation` `math` `two pointers` `*1200` | Oct/11/2021 08:23 | 
 1129 | [E - Fix the String](https://codeforces.com/contest/1571/problem/E) | [Kotlin 1.4](./codeforces/1571/E.kt) | `*special problem` `bitmasks` `dp` `greedy` | Oct/07/2021 23:14 | 
