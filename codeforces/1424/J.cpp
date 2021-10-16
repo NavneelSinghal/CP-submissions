@@ -29,7 +29,7 @@ struct fast_sieve_func_spf {
         spf.resize(n + 1);
         for (int i = 2; i <= n; ++i) {
             ans[i] = ans[i - 1];
-            int x = (int)sqrt(i);
+            int x = sqrt(i);
             if (x * x == i and is_prime[x]) ans[i]--;
             if (is_prime[i]) {
                 primes.push_back(i);
