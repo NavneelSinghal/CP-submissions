@@ -6,6 +6,23 @@
 using namespace std;
 using ll = int64_t;
 
+template <bool b>
+auto binsearch(auto l, auto r, const auto& pred) {
+    --l, ++r;
+    for (decltype(l) m; m = midpoint(l, r), r > l + 1;) (pred(m) ? l : r) = m;
+    return (b ? l : r);
+}
+
+// returns first i in [l, r], p(i) false, and if none found, returns r + 1
+auto find_first_false(auto l, auto r, const auto& p) {
+    return binsearch<false>(l, r, p);
+}
+
+// returns last i in [l, r], p(i) true, and if none found, returns l - 1
+auto find_last_true(auto l, auto r, const auto& p) {
+    return binsearch<true>(l, r, p);
+}
+
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int t = 1;
@@ -15,7 +32,7 @@ int main() {
         int n, k;
         string s;
         cin >> n >> k >> s;
-        cout << *ranges::partition_point(views::iota(1, n / k + 1), [&](int m) {
+        cout << find_last_true(1, n / k, [&](int m) {
             const int inf = 1e9;
             vector leftmost(k, vector(n + 1, inf));
             for (int bit = 0; bit < k; ++bit) {
@@ -36,7 +53,6 @@ int main() {
                             dp[mask ^ (1 << bit)], leftmost[bit][dp[mask]] + m);
             }
             return dp[(1 << k) - 1] <= n;
-        }) - 1 << '\n';
+        }) << '\n';
     }
 }
-
