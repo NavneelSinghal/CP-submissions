@@ -27,13 +27,10 @@ struct fast_sieve_func_spf {
         ans.assign(n + 1, 0);
         is_prime[0] = is_prime[1] = false;
         spf.resize(n + 1);
-        int x = 1;
         for (int i = 2; i <= n; ++i) {
             ans[i] = ans[i - 1];
-            if ((x + 1) * (x + 1) == i) {
-                ++x;
-                if (is_prime[x]) --ans[i];
-            }
+            int x = (int)sqrt(i);
+            if (x * x == i and is_prime[x]) ans[i]--;
             if (is_prime[i]) {
                 primes.push_back(i);
                 spf[i] = i;
