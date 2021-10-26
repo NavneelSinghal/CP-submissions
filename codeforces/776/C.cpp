@@ -2,6 +2,7 @@
     #pragma GCC optimize("O3,unroll-loops")
     #pragma GCC target("avx2,bmi2,lzcnt,popcnt")
 #endif
+
 #define USE_AES 1
 #if USE_AES
     #pragma GCC target("aes")
@@ -23,16 +24,6 @@ using namespace std;
 
 namespace hashing {
 
-    /* append to top
-    #define USE_AES 1
-    #if USE_AES
-        #ifndef LOCAL
-            #pragma GCC target("aes")
-        #endif
-        #include <immintrin.h>
-    #endif
-    */
-
     using ll = std::int64_t;
     using ull = std::uint64_t;
     static const ull FIXED_RANDOM =
@@ -40,7 +31,8 @@ namespace hashing {
 
 #if USE_AES
     std::mt19937 rd(FIXED_RANDOM);
-    const __m128i KEY{(ll)rd(), (ll)rd()};
+    const __m128i KEY1{(ll)rd(), (ll)rd()};
+    const __m128i KEY2{(ll)rd(), (ll)rd()};
 #endif
 
     template <class T, class D = void>
@@ -57,13 +49,13 @@ namespace hashing {
     template <class T>
     struct custom_hash<
         T, typename std::enable_if<std::is_integral<T>::value>::type> {
-        ull operator()(T v) const {
+        ull operator()(T x) const {
 #if USE_AES
-            __m128i m{ll(v), (ll)FIXED_RANDOM};
-            __m128i y = _mm_aesenc_si128(m, KEY);
-            m = _mm_aesenc_si128(y, KEY);
-            y = _mm_aesenc_si128(m, KEY);
-            return y[0];
+            // implementation defined till C++17, defined from C++20
+            __m128i m{ll(ull(x) * 0xbf58476d1ce4e5b9ULL), (ll)FIXED_RANDOM};
+            __m128i y = _mm_aesenc_si128(m, KEY1);
+            __m128i z = _mm_aesenc_si128(y, KEY2);
+            return z[0];
 #else
             ull x = v + 0x9e3779b97f4a7c15 + FIXED_RANDOM;
             x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
@@ -478,17 +470,17 @@ int main() {
             }
         }
         ll ans = 0;
-        for (auto p : powers) {
-            pbds::unordered_map<ll, int, hashing::custom_hash<ll>> mp;
-            mp.resize(1 << 16);
-            ll pre = 0;
-            mp[0]++;
-            for (int i = 0; i < n; ++i) {
-                pre += a[i];
+        pbds::unordered_map<ll, int, hashing::custom_hash<ll>> mp;
+        mp.resize(1 << 18);
+        ll pre = 0;
+        mp[0]++;
+        for (int i = 0; i < n; ++i) {
+            pre += a[i];
+            for (auto p : powers) {
                 auto it = mp.find(pre - p);
                 if (it != mp.end()) ans += it->second;
-                mp[pre]++;
             }
+            mp[pre]++;
         }
         cout << ans << '\n';
     }
