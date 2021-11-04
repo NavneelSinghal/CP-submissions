@@ -556,10 +556,38 @@ struct Mo {
             ans += (seg == 1 || seg == 2) ? add : (sub_square_size - add - 1);
             return ans;
         }
-        Query(int _l, int _r, int lgn)
-            : l(_l), r(_r), order(hilbert_order(_l, _r, lgn, 0)) {}
+        Query(int _l, int _r, int lgn) : l(_l), r(_r) {
+            order = hilbert_order(_l, _r, lgn, 0);
+        }
         bool operator<(const Query& q) const { return order < q.order; }
     };
+    template <class T, bool unsafe = false>
+    __attribute__((target("bmi,bmi2,popcnt,lzcnt"))) constexpr uint32_t clz(
+        T a) {
+        if constexpr (!unsafe) {
+            if (!a) return sizeof(T) * 8;
+        }
+        if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+            return (uint32_t)(__builtin_clz((uint32_t)a));
+        } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+            return (uint32_t)(__builtin_clzll((uint64_t)a));
+        } else {
+            static_assert(sizeof(T) == sizeof(uint64_t) * 2);
+            uint32_t l = clz((uint64_t)(a >> sizeof(uint64_t) * 8));
+            return l != sizeof(uint64_t) * 8 ? l : l + clz((uint64_t)a);
+        }
+    }
+    template <class T, bool unsafe = false>
+    __attribute__((target("bmi,bmi2,popcnt,lzcnt"))) constexpr uint32_t lg(
+        T a) {
+        if constexpr (sizeof(T) <= sizeof(uint32_t)) {
+            return sizeof(uint32_t) * 8 - 1 - clz<T, unsafe>(a);
+        } else if constexpr (sizeof(T) <= sizeof(uint64_t)) {
+            return sizeof(uint64_t) * 8 - 1 - clz<T, unsafe>(a);
+        } else {
+            return sizeof(uint64_t) * 16 - 1 - clz<T, unsafe>(a);
+        }
+    }
 
    public:
     Mo(int _n, const std::vector<std::pair<int, int>>& _queries,
@@ -575,11 +603,11 @@ struct Mo {
         int n = _n;
         std::vector<Query> queries;
         queries.reserve(q);
-        int N = 2 * n - 1;
-        int lgn = 0;
-        while ((1 << lgn) <= N) ++lgn;
-        --lgn;
-        for (auto [l, r] : _queries) queries.emplace_back(Query(l, r, lgn));
+        int lgn = lg(2 * n - 1);
+        for (int i = 0; i < q; ++i) {
+            auto [l, r] = _queries[i];
+            queries.push_back(Query(l, r, lgn));
+        }
         std::vector<int> id(q);
         std::iota(id.begin(), id.end(), 0);
         std::sort(id.begin(), id.end(),
@@ -626,6 +654,7 @@ int main() {
         cin >> a;
         vector<int> compressed, vals;
         tie(compressed, vals) = compress(a);
+        debug(compressed, vals);
         vector<pair<int, int>> queries(q);
         for (auto& [l, r] : queries) cin >> l >> r, --l, --r;
         using Base = int;
