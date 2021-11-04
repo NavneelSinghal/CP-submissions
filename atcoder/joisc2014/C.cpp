@@ -529,7 +529,7 @@ struct lazy_segtree {
 };
 // clang-format on
 
-template <class BlockSize, class Node, class AL, class AR, class EL, class ER>
+template <class Node, class AL, class AR, class EL, class ER>
 struct Mo {
    private:
     std::vector<Node> ans;
@@ -540,14 +540,31 @@ struct Mo {
     ER erase_right;
     struct Query {
         int l, r;
+        int64_t order;
+        Query() {}
+        inline int64_t hilbert_order(int x, int y, int p, int to_rotate) {
+            if (p == 0) return 0;
+            static constexpr int rotate_delta[4] = {3, 0, 0, 1};
+            int hp = 1 << (p - 1);
+            int seg = (x < hp) ? ((y < hp) ? 0 : 3) : ((y < hp) ? 1 : 2);
+            seg = (seg + to_rotate) & 3;
+            int nx = x & (x ^ hp), ny = y & (y ^ hp);
+            int nrot = (to_rotate + rotate_delta[seg]) & 3;
+            int64_t sub_square_size = int64_t(1) << (2 * p - 2);
+            int64_t ans = seg * sub_square_size;
+            int64_t add = hilbert_order(nx, ny, p - 1, nrot);
+            ans += (seg == 1 || seg == 2) ? add : (sub_square_size - add - 1);
+            return ans;
+        }
+        Query(int _l, int _r, int lgn)
+            : l(_l), r(_r), order(hilbert_order(_l, _r, lgn, 0)) {}
+        bool operator<(const Query& q) const { return order < q.order; }
     };
-    static constexpr int B = BlockSize::value;
 
    public:
-    Mo(int _n, BlockSize dummy,
-       const std::vector<std::pair<int, int>>& _queries, const Node& _id_node,
-       const AL& _add_left, const AR& _add_right, const EL& _erase_left,
-       const ER& _erase_right)
+    Mo(int _n, const std::vector<std::pair<int, int>>& _queries,
+       const Node& _id_node, const AL& _add_left, const AR& _add_right,
+       const EL& _erase_left, const ER& _erase_right)
         : ans(_queries.size()),
           id_node(_id_node),
           add_left(_add_left),
@@ -556,23 +573,21 @@ struct Mo {
           erase_right(_erase_right) {
         int q = (int)_queries.size();
         int n = _n;
+        std::vector<Query> queries;
+        queries.reserve(q);
         int N = 2 * n - 1;
         int lgn = 0;
         while ((1 << lgn) <= N) ++lgn;
         --lgn;
+        for (auto [l, r] : _queries) queries.emplace_back(Query(l, r, lgn));
         std::vector<int> id(q);
         std::iota(id.begin(), id.end(), 0);
-        std::sort(id.begin(), id.end(), [&_queries](int i, int j) {
-            return _queries[i].first / B != _queries[j].first / B
-                       ? _queries[i] < _queries[j]
-                   : _queries[i].first / B & 1
-                       ? _queries[i].second < _queries[j].second
-                       : _queries[i].second > _queries[j].second;
-        });
+        std::sort(id.begin(), id.end(),
+                  [&queries](int i, int j) { return queries[i] < queries[j]; });
         int l = 0, r = -1;
         Node cur = id_node;
         for (auto i : id) {
-            auto [ql, qr] = _queries[i];
+            auto [ql, qr, _] = queries[i];
             while (l > ql) add_left(--l, cur);
             while (r < qr) add_right(++r, cur);
             while (l < ql) erase_left(l++, cur);
@@ -599,10 +614,6 @@ auto compress(const vector<T>& a) {
     }
     return make_pair(compressed, vals);
 }
-
-struct BlockSize {
-    static constexpr int value = 300;
-} dummy;
 
 int main() {
     int _tests = 1;
@@ -634,15 +645,17 @@ int main() {
         vector<Base> v(n + 1);
         lazy_segtree st(v, id_node, make_node, combine, id_update,
                         apply_update);
-        auto add = [&](int x, ll& val) {
+        auto add_left = [&](int x, ll& val) {
             st.update(compressed[x], a[x]);
             val = st.all_query();
         };
-        auto erase = [&](int x, ll& val) {
+        auto add_right = add_left;
+        auto erase_left = [&](int x, ll& val) {
             st.update(compressed[x], -a[x]);
             val = st.all_query();
         };
-        Mo mo(n, dummy, queries, ll(0), add, add, erase, erase);
+        auto erase_right = erase_left;
+        Mo mo(n, queries, ll(0), add_left, add_right, erase_left, erase_right);
         auto ans = mo.get();
         for (auto x : ans) cout << x << '\n';
     }
