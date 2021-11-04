@@ -10,6 +10,7 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
+1134 | [E - Clear the Multiset](https://codeforces.com/contest/1400/problem/E) | [GNU C++20 (64)](./codeforces/1400/E.cpp) | `data structures` `divide and conquer` `dp` `greedy` `*2200` | Nov/04/2021 22:37 | 
 1133 | [E - Stringforces](https://codeforces.com/contest/1550/problem/E) | [GNU C++20 (64)](./codeforces/1550/E.cpp) | `binary search` `bitmasks` `brute force` `dp` `strings` `two pointers` `*2500` | Oct/16/2021 22:23 | 
 1132 | [C - Molly's Chemicals](https://codeforces.com/contest/776/problem/C) | [GNU C++17 (64)](./codeforces/776/C.cpp) | `binary search` `brute force` `data structures` `implementation` `math` `*1800` | Oct/15/2021 15:40 | 
 1131 | [J - Robot Factory](https://codeforces.com/contest/1600/problem/J) | [GNU C11](./codeforces/1600/J.cpp) | `bitmasks` `dfs and similar` `*1400` | Oct/11/2021 09:38 | 
