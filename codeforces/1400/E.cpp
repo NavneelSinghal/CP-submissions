@@ -142,7 +142,9 @@ struct Cache<ReturnType(Args...), Lambda> {
         auto tied_args = std::tie(args...);
         auto it = memo.find(tied_args);
         if (it == memo.end()) {
-            return memo[tied_args] = f(*this, std::forward<DummyArgs>(args)...);
+            auto&& ans = f(*this, std::forward<DummyArgs>(args)...);
+            memo[tied_args] = ans;
+            return ans;
         } else {
             return it->second;
         }
