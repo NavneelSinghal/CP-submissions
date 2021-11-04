@@ -1,4 +1,20 @@
 {
+  "AC27029699": {
+    "contest_id": "joisc2014",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/joisc2014/C.cpp",
+    "platform": "AtCoder",
+    "problem_index": "C",
+    "problem_name": "\u6b74\u53f2\u306e\u7814\u7a76",
+    "problem_url": "https://atcoder.jp/contests/joisc2014/tasks/joisc2014_c",
+    "submission_id": "AC27029699",
+    "submission_url": "https://atcoder.jp/contests/joisc2014/submissions/27029699",
+    "tags": [
+      "AtCoder",
+      "*100"
+    ],
+    "timestamp": "Nov/05/2021 00:43"
+  },
   "AC27029706": {
     "contest_id": "joisc2014",
     "language": "C++ (GCC 9.2.1)",

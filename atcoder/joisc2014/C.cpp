@@ -601,7 +601,7 @@ auto compress(const vector<T>& a) {
 }
 
 struct BlockSize {
-    static constexpr int value = 400;
+    static constexpr int value = 300;
 } dummy;
 
 int main() {
