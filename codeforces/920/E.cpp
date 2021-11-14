@@ -337,7 +337,7 @@ int main() {
         for (int i = 1; i < n; ++i) cnt[i] += cnt[i - 1];
         for (int i = (int)edges.size() - 1; i >= 0; --i)
             temp[--cnt[edges[i].second]] = edges[i];
-        vector<basic_string<int>> g(n);
+        vector<vector<int>> g(n);
         for (auto [u, v] : temp) g[u].push_back(v);
         return g;
     };
@@ -349,9 +349,9 @@ int main() {
     vector<int> unvisited(n);
     iota(begin(unvisited), end(unvisited), 0);
 
-    queue<int> q;
     for (int i = 0; i < n; ++i) {
         if (component[i] != -1) continue;
+        queue<int> q;
         cur_component++;
         component_sz.push_back(1);
         component[i] = cur_component;
