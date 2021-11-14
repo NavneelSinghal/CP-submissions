@@ -322,7 +322,6 @@ int main() {
 
     using edge = pair<int, int>;
     vector<edge> edges;
-    edges.reserve(2 * m);
     for (int i = 0; i < m; ++i) {
         int u, v;
         cin >> u >> v;
@@ -364,9 +363,8 @@ int main() {
             vector<int> remaining_to_visit;
             for (auto v : unvisited) {
                 if (v == u) continue;
-                int sz = (int)g[u].size();
-                while (ptr < sz && g[u][ptr] < v) ++ptr;
-                if (ptr < sz && v == g[u][ptr]) {
+                while (ptr < (int)g[u].size() && g[u][ptr] < v) ++ptr;
+                if (ptr < (int)g[u].size() && v == g[u][ptr]) {
                     remaining_to_visit.push_back(v);
                 } else {
                     component[v] = cur_component;
