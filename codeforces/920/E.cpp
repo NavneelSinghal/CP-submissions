@@ -323,15 +323,17 @@ struct graph_edge_pointers {
     vector<int> head;
     // head[i] = index of the last edge emanating from vertex i
     vector<edge> edges;
+    vector<int> sz;
     int cur_edges;
 
-    graph_edge_pointers(int n, int m) : head(n, -1), cur_edges(0) {
+    graph_edge_pointers(int n, int m) : head(n, -1), sz(n), cur_edges(0) {
         edges.reserve(2 * m);
     }
 
     // while adding (u, v), (v, u), we have i, i^1 as corresponding edges
     void add_edge(int u, int v) {
         edges.emplace_back(v, head[u]);
+        ++sz[v];
         head[u] = cur_edges++;
     }
 };
