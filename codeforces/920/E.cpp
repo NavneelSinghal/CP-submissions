@@ -369,7 +369,6 @@ int main() {
     auto g = get_sorted_graph(edges, n);
     vector component(n, -1);
     vector<int> component_sz;
-    component_sz.reserve(n);
     int cur_component = -1;
     vector<int> unvisited(n);
     iota(begin(unvisited), end(unvisited), 0);
