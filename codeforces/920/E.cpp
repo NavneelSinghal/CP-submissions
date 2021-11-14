@@ -314,30 +314,6 @@ IO io;
 
 using namespace std;
 
-struct graph_edge_pointers {
-    struct edge {
-        int to, nxt;
-        edge(int to, int nxt) : to(to), nxt(nxt) {}
-    };
-
-    vector<int> head;
-    // head[i] = index of the last edge emanating from vertex i
-    vector<edge> edges;
-    vector<int> sz;
-    int cur_edges;
-
-    graph_edge_pointers(int n, int m) : head(n, -1), sz(n), cur_edges(0) {
-        edges.reserve(2 * m);
-    }
-
-    // while adding (u, v), (v, u), we have i, i^1 as corresponding edges
-    void add_edge(int u, int v) {
-        edges.emplace_back(v, head[u]);
-        ++sz[v];
-        head[u] = cur_edges++;
-    }
-};
-
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
 
@@ -362,9 +338,8 @@ int main() {
         for (int i = 1; i < n; ++i) cnt[i] += cnt[i - 1];
         for (int i = (int)edges.size() - 1; i >= 0; --i)
             temp[--cnt[edges[i].second]] = edges[i];
-        graph_edge_pointers g(n, (int)edges.size());
-        for (int i = (int)temp.size() - 1; i >= 0; --i)
-            g.add_edge(temp[i].first, temp[i].second);
+        vector<basic_string<int>> g(n);
+        for (auto [u, v] : temp) g[u].push_back(v);
         return g;
     };
 
@@ -385,12 +360,13 @@ int main() {
         while (!q.empty()) {
             int u = q.front();
             q.pop();
-            int cur = g.head[u];
+            int ptr = 0;
             vector<int> remaining_to_visit;
             for (auto v : unvisited) {
                 if (v == u) continue;
-                while (cur != -1 && g.edges[cur].to < v) cur = g.edges[cur].nxt;
-                if (cur != -1 && v == g.edges[cur].to) {
+                int sz = (int)g[u].size();
+                while (ptr < sz && g[u][ptr] < v) ++ptr;
+                if (ptr < sz && v == g[u][ptr]) {
                     remaining_to_visit.push_back(v);
                 } else {
                     component[v] = cur_component;
@@ -407,4 +383,3 @@ int main() {
     for (auto x : component_sz) cout << x << ' ';
     cout << '\n';
 }
-
