@@ -561,11 +561,11 @@ int main() {
         auto compose_updates = [](Update u, Update v) -> Node {
             return u + v;
         };
-        // auto check_lazy = [](Update u) -> bool {
-        //     return u != 0;
-        // };
+        auto check_lazy = [](Update u) -> bool {
+            return u != 0;
+        };
         lazy_segtree st(temp, id_node, make_node, combine, id_update,
-                        apply_update, compose_updates);
+                        apply_update, compose_updates, check_lazy);
         int ans = 0;
         int start = -1;
         for (int i = n - 1; i >= 0; --i) {
