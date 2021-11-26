@@ -1,4 +1,21 @@
 {
+  "CF136961297": {
+    "contest_id": 12,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/12/B.cpp",
+    "platform": "Codeforces",
+    "problem_index": "B",
+    "problem_name": "Correct Solution?",
+    "problem_url": "https://codeforces.com/contest/12/problem/B",
+    "submission_id": "CF136961297",
+    "submission_url": "https://codeforces.com/contest/12/submission/136961297",
+    "tags": [
+      "implementation",
+      "sortings",
+      "*1100"
+    ],
+    "timestamp": "Nov/26/2021 10:16"
+  },
   "CF138562681": {
     "contest_id": 1614,
     "language": "GNU C++20 (64)",
