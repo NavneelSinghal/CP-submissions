@@ -146,11 +146,11 @@ namespace hashing {
 // 1-based indexing for internals
 template <typename T>
 struct Fenwick {
-    int n;
-    pbds::unordered_map<int, T, hashing::custom_hash<int>> t;
-    Fenwick(int n) : n(n) {}
+    ll n;
+    pbds::unordered_map<ll, T, hashing::custom_hash<ll>> t;
+    Fenwick(ll n) : n(n) {}
     // prefix sum [0, i)
-    T query(int i) {
+    T query(ll i) {
         T s = 0;
         while (i) {
             s += t[i];
@@ -159,9 +159,9 @@ struct Fenwick {
         return s;
     }
     // range query [l, r)
-    T query(int l, int r) { return query(r) - query(l); }
+    T query(ll l, ll r) { return query(r) - query(l); }
     // increase a[i] by v
-    void update(int i, T v) {
+    void update(ll i, T v) {
         ++i;
         while (i <= n) {
             t[i] += v;
@@ -173,10 +173,10 @@ struct Fenwick {
     // returns the max r > 0 such that f(query([0, r)), r) is true
     // returns 0 if no such positive r exists
     template <class F>
-    int max_right(F&& f) {
+    ll max_right(F&& f) {
         T sum = 0;
-        int pos = 0;
-        for (int i = __lg(n); i >= 0; --i) {
+        ll pos = 0;
+        for (ll i = __lg(n); i >= 0; --i) {
             if (pos + (1LL << i) <= n) {
                 T s = sum + t[pos + (1LL << i)];
                 if (f(s, pos + (1LL << i))) {
@@ -197,10 +197,10 @@ int main() {
         int n;
         cin >> n;
 
-        constexpr int mod = int(1e9) + 1;
-        Fenwick<int> f(mod + 2);
+        constexpr ll mod = int(1e9) + 1;
+        Fenwick<ll> f(mod + 2);
 
-        int lastans = 0;
+        ll lastans = 0;
 
         while (n--) {
             int t, k;
@@ -214,10 +214,8 @@ int main() {
             // = -1 + first i such that query(0, i) + i - 1 > t
             // = last i such that query(0, i) + i - 1 <= t
 
-            int l =
-                f.max_right([&](int val, int i) { return val + i - 1 < t; });
-            int r =
-                f.max_right([&](int val, int i) { return val + i - 1 <= t; });
+            ll l = f.max_right([&](ll val, ll i) { return val + i - 1 < t; });
+            ll r = f.max_right([&](ll val, ll i) { return val + i - 1 <= t; });
 
             // [0, l - 1] -> range add +1
             // [l, r - 1] -> range add 0
