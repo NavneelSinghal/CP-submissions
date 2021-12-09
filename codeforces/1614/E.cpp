@@ -208,7 +208,7 @@ int main() {
         constexpr int mod = int(1e9) + 1;
         Fenwick<int> f(mod + 2);
 
-        f.reserve(1 << 23);
+        f.reserve(1 << 22);
 
         int lastans = 0;
 
