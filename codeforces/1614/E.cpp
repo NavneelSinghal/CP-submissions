@@ -146,28 +146,22 @@ namespace hashing {
 // 1-based indexing for internals
 template <typename T>
 struct Fenwick {
-    ll n;
-    pbds::unordered_map<ll, T, hashing::custom_hash<ll>> t;
-    Fenwick(ll n) : n(n) {}
-    // reserve roughly q * log q
-    void reserve(int sz) {
-        assert(sz > 0 && !(sz & (sz - 1)));
-        t.resize(sz);
-    }
+    int n;
+    pbds::unordered_map<int, T, hashing::custom_hash<int>> t;
+    Fenwick(int n) : n(n) {}
     // prefix sum [0, i)
-    T query(ll i) {
+    T query(int i) {
         T s = 0;
         while (i) {
-            auto it = t.find(i);
-            if (it != t.end()) s += it->second;
+            s += t[i];
             i -= i & (-i);
         }
         return s;
     }
     // range query [l, r)
-    T query(ll l, ll r) { return query(r) - query(l); }
+    T query(int l, int r) { return query(r) - query(l); }
     // increase a[i] by v
-    void update(ll i, T v) {
+    void update(int i, T v) {
         ++i;
         while (i <= n) {
             t[i] += v;
@@ -179,16 +173,14 @@ struct Fenwick {
     // returns the max r > 0 such that f(query([0, r)), r) is true
     // returns 0 if no such positive r exists
     template <class F>
-    ll max_right(F&& f) {
+    int max_right(F&& f) {
         T sum = 0;
-        ll pos = 0;
-        for (ll i = __lg(n); i >= 0; --i) {
-            ll x = pos | (1LL << i);
-            if (x <= n) {
-                auto it = t.find(x);
-                T s = sum + (it == t.end() ? 0 : it->second);
-                if (f(s, x)) {
-                    pos = x;
+        int pos = 0;
+        for (int i = __lg(n); i >= 0; --i) {
+            if (pos + (1LL << i) <= n) {
+                T s = sum + t[pos + (1LL << i)];
+                if (f(s, pos + (1LL << i))) {
+                    pos += (1LL << i);
                     sum = s;
                 }
             }
@@ -208,8 +200,6 @@ int main() {
         constexpr int mod = int(1e9) + 1;
         Fenwick<int> f(mod + 2);
 
-        f.reserve(1 << 22);
-
         int lastans = 0;
 
         while (n--) {
@@ -225,9 +215,9 @@ int main() {
             // = last i such that query(0, i) + i - 1 <= t
 
             int l =
-                (int)f.max_right([&](int val, ll i) { return val + i <= t; });
-            int r = (int)f.max_right(
-                [&](int val, ll i) { return val + i - 1 <= t; });
+                f.max_right([&](int val, int i) { return val + i - 1 < t; });
+            int r =
+                f.max_right([&](int val, int i) { return val + i - 1 <= t; });
 
             // [0, l - 1] -> range add +1
             // [l, r - 1] -> range add 0
