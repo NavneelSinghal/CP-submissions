@@ -66,7 +66,7 @@ int main() {
             points.emplace(x + y, x - y + N);
         }
 
-        vector<basic_string<int>> Y((2 * N + 1) << 2);
+        vector<vector<int>> Y((2 * N + 1) << 2);
 
         auto build = [&](const auto& self, int i, int l, int r) -> void {
             if (l + 1 == r) {
