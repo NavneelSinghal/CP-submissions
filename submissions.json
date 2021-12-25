@@ -2079,6 +2079,22 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "AC28145660": {
+    "contest_id": "abc233",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc233/F.cpp",
+    "platform": "AtCoder",
+    "problem_index": "F",
+    "problem_name": "Swap and Sort",
+    "problem_url": "https://atcoder.jp/contests/abc233/tasks/abc233_f",
+    "submission_id": "AC28145660",
+    "submission_url": "https://atcoder.jp/contests/abc233/submissions/28145660",
+    "tags": [
+      "AtCoder",
+      "*500"
+    ],
+    "timestamp": "Dec/25/2021 19:01"
+  },
   "AC28151787": {
     "contest_id": "abc233",
     "language": "C++ (GCC 9.2.1)",
