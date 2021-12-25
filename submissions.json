@@ -2079,6 +2079,22 @@
     ],
     "timestamp": "Nov/05/2021 00:45"
   },
+  "AC28151787": {
+    "contest_id": "abc233",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc233/G.cpp",
+    "platform": "AtCoder",
+    "problem_index": "G",
+    "problem_name": "Strongest Takahashi",
+    "problem_url": "https://atcoder.jp/contests/abc233/tasks/abc233_g",
+    "submission_id": "AC28151787",
+    "submission_url": "https://atcoder.jp/contests/abc233/submissions/28151787",
+    "tags": [
+      "AtCoder",
+      "*600"
+    ],
+    "timestamp": "Dec/25/2021 20:00"
+  },
   "AC28154732": {
     "contest_id": "abc233",
     "language": "C++ (GCC 9.2.1)",
