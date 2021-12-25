@@ -13,10 +13,11 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-495 | [Ex - Manhattan Christmas Tree](https://atcoder.jp/contests/abc233/tasks/abc233_h) | [C++ (GCC 9.2.1)](./atcoder/abc233/Ex.cpp) | `AtCoder` `*600` | Dec/25/2021 22:15 | 
-494 | [G - Strongest Takahashi](https://atcoder.jp/contests/abc233/tasks/abc233_g) | [C++ (GCC 9.2.1)](./atcoder/abc233/G.cpp) | `AtCoder` `*600` | Dec/25/2021 20:00 | 
-493 | [F - Swap and Sort](https://atcoder.jp/contests/abc233/tasks/abc233_f) | [C++ (GCC 9.2.1)](./atcoder/abc233/F.cpp) | `AtCoder` `*500` | Dec/25/2021 19:01 | 
-492 | [E - Σ[k=0..10^100]floor(X／10^k)](https://atcoder.jp/contests/abc233/tasks/abc233_e) | [C++ (GCC 9.2.1)](./atcoder/abc233/E.cpp) | `AtCoder` `*500` | Dec/25/2021 17:43 | 
+496 | [Ex - Manhattan Christmas Tree](https://atcoder.jp/contests/abc233/tasks/abc233_h) | [C++ (GCC 9.2.1)](./atcoder/abc233/Ex.cpp) | `AtCoder` `*600` | Dec/25/2021 22:15 | 
+495 | [G - Strongest Takahashi](https://atcoder.jp/contests/abc233/tasks/abc233_g) | [C++ (GCC 9.2.1)](./atcoder/abc233/G.cpp) | `AtCoder` `*600` | Dec/25/2021 20:00 | 
+494 | [F - Swap and Sort](https://atcoder.jp/contests/abc233/tasks/abc233_f) | [C++ (GCC 9.2.1)](./atcoder/abc233/F.cpp) | `AtCoder` `*500` | Dec/25/2021 19:01 | 
+493 | [E - Σ[k=0..10^100]floor(X／10^k)](https://atcoder.jp/contests/abc233/tasks/abc233_e) | [C++ (GCC 9.2.1)](./atcoder/abc233/E.cpp) | `AtCoder` `*500` | Dec/25/2021 17:43 | 
+492 | [D - Count Interval](https://atcoder.jp/contests/abc233/tasks/abc233_d) | [C++ (GCC 9.2.1)](./atcoder/abc233/D.cpp) | `AtCoder` `*400` | Dec/25/2021 17:39 | 
 491 | [E - Xenia and Tree](https://codeforces.com/contest/342/problem/E) | [GNU C++20 (64)](./codeforces/342/E.cpp) | `data structures` `divide and conquer` `trees` `*2400` | Dec/17/2021 14:50 | 
 490 | [E - Divan and a Cottage](https://codeforces.com/contest/1614/problem/E) | [GNU C++20 (64)](./codeforces/1614/E.cpp) | `binary search` `data structures` `*2600` | Dec/09/2021 22:36 | 
 489 | [B - Correct Solution?](https://codeforces.com/contest/12/problem/B) | [GNU C++20 (64)](./codeforces/12/B.cpp) | `implementation` `sortings` `*1100` | Nov/26/2021 10:16 | 
