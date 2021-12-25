@@ -17,34 +17,53 @@ using ld = long double;
 
 using namespace std;
 
-template <typename I, typename P, bool b>
-I bin_search_split(I l, I r, const P& predicate) {
-    --l, ++r;
-    while (r - l > 1) {
-        auto mid = l + (r - l) / 2;
-        if (predicate(mid))
-            l = mid;
-        else
-            r = mid;
+// 0-based indexing for API
+// 1-based indexing for internals
+template <typename T>
+struct Fenwick {
+    int n;
+    vector<T> t;
+    Fenwick(int n) : n(n), t(n + 1) {}
+    // prefix sum [0, i)
+    T query(int i) {
+        T s = 0;
+        while (i) {
+            s += t[i];
+            i -= i & (-i);
+        }
+        return s;
     }
-    if constexpr (b) {
-        return r;
-    } else {
-        return l;
+    // range query [l, r)
+    T query(int l, int r) { return query(r) - query(l); }
+    // increase a[i] by v
+    void update(int i, T v) {
+        ++i;
+        while (i <= n) {
+            t[i] += v;
+            i += i & (-i);
+        }
     }
-}
 
-// returns first i in [l, r], p(i) false, and if none found, returns r + 1
-template <typename I, typename P>
-I find_first_false(I l, I r, const P& p) {
-    return bin_search_split<I, P, true>(l, r, p);
-}
-
-// returns last i in [l, r], p(i) true, and if none found, returns l - 1
-template <typename I, typename P>
-I find_last_true(I l, I r, const P& p) {
-    return bin_search_split<I, P, false>(l, r, p);
-}
+    // assumes f is monotonic - TT...TFF...F
+    // returns the max r > 0 such that f(query([0, r)), r) is true
+    // returns 0 if no such positive r exists
+    template <class F>
+    int max_right(F&& f) {
+        // assert(f(0));
+        T sum = 0;
+        int pos = 0;
+        for (int i = __lg(n); i >= 0; --i) {
+            if (pos + (1 << i) <= n) {
+                T s = sum + t[pos + (1 << i)];
+                if (f(s, pos + (1 << i))) {
+                    pos += (1 << i);
+                    sum = s;
+                }
+            }
+        }
+        return pos;
+    }
+};
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
@@ -55,59 +74,79 @@ int main() {
         // cout << "Case #" << _test << ": ";
 
         constexpr int N = 100000;
-
-        set<pair<int, int>> points;
+        vector<pair<int, int>> points;
 
         int n;
         cin >> n;
         for (int i = 0; i < n; ++i) {
             int x, y;
             cin >> x >> y;
-            points.emplace(x + y, x - y + N);
+            points.emplace_back(x + y, x - y + N);
         }
-
-        vector<vector<int>> Y((2 * N + 1) << 2);
-
-        auto build = [&](const auto& self, int i, int l, int r) -> void {
-            if (l + 1 == r) {
-                auto it = points.lower_bound({l, 0});
-                while (it != points.end() && it->first == l)
-                    Y[i].push_back(it->second), ++it;
-            } else {
-                self(self, 2 * i, l, (l + r) / 2);
-                self(self, 2 * i + 1, (l + r) / 2, r);
-                Y[i].resize(Y[2 * i].size() + Y[2 * i + 1].size());
-                merge(Y[2 * i].begin(), Y[2 * i].end(), Y[2 * i + 1].begin(),
-                      Y[2 * i + 1].end(), Y[i].begin());
-            }
-        };
-
-        build(build, 1, 0, 2 * N + 1);
-
-        // query [x1, x2) * [y1, y2)
-        auto query = [&](const auto& self, int x1, int y1, int x2, int y2,
-                         int i, int l, int r) -> int {
-            if (x2 <= l || r <= x1)
-                return 0;
-            else if (x1 <= l && r <= x2)
-                return int(lower_bound(begin(Y[i]), end(Y[i]), y2) -
-                           lower_bound(begin(Y[i]), end(Y[i]), y1));
-            else
-                return self(self, x1, y1, x2, y2, 2 * i, l, (l + r) / 2) +
-                       self(self, x1, y1, x2, y2, 2 * i + 1, (l + r) / 2, r);
-        };
 
         int q;
         cin >> q;
-
-        while (q--) {
-            int x, y, k;
+        vector<tuple<int, int, int>> queries(q);
+        for (auto& [x, y, k] : queries) {
             cin >> x >> y >> k;
             tie(x, y) = make_pair(x + y, x - y + N);
-            cout << find_first_false(0, 2 * N - 1, [&](int m) {
-                return query(query, x - m, y - m, x + m + 1, y + m + 1, 1, 0,
-                             2 * N + 1) < k;
-            }) << '\n';
         }
+
+        // function that takes in l and r arrays, and returns the value of the
+        // predicate at mid for each query
+        auto work = [&](const vector<int>& l,
+                        const vector<int>& r) -> vector<bool> {
+            // make events for queries
+            struct event {
+                int x;
+                int y;
+                int y_l;    // for queries
+                int y_r;    // for queries
+                int type;   // -1 for start, 0 for add, 1 for end
+                int index;  // query index
+            };
+            // insertion events
+            vector<event> events;
+            for (auto [x, y] : points) events.emplace_back(event{x, y, 0, 0, 0, 0});
+            // query events
+            for (int i = 0; i < q; ++i) {
+                auto [x, y, k] = queries[i];
+                int mid = (l[i] + r[i]) / 2;
+                int y_l = max(0, y - mid);
+                int y_r = min(y + mid, 2 * N) + 1;
+                events.emplace_back(event{x - mid, y, y_l, y_r, -1, i});
+                events.emplace_back(event{x + mid, y, y_l, y_r, +1, i});
+            }
+            sort(begin(events), end(events),
+                 [](const event& a, const event& b) -> bool {
+                     return tie(a.x, a.type, a.y) < tie(b.x, b.type, b.y);
+                 });
+            Fenwick<int> f(2 * N + 1);
+            vector<int> cnt(q, 0);
+            for (auto [x, y, y_l, y_r, type, index] : events) {
+                if (type == 0)
+                    f.update(y, 1);
+                else
+                    cnt[index] += type * f.query(y_l, y_r);
+            }
+            vector<bool> works(q);
+            for (int i = 0; i < q; ++i)
+                works[i] = (cnt[i] >= get<2>(queries[i]));
+            return works;
+        };
+
+        // parallel binary search
+        vector<int> L(q, -1), R(q, 2 * N + 1);
+        while (true) {
+            auto works = work(L, R);
+            int completed = 0;
+            for (int i = 0; i < q; ++i)
+                if (R[i] - L[i] > 1)
+                    (works[i] ? R[i] : L[i]) = (L[i] + R[i]) / 2;
+                else
+                    ++completed;
+            if (completed == q) break;
+        }
+        for (int i = 0; i < q; ++i) cout << R[i] << '\n';
     }
 }
