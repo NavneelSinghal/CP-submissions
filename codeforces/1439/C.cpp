@@ -596,7 +596,7 @@ int main() {
         };
 
         // create node from base value and index i
-        auto make_node = [](const Base& val, int) -> Node {
+        auto make_node = [](Base val, int) -> Node {
             return Node{val, 1, val};
         };
 
