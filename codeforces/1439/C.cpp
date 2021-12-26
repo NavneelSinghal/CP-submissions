@@ -1,14 +1,13 @@
 #ifndef LOCAL
-    #pragma GCC optimize("O3,unroll-loops")
-    #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+    #pragma GCC optimize("O2,unroll-loops")
+    #pragma GCC target("avx2,bmi2,lzcnt,popcnt")
 #endif
-
 #include "bits/stdc++.h"
-
 #ifdef DEBUG
     #include "includes/debug/debug.hpp"
 #else
-    #define debug(...) 0
+template <typename... T>
+void debug(T&&...) {}
 #endif
 
 using ll = int64_t;
@@ -412,6 +411,40 @@ struct lazy_segtree {
         for (int i = r_ctz + 1; i <= log; ++i) update((r - 1) >> i);
     }
 
+    /*
+        auto roots_both_h_correct_order = [&](int l, int r) {
+            vector<int> ans;
+            if (l == r) return ans;
+            l += n, r += n;
+            int lg = __lg(r - l) + 1;
+            for (int h = 0; h < lg; ++h) {
+                int L = ((l - 1) >> h) + 1;
+                if (L < (r >> h) && L % 2) ans.push_back(L);
+            }
+            for (int h = lg - 1; h >= 0; --h) {
+                int rh = r >> h;
+                if (((l - 1) >> h) + 1 != rh && rh % 2) ans.push_back(rh - 1);
+            }
+            return ans;
+        };
+
+        auto roots_both_h_reverse_order = [&](int l, int r) {
+            vector<int> ans;
+            if (l == r) return ans;
+            l += n, r += n;
+            int lg = __lg(r - l) + 1;
+            for (int h = 0; h < lg; ++h) {
+                int rh = r >> h;
+                if (((l - 1) >> h) + 1 != rh && rh % 2) ans.push_back(rh - 1);
+            }
+            for (int h = lg - 1; h >= 0; --h) {
+                int L = ((l - 1) >> h) + 1;
+                if (L < (r >> h) && L % 2) ans.push_back(L);
+            }
+            return ans;
+        };
+    */
+
     template <class G>
     int max_right(int l, G g) {
         // assert(0 <= l && l <= _n);
@@ -431,8 +464,7 @@ struct lazy_segtree {
         }
         
         Node sm = id_node;
-       
-
+        
         int i = -1;
         int lg = __lg(r - l) + 1;
         for (int h = 0; h < lg; ++h) {
@@ -477,68 +509,35 @@ struct lazy_segtree {
         return i - _n;
     }
 
+    // FIXME
     template <class G>
     int min_left(int r, G g) {
         // assert(0 <= r && r <= _n);
         // assert(g(id_node));
         if (r == 0) return 0;
         r += _n;
-        int l = _n;
-       
-        const int l_ctz = __builtin_ctz(l);
-        const int r_ctz = __builtin_ctz(r);
-        
-        if constexpr (is_lazy) {
-            for (int i = log; i > l_ctz; --i) push(l >> i);
-            for (int i = log; i > r_ctz; --i) push((r - 1) >> i);
-        }
-        
+        if constexpr (is_lazy)
+            for (int i = log; i >= 1; i--) push((r - 1) >> i);
         Node sm = id_node;
-         /*
-            
-        */
-        // clang-format on
-        int i = -1;
-        int lg = __lg(r - l) + 1;
-        for (int h = 0; h < lg; ++h) {
-            int rh = r >> h;
-            if (((l - 1) >> h) + 1 != rh && rh % 2) {
-                int root = rh - 1;
-                auto c = combine(d[root], sm);
-                if (!g(c)) {
-                    i = root;
-                    break;
-                }
-                sm = c;
-            }
-        }
-
-        if (i == -1)
-            for (int h = lg - 1; h >= 0; --h) {
-                int L = ((l - 1) >> h) + 1;
-                if (L < (r >> h) && L % 2) {
-                    int root = L;
-                    auto c = combine(d[root], sm);
-                    if (!g(c)) {
-                        i = root;
-                        break;
+        do {
+            r--;
+            while (r > 1 && (r % 2)) r >>= 1;
+            auto c = combine(d[r], sm);
+            if (!g(c)) {
+                while (r < _n) {
+                    if constexpr (is_lazy) push(r);
+                    r = (2 * r + 1);
+                    c = combine(d[r], sm);
+                    if (g(c)) {
+                        sm = c;
+                        r--;
                     }
-                    sm = c;
                 }
+                return r + 1 - _n;
             }
-
-        // clang-format off
-        if (i == -1) return 0;
-        while (i < _n) {
-            push(i);
-            i = 2 * i + 1;
-            auto c = combine(d[i], sm);
-            if (g(c)) {
-                sm = c;
-                --i;
-            }
-        }
-        return i + 1 - _n;
+            sm = c;
+        } while ((r & -r) != r);
+        return 0;
     }
 
    private:
