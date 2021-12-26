@@ -384,7 +384,7 @@ struct lazy_segtree {
         return sm;
     }
     
-    Node all_query() const { return query(0, _n); }
+    Node all_query() const { return d[1]; }
     
     void update(int p, Update f) {
         p += _n;
