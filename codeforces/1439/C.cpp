@@ -378,8 +378,8 @@ struct lazy_segtree {
             if (L < (r >> h) && L % 2) sm = combine(sm, d[L]);
         }
         for (int h = lg - 1; h >= 0; --h) {
-            int R = r >> h;
-            if (((l - 1) >> h) + 1 != R && R % 2) sm = combine(sm, d[R - 1]);
+            int rh = r >> h;
+            if (((l - 1) >> h) + 1 != rh && rh % 2) sm = combine(sm, d[rh - 1]);
         }
         return sm;
     }
@@ -411,9 +411,9 @@ struct lazy_segtree {
                 if (L < (r >> h) && L % 2) all_apply(L, f);
             }
             for (int h = lg - 1; h >= 0; --h) {
-                int R = r >> h;
-                if (((l - 1) >> h) + 1 != R && R % 2)
-                    all_apply(R - 1, f);
+                int rh = r >> h;
+                if (((l - 1) >> h) + 1 != rh && rh % 2)
+                    all_apply(rh - 1, f);
             }
             l = l2, r = r2;
         }
@@ -459,10 +459,10 @@ struct lazy_segtree {
         
         if (i == -1)
             for (int h = lg - 1; h >= 0; --h) {
-                int R = r >> h;
-                if (((l - 1) >> h) + 1 != R && R % 2) {
-                    // ans.push_back(R - 1);
-                    int root = R - 1;
+                int rh = r >> h;
+                if (((l - 1) >> h) + 1 != rh && rh % 2) {
+                    // ans.push_back(rh - 1);
+                    int root = rh - 1;
                     auto c = combine(sm, d[root]);
                     if (!g(c)) {
                         i = root;
@@ -505,9 +505,9 @@ struct lazy_segtree {
         int i = -1;
         int lg = __lg(r - l) + 1;
         for (int h = 0; h < lg; ++h) {
-            int R = r >> h;
-            if (((l - 1) >> h) + 1 != R && R % 2) {
-                int root = R - 1;
+            int rh = r >> h;
+            if (((l - 1) >> h) + 1 != rh && rh % 2) {
+                int root = rh - 1;
                 auto c = combine(d[root], sm);
                 if (!g(c)) {
                     i = root;
@@ -614,10 +614,6 @@ int main() {
             return std::max(u, v);
         };
 
-        auto check_lazy = [](const Update& u) -> bool {
-            return u != 0;
-        };
-
         constexpr Update id_update = 0;
 
         int n, q;
@@ -626,7 +622,7 @@ int main() {
         for (auto& x : a) cin >> x;
 
         lazy_segtree st(a, id_node, make_node, combine, id_update, apply_update,
-                        compose_updates, check_lazy);
+                        compose_updates);
 
         while (q--) {
             int t, x, y;
