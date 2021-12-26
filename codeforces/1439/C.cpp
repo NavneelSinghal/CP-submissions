@@ -424,20 +424,18 @@ struct lazy_segtree {
         Node sm = id_node;
         do {
             while (l % 2 == 0) l >>= 1;
-            auto c = combine(sm, d[l]);
-            if (!g(c)) {
+            if (!g(combine(sm, d[l]))) {
                 while (l < size) {
                     if constexpr (is_lazy) push(l);
                     l = (2 * l);
-                    c = combine(sm, d[l]);
-                    if (g(c)) {
-                        sm = c;
+                    if (g(combine(sm, d[l]))) {
+                        sm = combine(sm, d[l]);
                         l++;
                     }
                 }
                 return l - size;
             }
-            sm = c;
+            sm = combine(sm, d[l]);
             l++;
         } while ((l & -l) != l);
         return _n;
@@ -455,20 +453,18 @@ struct lazy_segtree {
         do {
             r--;
             while (r > 1 && (r % 2)) r >>= 1;
-            auto c = combine(d[r], sm);
-            if (!g(c)) {
+            if (!g(combine(d[r], sm))) {
                 while (r < size) {
                     if constexpr (is_lazy) push(r);
                     r = (2 * r + 1);
-                    c = combine(d[r], sm);
-                    if (g(c)) {
-                        sm = c;
+                    if (g(combine(d[r], sm))) {
+                        sm = combine(d[r], sm);
                         r--;
                     }
                 }
                 return r + 1 - size;
             }
-            sm = c;
+            sm = combine(d[r], sm);
         } while ((r & -r) != r);
         return 0;
     }
