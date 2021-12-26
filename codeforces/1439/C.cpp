@@ -371,24 +371,17 @@ struct lazy_segtree {
             for (int i = log; i > l_ctz; --i) push(l >> i);
             for (int i = log; i > r_ctz; --i) push((r - 1) >> i);
         }
-        Node sml = id_node, smr = id_node;
-        while (l < r) {
-            if (l & 1) sml = combine(sml, d[l++]);
-            if (r & 1) smr = combine(d[--r], smr);
-            l >>= 1, r >>= 1;
+        Node sm = id_node;
+        int lg = __lg(r - l) + 1;
+        for (int h = 0; h < lg; ++h) {
+            int L = ((l - 1) >> h) + 1;
+            if (L < (r >> h) && L % 2) sm = combine(sm, d[L]);
         }
-        return combine(sml, smr);
-        // Node sm = id_node;
-        // int lg = __lg(r - l) + 1;
-        // for (int h = 0; h < lg; ++h) {
-        //     int L = ((l - 1) >> h) + 1;
-        //     if (L < (r >> h) && L % 2) sm = combine(sm, d[L]);
-        // }
-        // for (int h = lg - 1; h >= 0; --h) {
-        //     int R = r >> h;
-        //     if (((l - 1) >> h) + 1 != R && R % 2) sm = combine(sm, d[R - 1]);
-        // }
-        // return sm;
+        for (int h = lg - 1; h >= 0; --h) {
+            int R = r >> h;
+            if (((l - 1) >> h) + 1 != R && R % 2) sm = combine(sm, d[R - 1]);
+        }
+        return sm;
     }
     
     Node all_query() const { return query(0, _n); }
@@ -412,24 +405,17 @@ struct lazy_segtree {
         }
         {
             const int l2 = l, r2 = r;
-            while (l < r) {
-                if (l & 1) all_apply(l++, f);
-                if (r & 1) all_apply(--r, f);
-                l >>= 1, r >>= 1;
+            int lg = __lg(r - l) + 1;
+            for (int h = 0; h < lg; ++h) {
+                int L = ((l - 1) >> h) + 1;
+                if (L < (r >> h) && L % 2) all_apply(L, f);
+            }
+            for (int h = lg - 1; h >= 0; --h) {
+                int R = r >> h;
+                if (((l - 1) >> h) + 1 != R && R % 2)
+                    all_apply(R - 1, f);
             }
             l = l2, r = r2;
-            // const int l2 = l, r2 = r;
-            // int lg = __lg(r - l) + 1;
-            // for (int h = 0; h < lg; ++h) {
-            //     int L = ((l - 1) >> h) + 1;
-            //     if (L < (r >> h) && L % 2) all_apply(L, f);
-            // }
-            // for (int h = lg - 1; h >= 0; --h) {
-            //     int R = r >> h;
-            //     if (((l - 1) >> h) + 1 != R && R % 2)
-            //         all_apply(R - 1, f);
-            // }
-            // l = l2, r = r2;
         }
         for (int i = l_ctz + 1; i <= log; ++i) update(l >> i);
         for (int i = r_ctz + 1; i <= log; ++i) update((r - 1) >> i);
