@@ -584,7 +584,7 @@ int main() {
         struct Node {
             int mn;
             int sz;
-            int64_t sum;
+            long long sum;
         };
 
         using Base = int;
@@ -596,8 +596,8 @@ int main() {
         };
 
         // create node from base value and index i
-        auto make_node = [](Base val, int) -> Node {
-            return Node{val, 1, val};
+        auto make_node = [](const Base& val, int) -> Node {
+            return {val, 1, val};
         };
 
         constexpr int inf = int(1e9);
@@ -606,7 +606,7 @@ int main() {
         // apply update u to the whole node n
         auto apply_update = [](const Update& u, const Node& nd) -> Node {
             if (u == 0) return nd;  // id
-            return Node{u, nd.sz, 1LL * u * nd.sz};
+            return {u, nd.sz, 1LL * u * nd.sz};
         };
 
         // effective update if v is applied to node, followed by u
@@ -615,15 +615,12 @@ int main() {
         };
 
         constexpr Update id_update = 0;
-
         int n, q;
         cin >> n >> q;
         vector<int> a(n);
         for (auto& x : a) cin >> x;
-        
         lazy_segtree st(a, id_node, make_node, combine, id_update, apply_update,
                         compose_updates);
-        
         while (q--) {
             int t, x, y;
             cin >> t >> x >> y;
