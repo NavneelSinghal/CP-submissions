@@ -1,7 +1,7 @@
-// #ifndef LOCAL
-//     #pragma GCC optimize("O3,unroll-loops")
-//     #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
-// #endif
+#ifndef LOCAL
+    #pragma GCC optimize("O3,unroll-loops")
+    #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+#endif
 
 #include "bits/stdc++.h"
 
