@@ -1,7 +1,7 @@
-#ifndef LOCAL
-    #pragma GCC optimize("O3")
-    #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
-#endif
+// #ifndef LOCAL
+//     #pragma GCC optimize("O3,unroll-loops")
+//     #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+// #endif
 
 #include "bits/stdc++.h"
 
@@ -620,10 +620,10 @@ int main() {
         cin >> n >> q;
         vector<int> a(n);
         for (auto& x : a) cin >> x;
-
+        
         lazy_segtree st(a, id_node, make_node, combine, id_update, apply_update,
                         compose_updates);
-
+        
         while (q--) {
             int t, x, y;
             cin >> t >> x >> y;
