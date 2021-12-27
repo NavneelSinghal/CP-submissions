@@ -299,6 +299,7 @@ struct IO {
 IO io;
 #define cin io
 #define cout io
+
 // clang-format off
 template <class Base,
           class Node,
@@ -360,50 +361,6 @@ struct lazy_segtree {
             for (int i = log; i >= 1; i--) push(p >> i);
         return d[p];
     }
-/*
-    auto roots_xor_correct_order = [&](int l, int r) {
-        int ans = 0;
-        //if (l == r) return ans;
-        l += n - 1, r += n;
-        const int lg = __lg(r ^ l);
-        const int lg_mask = (1 << lg) - 1;
-        const int l_iter = lg - __builtin_popcount(l & lg_mask);
-        for (int i = 0; i < l_iter; ++i) {
-            ++(l >>= __builtin_ctz(~l));
-            ans ^= (l);
-        }
-        const int r_iter = __builtin_popcount(r & lg_mask);
-        int r_suffix = r & ((1 << lg) - 1);
-        for (int i = 0; i < r_iter; ++i) {
-            const int lg_suffix = __lg(r_suffix);
-            const int R = r >> lg_suffix;
-            ans ^= (R - 1);
-            r_suffix ^= 1 << lg_suffix;
-        }
-        return ans;
-    };
-    auto roots_xor_reverse_order = [&](int l, int r) {
-        int ans = 0;
-        //if (l == r) return ans;
-        l += n - 1, r += n;
-        const int lg = __lg(r ^ l);
-        const int lg_mask = (1 << lg) - 1;
-        const int r_iter = __builtin_popcount(r & lg_mask);
-        for (int i = 0; i < r_iter; ++i) {
-            r >>= __builtin_ctz(r);
-            ans ^= (--r);
-        }
-        const int l_iter = lg - __builtin_popcount(l & lg_mask);
-        int l_suffix = (l & lg_mask) ^ lg_mask;
-        for (int i = 0; i < l_iter; ++i) {
-            const int lg_suffix = __lg(l_suffix);
-            const int L = l >> lg_suffix;
-            ans ^= (L + 1);
-            l_suffix ^= 1 << lg_suffix;
-        }
-        return ans;
-    };
-*/
 
     Node query(int l, int r) {
         if (l == r) return id_node;
@@ -414,24 +371,25 @@ struct lazy_segtree {
             for (int i = log; i > l_ctz; --i) push(l >> i);
             for (int i = log; i > r_ctz; --i) push((r - 1) >> i);
         }
-        Node sm = id_node;
-        --l;
-        const int lg = __lg(r ^ l);
-        const int lg_mask = (1 << lg) - 1;
-        const int l_iter = lg - __builtin_popcount(l & lg_mask);
-        for (int i = 0; i < l_iter; ++i) {
-            ++(l >>= __builtin_ctz(~l));
-            sm = combine(sm, d[l]);
+        Node sml = id_node, smr = id_node;
+        while (l < r) {
+            if (l & 1) sml = combine(sml, d[l++]);
+            if (r & 1) smr = combine(d[--r], smr);
+            l >>= 1, r >>= 1;
         }
-        const int r_iter = __builtin_popcount(r & lg_mask);
-        int r_suffix = r & ((1 << lg) - 1);
-        for (int i = 0; i < r_iter; ++i) {
-            const int lg_suffix = __lg(r_suffix);
-            const int R = r >> lg_suffix;
-            sm = combine(sm, d[R - 1]);
-            r_suffix ^= 1 << lg_suffix;
-        }
-        return sm;
+        return combine(sml, smr);
+        // Node sm = id_node;
+        // --l;
+        // const int lg = __lg(r ^ l);
+        // for (int h = 0; h < lg; ++h) {
+        //     const int L = (l >> h) + 1;
+        //     if (L & 1) sm = combine(sm, d[L]);
+        // }
+        // for (int h = lg - 1; h >= 0; --h) {
+        //     const int R = r >> h;
+        //     if (R % 2) sm = combine(sm, d[R - 1]);
+        // }
+        // return sm;
     }
     
     Node all_query() const { return query(0, _n); }
@@ -455,22 +413,21 @@ struct lazy_segtree {
         }
         {
             const int l2 = l, r2 = r;
-            --l;
-            const int lg = __lg(r ^ l);
-            const int lg_mask = (1 << lg) - 1;
-            const int l_iter = lg - __builtin_popcount(l & lg_mask);
-            for (int i = 0; i < l_iter; ++i) {
-                ++(l >>= __builtin_ctz(~l));
-                all_apply(l, f);
+            while (l < r) {
+                if (l & 1) all_apply(l++, f);
+                if (r & 1) all_apply(--r, f);
+                l >>= 1, r >>= 1;
             }
-            const int r_iter = __builtin_popcount(r & lg_mask);
-            int r_suffix = r & ((1 << lg) - 1);
-            for (int i = 0; i < r_iter; ++i) {
-                const int lg_suffix = __lg(r_suffix);
-                const int R = r >> lg_suffix;
-                all_apply(R - 1, f);
-                r_suffix ^= 1 << lg_suffix;
-            }
+            // --l;
+            // const int lg = __lg(r ^ l);
+            // for (int h = 0; h < lg; ++h) {
+            //     const int L = (l >> h) + 1;
+            //     if (L & 1) all_apply(L, f);
+            // }
+            // for (int h = lg - 1; h >= 0; --h) {
+            //     const int R = r >> h;
+            //     if (R & 1) all_apply(R - 1, f);
+            // }
             l = l2, r = r2;
         }
         for (int i = l_ctz + 1; i <= log; ++i) update(l >> i);
@@ -561,7 +518,7 @@ struct lazy_segtree {
         --l;
         Node sm = id_node;
         int i = -1;
-        int lg = __lg(r ^ l);
+        int lg = __lg(r - l) + 1;
         for (int h = 0; h < lg; ++h) {
             int R = r >> h;
             if (R & 1) {
@@ -710,4 +667,4 @@ int main() {
         }
     }
 }
- 
+
