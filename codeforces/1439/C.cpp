@@ -499,7 +499,8 @@ struct lazy_segtree {
 
         --l;
         int i = -1;
-        const int lg = __lg(r ^ l);
+        int lg = __lg(r ^ l);
+
         const int lg_mask = (1 << lg) - 1;
         const int l_iter = lg - __builtin_popcount(l & lg_mask);
         for (int it = 0; it < l_iter; ++it) {
@@ -520,7 +521,7 @@ struct lazy_segtree {
                 const int lg_suffix = __lg(r_suffix);
                 const int R = r >> lg_suffix;
                 r_suffix ^= 1 << lg_suffix;
-                const int root = R - 1;
+                int root = R - 1;
                 auto c = combine(sm, d[root]);
                 if (!g(c)) {
                     i = root;
@@ -562,12 +563,12 @@ struct lazy_segtree {
         --l;
         Node sm = id_node;
         int i = -1;
-        const int lg = __lg(r ^ l);
+        int lg = __lg(r ^ l);
         const int lg_mask = (1 << lg) - 1;
         const int r_iter = __builtin_popcount(r & lg_mask);
         for (int it = 0; it < r_iter; ++it) {
             r >>= __builtin_ctz(r);
-            const int root = --r;
+            int root = --r;
             auto c = combine(d[root], sm);
             if (!g(c)) {
                 i = root;
@@ -583,7 +584,7 @@ struct lazy_segtree {
                 const int lg_suffix = __lg(l_suffix);
                 const int L = l >> lg_suffix;
                 l_suffix ^= 1 << lg_suffix;
-                const int root = L + 1;
+                int root = L + 1;
                 auto c = combine(d[root], sm);
                 if (!g(c)) {
                     i = root;
