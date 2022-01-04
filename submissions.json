@@ -2239,6 +2239,22 @@
     ],
     "timestamp": "Dec/25/2021 23:13"
   },
+  "AC28321184": {
+    "contest_id": "arc127",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/arc127/F.cpp",
+    "platform": "AtCoder",
+    "problem_index": "F",
+    "problem_name": "\u00b1AB",
+    "problem_url": "https://atcoder.jp/contests/arc127/tasks/arc127_f",
+    "submission_id": "AC28321184",
+    "submission_url": "https://atcoder.jp/contests/arc127/submissions/28321184",
+    "tags": [
+      "AtCoder",
+      "*1000"
+    ],
+    "timestamp": "Jan/04/2022 13:24"
+  },
   "CF100586070": {
     "contest_id": 1450,
     "language": "GNU C++17",
