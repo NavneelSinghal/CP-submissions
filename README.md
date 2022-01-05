@@ -13,10 +13,11 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-505 | [F - Making It Bipartite](https://codeforces.com/contest/1630/problem/F) | [GNU C++20 (64)](./codeforces/1630/F.cpp) | `flows` `graph matchings` `graphs` `number theory` `*3400` | Jan/28/2022 17:01 | 
-504 | [D2 - Game on Sum (Hard Version)](https://codeforces.com/contest/1628/problem/D2) | [GNU C++20 (64)](./codeforces/1628/D2.cpp) | `combinatorics` `dp` `games` `math` `*2400` | Jan/24/2022 13:19 | 
-503 | [G - MinOr Tree](https://codeforces.com/contest/1624/problem/G) | [GNU C++20 (64)](./codeforces/1624/G.cpp) | `bitmasks` `dfs and similar` `dsu` `graphs` `greedy` `*1900` | Jan/11/2022 15:39 | 
-502 | [G - GCD Festival](https://codeforces.com/contest/1575/problem/G) | [GNU C++20 (64)](./codeforces/1575/G.cpp) | `math` `number theory` `*2200` | Jan/09/2022 19:43 | 
+506 | [F - Making It Bipartite](https://codeforces.com/contest/1630/problem/F) | [GNU C++20 (64)](./codeforces/1630/F.cpp) | `flows` `graph matchings` `graphs` `number theory` `*3400` | Jan/28/2022 17:01 | 
+505 | [D2 - Game on Sum (Hard Version)](https://codeforces.com/contest/1628/problem/D2) | [GNU C++20 (64)](./codeforces/1628/D2.cpp) | `combinatorics` `dp` `games` `math` `*2400` | Jan/24/2022 13:19 | 
+504 | [G - MinOr Tree](https://codeforces.com/contest/1624/problem/G) | [GNU C++20 (64)](./codeforces/1624/G.cpp) | `bitmasks` `dfs and similar` `dsu` `graphs` `greedy` `*1900` | Jan/11/2022 15:39 | 
+503 | [G - GCD Festival](https://codeforces.com/contest/1575/problem/G) | [GNU C++20 (64)](./codeforces/1575/G.cpp) | `math` `number theory` `*2200` | Jan/09/2022 19:43 | 
+502 | [A - Quirky Quantifiers](https://codeforces.com/contest/952/problem/A) | [GNU C++20 (64)](./codeforces/952/A.cpp) | `math` `*800` | Jan/05/2022 22:49 | 
 501 | [F - ±AB](https://atcoder.jp/contests/arc127/tasks/arc127_f) | [C++ (GCC 9.2.1)](./atcoder/arc127/F.cpp) | `AtCoder` `*1000` | Jan/04/2022 13:24 | 
 500 | [C - Greedy Shopping](https://codeforces.com/contest/1439/problem/C) | [GNU C++20 (64)](./codeforces/1439/C.cpp) | `binary search` `data structures` `divide and conquer` `greedy` `implementation` `*2600` | Dec/27/2021 17:07 | 
 499 | [Ex - Manhattan Christmas Tree](https://atcoder.jp/contests/abc233/tasks/abc233_h) | [C++ (GCC 9.2.1)](./atcoder/abc233/Ex.cpp) | `AtCoder` `*600` | Dec/25/2021 23:13 | 
