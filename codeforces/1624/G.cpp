@@ -28,15 +28,18 @@ int main() {
         int n, m;
         cin >> n >> m;
         struct edge {
-            int v, w;
+            int u, v, w;
         };
-        vector<basic_string<edge>> g(n);
+        vector<vector<int>> g(n);
+        vector<edge> edges(2 * m);
         for (int i = 0; i < m; ++i) {
             int u, v, w;
             cin >> u >> v >> w;
             --u, --v;
-            g[u].push_back(edge{v, w});
-            g[v].push_back(edge{u, w});
+            edges[2 * i] = {u, v, w};
+            edges[2 * i + 1] = {v, u, w};
+            g[u].push_back(2 * i);
+            g[v].push_back(2 * i + 1);
         }
         int ans = (1 << 30) - 1;
         for (int bit = 29; bit >= 0; --bit) {
@@ -46,8 +49,10 @@ int main() {
             auto dfs = [&](const auto& self, int u) -> void {
                 ++cnt;
                 visited[u] = 1;
-                for (auto [v, w] : g[u])
-                    if (!visited[v] && !(w & ~ans)) self(self, v);
+                for (auto i : g[u]) {
+                    auto v = edges[i].v;
+                    if (!visited[v] && !(edges[i].w & ~ans)) self(self, v);
+                }
             };
             dfs(dfs, 0);
             if (cnt != n) ans ^= 1 << bit;
