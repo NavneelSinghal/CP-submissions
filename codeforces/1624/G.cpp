@@ -42,13 +42,15 @@ int main() {
         for (int bit = 29; bit >= 0; --bit) {
             ans ^= 1 << bit;
             vector<int> visited(n);
+            int cnt = 0;
             auto dfs = [&](const auto& self, int u) -> void {
+                ++cnt;
                 visited[u] = 1;
                 for (auto [v, w] : g[u])
                     if (!visited[v] && !(w & ~ans)) self(self, v);
             };
             dfs(dfs, 0);
-            if (reduce(begin(visited), end(visited)) != n) ans ^= 1 << bit;
+            if (cnt != n) ans ^= 1 << bit;
         }
         cout << ans << '\n';
     }
