@@ -8732,6 +8732,25 @@
     ],
     "timestamp": "Dec/27/2021 17:07"
   },
+  "CF143848491": {
+    "contest_id": 1628,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1628/D2.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D2",
+    "problem_name": "Game on Sum (Hard Version)",
+    "problem_url": "https://codeforces.com/contest/1628/problem/D2",
+    "submission_id": "CF143848491",
+    "submission_url": "https://codeforces.com/contest/1628/submission/143848491",
+    "tags": [
+      "combinatorics",
+      "dp",
+      "games",
+      "math",
+      "*2400"
+    ],
+    "timestamp": "Jan/24/2022 13:19"
+  },
   "CF144254188": {
     "contest_id": 1630,
     "language": "GNU C++20 (64)",
