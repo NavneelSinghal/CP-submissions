@@ -166,9 +166,6 @@ int main() {
 
     constexpr int N = 50005;
     vector<int> id(N);
-    vector<vector<int>> d(N);
-    for (int i = 1; i < N; ++i)
-        for (int j = 2 * i; j < N; j += i) d[j].push_back(i);
 
     int _tests = 1;
     cin >> _tests;
@@ -186,7 +183,7 @@ int main() {
             g.add_edge(n + i, 2 * n + i, 1);
             g.add_edge(3 * n + i, 4 * n + 1, 1);
             const int ai = a[i - 1];
-            for (auto m : d[ai]) {
+            for (int m = 2 * ai; m < N; m += ai) {
                 int j = id[m];
                 if (j == 0) continue;
                 g.add_edge(i, n + j, 1);
