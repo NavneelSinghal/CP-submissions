@@ -412,7 +412,6 @@ struct bipartite_matching {
 
 constexpr int N = 50005;
 std::array<std::basic_string<int>, N> d;
-std::array<int, N> a;
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
@@ -429,10 +428,9 @@ int main() {
         // cout << "Case #" << _test << ": ";
         int n;
         cin >> n;
-        for (int i = 0; i < n; ++i) {
-            cin >> a[i];
-            id[a[i]] = i;
-        }
+        vector<int> a(n);
+        for (auto& x : a) cin >> x;
+        for (int i = 0; i < n; ++i) id[a[i]] = i;
         bipartite_matching<true> b(2 * n, 2 * n);
         for (int i = 0; i < n; ++i) {
             b.add(i, n + i);
