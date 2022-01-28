@@ -408,13 +408,13 @@ int main() {
         }
         bipartite_matching b(2 * n, 2 * n);
         for (int i = 0; i < n; ++i) {
+            b.add(i, n + i);
             for (const auto m : d[a[i]]) {
                 int j = id[m];
                 if (j == -1) continue;
                 b.add(i, j);
                 b.add(n + i, n + j);
             }
-            b.add(i, n + i);
         }
         cout << b.get_max_matching() - n << '\n';
         for (int i = 0; i < n; ++i) id[a[i]] = -1;
