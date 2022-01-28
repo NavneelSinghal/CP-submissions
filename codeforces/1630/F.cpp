@@ -124,13 +124,14 @@ int main() {
         for (int i = 0; i < n; ++i) id[a[i]] = i;
         bipartite_matching<true> b(2 * n, 2 * n);
         for (int i = 0; i < n; ++i) {
-            for (const auto m : d[a[i]]) {
+            b.add(i, n + i);
+            const int ai = a[i];
+            for (auto m : d[ai]) {
                 int j = id[m];
                 if (j == -1) continue;
                 b.add(i, j);
                 b.add(n + i, n + j);
             }
-            b.add(i, n + i);
         }
         cout << b.get_max_matching() - n << '\n';
         for (int i = 0; i < n; ++i) id[a[i]] = -1;
