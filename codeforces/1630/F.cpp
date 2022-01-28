@@ -368,7 +368,6 @@ struct bipartite_matching {
         std::vector<int> level(L), mate(L + R, -1);
         auto levelize = [&]() {
             simple_queue<int> Q;
-            Q.reserve(L + R);
             for (int u = 0; u < L; ++u) {
                 level[u] = -1;
                 if (!~mate[u]) {
