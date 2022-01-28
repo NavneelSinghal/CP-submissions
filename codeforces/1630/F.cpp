@@ -340,9 +340,10 @@ struct bipartite_matching {
     }
 
     int get_max_matching() {
-        std::vector<int> level(L), mate(L + R, -1);
+        vector<int> level(L), mate(L + R, -1);
+
         auto levelize = [&]() {
-            std::queue<int> Q;
+            queue<int> Q;
             for (int u = 0; u < L; ++u) {
                 level[u] = -1;
                 if (mate[u] < 0) {
@@ -364,11 +365,12 @@ struct bipartite_matching {
             }
             return false;
         };
-        auto augment = [&](auto self, int u) -> bool {
+        auto augment = [&](const auto& self, int u) -> bool {
             for (int w : g[u]) {
                 int v = mate[w];
                 if (v < 0 || (level[v] > level[u] && self(self, v))) {
-                    mate[u] = w, mate[w] = u;
+                    mate[u] = w;
+                    mate[w] = u;
                     return true;
                 }
             }
@@ -383,8 +385,10 @@ struct bipartite_matching {
 };
 
 constexpr int N = 50005;
-std::array<std::vector<int>, N> d;
-std::array<int, N> id;
+std::array<std::basic_string<int>, N> d;
+std::array<int, N> a, id;
+
+int n, _tests;
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
@@ -393,27 +397,22 @@ int main() {
     id.fill(-1);
     for (int i = 1; i < N; ++i)
         for (int j = 2 * i; j < N; j += i) d[j].push_back(i);
-
-    int _tests;
     cin >> _tests;
 
     for (int _test = 1; _test <= _tests; ++_test) {
         // cout << "Case #" << _test << ": ";
-        int n;
         cin >> n;
-        vector<int> a(n);
         for (int i = 0; i < n; ++i) {
             cin >> a[i];
             id[a[i]] = i;
         }
         bipartite_matching b(2 * n, 2 * n);
         for (int i = 0; i < n; ++i) {
-            for (auto m : d[a[i]]) {
-                if (id[m] != -1) {
-                    int j = id[m];
-                    b.add(j, i);
-                    b.add(n + j, n + i);
-                }
+            for (const auto m : d[a[i]]) {
+                int j = id[m];
+                if (j == -1) continue;
+                b.add(i, j);
+                b.add(n + i, n + j);
             }
             b.add(i, n + i);
         }
