@@ -150,7 +150,7 @@ int main() {
         vector<int> a(n);
         for (auto& x : a) cin >> x;
         for (int i = 0; i < n; ++i) id[a[i]] = i;
-        bipartite_matching<> b(2 * n, 2 * n);
+        bipartite_matching<true> b(2 * n, 2 * n);
         for (int i = 0; i < n; ++i) {
             b.add(i, n + i);
             const int ai = a[i];
