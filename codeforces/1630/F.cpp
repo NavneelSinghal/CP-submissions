@@ -412,17 +412,17 @@ struct bipartite_matching {
 
 constexpr int N = 50005;
 std::array<std::basic_string<int>, N> d;
-std::array<int, N> a, id;
-
-int n, _tests;
+std::array<int, N> a;
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     // cout << setprecision(20) << fixed;
 
-    id.fill(-1);
+    vector<int> id(N, -1);
     for (int i = 1; i < N; ++i)
         for (int j = 2 * i; j < N; j += i) d[j].push_back(i);
+
+    int _tests = 1;
     cin >> _tests;
 
     for (int _test = 1; _test <= _tests; ++_test) {
