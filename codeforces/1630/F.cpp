@@ -327,60 +327,86 @@ IO io;
 #define cin io
 #define cout io
 
-struct bipartite_matching {
-    int L, R;
-    std::vector<std::basic_string<int>> g;
+struct Random : std::mt19937 {
+    using std::mt19937::mt19937;
+    using std::mt19937::operator();
+    static int64_t gen_seed() {
+        return std::chrono::steady_clock::now().time_since_epoch().count();
+    }
+    Random() : std::mt19937(gen_seed()) {}
+    template <class Int>
+    auto operator()(Int a, Int b)
+        -> std::enable_if_t<std::is_integral_v<Int>, Int> {
+        return std::uniform_int_distribution<Int>(a, b)(*this);
+    }
+    template <class Int>
+    auto operator()(Int a) -> std::enable_if_t<std::is_integral_v<Int>, Int> {
+        return std::uniform_int_distribution<Int>(0, a - 1)(*this);
+    }
+    template <class Real>
+    auto operator()(Real a, Real b)
+        -> std::enable_if_t<std::is_floating_point_v<Real>, Real> {
+        return std::uniform_real_distribution<Real>(a, b)(*this);
+    }
+};
 
-    bipartite_matching(int _L, int _R) : L(_L), R(_R), g(_L + _R) {}
+// consider shuffling adjacency lists if this gives TLE
+template <bool ToShuffle = false>
+struct bipartite_matching {
+    int n_left, n_right;
+    std::vector<std::basic_string<int>> g;
+    std::vector<int> match_from_left, match_from_right;
+    std::vector<int> vis;
+    int iteration;
+
+    bipartite_matching(int _n_left, int _n_right)
+        : n_left(_n_left),
+          n_right(_n_right),
+          g(_n_left),
+          match_from_left(_n_left, -1),
+          match_from_right(_n_right, -1),
+          vis(_n_left, 0),
+          iteration(0) {}
 
     // u on left, v on right
-    void add(int u, int v) {
-        g[u].push_back(v + L);
-        g[v + L].push_back(u);
+    void add(int u, int v) { g[u].push_back(v); }
+
+    bool dfs(int u) {
+        vis[u] = iteration;
+        for (auto v : g[u]) {
+            if (match_from_right[v] == -1) {
+                match_from_right[v] = u;
+                match_from_left[u] = v;
+                return true;
+            }
+        }
+        for (auto v : g[u]) {
+            if (vis[match_from_right[v]] != iteration &&
+                dfs(match_from_right[v])) {
+                match_from_right[v] = u;
+                match_from_left[u] = v;
+                return true;
+            }
+        }
+        return false;
     }
 
     int get_max_matching() {
-        vector<int> level(L), mate(L + R, -1);
-
-        auto levelize = [&]() {
-            queue<int> Q;
-            for (int u = 0; u < L; ++u) {
-                level[u] = -1;
-                if (mate[u] < 0) {
-                    level[u] = 0;
-                    Q.push(u);
-                }
-            }
-            while (!Q.empty()) {
-                int u = Q.front();
-                Q.pop();
-                for (int w : g[u]) {
-                    int v = mate[w];
-                    if (v < 0) return true;
-                    if (level[v] < 0) {
-                        level[v] = level[u] + 1;
-                        Q.push(v);
-                    }
-                }
-            }
-            return false;
-        };
-        auto augment = [&](const auto& self, int u) -> bool {
-            for (int w : g[u]) {
-                int v = mate[w];
-                if (v < 0 || (level[v] > level[u] && self(self, v))) {
-                    mate[u] = w;
-                    mate[w] = u;
-                    return true;
-                }
-            }
-            return false;
-        };
-        int match = 0;
-        while (levelize())
-            for (int u = 0; u < L; ++u)
-                if (mate[u] < 0 && augment(augment, u)) ++match;
-        return match;
+        if constexpr (ToShuffle) {
+            Random rng;
+            for (int i = 0; i < n_left; ++i)
+                std::random_shuffle(std::begin(g[i]), std::end(g[i]), rng);
+        }
+        int new_matchings = 0;
+        int matchings = 0;
+        do {
+            iteration++;
+            new_matchings = 0;
+            for (int u = 0; u < n_left; ++u)
+                if (match_from_left[u] == -1 && dfs(u)) new_matchings++;
+            matchings += new_matchings;
+        } while (new_matchings > 0);
+        return matchings;
     }
 };
 
@@ -401,12 +427,13 @@ int main() {
 
     for (int _test = 1; _test <= _tests; ++_test) {
         // cout << "Case #" << _test << ": ";
+        int n;
         cin >> n;
         for (int i = 0; i < n; ++i) {
             cin >> a[i];
             id[a[i]] = i;
         }
-        bipartite_matching b(2 * n, 2 * n);
+        bipartite_matching<true> b(2 * n, 2 * n);
         for (int i = 0; i < n; ++i) {
             b.add(i, n + i);
             for (const auto m : d[a[i]]) {
