@@ -327,31 +327,6 @@ IO io;
 #define cin io
 #define cout io
 
-template <class T>
-struct simple_queue {
-    std::vector<T> payload;
-    int pos = 0;
-    void reserve(int n) { payload.reserve(n); }
-    int size() const { return int(payload.size()) - pos; }
-    bool empty() const { return pos == int(payload.size()); }
-    void push(const T& t) { payload.push_back(t); }
-    T& front() { return payload[pos]; }
-    void clear() { payload.clear(), pos = 0; }
-    void pop() { pos++; }
-};
-
-template <class T>
-struct simple_stack {
-    std::vector<T> payload;
-    void reserve(int n) { payload.reserve(n); }
-    int size() const { return int(payload.size()); }
-    bool empty() const { return payload.empty(); }
-    void push(const T& t) { payload.push_back(t); }
-    T& top() { return payload.back(); }
-    void clear() { payload.clear(); }
-    void pop() { payload.pop_back(); }
-};
-
 struct bipartite_matching {
     int L, R;
     std::vector<std::basic_string<int>> g;
@@ -367,10 +342,10 @@ struct bipartite_matching {
     int get_max_matching() {
         std::vector<int> level(L), mate(L + R, -1);
         auto levelize = [&]() {
-            simple_queue<int> Q;
+            std::queue<int> Q;
             for (int u = 0; u < L; ++u) {
                 level[u] = -1;
-                if (!~mate[u]) {
+                if (mate[u] < 0) {
                     level[u] = 0;
                     Q.push(u);
                 }
@@ -380,8 +355,8 @@ struct bipartite_matching {
                 Q.pop();
                 for (int w : g[u]) {
                     int v = mate[w];
-                    if (!~v) return true;
-                    if (!~level[v]) {
+                    if (v < 0) return true;
+                    if (level[v] < 0) {
                         level[v] = level[u] + 1;
                         Q.push(v);
                     }
@@ -392,7 +367,7 @@ struct bipartite_matching {
         auto augment = [&](auto self, int u) -> bool {
             for (int w : g[u]) {
                 int v = mate[w];
-                if (!~v || (level[v] > level[u] && self(self, v))) {
+                if (v < 0 || (level[v] > level[u] && self(self, v))) {
                     mate[u] = w, mate[w] = u;
                     return true;
                 }
@@ -402,14 +377,14 @@ struct bipartite_matching {
         int match = 0;
         while (levelize())
             for (int u = 0; u < L; ++u)
-                if (!~mate[u] && augment(augment, u)) ++match;
+                if (mate[u] < 0 && augment(augment, u)) ++match;
         return match;
     }
 };
 
 constexpr int N = 50005;
-std::array<std::basic_string<int>, N> d;
-std::array<int, N> id, a;
+std::array<std::vector<int>, N> d;
+std::array<int, N> id;
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
@@ -426,6 +401,7 @@ int main() {
         // cout << "Case #" << _test << ": ";
         int n;
         cin >> n;
+        vector<int> a(n);
         for (int i = 0; i < n; ++i) {
             cin >> a[i];
             id[a[i]] = i;
