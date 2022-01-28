@@ -379,7 +379,7 @@ struct Random : std::mt19937 {
 template <bool ToShuffle = false>
 struct bipartite_matching {
     int n_left, n_right;
-    std::vector<std::basic_string<int>> g;
+    std::vector<std::vector<int>> g;
     std::vector<int> match_from_left, match_from_right;
     std::vector<int> vis;
     int iteration;
