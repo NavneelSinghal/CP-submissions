@@ -13,6 +13,7 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
+508 | [D - Number of Shortest paths](https://atcoder.jp/contests/abc211/tasks/abc211_d) | [C++ (GCC 9.2.1)](./atcoder/abc211/D.cpp) | `AtCoder` `*400` | Feb/09/2022 22:07 | 
 507 | [F - Making It Bipartite](https://codeforces.com/contest/1630/problem/F) | [GNU C++20 (64)](./codeforces/1630/F.cpp) | `flows` `graph matchings` `graphs` `number theory` `*3400` | Jan/28/2022 17:01 | 
 506 | [D2 - Game on Sum (Hard Version)](https://codeforces.com/contest/1628/problem/D2) | [GNU C++20 (64)](./codeforces/1628/D2.cpp) | `combinatorics` `dp` `games` `math` `*2400` | Jan/24/2022 13:19 | 
 505 | [G - MinOr Tree](https://codeforces.com/contest/1624/problem/G) | [GNU C++20 (64)](./codeforces/1624/G.cpp) | `bitmasks` `dfs and similar` `dsu` `graphs` `greedy` `*1900` | Jan/11/2022 15:39 | 
