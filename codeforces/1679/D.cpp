@@ -1836,9 +1836,6 @@ struct graph {
 };
 using graph_t = graph;
 
-static constexpr int N = 200'000;
-int a[N], b[N], max_length[N], indegree[N];
-
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
 
@@ -1846,16 +1843,16 @@ int main() {
     std::int64_t k;
     cin >> n >> m >> k;
 
-    for (int i = 0; i < n; ++i) cin >> a[i];
+    std::vector<int> a(n);
+    for (auto& x : a) cin >> x;
 
     if (k == 1) {
-        cout << *std::min_element(a, a + n) << '\n';
+        cout << *min_element(std::begin(a), std::end(a)) << '\n';
         return 0;
     }
 
-    std::copy(a, a + n, b);
-
-    ska::ska_sort(b, b + n);
+    auto b = a;
+    ska::ska_sort(std::begin(b), std::end(b));
 
     std::vector<std::array<int, 2>> edges(m);
     for (auto& [u, v] : edges) {
@@ -1864,13 +1861,13 @@ int main() {
     }
 
     graph_t g(n, m);
-    std::vector<int> order;
+    std::vector<int> max_length(n), indegree(n), order;
     int ans =
         *std::ranges::partition_point(std::views::iota(0, n), [&](int id) {
             auto max = b[id];
             g.clear();
-            std::fill_n(max_length, n, -1);
-            std::fill_n(indegree, n, 0);
+            std::fill(std::begin(max_length), std::end(max_length), -1);
+            std::fill(std::begin(indegree), std::end(indegree), 0);
             order.clear();
             for (auto [u, v] : edges)
                 if (a[u] <= max && a[v] <= max) g.add_edge(u, v), ++indegree[v];
@@ -1885,8 +1882,8 @@ int main() {
                 }
             }
             if ((int)order.size() < n) return false;
-            for (int i = 0; i < n; ++i)
-                if (max_length[i] >= k) return false;
+            if (*max_element(std::begin(max_length), std::end(max_length)) >= k)
+                return false;
             return true;
         });
 
