@@ -266,8 +266,9 @@ namespace algebra {
     std::vector<ModInt32<P>> add(const std::vector<ModInt32<P>>& x,
                                  const std::vector<ModInt32<P>>& y) {
         using i32 = std::int32_t;
+        using value_type = ModInt32<P>;
         std::vector<value_type> res(std::max(x.size(), y.size()));
-        for (i32 i = 0, e = (i32)std::min(x.size(), y.size()); i != e; ++i)
+        for (i32 i = 0, e = std::min(x.size(), y.size()); i != e; ++i)
             res[i] = x[i] + y[i];
         if (x.size() < y.size())
             std::copy(y.begin() + x.size(), y.end(), res.begin() + x.size());
@@ -276,20 +277,35 @@ namespace algebra {
         return norm(res);
     }
     template <std::uint32_t P>
-    std::vector<ModInt32<P>> mul_xk(std::vector<ModInt32<P>> p, int k) {
-        p.insert(p.begin(), k, 0);
-        return p;
+    std::vector<ModInt32<P>> sub(const std::vector<ModInt32<P>>& x,
+                                 const std::vector<ModInt32<P>>& y) {
+        using i32 = std::int32_t;
+        using value_type = ModInt32<P>;
+        std::vector<value_type> res(std::max(x.size(), y.size()));
+        for (i32 i = 0, e = std::min(x.size(), y.size()); i != e; ++i)
+            res[i] = x[i] - y[i];
+        if (x.size() < y.size())
+            for (i32 i = x.size(), e = y.size(); i != e; ++i) res[i] = -y[i];
+        else
+            std::copy(x.begin() + y.size(), x.end(), res.begin() + y.size());
+        return norm(res);
     }
     template <std::uint32_t P>
-    std::vector<ModInt32<P>> mul_scalar(std::vector<ModInt32<P>> p,
+    std::vector<ModInt32<P>> mul_xk(std::vector<ModInt32<P>> a, int k) {
+        a.insert(a.begin(), k, 0);
+        return a;
+    }
+    template <std::uint32_t P>
+    std::vector<ModInt32<P>> mul_scalar(std::vector<ModInt32<P>> a,
                                         const ModInt32<P>& c) {
-        for (auto& x : p) x *= c;
-        return p;
+        for (auto& x : a) x *= c;
+        return a;
     };
     template <std::uint32_t P>
     std::vector<ModInt32<P>> mul(std::vector<ModInt32<P>> x,
                                  std::vector<ModInt32<P>> y) {
         using i32 = std::int32_t;
+        using value_type = ModInt32<P>;
         norm(x), norm(y);
         if (deg(x) == -1 || deg(y) == -1) return {0};
         std::vector<value_type> res(x.size() + y.size() - 1);
@@ -317,6 +333,7 @@ namespace algebra {
                                           const ModInt32<P>& c) {
         if (deg(x) < 1) return x;
         using i32 = std::int32_t;
+        using value_type = ModInt32<P>;
         i32 n = (i32)x.size(), len = (i32)get_len((n << 1) - 1);
         for (i32 i = 0; i != n; ++i) a[n - i - 1] = x[i] * combi.fact[i];
         value_type k(c);
@@ -345,13 +362,147 @@ namespace algebra {
         return add(x, y);
     }
     template <std::uint32_t P>
+    std::vector<ModInt32<P>> operator-(const std::vector<ModInt32<P>>& x,
+                                       const std::vector<ModInt32<P>>& y) {
+        return sub(x, y);
+    }
+    template <std::uint32_t P>
     std::vector<ModInt32<P>> operator*(const std::vector<ModInt32<P>>& x,
                                        const std::vector<ModInt32<P>>& y) {
         return mul(x, y);
     }
+    template <std::uint32_t P>
+    std::vector<ModInt32<P>> operator/(const std::vector<ModInt32<P>>& x,
+                                       const std::vector<ModInt32<P>>& y) {
+        return quorem(x, y);
+    }
+    template <std::uint32_t P>
+    std::vector<ModInt32<P>> operator%(const std::vector<ModInt32<P>>& x,
+                                       const std::vector<ModInt32<P>>& y) {
+        return rem(x, y);
+    }
+    template <std::uint32_t P>
+    struct PolyMat {
+       public:
+        using poly = std::vector<ModInt32<P>>;
+        /* a0 a1
+           b0 b1 */
+        poly a0, a1, b0, b1;
+        PolyMat(const poly& a0, const poly& a1, const poly& b0, const poly& b1)
+            : a0(a0), a1(a1), b0(b0), b1(b1) {}
+        PolyMat(const PolyMat& rhs)
+            : a0(rhs.a0), a1(rhs.a1), b0(rhs.b0), b1(rhs.b1) {}
+        ~PolyMat() = default;
+        bool is_identity_matrix() const {
+            static constexpr ModInt32<P> ONE(1);
+            return deg(a1) == -1 && deg(b0) == -1 && deg(a0) == 0 &&
+                   a0[0] == ONE && deg(b1) == 0 && b1[0] == ONE;
+        }
+        PolyMat& operator=(const PolyMat& rhs) {
+            return a0 = rhs.a0, a1 = rhs.a1, b0 = rhs.b0, b1 = rhs.b1, *this;
+        }
+    };
+    template <std::uint32_t P>
+    struct PolyVec {
+       public:
+        using poly = std::vector<ModInt32<P>>;
+        /* a
+           b */
+        poly a, b;
+        PolyVec(const poly& a, const poly& b) : a(a), b(b) {}
+        PolyVec(const PolyVec& rhs) : a(rhs.a), b(rhs.b) {}
+        ~PolyVec() = default;
+        PolyVec& operator=(const PolyVec& rhs) {
+            return a = rhs.a, b = rhs.b, *this;
+        }
+    };
+    template <std::uint32_t P>
+    PolyMat<P> operator*(const PolyMat<P>& lhs, const PolyMat<P>& rhs) {
+        if (lhs.is_identity_matrix()) return rhs;
+        if (rhs.is_identity_matrix()) return lhs;
+        return PolyMat<P>(lhs.a0 * rhs.a0 + lhs.a1 * rhs.b0,
+                          lhs.a0 * rhs.a1 + lhs.a1 * rhs.b1,
+                          lhs.b0 * rhs.a0 + lhs.b1 * rhs.b0,
+                          lhs.b0 * rhs.a1 + lhs.b1 * rhs.b1);
+    }
+    template <std::uint32_t P>
+    PolyVec<P> operator*(const PolyMat<P>& lhs, const PolyVec<P>& rhs) {
+        if (lhs.is_identity_matrix()) return rhs;
+        return PolyVec<P>(lhs.a0 * rhs.a + lhs.a1 * rhs.b,
+                          lhs.b0 * rhs.a + lhs.b1 * rhs.b);
+    }
+    template <std::uint32_t P>
+    PolyMat<P> hgcd(const std::vector<ModInt32<P>>& p0,
+                    const std::vector<ModInt32<P>>& p1) {
+        using poly = std::vector<ModInt32<P>>;
+        assert(deg(p0) > deg(p1));
+        std::int32_t m = (deg(p0) - 1 >> 1) + 1, n = deg(p1);
+        if (n < m) return PolyMat<P>({1}, {}, {}, {1});
+        PolyMat<P> R(hgcd(poly(p0.begin() + m, p0.end()),
+                          poly(p1.begin() + m, p1.end())));
+        PolyVec<P> ab(R * PolyVec<P>(p0, p1));
+        if (deg(ab.b) < m) return R;
+        std::pair<poly, poly> qr(quo_with_rem(ab.a, ab.b));
+        PolyMat<P> Q({}, {1}, {1}, -qr.first);
+        std::int32_t k = (m << 1) - deg(ab.b);
+        if (qr.second.size() <= k) return Q * R;
+        return hgcd(poly(ab.b.begin() + k, ab.b.end()),
+                    poly(qr.second.begin() + k, qr.second.end())) *
+               Q * R;
+    }
+    template <std::uint32_t P>
+    PolyMat<P> cogcd(const std::vector<ModInt32<P>>& p0,
+                     const std::vector<ModInt32<P>>& p1) {
+        using poly = std::vector<ModInt32<P>>;
+        assert(deg(p0) > deg(p1));
+        PolyMat<P> M(hgcd(p0, p1));
+        PolyVec<P> p2p3(M * PolyVec<P>(p0, p1));
+        if (deg(p2p3.b) == -1) return M;
+        std::pair<poly, poly> qr(quo_with_rem(p2p3.a, p2p3.b));
+        PolyMat<P> Q({}, {1}, {1}, -qr.first);
+        if (deg(qr.second) == -1) return Q * M;
+        return cogcd(p2p3.b, qr.second) * Q * M;
+    }
+    template <std::uint32_t P>
+    std::vector<ModInt32<P>> exgcd(
+        std::vector<ModInt32<P>> a, std::vector<ModInt32<P>> b,
+        std::vector<ModInt32<P>>& x,
+        std::vector<ModInt32<P>>& y) {  // ax + by = gcd(a, b)
+        assert(deg(a) >= 0);
+        assert(deg(b) >= 0);
+        using poly = std::vector<ModInt32<P>>;
+        PolyMat<P> c({}, {}, {}, {});
+        if (deg(norm(a)) > deg(norm(b))) {
+            c = cogcd(a, b);
+        } else {
+            std::pair<poly, poly> qr(quo_with_rem(a, b));
+            c = cogcd(b, qr.second) * PolyMat<P>({}, {1}, {1}, -qr.first);
+        }
+        return a * (x = c.a0) + b * (y = c.a1);
+    }
 }  // namespace algebra
 
 using mint = algebra::ModInt32<algebra::mod>;
+
+/*
+
+   to count this, first pick s positions (can be done in C(n - 1, s) ways)
+
+   now we need to ensure that a non-chosen element is not equal to next element
+   - 1
+
+   so we use PIE:
+
+   let's find the number of ways to get k ascents (or n - s - k - 1 descents),
+   with at least i elements being equal to next element - 1
+
+   contribution = (-1)^i * C(n - s - 1, i) * euler(n - s - i, n - s - k - 1)
+
+   n -> n - s
+
+   sum_{i = 0}^{k} (-1)^i C(n - 1, i) euler(n - i, n - k - 1)
+
+   */
 
 using ll = int64_t;
 using ull = uint64_t;
