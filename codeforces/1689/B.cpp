@@ -28,17 +28,31 @@ int main() {
         int n;
         cin >> n;
         vector<int> p(n);
-        for (auto& x : p) cin >> x;
+        for (auto& x : p) cin >> x, --x;
         if (n == 1) {
             cout << -1 << '\n';
         } else {
-            vector<int> a(n);
-            iota(begin(a), end(a), 1);
-            for (int i = 0; i + 1 < n; ++i)
-                if (p[i] == a[i]) swap(a[i], a[i + 1]);
-            if (p[n - 1] == a[n - 1]) swap(a[n - 2], a[n - 1]);
-            for (auto x : a) cout << x << ' ';
-            cout << '\n';
+            set<int> s;
+            for (int i = 0; i < n; ++i) s.insert(i);
+            for (int i = 0; i < n - 2; ++i) {
+                auto it = s.begin();
+                if (*it == p[i]) {
+                    s.erase(it);
+                    it = s.begin();
+                    cout << *it + 1 << ' ';
+                    s.erase(it);
+                    s.insert(p[i]);
+                } else {
+                    cout << *it + 1 << ' ';
+                    s.erase(it);
+                }
+            }
+            assert(s.size() == 2);
+            vector<int> rem{s.begin(), s.end()};
+            if (rem[0] == p[n - 2] || rem[1] == p[n - 1])
+                cout << rem[1] + 1 << ' ' << rem[0] + 1 << '\n';
+            else
+                cout << rem[0] + 1 << ' ' << rem[1] + 1 << '\n';
         }
     }
 }
