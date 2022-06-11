@@ -13,18 +13,19 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-520 | [B - Subway Pursuit](https://codeforces.com/contest/1039/problem/B) | [GNU C11](./codeforces/1039/B.cpp) | `binary search` `interactive` `probabilities` `*2100` | Aug/13/2022 13:56 | 
-519 | [F - Lost Array](https://codeforces.com/contest/1713/problem/F) | [GNU C11](./codeforces/1713/F.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `dp` `math` `*2900` | Aug/12/2022 20:06 | 
-518 | [B - Integers Have Friends](https://codeforces.com/contest/1548/problem/B) | [GNU C++20 (64)](./codeforces/1548/B.cpp) | `binary search` `data structures` `divide and conquer` `math` `number theory` `two pointers` `*1800` | Aug/12/2022 11:20 | 
-517 | [B - Permutation Chain](https://codeforces.com/contest/1716/problem/B) | [GNU C11](./codeforces/1716/B.cpp) | `constructive algorithms` `math` `*800` | Aug/07/2022 07:27 | 
-516 | [J - Jeopardy of Dropped Balls](https://codeforces.com/contest/1575/problem/J) | [GNU C++20 (64)](./codeforces/1575/J.cpp) | `binary search` `brute force` `dsu` `implementation` `*1500` | Jul/20/2022 21:18 | 
-515 | [F - Points](https://codeforces.com/contest/1701/problem/F) | [GNU C++20 (64)](./codeforces/1701/F.cpp) | `combinatorics` `data structures` `implementation` `math` `matrices` `*2500` | Jul/09/2022 13:55 | 
-514 | [D - Roads and Ramen](https://codeforces.com/contest/1434/problem/D) | [GNU C++20 (64)](./codeforces/1434/D.cpp) | `data structures` `dfs and similar` `trees` `*2800` | Jun/26/2022 09:45 | 
-513 | [F - The Chocolate Spree](https://codeforces.com/contest/633/problem/F) | [GNU C++20 (64)](./codeforces/633/F.cpp) | `dfs and similar` `dp` `graphs` `trees` `*2600` | Jun/26/2022 09:40 | 
-512 | [B - Mystic Permutation](https://codeforces.com/contest/1689/problem/B) | [GNU C++20 (64)](./codeforces/1689/B.cpp) | `data structures` `greedy` `*900` | Jun/11/2022 10:31 | 
-511 | [A - Lex String](https://codeforces.com/contest/1689/problem/A) | [GNU C++20 (64)](./codeforces/1689/A.cpp) | `brute force` `greedy` `implementation` `sortings` `two pointers` `*800` | Jun/11/2022 10:24 | 
-510 | [C - Infected Tree](https://codeforces.com/contest/1689/problem/C) | [GNU C++20 (64)](./codeforces/1689/C.cpp) | `dfs and similar` `dp` `trees` `*1600` | Jun/11/2022 10:24 | 
-509 | [D - Lena and Matrix](https://codeforces.com/contest/1689/problem/D) | [GNU C++20 (64)](./codeforces/1689/D.cpp) | `data structures` `dp` `geometry` `shortest paths` `*1900` | Jun/11/2022 10:23 | 
+521 | [B - Subway Pursuit](https://codeforces.com/contest/1039/problem/B) | [GNU C11](./codeforces/1039/B.cpp) | `binary search` `interactive` `probabilities` `*2100` | Aug/13/2022 13:56 | 
+520 | [F - Lost Array](https://codeforces.com/contest/1713/problem/F) | [GNU C11](./codeforces/1713/F.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `dp` `math` `*2900` | Aug/12/2022 20:06 | 
+519 | [B - Integers Have Friends](https://codeforces.com/contest/1548/problem/B) | [GNU C++20 (64)](./codeforces/1548/B.cpp) | `binary search` `data structures` `divide and conquer` `math` `number theory` `two pointers` `*1800` | Aug/12/2022 11:20 | 
+518 | [B - Permutation Chain](https://codeforces.com/contest/1716/problem/B) | [GNU C11](./codeforces/1716/B.cpp) | `constructive algorithms` `math` `*800` | Aug/07/2022 07:27 | 
+517 | [J - Jeopardy of Dropped Balls](https://codeforces.com/contest/1575/problem/J) | [GNU C++20 (64)](./codeforces/1575/J.cpp) | `binary search` `brute force` `dsu` `implementation` `*1500` | Jul/20/2022 21:18 | 
+516 | [F - Points](https://codeforces.com/contest/1701/problem/F) | [GNU C++20 (64)](./codeforces/1701/F.cpp) | `combinatorics` `data structures` `implementation` `math` `matrices` `*2500` | Jul/09/2022 13:55 | 
+515 | [D - Roads and Ramen](https://codeforces.com/contest/1434/problem/D) | [GNU C++20 (64)](./codeforces/1434/D.cpp) | `data structures` `dfs and similar` `trees` `*2800` | Jun/26/2022 09:45 | 
+514 | [F - The Chocolate Spree](https://codeforces.com/contest/633/problem/F) | [GNU C++20 (64)](./codeforces/633/F.cpp) | `dfs and similar` `dp` `graphs` `trees` `*2600` | Jun/26/2022 09:40 | 
+513 | [B - Mystic Permutation](https://codeforces.com/contest/1689/problem/B) | [GNU C++20 (64)](./codeforces/1689/B.cpp) | `data structures` `greedy` `*900` | Jun/11/2022 10:31 | 
+512 | [A - Lex String](https://codeforces.com/contest/1689/problem/A) | [GNU C++20 (64)](./codeforces/1689/A.cpp) | `brute force` `greedy` `implementation` `sortings` `two pointers` `*800` | Jun/11/2022 10:24 | 
+511 | [C - Infected Tree](https://codeforces.com/contest/1689/problem/C) | [GNU C++20 (64)](./codeforces/1689/C.cpp) | `dfs and similar` `dp` `trees` `*1600` | Jun/11/2022 10:24 | 
+510 | [D - Lena and Matrix](https://codeforces.com/contest/1689/problem/D) | [GNU C++20 (64)](./codeforces/1689/D.cpp) | `data structures` `dp` `geometry` `shortest paths` `*1900` | Jun/11/2022 10:23 | 
+509 | [E - ANDfinity](https://codeforces.com/contest/1689/problem/E) | [GNU C++20 (64)](./codeforces/1689/E.cpp) | `bitmasks` `brute force` `constructive algorithms` `dfs and similar` `dsu` `graphs` `*2500` | Jun/11/2022 10:20 | 
 508 | [D - Number of Shortest paths](https://atcoder.jp/contests/abc211/tasks/abc211_d) | [C++ (GCC 9.2.1)](./atcoder/abc211/D.cpp) | `AtCoder` `*400` | Feb/09/2022 22:07 | 
 507 | [F - Making It Bipartite](https://codeforces.com/contest/1630/problem/F) | [GNU C++20 (64)](./codeforces/1630/F.cpp) | `flows` `graph matchings` `graphs` `number theory` `*3400` | Jan/28/2022 17:01 | 
 506 | [D2 - Game on Sum (Hard Version)](https://codeforces.com/contest/1628/problem/D2) | [GNU C++20 (64)](./codeforces/1628/D2.cpp) | `combinatorics` `dp` `games` `math` `*2400` | Jan/24/2022 13:19 | 

@@ -9313,6 +9313,27 @@
     ],
     "timestamp": "Jan/28/2022 17:01"
   },
+  "CF160161254": {
+    "contest_id": 1689,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1689/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "ANDfinity",
+    "problem_url": "https://codeforces.com/contest/1689/problem/E",
+    "submission_id": "CF160161254",
+    "submission_url": "https://codeforces.com/contest/1689/submission/160161254",
+    "tags": [
+      "bitmasks",
+      "brute force",
+      "constructive algorithms",
+      "dfs and similar",
+      "dsu",
+      "graphs",
+      "*2500"
+    ],
+    "timestamp": "Jun/11/2022 10:20"
+  },
   "CF160161428": {
     "contest_id": 1689,
     "language": "GNU C++20 (64)",
