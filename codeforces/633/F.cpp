@@ -40,7 +40,7 @@ int main() {
         // find vertex-weighted diameter
         vector<ll> d(n);
         vector<int> prv(n);
-        auto dfs = [&](auto& self, int u, int p, ll dist) -> void {
+        auto dfs = [&](auto self, int u, int p, ll dist) -> void {
             prv[u] = p;
             d[u] = dist;
             for (auto v : g[u]) {
@@ -62,7 +62,7 @@ int main() {
         for (auto u : path) removed[u] = true;
         for (int i = 0; i < (int)path.size(); ++i) {
             ll val = 0;
-            auto dfs_subtree = [&](auto& self, int u, int p,
+            auto dfs_subtree = [&](auto self, int u, int p,
                                    ll dist) -> void {
                 val = max(val, dist);
                 for (auto v : g[u]) {
@@ -77,7 +77,7 @@ int main() {
                 // find diameter of this subtree
                 ll max_distance = -1;
                 int endpoint = -1;
-                auto dfs_lengths = [&](auto& self, int u, int p,
+                auto dfs_lengths = [&](auto self, int u, int p,
                                        ll dist) -> void {
                     if (dist > max_distance) {
                         max_distance = dist;
