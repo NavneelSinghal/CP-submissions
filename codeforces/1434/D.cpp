@@ -553,7 +553,7 @@ int main() {
         }
         vector<int> parity(n);
         vector<int> parent(n);
-        auto dfs_parity = [&](auto& self, int u, int p, int state) -> void {
+        auto dfs_parity = [&](auto self, int u, int p, int state) -> void {
             parity[u] = state;
             parent[u] = p;
             for (auto [v, t] : g[u]) {
@@ -565,7 +565,7 @@ int main() {
         vector<int> tin(n, -1), sz(n, 1), order;
         {
             int timer = 0;
-            auto dfs_time = [&](auto& self, int u, int p) -> void {
+            auto dfs_time = [&](auto self, int u, int p) -> void {
                 tin[u] = timer++;
                 order.push_back(u);
                 for (auto [v, _] : g[u]) {
@@ -582,7 +582,7 @@ int main() {
             int endpoint = -1;
             int max_distance = -1;
             vector<int> d(n);
-            auto dfs_dist = [&](auto& self, int u, int p, int dist) -> void {
+            auto dfs_dist = [&](auto self, int u, int p, int dist) -> void {
                 if (dist > max_distance) {
                     max_distance = dist;
                     endpoint = u;
