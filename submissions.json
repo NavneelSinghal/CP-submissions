@@ -9313,6 +9313,25 @@
     ],
     "timestamp": "Jan/28/2022 17:01"
   },
+  "CF161826883": {
+    "contest_id": 633,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/633/F.cpp",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "The Chocolate Spree",
+    "problem_url": "https://codeforces.com/contest/633/problem/F",
+    "submission_id": "CF161826883",
+    "submission_url": "https://codeforces.com/contest/633/submission/161826883",
+    "tags": [
+      "dfs and similar",
+      "dp",
+      "graphs",
+      "trees",
+      "*2600"
+    ],
+    "timestamp": "Jun/26/2022 09:40"
+  },
   "CF161827071": {
     "contest_id": 1434,
     "language": "GNU C++20 (64)",
