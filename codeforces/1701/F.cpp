@@ -57,9 +57,7 @@ struct IO {
     IO& operator=(const IO&) = delete;
     IO& operator=(IO&&) = delete;
 
-    ~IO() {
-        flush();
-    }
+    ~IO() { flush(); }
 
     template <class T>
     struct is_char {
@@ -321,9 +319,7 @@ struct IO {
         return *this;
     }
 
-    IO* tie(std::nullptr_t) {
-        return this;
-    }
+    IO* tie(std::nullptr_t) { return this; }
     void sync_with_stdio(bool) {}
 };
 IO io;
@@ -541,25 +537,24 @@ int main() {
             while (q--) cout << "0\n";
         } else {
             struct Base {
-                int c{}, x{};
+                ll c{}, x{};
             };
             struct Node {
-                int c{}, x{};
-                ll ans{};
+                ll c{}, x{}, ans{}, sz{};
             };
             constexpr Node id_node{};
             constexpr auto make_node = [](const Base& b, int) -> Node {
-                return Node{b.c, b.x, ll(b.x) * b.c};
+                return Node{b.c, b.x, b.x * b.c, 1};
             };
             constexpr auto combine = [](const Node& l, const Node& r) -> Node {
-                return Node{l.c + r.c, l.x + r.x, l.ans + r.ans};
+                return Node{l.c + r.c, l.x + r.x, l.ans + r.ans, l.sz + r.sz};
             };
-            using Update = int;
+            using Update = ll;
             constexpr Update id_update = 0;
             // update for c, set for x
             constexpr auto apply_update = [](const Update& u,
                                              const Node& n) -> Node {
-                return {n.c + u, n.x, n.ans + ll(n.x) * u};
+                return {n.c + n.sz * u, n.x, n.ans + n.x * u, n.sz};
             };
             constexpr auto compose_updates = [](const Update& u,
                                                 const Update& v) -> Update {
@@ -580,14 +575,14 @@ int main() {
                 auto nd2 = st.get(i);
                 if (x[i]) {
                     x[i] = false;
-                    ans += -nd.ans + 2 * nd.x - ll(nd2.c - 1) * (nd2.c - 2) / 2;
+                    ans += -nd.ans + 2 * nd.x - (nd2.c - 1) * (nd2.c - 2) / 2;
                     st.update(l, r, -1);
-                    st.set(i, Node{nd2.c - 1, 0, 0});
+                    st.set(i, Node{nd2.c - 1, 0, 0, 1});
                 } else {
                     x[i] = true;
-                    ans += nd.ans - nd.x + nd2.c * ll(nd2.c - 1) / 2;
+                    ans += nd.ans - nd.x + nd2.c * (nd2.c - 1) / 2;
                     st.update(l, r, 1);
-                    st.set(i, Node{nd2.c + 1, 1, nd2.c + 1});
+                    st.set(i, Node{nd2.c + 1, 1, nd2.c + 1, 1});
                 }
                 cout << ans << '\n';
             }
