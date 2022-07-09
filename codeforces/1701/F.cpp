@@ -57,9 +57,7 @@ struct IO {
     IO& operator=(const IO&) = delete;
     IO& operator=(IO&&) = delete;
 
-    ~IO() {
-        flush();
-    }
+    ~IO() { flush(); }
 
     template <class T>
     struct is_char {
@@ -321,9 +319,7 @@ struct IO {
         return *this;
     }
 
-    IO* tie(std::nullptr_t) {
-        return this;
-    }
+    IO* tie(std::nullptr_t) { return this; }
     void sync_with_stdio(bool) {}
 };
 IO io;
@@ -332,22 +328,25 @@ IO io;
 
 template <int n>
 struct st_wrapper {
-    template <class Node, class Update, class CombineNodes, class ApplyUpdate,
+    // clang-format off
+    template <class Node,
+              class Update,
+              class CombineNodes,
+              class ApplyUpdate,
               class ComposeUpdates = std::nullptr_t,
               class CheckLazy = std::nullptr_t>
     struct lazy_segtree {
         static constexpr bool is_lazy =
             !std::is_same<ComposeUpdates, std::nullptr_t>::value;
-        static constexpr bool is_check_lazy =
-            !std::is_same<CheckLazy, std::nullptr_t>::value;
-
+        static constexpr bool is_check_lazy = !std::is_same<CheckLazy, std::nullptr_t>::value;
+        
         static constexpr int log = [] {
             int x = 0;
             while ((1 << x) < n) ++x;
             return x;
         }();
         static constexpr int size = 1 << log;
-
+    
        public:
         template <typename... T>
         explicit lazy_segtree(const Node& _id_node,
@@ -355,8 +354,8 @@ struct st_wrapper {
                               const Update& _id_update,
                               const ApplyUpdate& _apply_update,
                               const ComposeUpdates& _compose_updates = nullptr,
-                              const CheckLazy& _check_lazy = nullptr)
-            : combine{_combine},
+                              const CheckLazy& _check_lazy = nullptr):
+              combine{_combine},
               id_node{_id_node},
               apply_update{_apply_update},
               id_update{_id_update},
@@ -364,7 +363,7 @@ struct st_wrapper {
               check_lazy{_check_lazy},
               d{},
               lz{} {}
-
+        
         void set(int p, Node x) {
             p += size;
             if constexpr (is_lazy)
@@ -372,14 +371,14 @@ struct st_wrapper {
             d[p] = x;
             for (int i = 1; i <= log; ++i) update(p >> i);
         }
-
+    
         Node get(int p) {
             p += size;
             if constexpr (is_lazy)
                 for (int i = log; i >= 1; i--) push(p >> i);
             return d[p];
         }
-
+    
         Node query(int l, int r) {
             if (l == r) return id_node;
             l += size, r += size;
@@ -397,9 +396,9 @@ struct st_wrapper {
             }
             return combine(sml, smr);
         }
-
+        
         Node all_query() const { return d[1]; }
-
+        
         void update(int p, Update f) {
             p += size;
             if constexpr (is_lazy)
@@ -407,7 +406,7 @@ struct st_wrapper {
             d[p] = apply_update(f, d[p]);
             for (int i = 1; i <= log; ++i) update(p >> i);
         }
-
+        
         void update(int l, int r, Update f) {
             if (l == r) return;
             l += size, r += size;
@@ -429,7 +428,7 @@ struct st_wrapper {
             for (int i = l_ctz + 1; i <= log; ++i) update(l >> i);
             for (int i = r_ctz + 1; i <= log; ++i) update((r - 1) >> i);
         }
-
+    
         template <class G>
         int max_right(int l, G g) {
             if (l == n) return n;
@@ -455,7 +454,7 @@ struct st_wrapper {
             } while ((l & -l) != l);
             return n;
         }
-
+    
         template <class G>
         int min_left(int r, G g) {
             if (r == 0) return 0;
@@ -481,7 +480,7 @@ struct st_wrapper {
             } while ((r & -r) != r);
             return 0;
         }
-
+    
        private:
         CombineNodes combine;
         Node id_node;
@@ -491,7 +490,7 @@ struct st_wrapper {
         CheckLazy check_lazy;
         std::array<Node, 2 * size> d;
         std::array<Update, size> lz;
-
+    
         void update(int k) { d[k] = combine(d[2 * k], d[2 * k + 1]); }
         void all_apply(int k, Update f) {
             d[k] = apply_update(f, d[k]);
@@ -506,6 +505,7 @@ struct st_wrapper {
             lz[k] = id_update;
         }
     };
+    // clang-format on
 };
 
 using Base = char;
@@ -526,11 +526,10 @@ constexpr auto compose_updates = [](const Update& u,
                                     const Update& v) -> Update {
     return u + v;
 };
-constexpr int N = 200'000;
+constexpr int n = 200'000;
 
-st_wrapper<N>::lazy_segtree st{id_node, combine, id_update, apply_update,
-                               compose_updates};
-char x[N];
+st_wrapper<n>::lazy_segtree st(id_node, combine, id_update, apply_update,
+                               compose_updates);
 
 int main() {
     int q, d;
@@ -538,6 +537,7 @@ int main() {
     if (d == 1) {
         while (q--) cout << "0\n";
     } else {
+        vector<Base> x(n);
         ll ans = 0;
         while (q--) {
             int i;
