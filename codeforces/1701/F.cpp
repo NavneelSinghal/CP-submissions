@@ -521,7 +521,7 @@ constexpr int N = 200'000;
 
 st_wrapper<N>::lazy_segtree st{id_node, combine, id_update, apply_update,
                                compose_updates};
-char x[N];
+bool x[N];
 
 int main() {
     int q, d;
