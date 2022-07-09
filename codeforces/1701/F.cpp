@@ -1,7 +1,17 @@
-#pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx,avx2,bmi,bmi2,popcnt,lzcnt")
+#ifndef LOCAL
+    #pragma GCC optimize("O3,unroll-loops")
+    #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+
+// #pragma GCC target("avx2,sse4.2,bmi,bmi2,popcnt,lzcnt")
+#endif
 
 #include "bits/stdc++.h"
+
+#ifdef DEBUG
+    #include "includes/debug/debug.hpp"
+#else
+    #define debug(...) 0
+#endif
 
 using ll = int64_t;
 using ull = uint64_t;
@@ -480,8 +490,8 @@ struct st_wrapper {
         Update id_update;
         ComposeUpdates compose_updates;
         CheckLazy check_lazy;
-        Node d[2 * size];
-        Update lz[size];
+        std::array<Node, 2 * size> d;
+        std::array<Update, size> lz;
 
         void update(int k) { d[k] = combine(d[2 * k], d[2 * k + 1]); }
         void all_apply(int k, Update f) {
@@ -510,10 +520,11 @@ constexpr auto combine = [](const Node& l, const Node& r) -> Node {
 };
 using Update = int;
 constexpr Update id_update = 0;
-constexpr auto apply_update = [](Update u, const Node& n) -> Node {
+constexpr auto apply_update = [](const Update& u, const Node& n) -> Node {
     return {n.c + u, n.x, n.ans + ll(n.x) * u};
 };
-constexpr auto compose_updates = [](Update u, Update v) -> Update {
+constexpr auto compose_updates = [](const Update& u,
+                                    const Update& v) -> Update {
     return u + v;
 };
 constexpr int N = 200'000;
