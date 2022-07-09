@@ -523,20 +523,17 @@ st_wrapper<N>::lazy_segtree st{id_node, combine, id_update, apply_update,
                                compose_updates};
 char x[N];
 
-int rd() {
-    int _;
-    cin >> _;
-    return _;
-}
-
 int main() {
-    const int q = rd(), d = rd();
+    int q, d;
+    cin >> q >> d;
     if (d == 1) {
-        for (auto _ : ranges::iota_view(0, q)) cout << "0\n";
+        while (q--) cout << "0\n";
     } else {
         ll ans = 0;
-        for (auto _ : ranges::iota_view(0, q)) {
-            const int i = rd() - 1;
+        while (q--) {
+            int i;
+            cin >> i;
+            --i;
             const int l = max(0, i - d), r = i;
             const auto nd = st.query(l, r), nd2 = st.get(i);
             if (x[i]) {
