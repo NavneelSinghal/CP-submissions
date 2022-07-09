@@ -1,7 +1,16 @@
-#pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+#ifndef LOCAL
+    #pragma GCC optimize("O3,unroll-loops")
+    #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+// #pragma GCC target("avx2,sse4.2,bmi,bmi2,popcnt,lzcnt")
+#endif
 
 #include "bits/stdc++.h"
+
+#ifdef DEBUG
+    #include "includes/debug/debug.hpp"
+#else
+    #define debug(...) 0
+#endif
 
 using ll = int64_t;
 using ull = uint64_t;
@@ -322,7 +331,8 @@ IO io;
 #define cout io
 
 // clang-format off
-template <class Node,
+template <
+          class Node,
           class Update,
           class CombineNodes,
           class ApplyUpdate,
@@ -506,54 +516,61 @@ struct lazy_segtree {
 // clang-format on
 
 int main() {
-    int q, d;
-    cin >> q >> d;
-    if (d == 1) {
-        while (q--) cout << "0\n";
-    } else {
-        using Base = char;
-        struct Node {
-            int c{}, x{};
-            ll ans{};
-        };
-        constexpr Node id_node{};
-        constexpr auto combine = [](const Node& l, const Node& r) -> Node {
-            return Node{l.c, l.x + r.x, l.ans + r.ans};
-        };
-        using Update = int;
-        constexpr Update id_update = 0;
-        // update for c, set for x
-        constexpr auto apply_update = [](const Update& u,
-                                         const Node& n) -> Node {
-            return {n.c + u, n.x, n.ans + ll(n.x) * u};
-        };
-        constexpr auto compose_updates = [](const Update& u,
-                                            const Update& v) -> Update {
-            return u + v;
-        };
-        constexpr int n = 200'000;
-        vector<Base> x(n);
-        lazy_segtree st(n, id_node, combine, id_update, apply_update,
-                        compose_updates);
-        ll ans = 0;
-        while (q--) {
-            int i;
-            cin >> i;
-            --i;
-            const int l = max(0, i - d), r = i;
-            const auto nd = st.query(l, r), nd2 = st.get(i);
-            if (x[i]) {
-                x[i] = false;
-                ans += -nd.ans + 2 * nd.x - ll(nd2.c - 1) * (nd2.c - 2) / 2;
-                st.update(l, r, -1);
-                st.set(i, Node{nd2.c - 1, 0, 0});
-            } else {
-                x[i] = true;
-                ans += nd.ans - nd.x + nd2.c * ll(nd2.c - 1) / 2;
-                st.update(l, r, 1);
-                st.set(i, Node{nd2.c + 1, 1, nd2.c + 1});
+    cin.tie(nullptr)->sync_with_stdio(false);
+    // cout << setprecision(20) << fixed;
+    int _tests = 1;
+    // cin >> _tests;
+    for (int _test = 1; _test <= _tests; ++_test) {
+        // cout << "Case #" << _test << ": ";
+        int q, d;
+        cin >> q >> d;
+        if (d == 1) {
+            while (q--) cout << "0\n";
+        } else {
+            using Base = char;
+            struct Node {
+                int c{}, x{};
+                ll ans{};
+            };
+            constexpr Node id_node{};
+            constexpr auto combine = [](const Node& l, const Node& r) -> Node {
+                return Node{l.c, l.x + r.x, l.ans + r.ans};
+            };
+            using Update = int;
+            constexpr Update id_update = 0;
+            // update for c, set for x
+            constexpr auto apply_update = [](const Update& u,
+                                             const Node& n) -> Node {
+                return {n.c + u, n.x, n.ans + ll(n.x) * u};
+            };
+            constexpr auto compose_updates = [](const Update& u,
+                                                const Update& v) -> Update {
+                return u + v;
+            };
+            constexpr int n = 200'000;
+            vector<Base> x(n);
+            lazy_segtree st(n, id_node, combine, id_update, apply_update,
+                            compose_updates);
+            ll ans = 0;
+            while (q--) {
+                int i;
+                cin >> i;
+                --i;
+                const int l = max(0, i - d), r = i;
+                const auto nd = st.query(l, r), nd2 = st.get(i);
+                if (x[i]) {
+                    x[i] = false;
+                    ans += -nd.ans + 2 * nd.x - ll(nd2.c - 1) * (nd2.c - 2) / 2;
+                    st.update(l, r, -1);
+                    st.set(i, Node{nd2.c - 1, 0, 0});
+                } else {
+                    x[i] = true;
+                    ans += nd.ans - nd.x + nd2.c * ll(nd2.c - 1) / 2;
+                    st.update(l, r, 1);
+                    st.set(i, Node{nd2.c + 1, 1, nd2.c + 1});
+                }
+                cout << ans << '\n';
             }
-            cout << ans << '\n';
         }
     }
 }
