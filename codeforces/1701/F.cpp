@@ -500,7 +500,7 @@ int main() {
             cin >> i;
             --i;
             int factor = x[i] ? -1 : 1;
-            x[i] ^= 1;
+            x[i] ^= -1;
             long long delta = G(st.query(max(0, i - d), i).r) +
                               G(st.query(i + 1, i + d + 1).r);
             delta += st.query(i + 1, i + d).m;
