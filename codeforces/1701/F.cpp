@@ -331,7 +331,7 @@ IO io;
 #define cout io
 
 // clang-format off
-template <
+template <class Base,
           class Node,
           class Update,
           class CombineNodes,
@@ -345,25 +345,33 @@ struct lazy_segtree {
 
    public:
     template <typename... T>
-    explicit lazy_segtree(int n,
+    explicit lazy_segtree(int n, const Base& id_base, T... args)
+        : lazy_segtree(std::vector<Base>(n, id_base), args...) {}
+    explicit lazy_segtree(const std::vector<Base>& v,
                           const Node& _id_node,
                           const CombineNodes& _combine,
                           const Update& _id_update,
                           const ApplyUpdate& _apply_update,
                           const ComposeUpdates& _compose_updates = nullptr,
                           const CheckLazy& _check_lazy = nullptr)
-        : _n(n),
+        : _n(int(v.size())),
           combine(_combine),
           id_node(_id_node),
           apply_update(_apply_update),
           id_update(_id_update),
           compose_updates(_compose_updates),
           check_lazy(_check_lazy) {
+        build(v);
+    }
+
+    void build(const std::vector<Base>& v) {
+        _n = int(v.size());
         log = 0;
         while ((1 << log) < _n) ++log;
         size = 1 << log;
         d = std::vector<Node>(2 * size, id_node);
         if constexpr (is_lazy) lz = std::vector<Update>(size, id_update);
+        for (int i = size - 1; i >= 1; i--) update(i);
     }
     
     void set(int p, Node x) {
@@ -549,7 +557,7 @@ int main() {
             };
             constexpr int n = 200'000;
             vector<Base> x(n);
-            lazy_segtree st(n, id_node, combine, id_update, apply_update,
+            lazy_segtree st(x, id_node, combine, id_update, apply_update,
                             compose_updates);
             ll ans = 0;
             while (q--) {
