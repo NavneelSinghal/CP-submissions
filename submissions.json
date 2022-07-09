@@ -9313,6 +9313,26 @@
     ],
     "timestamp": "Jan/28/2022 17:01"
   },
+  "CF163349669": {
+    "contest_id": 1701,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1701/F.cpp",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Points",
+    "problem_url": "https://codeforces.com/contest/1701/problem/F",
+    "submission_id": "CF163349669",
+    "submission_url": "https://codeforces.com/contest/1701/submission/163349669",
+    "tags": [
+      "combinatorics",
+      "data structures",
+      "implementation",
+      "math",
+      "matrices",
+      "*2500"
+    ],
+    "timestamp": "Jul/09/2022 12:22"
+  },
   "CF163349744": {
     "contest_id": 1701,
     "language": "GNU C++20 (64)",
