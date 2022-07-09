@@ -575,8 +575,8 @@ int main() {
                 int i;
                 cin >> i;
                 --i;
-                int l = max(0, i - d), r = i;
-                auto nd = st.query(l, r), nd2 = st.get(i);
+                const int l = max(0, i - d), r = i;
+                const auto nd = st.query(l, r), nd2 = st.get(i);
                 if (x[i]) {
                     x[i] = false;
                     ans += -nd.ans + 2 * nd.x - ll(nd2.c - 1) * (nd2.c - 2) / 2;
