@@ -331,9 +331,10 @@ IO io;
 #define cout io
 
 // clang-format off
-template <
+template <class Base,
           class Node,
           class Update,
+          class MakeNode,
           class CombineNodes,
           class ApplyUpdate,
           class ComposeUpdates = std::nullptr_t,
@@ -345,25 +346,36 @@ struct lazy_segtree {
 
    public:
     template <typename... T>
-    explicit lazy_segtree(int n,
+    explicit lazy_segtree(int n, const Base& id_base, T... args)
+        : lazy_segtree(std::vector<Base>(n, id_base), args...) {}
+    explicit lazy_segtree(const std::vector<Base>& v,
                           const Node& _id_node,
+                          const MakeNode& _make_node,
                           const CombineNodes& _combine,
                           const Update& _id_update,
                           const ApplyUpdate& _apply_update,
                           const ComposeUpdates& _compose_updates = nullptr,
                           const CheckLazy& _check_lazy = nullptr)
-        : _n(n),
+        : _n(int(v.size())),
+          make_node(_make_node),
           combine(_combine),
           id_node(_id_node),
           apply_update(_apply_update),
           id_update(_id_update),
           compose_updates(_compose_updates),
           check_lazy(_check_lazy) {
+        build(v);
+    }
+
+    void build(const std::vector<Base>& v) {
+        _n = int(v.size());
         log = 0;
         while ((1 << log) < _n) ++log;
         size = 1 << log;
         d = std::vector<Node>(2 * size, id_node);
         if constexpr (is_lazy) lz = std::vector<Update>(size, id_update);
+        for (int i = 0; i < _n; i++) d[size + i] = make_node(v[i], i);
+        for (int i = size - 1; i >= 1; i--) update(i);
     }
     
     void set(int p, Node x) {
@@ -491,6 +503,7 @@ struct lazy_segtree {
     int _n, size, log;
     std::vector<Node> d;
     std::vector<Update> lz;
+    MakeNode make_node;
     CombineNodes combine;
     Node id_node;
     ApplyUpdate apply_update;
@@ -527,12 +540,17 @@ int main() {
         if (d == 1) {
             while (q--) cout << "0\n";
         } else {
-            using Base = char;
+            struct Base {
+                int c{}, x{};
+            };
             struct Node {
                 int c{}, x{};
                 ll ans{};
             };
             constexpr Node id_node{};
+            constexpr auto make_node = [](const Base& b, int) -> Node {
+                return Node{b.c, b.x, ll(b.x) * b.c};
+            };
             constexpr auto combine = [](const Node& l, const Node& r) -> Node {
                 return Node{l.c, l.x + r.x, l.ans + r.ans};
             };
@@ -548,9 +566,10 @@ int main() {
                 return u + v;
             };
             constexpr int n = 200'000;
-            vector<Base> x(n);
-            lazy_segtree st(n, id_node, combine, id_update, apply_update,
-                            compose_updates);
+            vector<Base> a(n);
+            lazy_segtree st(a, id_node, make_node, combine, id_update,
+                            apply_update, compose_updates);
+            vector<char> x(n);
             ll ans = 0;
             while (q--) {
                 int i;
