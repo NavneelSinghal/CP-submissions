@@ -524,7 +524,7 @@ st_wrapper<N>::lazy_segtree st{id_node, combine, id_update, apply_update,
 char x[N];
 
 int rd() {
-    unsigned _;
+    int _;
     cin >> _;
     return _;
 }
@@ -532,10 +532,10 @@ int rd() {
 int main() {
     const int q = rd(), d = rd();
     if (d == 1) {
-        for ([[maybe_unused]] auto _ : ranges::iota_view(0, q)) cout << "0\n";
+        for (auto _ : ranges::iota_view(0, q)) cout << "0\n";
     } else {
         ll ans = 0;
-        for ([[maybe_unused]] auto _ : ranges::iota_view(0, q)) {
+        for (auto _ : ranges::iota_view(0, q)) {
             const int i = rd() - 1;
             const int l = max(0, i - d), r = i;
             const auto nd = st.query(l, r), nd2 = st.get(i);
@@ -550,7 +550,7 @@ int main() {
                 st.update(l, r, 1);
                 st.set(i, Node{nd2.c + 1, 1, nd2.c + 1});
             }
-            cout << ull(ans) << '\n';
+            cout << ans << '\n';
         }
     }
 }
