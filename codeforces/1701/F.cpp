@@ -569,14 +569,15 @@ int main() {
             vector<Base> a(n);
             lazy_segtree st(a, id_node, make_node, combine, id_update,
                             apply_update, compose_updates);
-            vector<char> x(n);
+            vector<bool> x(n);
             ll ans = 0;
             while (q--) {
                 int i;
                 cin >> i;
                 --i;
-                const int l = max(0, i - d), r = i;
-                const auto nd = st.query(l, r), nd2 = st.get(i);
+                int l = max(0, i - d), r = i;
+                auto nd = st.query(l, r);
+                auto nd2 = st.get(i);
                 if (x[i]) {
                     x[i] = false;
                     ans += -nd.ans + 2 * nd.x - ll(nd2.c - 1) * (nd2.c - 2) / 2;
