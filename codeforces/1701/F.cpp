@@ -540,15 +540,16 @@ int main() {
         if (d == 1) {
             while (q--) cout << "0\n";
         } else {
-            using Base = char;
+            struct Base {
+                int c{}, x{};
+            };
             struct Node {
                 int c{}, x{};
                 ll ans{};
             };
             constexpr Node id_node{};
-            constexpr auto make_node = [](Base, int) -> Node {
-                // useless
-                return Node{};
+            constexpr auto make_node = [](const Base& b, int) -> Node {
+                return Node{b.c, b.x, ll(b.x) * b.c};
             };
             constexpr auto combine = [](const Node& l, const Node& r) -> Node {
                 return Node{l.c + r.c, l.x + r.x, l.ans + r.ans};
@@ -565,16 +566,17 @@ int main() {
                 return u + v;
             };
             constexpr int n = 200'000;
-            vector<Base> x(n);
-            lazy_segtree st(x, id_node, make_node, combine, id_update,
+            vector<Base> a(n);
+            lazy_segtree st(a, id_node, make_node, combine, id_update,
                             apply_update, compose_updates);
+            vector<char> x(n);
             ll ans = 0;
             while (q--) {
                 int i;
                 cin >> i;
                 --i;
-                const int l = max(0, i - d), r = i;
-                const auto nd = st.query(l, r), nd2 = st.get(i);
+                int l = max(0, i - d), r = i;
+                auto nd = st.query(l, r), nd2 = st.get(i);
                 if (x[i]) {
                     x[i] = false;
                     ans += -nd.ans + 2 * nd.x - ll(nd2.c - 1) * (nd2.c - 2) / 2;
