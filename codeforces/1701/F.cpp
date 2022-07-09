@@ -510,18 +510,17 @@ constexpr auto combine = [](const Node& l, const Node& r) -> Node {
 };
 using Update = int;
 constexpr Update id_update = 0;
-constexpr auto apply_update = [](const Update& u, const Node& n) -> Node {
-    return Node{n.c + u, n.x, n.ans + ll(n.x) * u};
+constexpr auto apply_update = [](Update u, const Node& n) -> Node {
+    return {n.c + u, n.x, n.ans + ll(n.x) * u};
 };
-constexpr auto compose_updates = [](const Update& u,
-                                    const Update& v) -> Update {
+constexpr auto compose_updates = [](Update u, Update v) -> Update {
     return u + v;
 };
 constexpr int N = 200'000;
 
 st_wrapper<N>::lazy_segtree st{id_node, combine, id_update, apply_update,
                                compose_updates};
-bool x[N];
+char x[N];
 
 int main() {
     int q, d;
