@@ -334,6 +334,7 @@ IO io;
 template <class Base,
           class Node,
           class Update,
+          class MakeNode,
           class CombineNodes,
           class ApplyUpdate,
           class ComposeUpdates = std::nullptr_t,
@@ -349,12 +350,14 @@ struct lazy_segtree {
         : lazy_segtree(std::vector<Base>(n, id_base), args...) {}
     explicit lazy_segtree(const std::vector<Base>& v,
                           const Node& _id_node,
+                          const MakeNode& _make_node,
                           const CombineNodes& _combine,
                           const Update& _id_update,
                           const ApplyUpdate& _apply_update,
                           const ComposeUpdates& _compose_updates = nullptr,
                           const CheckLazy& _check_lazy = nullptr)
         : _n(int(v.size())),
+          make_node(_make_node),
           combine(_combine),
           id_node(_id_node),
           apply_update(_apply_update),
@@ -371,6 +374,7 @@ struct lazy_segtree {
         size = 1 << log;
         d = std::vector<Node>(2 * size, id_node);
         if constexpr (is_lazy) lz = std::vector<Update>(size, id_update);
+        for (int i = 0; i < _n; i++) d[size + i] = make_node(v[i], i);
         for (int i = size - 1; i >= 1; i--) update(i);
     }
     
@@ -499,6 +503,7 @@ struct lazy_segtree {
     int _n, size, log;
     std::vector<Node> d;
     std::vector<Update> lz;
+    MakeNode make_node;
     CombineNodes combine;
     Node id_node;
     ApplyUpdate apply_update;
@@ -541,6 +546,10 @@ int main() {
                 ll ans{};
             };
             constexpr Node id_node{};
+            constexpr auto make_node = [](Base, int) -> Node {
+                // useless
+                return Node{};
+            };
             constexpr auto combine = [](const Node& l, const Node& r) -> Node {
                 return Node{l.c + r.c, l.x + r.x, l.ans + r.ans};
             };
@@ -557,8 +566,8 @@ int main() {
             };
             constexpr int n = 200'000;
             vector<Base> x(n);
-            lazy_segtree st(x, id_node, combine, id_update, apply_update,
-                            compose_updates);
+            lazy_segtree st(x, id_node, make_node, combine, id_update,
+                            apply_update, compose_updates);
             ll ans = 0;
             while (q--) {
                 int i;
