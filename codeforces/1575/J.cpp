@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-constexpr int MX = int(1e3) + 2;
+const int MX = int(1e3) + 2;
 
 template <std::size_t N>
 struct VectorF3 {
@@ -105,19 +105,14 @@ void solve() {
         int x = 0, y = ball - 1;
 
         while (x != n) {
-            switch (mtx[x][y]) {
-                case 0: {
-                    mtx[x][y++] = 1;
-                    break;
-                }
-                case 1: {
-                    ++x;
-                    break;
-                }
-                case 2: {
-                    mtx[x][y--] = 1;
-                    break;
-                }
+            if (mtx[x][y] == 1) {
+                x++;
+            } else if (mtx[x][y] == 0) {
+                mtx[x][y] = 1;
+                y++;
+            } else if (mtx[x][y] == 2) {
+                mtx[x][y] = 1;
+                y--;
             }
         }
 
