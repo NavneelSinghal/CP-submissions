@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MX = int(1e3) + 2;
+const int MX = int(1e3) + 1;
 
 int mtx[MX][MX];
 
