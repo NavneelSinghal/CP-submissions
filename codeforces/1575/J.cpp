@@ -2,6 +2,7 @@
 #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
 
 #include <bits/stdc++.h>
+using namespace std;
 
 constexpr int MX = int(1e3) + 2;
 
@@ -86,22 +87,23 @@ struct VectorF3 {
 
 std::array<VectorF3<MX>, MX> mtx{};
 
-int main() {
-    std::cin.tie(nullptr)->sync_with_stdio(false);
+void solve() {
     int n, m, k;
-    std::cin >> n >> m >> k;
+    cin >> n >> m >> k;
 
     for (int i = 0; i < n; i++)
         for (int j = 0; j < m; j++) {
             int x;
-            std::cin >> x;
+            cin >> x;
             mtx[i][j] = x - 1;
         }
 
     for (int i = 0; i < k; i++) {
         int ball;
-        std::cin >> ball;
+        cin >> ball;
+
         int x = 0, y = ball - 1;
+
         while (x != n) {
             switch (mtx[x][y]) {
                 case 0: {
@@ -118,6 +120,13 @@ int main() {
                 }
             }
         }
-        std::cout << y + 1 << ' ';
+
+        cout << y + 1 << ' ';
     }
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve();
 }
