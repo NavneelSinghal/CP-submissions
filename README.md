@@ -13,10 +13,11 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-512 | [B - Subway Pursuit](https://codeforces.com/contest/1039/problem/B) | [GNU C11](./codeforces/1039/B.cpp) | `binary search` `interactive` `probabilities` `*2100` | Aug/13/2022 13:56 | 
-511 | [F - Lost Array](https://codeforces.com/contest/1713/problem/F) | [GNU C11](./codeforces/1713/F.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `dp` `math` `*2900` | Aug/12/2022 20:06 | 
-510 | [B - Integers Have Friends](https://codeforces.com/contest/1548/problem/B) | [GNU C++20 (64)](./codeforces/1548/B.cpp) | `binary search` `data structures` `divide and conquer` `math` `number theory` `two pointers` `*1800` | Aug/12/2022 11:20 | 
-509 | [B - Permutation Chain](https://codeforces.com/contest/1716/problem/B) | [GNU C11](./codeforces/1716/B.cpp) | `constructive algorithms` `math` `*800` | Aug/07/2022 07:27 | 
+513 | [B - Subway Pursuit](https://codeforces.com/contest/1039/problem/B) | [GNU C11](./codeforces/1039/B.cpp) | `binary search` `interactive` `probabilities` `*2100` | Aug/13/2022 13:56 | 
+512 | [F - Lost Array](https://codeforces.com/contest/1713/problem/F) | [GNU C11](./codeforces/1713/F.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `dp` `math` `*2900` | Aug/12/2022 20:06 | 
+511 | [B - Integers Have Friends](https://codeforces.com/contest/1548/problem/B) | [GNU C++20 (64)](./codeforces/1548/B.cpp) | `binary search` `data structures` `divide and conquer` `math` `number theory` `two pointers` `*1800` | Aug/12/2022 11:20 | 
+510 | [B - Permutation Chain](https://codeforces.com/contest/1716/problem/B) | [GNU C11](./codeforces/1716/B.cpp) | `constructive algorithms` `math` `*800` | Aug/07/2022 07:27 | 
+509 | [J - Jeopardy of Dropped Balls](https://codeforces.com/contest/1575/problem/J) | [GNU C++20 (64)](./codeforces/1575/J.cpp) | `binary search` `brute force` `dsu` `implementation` `*1500` | Jul/20/2022 21:18 | 
 508 | [D - Number of Shortest paths](https://atcoder.jp/contests/abc211/tasks/abc211_d) | [C++ (GCC 9.2.1)](./atcoder/abc211/D.cpp) | `AtCoder` `*400` | Feb/09/2022 22:07 | 
 507 | [F - Making It Bipartite](https://codeforces.com/contest/1630/problem/F) | [GNU C++20 (64)](./codeforces/1630/F.cpp) | `flows` `graph matchings` `graphs` `number theory` `*3400` | Jan/28/2022 17:01 | 
 506 | [D2 - Game on Sum (Hard Version)](https://codeforces.com/contest/1628/problem/D2) | [GNU C++20 (64)](./codeforces/1628/D2.cpp) | `combinatorics` `dp` `games` `math` `*2400` | Jan/24/2022 13:19 | 
