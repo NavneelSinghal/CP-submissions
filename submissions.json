@@ -2271,6 +2271,22 @@
     ],
     "timestamp": "Feb/09/2022 22:07"
   },
+  "AC33894280": {
+    "contest_id": "agc056",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/agc056/C.cpp",
+    "platform": "AtCoder",
+    "problem_index": "C",
+    "problem_name": "01 Balanced",
+    "problem_url": "https://atcoder.jp/contests/agc056/tasks/agc056_c",
+    "submission_id": "AC33894280",
+    "submission_url": "https://atcoder.jp/contests/agc056/submissions/33894280",
+    "tags": [
+      "AtCoder",
+      "*900"
+    ],
+    "timestamp": "Aug/09/2022 10:50"
+  },
   "CF100586070": {
     "contest_id": 1450,
     "language": "GNU C++17",

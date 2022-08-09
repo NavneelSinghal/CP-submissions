@@ -13,17 +13,18 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-523 | [B - Subway Pursuit](https://codeforces.com/contest/1039/problem/B) | [GNU C11](./codeforces/1039/B.cpp) | `binary search` `interactive` `probabilities` `*2100` | Aug/13/2022 13:56 | 
-522 | [F - Lost Array](https://codeforces.com/contest/1713/problem/F) | [GNU C11](./codeforces/1713/F.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `dp` `math` `*2900` | Aug/12/2022 20:06 | 
-521 | [B - Integers Have Friends](https://codeforces.com/contest/1548/problem/B) | [GNU C++20 (64)](./codeforces/1548/B.cpp) | `binary search` `data structures` `divide and conquer` `math` `number theory` `two pointers` `*1800` | Aug/12/2022 11:20 | 
+524 | [B - Subway Pursuit](https://codeforces.com/contest/1039/problem/B) | [GNU C11](./codeforces/1039/B.cpp) | `binary search` `interactive` `probabilities` `*2100` | Aug/13/2022 13:56 | 
+523 | [F - Lost Array](https://codeforces.com/contest/1713/problem/F) | [GNU C11](./codeforces/1713/F.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `dp` `math` `*2900` | Aug/12/2022 20:06 | 
+522 | [B - Integers Have Friends](https://codeforces.com/contest/1548/problem/B) | [GNU C++20 (64)](./codeforces/1548/B.cpp) | `binary search` `data structures` `divide and conquer` `math` `number theory` `two pointers` `*1800` | Aug/12/2022 11:20 | 
+521 | [C - 01 Balanced](https://atcoder.jp/contests/agc056/tasks/agc056_c) | [C++ (GCC 9.2.1)](./atcoder/agc056/C.cpp) | `AtCoder` `*900` | Aug/09/2022 10:50 | 
 520 | [B - Permutation Chain](https://codeforces.com/contest/1716/problem/B) | [GNU C11](./codeforces/1716/B.cpp) | `constructive algorithms` `math` `*800` | Aug/07/2022 07:27 | 
 519 | [J - Jeopardy of Dropped Balls](https://codeforces.com/contest/1575/problem/J) | [GNU C++20 (64)](./codeforces/1575/J.cpp) | `binary search` `brute force` `dsu` `implementation` `*1500` | Jul/20/2022 21:18 | 
 518 | [F - Points](https://codeforces.com/contest/1701/problem/F) | [GNU C++20 (64)](./codeforces/1701/F.cpp) | `combinatorics` `data structures` `implementation` `math` `matrices` `*2500` | Jul/09/2022 13:55 | 
 517 | [D - Roads and Ramen](https://codeforces.com/contest/1434/problem/D) | [GNU C++20 (64)](./codeforces/1434/D.cpp) | `data structures` `dfs and similar` `trees` `*2800` | Jun/26/2022 09:45 | 
 516 | [F - The Chocolate Spree](https://codeforces.com/contest/633/problem/F) | [GNU C++20 (64)](./codeforces/633/F.cpp) | `dfs and similar` `dp` `graphs` `trees` `*2600` | Jun/26/2022 09:40 | 
 515 | [B - Mystic Permutation](https://codeforces.com/contest/1689/problem/B) | [GNU C++20 (64)](./codeforces/1689/B.cpp) | `data structures` `greedy` `*900` | Jun/11/2022 10:31 | 
-514 | [A - Lex String](https://codeforces.com/contest/1689/problem/A) | [GNU C++20 (64)](./codeforces/1689/A.cpp) | `brute force` `greedy` `implementation` `sortings` `two pointers` `*800` | Jun/11/2022 10:24 | 
-513 | [C - Infected Tree](https://codeforces.com/contest/1689/problem/C) | [GNU C++20 (64)](./codeforces/1689/C.cpp) | `dfs and similar` `dp` `trees` `*1600` | Jun/11/2022 10:24 | 
+514 | [C - Infected Tree](https://codeforces.com/contest/1689/problem/C) | [GNU C++20 (64)](./codeforces/1689/C.cpp) | `dfs and similar` `dp` `trees` `*1600` | Jun/11/2022 10:24 | 
+513 | [A - Lex String](https://codeforces.com/contest/1689/problem/A) | [GNU C++20 (64)](./codeforces/1689/A.cpp) | `brute force` `greedy` `implementation` `sortings` `two pointers` `*800` | Jun/11/2022 10:24 | 
 512 | [D - Lena and Matrix](https://codeforces.com/contest/1689/problem/D) | [GNU C++20 (64)](./codeforces/1689/D.cpp) | `data structures` `dp` `geometry` `shortest paths` `*1900` | Jun/11/2022 10:23 | 
 511 | [E - ANDfinity](https://codeforces.com/contest/1689/problem/E) | [GNU C++20 (64)](./codeforces/1689/E.cpp) | `bitmasks` `brute force` `constructive algorithms` `dfs and similar` `dsu` `graphs` `*2500` | Jun/11/2022 10:20 | 
 510 | [F - Koishi's Unconscious Permutation](https://codeforces.com/contest/1687/problem/F) | [GNU C++20 (64)](./codeforces/1687/F.cpp) | `fft` `math` `*3500` | Jun/04/2022 20:22 | 
