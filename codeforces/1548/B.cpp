@@ -2,8 +2,8 @@
 #pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
 
 #define __USE_MINGW_ANSI_STDIO 0
-#include <assert.h>
 #include <stdio.h>
+#include <assert.h>
 
 #define ll long long
 #define ull unsigned long long
@@ -65,7 +65,7 @@ void print(unsigned x) {
     }
 }
 
-ll abs_(ll a) {
+ll abs(ll a) {
     return a < 0 ? -a : a;
 }
 
@@ -105,7 +105,7 @@ int main() {
             continue;
         }
         --n;
-        for (int i = 0; i < n; ++i) a[i] = abs_(a[i] - a[i + 1]);
+        for (int i = 0; i < n; ++i) a[i] = abs(a[i] - a[i + 1]);
         int ans = 0, ptr = 0;
         for (int i = 0; i < n; ++i) {
             distinct[ptr] = a[i];
