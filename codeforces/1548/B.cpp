@@ -10,9 +10,9 @@
 #define N 200000
 #define S 100
 
-char buf[N * 22];
+char buf[N * 30];
 char* bufptr = &*buf;
-char buf2[N * 22];
+char buf2[N * 30];
 char* bufptr2 = &*buf2;
 
 // assumes "x y z"
