@@ -11,8 +11,8 @@
 #define S 100
 
 char buf[N * 22];
-char buf2[N * 22];
 char* bufptr = &*buf;
+char buf2[N * 22];
 char* bufptr2 = &*buf2;
 
 // assumes "x y z"
@@ -132,4 +132,3 @@ int main() {
     }
     fwrite(buf2, 1, bufptr2 - buf2, stdout);
 }
-
