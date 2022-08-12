@@ -69,28 +69,29 @@ ll abs(ll a) {
     return a < 0 ? -a : a;
 }
 
-ull gcd(ull a, ull b) {
-    if (a == 0) return b;
-    if (b == 0) return a;
-    int i = __builtin_ctzll(a);
-    int j = __builtin_ctzll(b);
-    a >>= i;
-    b >>= j;
-    int k = i < j ? i : j;
-    while (1) {
-        if (a > b) {
-            ull t = a;
-            a = b;
-            b = t;
-        }
-        b -= a;
-        if (b == 0) return a << k;
-        b >>= __builtin_ctzll(b);
+ll gcd(ll a, ll b) {
+    if (!a || !b) return a | b;
+    int c = __builtin_ctzll(a | b);
+    a >>= __builtin_ctzll(a);
+    b >>= __builtin_ctzll(b);
+    if (a < b) {
+        ll t = a;
+        a = b;
+        b = t;
     }
+    while (b) {
+        do {
+            a -= b;
+            a >>= __builtin_ctzll(a);
+        } while (a >= b);
+        ll t = a;
+        a = b;
+        b = t;
+    }
+    return a << c;
 }
 
-ll a[N];
-ull distinct[S];
+ll a[N], distinct[S];
 int index[S];
 
 int main() {
