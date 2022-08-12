@@ -11,9 +11,9 @@
 char buf[N * 30];
 int bufptr = 0;
 
-// assumes "x y z"
 ll read_non_negative() {
-    ++bufptr;
+    // for multiple spaces, while
+    if (buf[bufptr] < '0') ++bufptr;
     ll ans = 0;
     while (buf[bufptr] >= '0') ans = ans * 10 + buf[bufptr++] - '0';
     return ans;
@@ -57,7 +57,7 @@ ll a[N], distinct[S];
 int index[S];
 
 int main() {
-    fread(buf + 1, 1, sizeof(buf) - 1, stdin);
+    fread(buf, 1, sizeof(buf), stdin);
     int t = (int)read_non_negative();
     while (t--) {
         int n = (int)read_non_negative();
