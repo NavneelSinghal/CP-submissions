@@ -37,8 +37,25 @@ ll abs(ll a) {
 }
 
 ll gcd(ll a, ll b) {
-    if (a == 0) return b;
-    return gcd(b % a, a);
+    if (!a || !b) return a | b;
+    int c = __builtin_ctzll(a | b);
+    a >>= __builtin_ctzll(a);
+    b >>= __builtin_ctzll(b);
+    if (a < b) {
+        ll t = a;
+        a = b;
+        b = t;
+    }
+    while (b) {
+        do {
+            a -= b;
+            a >>= __builtin_ctzll(a);
+        } while (a >= b);
+        ll t = a;
+        a = b;
+        b = t;
+    }
+    return a << c;
 }
 
 ll a[N], distinct[S];
