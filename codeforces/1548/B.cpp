@@ -72,11 +72,11 @@ ll abs_(ll a) {
 ull gcd(ull a, ull b) {
     if (a == 0) return b;
     if (b == 0) return a;
-    const int i = __builtin_ctzll(a);
-    const int j = __builtin_ctzll(b);
+    int i = __builtin_ctzll(a);
+    int j = __builtin_ctzll(b);
     a >>= i;
     b >>= j;
-    const int k = i < j ? i : j;
+    int k = i < j ? i : j;
     while (1) {
         if (a > b) {
             ull t = a;
