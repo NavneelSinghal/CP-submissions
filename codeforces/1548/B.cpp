@@ -8,30 +8,6 @@
 #define N 200000
 #define LG 20
 
-ll read() {
-    ll f = 0;
-    ll fu = 1;
-    char c = getchar();
-    while (c < '0' || c > '9') {
-        if (c == '-') fu = -1;
-        c = getchar();
-    }
-    while (c >= '0' && c <= '9') {
-        f = (f << 3) + (f << 1) + (c & 15);
-        c = getchar();
-    }
-    f *= fu;
-    return f;
-}
-
-void print(ll x) {
-    if (x < 0) putchar('-'), x = -x;
-    if (x < 10)
-        putchar(x + 48);
-    else
-        print(x / 10), putchar(x % 10 + 48);
-}
-
 ll abs(ll a) {
     return a < 0 ? -a : a;
 }
@@ -82,10 +58,9 @@ int main() {
     while (t--) {
         int n;
         scanf("%d", &n);
-        for (int i = 0; i < n; ++i) a[0][i] = read();
+        for (int i = 0; i < n; ++i) scanf("%lld", &a[0][i]);
         if (n == 1) {
-            print(1);
-            putchar('\n');
+            printf("1\n");
             continue;
         }
         --n;
@@ -113,7 +88,6 @@ int main() {
             }
             if (r - l + 1 > ans) ans = r - l + 1;
         }
-        print(ans + 1);
-        putchar('\n');
+        printf("%d\n", ans + 1);
     }
 }
