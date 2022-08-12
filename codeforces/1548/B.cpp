@@ -96,8 +96,8 @@ int main() {
             }
         }
         print(ans + 1);
-        print_char('\n');
+        if (t) print_char('\n');
     }
-    fwrite(buf2, 1, bufptr2 - buf2, stdout);
+    puts(buf2);
 }
 
