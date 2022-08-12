@@ -5,7 +5,6 @@
 #include <stdio.h>
 
 #define ll long long
-#define ull unsigned long long
 #define N 200000
 #define S 100
 
@@ -13,16 +12,17 @@ char buf[N * 30];
 int bufptr = 0;
 
 // assumes "x y z"
-ull read_non_negative() {
+ll read_non_negative() {
     ++bufptr;
-    ull ans = 0;
+    ll ans = 0;
     while (buf[bufptr] >= '0') ans = ans * 10 + buf[bufptr++] - '0';
     return ans;
 }
 
-void print(ull x) {
+void print(ll x) {
+    if (x < 0) putchar('-'), x = -x;
     if (x < 10)
-        putchar(x + 48);
+        putchar((char)(x + 48));
     else
         print(x / 10), putchar(x % 10 + 48);
 }
