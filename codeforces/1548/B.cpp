@@ -45,7 +45,6 @@ int main() {
         int ans = 0;
         int l = -1, r = -1;
         while (++l < n) {
-            if (r < l - 1) r = l - 1;
             while (l <= r) {
                 ll g = query(l, r);
                 if (g != 1 && g != -1) {
@@ -55,9 +54,8 @@ int main() {
                 }
             }
             if (r - l + 1 > ans) ans = r - l + 1;
-            ll g = query(l, r);
             while (r + 1 < n) {
-                g = gcd(g, a[0][r + 1]);
+                ll g = query(l, r + 1);
                 if (g == 1 || g == -1) {
                     break;
                 } else {
