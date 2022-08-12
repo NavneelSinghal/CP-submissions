@@ -111,9 +111,9 @@ int main() {
             index[ptr] = i;
             for (int j = ptr - 1; j >= 0; --j)
                 distinct[j] = gcd(distinct[j], distinct[j + 1]);
-            int newptr = 1;
-            for (int j = 1; j <= ptr; ++j) {
-                if (distinct[j] != distinct[j - 1]) {
+            int newptr = 0;
+            for (int j = 0; j <= ptr; ++j) {
+                if (j == 0 || distinct[j] != distinct[j - 1]) {
                     distinct[newptr] = distinct[j];
                     index[newptr] = index[j];
                     ++newptr;
