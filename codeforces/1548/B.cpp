@@ -12,8 +12,7 @@ char buf[N * 30];
 int bufptr = 0;
 
 ll read_non_negative() {
-    // for multiple spaces, while
-    if (buf[bufptr] < '0') ++bufptr;
+    while (buf[bufptr] < '0') ++bufptr;
     ll ans = 0;
     while (buf[bufptr] >= '0') ans = ans * 10 + buf[bufptr++] - '0';
     return ans;
