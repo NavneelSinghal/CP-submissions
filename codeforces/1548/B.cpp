@@ -13,19 +13,6 @@ ll gcd(ll a, ll b) {
 ll a[LG][N];
 int lg[N + 1];
 
-void build(int n) {
-    for (int h = 1; (1 << h) <= n; ++h)
-        for (int i = 0; i + (1 << h) <= n; ++i)
-            a[h][i] = gcd(a[h - 1][i], a[h - 1][i + (1 << (h - 1))]);
-}
-
-ll query(int l, int r) {
-    if (l > r) return 0;
-    if (l == r) return a[0][l];
-    int h = lg[r - l + 1];
-    return gcd(a[h][l], a[h][r - (1 << h) + 1]);
-}
-
 int main() {
     lg[1] = 0;
     for (int i = 2; i < N; ++i) lg[i] = lg[i >> 1] + 1;
@@ -41,28 +28,29 @@ int main() {
         }
         --n;
         for (int i = 0; i < n; ++i) a[0][i] -= a[0][i + 1];
-        build(n);
+        for (int h = 1; (1 << h) <= n; ++h)
+            for (int i = 0; i + (1 << h) <= n; ++i)
+                a[h][i] = gcd(a[h - 1][i], a[h - 1][i + (1 << (h - 1))]);
         int ans = 0;
-        int l = -1, r = -1;
-        while (++l < n) {
-            while (l <= r) {
-                ll g = query(l, r);
-                if (g != 1 && g != -1) {
-                    break;
+        int index = 0;
+        for (int i = 0; i < n; ++i) {
+            int l = i - 1, r = n;
+            while (l + 1 < r) {
+                int m = l + (r - l) / 2;
+                ll g;
+                if (m == i) {
+                    g = a[0][i];
                 } else {
-                    ++l;
+                    int h = lg[m - i + 1];
+                    g = gcd(a[h][i], a[h][m - (1 << h) + 1]);
                 }
+                if (g == 1 || g == -1)
+                    r = m;
+                else
+                    l = m;
             }
-            if (r - l + 1 > ans) ans = r - l + 1;
-            while (r + 1 < n) {
-                ll g = query(l, r + 1);
-                if (g == 1 || g == -1) {
-                    break;
-                } else {
-                    ++r;
-                }
-            }
-            if (r - l + 1 > ans) ans = r - l + 1;
+            int len = l - i + 1;
+            if (len > ans) ans = len, index = i;
         }
         printf("%d\n", ans + 1);
     }
