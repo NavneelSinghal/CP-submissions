@@ -29,7 +29,7 @@ void print_char(char x) {
 
 // print only till 999999
 void print(unsigned x) {
-    // assert(x < 1000000);
+    assert(x < 1000000);
     // 1, 2, 3, 4, 5, 6
     if (x < 1000) {
         if (x < 10) {
