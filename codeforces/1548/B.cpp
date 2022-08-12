@@ -131,3 +131,4 @@ int main() {
     }
     fwrite(buf2, 1, bufptr2 - buf2, stdout);
 }
+
