@@ -8,14 +8,20 @@
 #define N 200000
 #define S 100
 
-char buf[N * 30];
-int bufptr = 0;
-
-ll read_non_negative() {
-    while (buf[bufptr] < '0') ++bufptr;
-    ll ans = 0;
-    while (buf[bufptr] >= '0') ans = ans * 10 + buf[bufptr++] - '0';
-    return ans;
+ll read() {
+    ll f = 0;
+    ll fu = 1;
+    char c = (char)getchar();
+    while (c < '0' || c > '9') {
+        if (c == '-') fu = -1;
+        c = (char)getchar();
+    }
+    while (c >= '0' && c <= '9') {
+        f = (f << 3) + (f << 1) + (c & 15);
+        c = (char)getchar();
+    }
+    f *= fu;
+    return f;
 }
 
 void print(ll x) {
@@ -31,36 +37,20 @@ ll abs(ll a) {
 }
 
 ll gcd(ll a, ll b) {
-    if (!a || !b) return a | b;
-    int c = __builtin_ctzll(a | b);
-    a >>= __builtin_ctzll(a);
-    b >>= __builtin_ctzll(b);
-    if (a < b) {
-        ll t = a;
-        a = b;
-        b = t;
-    }
-    while (b) {
-        do {
-            a -= b;
-            a >>= __builtin_ctzll(a);
-        } while (a >= b);
-        ll t = a;
-        a = b;
-        b = t;
-    }
-    return a << c;
+    if (a == 0) return b;
+    return gcd(b % a, a);
 }
 
 ll a[N], distinct[S];
 int index[S];
 
 int main() {
-    fread(buf, 1, sizeof(buf), stdin);
-    int t = (int)read_non_negative();
+    int t;
+    scanf("%d", &t);
     while (t--) {
-        int n = (int)read_non_negative();
-        for (int i = 0; i < n; ++i) a[i] = read_non_negative();
+        int n;
+        scanf("%d", &n);
+        for (int i = 0; i < n; ++i) a[i] = read();
         if (n == 1) {
             print(1);
             putchar('\n');
@@ -93,4 +83,3 @@ int main() {
         putchar('\n');
     }
 }
-
