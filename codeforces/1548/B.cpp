@@ -10,26 +10,21 @@
 #define S 100
 
 char buf[N * 30];
-char* bufptr = &*buf;
-char buf2[N * 30];
-char* bufptr2 = &*buf2;
+int bufptr = 0;
 
 // assumes "x y z"
 ull read_non_negative() {
     ++bufptr;
     ull ans = 0;
-    while (*bufptr >= '0') ans = ans * 10 + *(bufptr++) - '0';
+    while (buf[bufptr] >= '0') ans = ans * 10 + buf[bufptr++] - '0';
     return ans;
 }
 
-void print_char(char x) {
-    *(bufptr2++) = x;
-}
-
 void print(ull x) {
-    if (x < 10) *(bufptr2++) = x + 48;
+    if (x < 10)
+        putchar(x + 48);
     else
-        print(x / 10), *(bufptr2++) = x % 10 + 48;
+        print(x / 10), putchar(x % 10 + 48);
 }
 
 ll abs(ll a) {
@@ -69,7 +64,7 @@ int main() {
         for (int i = 0; i < n; ++i) a[i] = read_non_negative();
         if (n == 1) {
             print(1);
-            print_char('\n');
+            putchar('\n');
             continue;
         }
         --n;
@@ -96,8 +91,7 @@ int main() {
             }
         }
         print(ans + 1);
-        if (t) print_char('\n');
+        putchar('\n');
     }
-    puts(buf2);
 }
 
