@@ -26,41 +26,10 @@ void print_char(char x) {
     *(bufptr2++) = x;
 }
 
-// print only till 999999
-void print(unsigned x) {
-    // 1, 2, 3, 4, 5, 6
-    if (x < 1000) {
-        if (x < 10) {
-            print_char(x + 48);
-        } else if (x < 100) {
-            print_char(x / 10 + 48);
-            print_char(x % 10 + 48);
-        } else {
-            print_char(x / 100 + 48);
-            print_char((x / 10) % 10 + 48);
-            print_char(x % 10 + 48);
-        }
-    } else {
-        if (x < 10000) {
-            print_char(x / 1000 + 48);
-            print_char((x / 100) % 10 + 48);
-            print_char((x / 10) % 10 + 48);
-            print_char(x % 10 + 48);
-        } else if (x < 100000) {
-            print_char(x / 10000 + 48);
-            print_char((x / 1000) % 10 + 48);
-            print_char((x / 100) % 10 + 48);
-            print_char((x / 10) % 10 + 48);
-            print_char(x % 10 + 48);
-        } else {
-            print_char(x / 100000 + 48);
-            print_char((x / 10000) % 10 + 48);
-            print_char((x / 1000) % 10 + 48);
-            print_char((x / 100) % 10 + 48);
-            print_char((x / 10) % 10 + 48);
-            print_char(x % 10 + 48);
-        }
-    }
+void print(ull x) {
+    if (x < 10) *(bufptr2++) = x + 48;
+    else
+        print(x / 10), *(bufptr2++) = x % 10 + 48;
 }
 
 ll abs(ll a) {
