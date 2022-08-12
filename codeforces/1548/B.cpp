@@ -1,6 +1,3 @@
-#pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
-
 #define __USE_MINGW_ANSI_STDIO 0
 #include <stdio.h>
 
@@ -8,30 +5,9 @@
 #define N 200000
 #define LG 20
 
-ll abs(ll a) {
-    return a < 0 ? -a : a;
-}
-
 ll gcd(ll a, ll b) {
-    if (!a || !b) return a | b;
-    int c = __builtin_ctzll(a | b);
-    a >>= __builtin_ctzll(a);
-    b >>= __builtin_ctzll(b);
-    if (a < b) {
-        ll t = a;
-        a = b;
-        b = t;
-    }
-    while (b) {
-        do {
-            a -= b;
-            a >>= __builtin_ctzll(a);
-        } while (a >= b);
-        ll t = a;
-        a = b;
-        b = t;
-    }
-    return a << c;
+    if (a == 0) return b;
+    return gcd(b % a, a);
 }
 
 ll a[LG][N];
@@ -64,23 +40,25 @@ int main() {
             continue;
         }
         --n;
-        for (int i = 0; i < n; ++i) a[0][i] = abs(a[0][i] - a[0][i + 1]);
+        for (int i = 0; i < n; ++i) a[0][i] -= a[0][i + 1];
         build(n);
         int ans = 0;
         int l = -1, r = -1;
         while (++l < n) {
+            if (r < l - 1) r = l - 1;
             while (l <= r) {
                 ll g = query(l, r);
-                if (g != 1) {
+                if (g != 1 && g != -1) {
                     break;
                 } else {
                     ++l;
                 }
             }
             if (r - l + 1 > ans) ans = r - l + 1;
+            ll g = query(l, r);
             while (r + 1 < n) {
-                ll g = query(l, r + 1);
-                if (g == 1) {
+                g = gcd(g, a[0][r + 1]);
+                if (g == 1 || g == -1) {
                     break;
                 } else {
                     ++r;
