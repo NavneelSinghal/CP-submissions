@@ -8,119 +8,6 @@
 #include <string.h>
 #include <time.h>
 
-#define IBUFSIZE 20000000
-#define OBUFSIZE 10000
-
-char ibuf[IBUFSIZE], obuf[OBUFSIZE];
-char *ibufptr = &*ibuf, *obufptr = &*obuf;
-
-// assumes "x y z"
-int read_non_negative() {
-    ++ibufptr;
-    int ans = 0;
-    while (*ibufptr >= '0') ans = ans * 10 + *(ibufptr++) - '0';
-    return ans;
-}
-
-void print_char(char x) {
-    *(obufptr++) = x;
-}
-
-// 1 2 3 4 5 6 7 8 9 10
-void print_non_negative(int x) {
-#define PRINT_MID(X, P) print_char((x / P) % 10 + 48)
-#define PRINT_TOP(X, P) print_char(x / P + 48)
-#define PRINT_BOTTOM(X) print_char(x % 10 + 48)
-    if (x < 1000000) {
-        if (x < 1000) {
-            if (x < 10) {
-                print_char(x + 48);
-            } else if (x < 100) {
-                PRINT_TOP(X, 10);
-                PRINT_BOTTOM(X);
-            } else {
-                PRINT_TOP(X, 100);
-                PRINT_MID(X, 10);
-                PRINT_BOTTOM(X);
-            }
-        } else {
-            if (x < 10000) {
-                PRINT_TOP(X, 1000);
-                PRINT_MID(X, 100);
-                PRINT_MID(X, 10);
-                PRINT_BOTTOM(X);
-            } else if (x < 100000) {
-                PRINT_TOP(X, 10000);
-                PRINT_MID(X, 1000);
-                PRINT_MID(X, 100);
-                PRINT_MID(X, 10);
-                PRINT_BOTTOM(X);
-            } else {
-                PRINT_TOP(X, 100000);
-                PRINT_MID(X, 10000);
-                PRINT_MID(X, 1000);
-                PRINT_MID(X, 100);
-                PRINT_MID(X, 10);
-                PRINT_BOTTOM(X);
-            }
-        }
-    } else {
-        if (x < 100000000) {
-            if (x < 10000000) {
-                PRINT_TOP(X, 1000000);
-                PRINT_MID(X, 100000);
-                PRINT_MID(X, 10000);
-                PRINT_MID(X, 1000);
-                PRINT_MID(X, 100);
-                PRINT_MID(X, 10);
-                PRINT_BOTTOM(X);
-            } else {
-                PRINT_TOP(X, 10000000);
-                PRINT_MID(X, 1000000);
-                PRINT_MID(X, 100000);
-                PRINT_MID(X, 10000);
-                PRINT_MID(X, 1000);
-                PRINT_MID(X, 100);
-                PRINT_MID(X, 10);
-                PRINT_BOTTOM(X);
-            }
-        } else {
-            if (x < 1000000000) {
-                PRINT_TOP(X, 100000000);
-                PRINT_MID(X, 10000000);
-                PRINT_MID(X, 1000000);
-                PRINT_MID(X, 100000);
-                PRINT_MID(X, 10000);
-                PRINT_MID(X, 1000);
-                PRINT_MID(X, 100);
-                PRINT_MID(X, 10);
-                PRINT_BOTTOM(X);
-            } else {
-                PRINT_TOP(X, 1000000000);
-                PRINT_MID(X, 100000000);
-                PRINT_MID(X, 10000000);
-                PRINT_MID(X, 1000000);
-                PRINT_MID(X, 100000);
-                PRINT_MID(X, 10000);
-                PRINT_MID(X, 1000);
-                PRINT_MID(X, 100);
-                PRINT_MID(X, 10);
-                PRINT_BOTTOM(X);
-            }
-        }
-    }
-#undef PRINT_MID
-#undef PRINT_TOP
-#undef PRINT_BOTTOM
-}
-
-void print(int x) {
-    if (x < 0)
-        print_non_negative(-x);
-    else
-        print_non_negative(x);
-}
-
 void swap_detail(void* p1, void* p2, void* tmp, size_t pSize) {
     memcpy(tmp, p1, pSize), memcpy(p1, p2, pSize), memcpy(p2, tmp, pSize);
 }
@@ -133,7 +20,7 @@ void swap_detail(void* p1, void* p2, void* tmp, size_t pSize) {
 typedef long long ll;
 
 #define GEN_PRINT(NAME, TYPE, SPECIFIER_STR)  \
-    int print_generated_##NAME(TYPE x) {      \
+    int print_##NAME(TYPE x) {                \
         return printf(SPECIFIER_STR "\n", x); \
     }
 
@@ -143,13 +30,12 @@ GEN_PRINT(float, float, "%f")
 GEN_PRINT(str, char*, "%s")
 GEN_PRINT(ptr, void*, "%p")
 
-#define print_any(X)                            \
-    _Generic((X),                               \
-            int : print_generated_int,          \
-            float : print_generated_float,      \
-            char : print_generated_char,        \
-            char* : print_generated_str,        \
-            default : print_generated_ptr       \
+#define print_any(X) \
+    _Generic((X),                   \
+            int : print_int,        \
+            float : print_float,    \
+            char* : print_str,      \
+            default : print_ptr     \
             )(X)
 
 #ifdef DEBUG
@@ -244,10 +130,11 @@ void dfs(int u, int p) {
 }
 
 int main() {
-    fread(ibuf + 1, 1, sizeof(ibuf) - 1, stdin);
-    n = read_non_negative();
+    scanf("%d", &n);
     for (int i = 1; i < n; ++i) {
-        int u = read_non_negative() - 1;
+        int u;
+        scanf("%d", &u);
+        --u;
         ++deg[i], ++deg[u];
         add_edge(i, u);
         add_edge(u, i);
@@ -272,10 +159,9 @@ int main() {
             }
         }
     }
-    queries = read_non_negative();
-    for (int i = 0; i < queries; ++i) query[i] = read_non_negative();
+    scanf("%d", &queries);
+    for (int i = 0; i < queries; ++i) scanf("%d", &query[i]);
     dfs(root, -1);
     for (int i = 0; i < queries; ++i)
-        print_non_negative(ans[i]), print_char(" \n"[i == queries - 1]);
-    fwrite(obuf, 1, obufptr - obuf, stdout);
+        printf("%d%c", ans[i], " \n"[i == queries - 1]);
 }
