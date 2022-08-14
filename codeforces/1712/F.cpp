@@ -117,6 +117,15 @@ void print_non_negative(int x) {
 #undef PRINT_BOTTOM
 }
 
+void print(int x) {
+    if (x < 0)
+        print_non_negative(-x);
+    else
+        print_non_negative(x);
+}
+
+typedef long long ll;
+
 #define GEN_PRINT(NAME, TYPE, SPECIFIER_STR)  \
     int print_generated_##NAME(TYPE x) {      \
         return printf(SPECIFIER_STR "\n", x); \
@@ -261,7 +270,7 @@ int main() {
     }
     queries = read_non_negative();
     for (int i = 0; i < queries; ++i) query[i] = read_non_negative();
-    dfs(0, 0);
+    dfs(0, N - 1);
     for (int i = 0; i < queries; ++i)
         print_non_negative(ans[i]), print_char(" \n"[i == queries - 1]);
     fwrite(obuf, 1, obufptr - obuf, stdout);
