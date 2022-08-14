@@ -1,3 +1,6 @@
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+
 #define __USE_MINGW_ANSI_STDIO 0
 #include <assert.h>
 #include <inttypes.h>
@@ -290,4 +293,3 @@ int main() {
     for (int i = 0; i < t; ++i) print_non_negative_64(ans[i]), print_char('\n');
     fwrite(obuf, 1, obufptr - obuf, stdout);
 }
-
