@@ -121,6 +121,15 @@ void print(int x) {
         print_non_negative(x);
 }
 
+void swap_detail(void* p1, void* p2, void* tmp, size_t pSize) {
+    memcpy(tmp, p1, pSize), memcpy(p1, p2, pSize), memcpy(p2, tmp, pSize);
+}
+#define SWAP(a, b)                                                       \
+    swap_detail(                                                         \
+        &(a), &(b),                                                      \
+        (char[(sizeof(a) == sizeof(b)) ? (ptrdiff_t)sizeof(a) : -1]){0}, \
+        sizeof(a))
+
 typedef long long ll;
 
 #define GEN_PRINT(NAME, TYPE, SPECIFIER_STR)  \
@@ -134,7 +143,7 @@ GEN_PRINT(float, float, "%f")
 GEN_PRINT(str, char*, "%s")
 GEN_PRINT(ptr, void*, "%p")
 
-#define print_any(X) \
+#define print_any(X)                            \
     _Generic((X),                               \
             int : print_generated_int,          \
             float : print_generated_float,      \
@@ -192,16 +201,8 @@ void dfs(int u, int p) {
         if (v == p) continue;
         dfs(v, u);
         if (dp_len[u] < dp_len[v]) {
-            {
-                int t = dp_len[u];
-                dp_len[u] = dp_len[v];
-                dp_len[v] = t;
-            }
-            {
-                int *t = dp[u];
-                dp[u] = dp[v];
-                dp[v] = t;
-            }
+            SWAP(dp_len[u], dp_len[v]);
+            SWAP(dp[u], dp[v]);
         }
         int dp_len_v = dp_len[v];
         int dp_len_u = dp_len[u];
