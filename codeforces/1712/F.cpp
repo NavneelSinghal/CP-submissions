@@ -1,5 +1,5 @@
-//#pragma GCC optimize("O3,unroll-loops")
-//#pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
 
 #define __USE_MINGW_ANSI_STDIO 0
 #include <assert.h>
@@ -11,7 +11,7 @@
 #include <string.h>
 #include <time.h>
 
-#define IBUFSIZE 10000000
+#define IBUFSIZE 20000000
 #define OBUFSIZE 10000
 
 char ibuf[IBUFSIZE], obuf[OBUFSIZE];
@@ -164,7 +164,7 @@ typedef struct {
 } edge;
 
 int n;
-int root = 0;
+int root = -1;
 
 edge tree[2 * N + 1];
 int head[N];
@@ -251,13 +251,17 @@ int main() {
     for (int i = 1; i < n; ++i) {
         int u = read_non_negative() - 1;
         ++deg[i], ++deg[u];
-        add_edge(i, u), add_edge(u, i);
+        add_edge(i, u);
+        add_edge(u, i);
     }
     for (int i = 0; i < n; ++i)
-        if (deg[i] > 1)
+        if (deg[i] > 1) {
+            root = i;
             d_leaf[i] = -1;
-        else
+        } else {
+            d_leaf[i] = 0;
             q[++q_r] = i;
+        }
     assert(root != -1);
     while (q_l <= q_r) {
         int u = q[q_l++];

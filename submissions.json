@@ -10949,6 +10949,25 @@
     ],
     "timestamp": "Aug/13/2022 13:56"
   },
+  "CF168235841": {
+    "contest_id": 1712,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1712/F.cpp",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Triameter",
+    "problem_url": "https://codeforces.com/contest/1712/problem/F",
+    "submission_id": "CF168235841",
+    "submission_url": "https://codeforces.com/contest/1712/submission/168235841",
+    "tags": [
+      "binary search",
+      "data structures",
+      "dfs and similar",
+      "trees",
+      "*3200"
+    ],
+    "timestamp": "Aug/14/2022 12:48"
+  },
   "CF168236187": {
     "contest_id": 1712,
     "language": "GNU C11",
