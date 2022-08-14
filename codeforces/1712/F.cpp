@@ -188,7 +188,7 @@ int dp_len[N];
 int depth[N];
 
 void dfs(int u, int p) {
-    depth[u] = depth[p] + 1;
+    if (p != -1) depth[u] = depth[p] + 1;
     for (int it = head[u]; it; it = tree[it].next) {
         int v = tree[it].v;
         if (v == p) continue;
@@ -270,7 +270,7 @@ int main() {
     }
     queries = read_non_negative();
     for (int i = 0; i < queries; ++i) query[i] = read_non_negative();
-    dfs(0, N - 1);
+    dfs(0, -1);
     for (int i = 0; i < queries; ++i)
         print_non_negative(ans[i]), print_char(" \n"[i == queries - 1]);
     fwrite(obuf, 1, obufptr - obuf, stdout);
