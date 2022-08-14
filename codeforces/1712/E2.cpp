@@ -210,7 +210,6 @@ void print_non_negative_64(uint64_t x) {
 #undef PRINT_MID
 #undef PRINT_TOP
 #undef PRINT_BOTTOM
-#undef PRINT_ALL
 
 #define GEN_PRINT(NAME, TYPE, SPECIFIER_STR)  \
     int print_generated_##NAME(TYPE x) {      \
