@@ -164,6 +164,7 @@ typedef struct {
 } edge;
 
 int n;
+int root = 0;
 
 edge tree[2 * N + 1];
 int head[N];
@@ -257,6 +258,7 @@ int main() {
             d_leaf[i] = -1;
         else
             q[++q_r] = i;
+    assert(root != -1);
     while (q_l <= q_r) {
         int u = q[q_l++];
         int d_leaf_u = d_leaf[u];
@@ -270,7 +272,7 @@ int main() {
     }
     queries = read_non_negative();
     for (int i = 0; i < queries; ++i) query[i] = read_non_negative();
-    dfs(0, -1);
+    dfs(root, -1);
     for (int i = 0; i < queries; ++i)
         print_non_negative(ans[i]), print_char(" \n"[i == queries - 1]);
     fwrite(obuf, 1, obufptr - obuf, stdout);
