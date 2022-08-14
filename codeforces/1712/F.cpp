@@ -239,7 +239,7 @@ void dfs(int u, int p) {
         }
     }
     if (dp_len_u <= d_leaf[u])
-        dp[u] = (int*)realloc(dp[u], (d_leaf[u] + 1) * sizeof(int)),
+        dp[u] = realloc(dp[u], (d_leaf[u] + 1) * sizeof(int)),
         dp_len[u] = d_leaf[u] + 1;
     for (int i = dp_len_u; i <= d_leaf[u]; ++i) dp[u][i] = 0;
     if (dp[u][d_leaf[u]] < depth[u]) dp[u][d_leaf[u]] = depth[u];
