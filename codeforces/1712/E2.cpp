@@ -40,65 +40,103 @@ void print_str(const char* const c, size_t len) {
 #define PRINT_BOTTOM(X) print_char((X) % 10 + 48)
 
 #define MID_10(X) PRINT_MID(X, 10)
-#define MID_100(X)     \
-    PRINT_MID(X, 100); \
-    MID_10(X);
-#define MID_1000(X)     \
-    PRINT_MID(X, 1000); \
-    MID_100(X);
-#define MID_10000(X)     \
-    PRINT_MID(X, 10000); \
-    MID_1000(X);
-#define MID_100000(X)     \
-    PRINT_MID(X, 100000); \
-    MID_10000(X);
-#define MID_1000000(X)     \
-    PRINT_MID(X, 1000000); \
-    MID_100000(X);
-#define MID_10000000(X)     \
-    PRINT_MID(X, 10000000); \
-    MID_1000000(X);
-#define MID_100000000(X)     \
-    PRINT_MID(X, 100000000); \
-    MID_10000000(X);
-#define MID_1000000000(X)     \
-    PRINT_MID(X, 1000000000); \
-    MID_100000000(X);
-#define MID_10000000000(X)     \
-    PRINT_MID(X, 10000000000); \
-    MID_1000000000(X);
-#define MID_100000000000(X)     \
-    PRINT_MID(X, 100000000000); \
-    MID_10000000000(X);
-#define MID_1000000000000(X)     \
-    PRINT_MID(X, 1000000000000); \
-    MID_100000000000(X);
-#define MID_10000000000000(X)     \
-    PRINT_MID(X, 10000000000000); \
-    MID_1000000000000(X);
-#define MID_100000000000000(X)     \
-    PRINT_MID(X, 100000000000000); \
-    MID_10000000000000(X);
-#define MID_1000000000000000(X)     \
-    PRINT_MID(X, 1000000000000000); \
-    MID_100000000000000(X);
-#define MID_10000000000000000(X)     \
-    PRINT_MID(X, 10000000000000000); \
-    MID_1000000000000000(X);
-#define MID_100000000000000000(X)     \
-    PRINT_MID(X, 100000000000000000); \
-    MID_10000000000000000(X);
-#define MID_1000000000000000000(X)     \
-    PRINT_MID(X, 1000000000000000000); \
-    MID_100000000000000000(X);
-#define MID_10000000000000000000(X)     \
-    PRINT_MID(X, 10000000000000000000); \
-    MID_1000000000000000000(X);
+#define MID_100(X)         \
+    do {                   \
+        PRINT_MID(X, 100); \
+        MID_10(X);         \
+    } while (0)
+#define MID_1000(X)         \
+    do {                    \
+        PRINT_MID(X, 1000); \
+        MID_100(X);         \
+    } while (0)
+#define MID_10000(X)         \
+    do {                     \
+        PRINT_MID(X, 10000); \
+        MID_1000(X);         \
+    } while (0)
+#define MID_100000(X)         \
+    do {                      \
+        PRINT_MID(X, 100000); \
+        MID_10000(X);         \
+    } while (0)
+#define MID_1000000(X)         \
+    do {                       \
+        PRINT_MID(X, 1000000); \
+        MID_100000(X);         \
+    } while (0)
+#define MID_10000000(X)         \
+    do {                        \
+        PRINT_MID(X, 10000000); \
+        MID_1000000(X);         \
+    } while (0)
+#define MID_100000000(X)         \
+    do {                         \
+        PRINT_MID(X, 100000000); \
+        MID_10000000(X);         \
+    } while (0)
+#define MID_1000000000(X)         \
+    do {                          \
+        PRINT_MID(X, 1000000000); \
+        MID_100000000(X);         \
+    } while (0)
+#define MID_10000000000(X)         \
+    do {                           \
+        PRINT_MID(X, 10000000000); \
+        MID_1000000000(X);         \
+    } while (0)
+#define MID_100000000000(X)         \
+    do {                            \
+        PRINT_MID(X, 100000000000); \
+        MID_10000000000(X);         \
+    } while (0)
+#define MID_1000000000000(X)         \
+    do {                             \
+        PRINT_MID(X, 1000000000000); \
+        MID_100000000000(X);         \
+    } while (0)
+#define MID_10000000000000(X)         \
+    do {                              \
+        PRINT_MID(X, 10000000000000); \
+        MID_1000000000000(X);         \
+    } while (0)
+#define MID_100000000000000(X)         \
+    do {                               \
+        PRINT_MID(X, 100000000000000); \
+        MID_10000000000000(X);         \
+    } while (0)
+#define MID_1000000000000000(X)         \
+    do {                                \
+        PRINT_MID(X, 1000000000000000); \
+        MID_100000000000000(X);         \
+    } while (0)
+#define MID_10000000000000000(X)         \
+    do {                                 \
+        PRINT_MID(X, 10000000000000000); \
+        MID_1000000000000000(X);         \
+    } while (0)
+#define MID_100000000000000000(X)         \
+    do {                                  \
+        PRINT_MID(X, 100000000000000000); \
+        MID_10000000000000000(X);         \
+    } while (0)
+#define MID_1000000000000000000(X)         \
+    do {                                   \
+        PRINT_MID(X, 1000000000000000000); \
+        MID_100000000000000000(X);         \
+    } while (0)
+#define MID_10000000000000000000(X)         \
+    do {                                    \
+        PRINT_MID(X, 10000000000000000000); \
+        MID_1000000000000000000(X);         \
+    } while (0)
 
-#define PRINT_ALL(X, P)      \
-    PRINT_TOP(X, 10ULL * P); \
-    MID_##P(X);              \
-    PRINT_BOTTOM(X);
+#define PRINT_ALL(X, P)          \
+    do {                         \
+        PRINT_TOP(X, 10ULL * P); \
+        MID_##P(X);              \
+        PRINT_BOTTOM(X);         \
+    } while (0)
 
 // 1 2 3 4 5 6 7 8 9 10
 void print_non_negative(uint32_t x) {
