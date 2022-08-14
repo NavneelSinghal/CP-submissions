@@ -1,6 +1,3 @@
-#pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
-
 #define __USE_MINGW_ANSI_STDIO 0
 #include <assert.h>
 #include <inttypes.h>
