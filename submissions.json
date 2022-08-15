@@ -2319,6 +2319,22 @@
     ],
     "timestamp": "Aug/09/2022 10:50"
   },
+  "AC34066981": {
+    "contest_id": "agc058",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/agc058/D.cpp",
+    "platform": "AtCoder",
+    "problem_index": "D",
+    "problem_name": "Yet Another ABC String",
+    "problem_url": "https://atcoder.jp/contests/agc058/tasks/agc058_d",
+    "submission_id": "AC34066981",
+    "submission_url": "https://atcoder.jp/contests/agc058/submissions/34066981",
+    "tags": [
+      "AtCoder",
+      "*1000"
+    ],
+    "timestamp": "Aug/15/2022 15:57"
+  },
   "AC34067020": {
     "contest_id": "agc058",
     "language": "C++ (GCC 9.2.1)",
