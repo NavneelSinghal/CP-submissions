@@ -1,6 +1,3 @@
-#pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
-
 #include <stdio.h>
 
 #define MOD 998244353
@@ -37,15 +34,13 @@ int inv(int a) {
 
 #define N 1000000
 
-int fact[3 * N + 1], ifact[3 * N + 1], pw[N + 1];
+int fact[3 * N + 1], ifact[3 * N + 1];
 
 void init_fact() {
     fact[0] = 1;
     for (int i = 1; i <= 3 * N; ++i) fact[i] = mul(fact[i - 1], i);
     ifact[3 * N] = inv(fact[3 * N]);
     for (int i = 3 * N - 1; i >= 0; --i) ifact[i] = mul(ifact[i + 1], i + 1);
-    pw[0] = 1;
-    for (int i = 1; i <= N; ++i) pw[i] = mul(pw[i - 1], MOD - 2);
 }
 
 int C(int a, int b, int c, int d) {
@@ -57,9 +52,11 @@ int coeff(int a, int b, int c) {
     int x = a;
     if (b < x) x = b;
     if (c < x) x = c;
-    int ans = 0;
-    for (int i = 0; i <= x; ++i)
-        ans = add(ans, mul(pw[i], C(a - i, b - i, c - i, i)));
+    int pw = 1, ans = 0;
+    for (int i = 0; i <= x; ++i) {
+        ans = add(ans, mul(pw, C(a - i, b - i, c - i, i)));
+        pw = mul(pw, MOD - 2);
+    }
     return ans;
 }
 
