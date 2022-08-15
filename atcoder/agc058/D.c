@@ -5,23 +5,24 @@
 
 #define MOD 998244353
 
-unsigned add(unsigned a, unsigned b) {
+int add(int a, int b) {
     a += b;
     if (a >= MOD) a -= MOD;
     return a;
 }
 
-unsigned sub(unsigned a, unsigned b) {
-    if (a < b) return a + MOD - b;
-    return a - b;
+int sub(int a, int b) {
+    a -= b;
+    if (a < 0) a += MOD;
+    return a;
 }
 
-unsigned mul(unsigned a, unsigned b) {
-    return 1ULL * a * b % MOD;
+int mul(int a, int b) {
+    return 1LL * a * b % MOD;
 }
 
-unsigned binexp(unsigned a, unsigned n) {
-    unsigned ans = 1;
+int binexp(int a, int n) {
+    int ans = 1;
     while (n) {
         if (n & 1) ans = mul(ans, a);
         a = mul(a, a);
@@ -30,13 +31,13 @@ unsigned binexp(unsigned a, unsigned n) {
     return ans;
 }
 
-unsigned inv(unsigned a) {
+int inv(int a) {
     return binexp(a, MOD - 2);
 }
 
 #define N 1000000
 
-unsigned fact[3 * N + 1], ifact[3 * N + 1], pw[N + 1];
+int fact[3 * N + 1], ifact[3 * N + 1], pw[N + 1];
 
 void init_fact() {
     fact[0] = 1;
@@ -47,27 +48,27 @@ void init_fact() {
     for (int i = 1; i <= N; ++i) pw[i] = mul(pw[i - 1], MOD - 2);
 }
 
-unsigned C(unsigned a, unsigned b, unsigned c, unsigned d) {
+int C(int a, int b, int c, int d) {
     return mul(fact[a + b + c + d],
                mul(mul(ifact[a], ifact[b]), mul(ifact[c], ifact[d])));
 }
 
-unsigned coeff(unsigned a, unsigned b, unsigned c) {
-    unsigned x = a;
+int coeff(int a, int b, int c) {
+    int x = a;
     if (b < x) x = b;
     if (c < x) x = c;
-    unsigned ans = 0;
-    for (unsigned i = 0; i <= x; ++i)
+    int ans = 0;
+    for (int i = 0; i <= x; ++i)
         ans = add(ans, mul(pw[i], C(a - i, b - i, c - i, i)));
     return ans;
 }
 
 int main() {
     init_fact();
-    unsigned a, b, c;
-    scanf("%u%u%u", &a, &b, &c);
-    unsigned ans = sub(
+    int a, b, c;
+    scanf("%d%d%d", &a, &b, &c);
+    int ans = sub(
         add(add(coeff(a - 1, b, c), coeff(a, b - 1, c)), coeff(a, b, c - 1)),
         mul(3, coeff(a - 1, b - 1, c - 1)));
-    printf("%u\n", ans);
+    printf("%d\n", ans);
 }
