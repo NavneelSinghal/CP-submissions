@@ -36,13 +36,13 @@ unsigned inv(unsigned a) {
 
 #define N 1000000
 
-unsigned fact[3 * N + 1], ifact[N + 1], pw[N + 1];
+unsigned fact[3 * N + 1], ifact[3 * N + 1], pw[N + 1];
 
 void init_fact() {
     fact[0] = 1;
     for (int i = 1; i <= 3 * N; ++i) fact[i] = mul(fact[i - 1], i);
-    ifact[N] = inv(fact[N]);
-    for (int i = N - 1; i >= 0; --i) ifact[i] = mul(ifact[i + 1], i + 1);
+    ifact[3 * N] = inv(fact[3 * N]);
+    for (int i = 3 * N - 1; i >= 0; --i) ifact[i] = mul(ifact[i + 1], i + 1);
     pw[0] = 1;
     for (int i = 1; i <= N; ++i) pw[i] = mul(pw[i - 1], MOD - 2);
 }
