@@ -10949,6 +10949,26 @@
     ],
     "timestamp": "Aug/13/2022 13:56"
   },
+  "CF168878867": {
+    "contest_id": 1101,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1101/D.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D",
+    "problem_name": "GCD Counting",
+    "problem_url": "https://codeforces.com/contest/1101/problem/D",
+    "submission_id": "CF168878867",
+    "submission_url": "https://codeforces.com/contest/1101/submission/168878867",
+    "tags": [
+      "data structures",
+      "dfs and similar",
+      "dp",
+      "number theory",
+      "trees",
+      "*2000"
+    ],
+    "timestamp": "Aug/18/2022 23:17"
+  },
   "CF168917509": {
     "contest_id": 1101,
     "language": "GNU C++20 (64)",
