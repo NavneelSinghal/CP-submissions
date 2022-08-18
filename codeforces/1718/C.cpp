@@ -124,18 +124,25 @@ ll max(ll a, ll b) {
 }
 
 ll t[6][4 * N];
-
-void add(ll* tree, int i, int x, int s) {
-    i += s;
-    tree[i] += x;
-    while (i > 1) {
-        i >>= 1;
-        tree[i] = max(tree[2 * i], tree[2 * i + 1]);
+void add(ll* tree, int v, int l, int r, int i, int x) {
+    if (l + 1 == r) {
+        tree[v] += x;
+        return;
     }
+    int m = (l + r) / 2;
+    if (i < m)
+        add(tree, 2 * v, l, m, i, x);
+    else
+        add(tree, 2 * v + 1, m, r, i, x);
+    tree[v] = max(tree[2 * v], tree[2 * v + 1]);
 }
 
-void build(ll* tree, int s) {
-    for (int i = s - 1; i > 0; --i) tree[i] = max(tree[2 * i], tree[2 * i + 1]);
+void build(ll* tree, int v, int l, int r) {
+    if (l + 1 == r) return;
+    int m = (l + r) / 2;
+    build(tree, 2 * v, l, m);
+    build(tree, 2 * v + 1, m, r);
+    tree[v] = max(tree[2 * v], tree[2 * v + 1]);
 }
 
 ll query(ll* tree) {
@@ -166,7 +173,7 @@ int main() {
             memset(t[ptr], 0, sizeof(ll) * 2 * size[ptr]);
             for (int start = 0; start < n; start += skip)
                 for (int i = 0; i < skip; ++i) t[ptr][p2 + i] += a[start + i];
-            build(t[ptr], p2);
+            build(t[ptr], 1, 0, p2);
         }
         print_u64(solve());
         print_char('\n');
@@ -176,7 +183,7 @@ int main() {
             int diff = A - a[I];
             a[I] = A;
             for (int ptr = 0; ptr < total_primes; ++ptr)
-                add(t[ptr], I % complement[ptr], diff, size[ptr]);
+                add(t[ptr], 1, 0, size[ptr], I % complement[ptr], diff);
             print_u64(solve());
             print_char('\n');
         }
