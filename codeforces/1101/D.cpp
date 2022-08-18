@@ -373,6 +373,10 @@ int main() {
         vector<bool> nonempty(N + 1);
         struct Pair {
             int first, second;
+            bool operator<(const Pair& other) const {
+                if (first != other.first) return first < other.first;
+                return second < other.second;
+            }
         };
         vector<basic_string<Pair>> edges(N + 1);
         for (int i = 1; i < n; ++i) {
@@ -390,7 +394,7 @@ int main() {
         int ans = 0;
 
         vector<basic_string<int>> g(n);
-        vector<char> used(n), visited_1(n), visited_2(n);
+        vector<bool> used(n), visited_1(n), visited_2(n);
 
         for (int i = 2; i <= N; ++i) {
             if (!nonempty[i]) continue;
@@ -407,8 +411,8 @@ int main() {
             for (auto root : all) {
                 if (visited_2[root]) continue;
                 // now find diameter
-                queue<pair<int, int>> q;
-                pair best{0, root};
+                queue<Pair> q;
+                Pair best{0, root};
                 q.emplace(0, root);
                 while (not q.empty()) {
                     auto [du, u] = q.front();
@@ -416,7 +420,7 @@ int main() {
                     for (auto v : g[u]) {
                         if (visited_1[v]) continue;
                         visited_1[v] = true;
-                        pair x{du + 1, v};
+                        Pair x{du + 1, v};
                         best = max(best, x);
                         q.push(x);
                     }
@@ -431,7 +435,7 @@ int main() {
                     for (auto v : g[u]) {
                         if (visited_2[v]) continue;
                         visited_2[v] = true;
-                        pair x{du + 1, v};
+                        Pair x{du + 1, v};
                         best = max(best, x);
                         q.push(x);
                     }
