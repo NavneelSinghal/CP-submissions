@@ -90,6 +90,15 @@ void load_str(char* s) {
 typedef int64_t ll;
 
 #define N 200000
+int prime_factor[N + 1];
+void init_sieve() {
+    for (int i = 2; i <= N; ++i)
+        if (prime_factor[i] == 0) {
+            prime_factor[i] = i;
+            if ((ll)i * i > N) continue;
+            for (int j = i * i; j <= N; j += i) prime_factor[j] = i;
+        }
+}
 
 int total_primes;
 int primes[6], complement[6], size[6];
@@ -97,13 +106,11 @@ int primes[6], complement[6], size[6];
 void factorize(int n) {
     int n_ = n;
     total_primes = 0;
-    for (int i = 2; i * i <= n; ++i) {
-        if (n % i == 0) {
-            primes[total_primes++] = i;
-            while (n % i == 0) n /= i;
-        }
+    while (n > 1) {
+        int p = prime_factor[n];
+        primes[total_primes++] = p;
+        while (n % p == 0) n /= p;
     }
-    if (n > 1) primes[total_primes++] = n;
     for (int i = 0; i < total_primes; ++i) {
         complement[i] = n_ / primes[i];
         int p = 1;
@@ -146,6 +153,7 @@ int a[N];
 
 int main() {
     fread(ibuf + 1, 1, sizeof(ibuf) - 1, stdin);
+    init_sieve();
     int tests = read_u32();
     while (tests--) {
         int n = read_u32();
