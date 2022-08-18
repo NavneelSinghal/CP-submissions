@@ -116,7 +116,7 @@ ll max(ll a, ll b) {
     return a < b ? b : a;
 }
 
-ll t[6][2 * N];
+ll t[6][4 * N];
 
 void add(ll* tree, int i, int x, int s) {
     i += s;
