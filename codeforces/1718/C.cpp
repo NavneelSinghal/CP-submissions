@@ -87,18 +87,15 @@ void load_str(char* s) {
     while (*ibufptr != ' ' && *ibufptr != '\n') *(s++) = *(ibufptr++);
 }
 
-typedef int64_t ll;
-
 #define N 200000
 int prime_factor[N + 1];
 void init_sieve() {
     for (int i = 2; i <= N; ++i)
-        if (prime_factor[i] == 0) {
-            prime_factor[i] = i;
-            if ((ll)i * i > N) continue;
-            for (int j = i * i; j <= N; j += i) prime_factor[j] = i;
-        }
+        if (prime_factor[i] == 0)
+            for (int j = i; j <= N; j += i) prime_factor[j] = i;
 }
+
+typedef int64_t ll;
 
 int total_primes;
 int primes[6], complement[6], size[6];
