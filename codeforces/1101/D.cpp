@@ -59,10 +59,7 @@ int main() {
 
         const int N = 2e5;
         vector<bool> nonempty(N + 1);
-        struct Pair {
-            int first, second;
-        };
-        vector<basic_string<Pair>> edges(N + 1);
+        vector<vector<pair<int, int>>> edges(N + 1);
         for (int i = 1; i < n; ++i) {
             int u, v;
             cin >> u >> v;
@@ -71,13 +68,13 @@ int main() {
             while (g > 1) {
                 int p = sv.spf[g];
                 nonempty[p] = true;
-                edges[p].push_back({u, v});
+                edges[p].emplace_back(u, v);
                 while (g % p == 0) g /= p;
             }
         }
         int ans = 0;
 
-        vector<basic_string<int>> g(n);
+        vector<vector<int>> g(n);
         vector<bool> used(n), visited_1(n), visited_2(n);
 
         for (int i = 2; i <= N; ++i) {
