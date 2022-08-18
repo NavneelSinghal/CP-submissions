@@ -55,9 +55,7 @@ struct IO {
     IO& operator=(const IO&) = delete;
     IO& operator=(IO&&) = delete;
 
-    ~IO() {
-        flush();
-    }
+    ~IO() { flush(); }
 
     template <class T>
     struct is_char {
@@ -319,9 +317,7 @@ struct IO {
         return *this;
     }
 
-    IO* tie(std::nullptr_t) {
-        return this;
-    }
+    IO* tie(std::nullptr_t) { return this; }
     void sync_with_stdio(bool) {}
 };
 IO io;
@@ -373,10 +369,6 @@ int main() {
         vector<bool> nonempty(N + 1);
         struct Pair {
             int first, second;
-            bool operator<(const Pair& other) const {
-                if (first != other.first) return first < other.first;
-                return second < other.second;
-            }
         };
         vector<basic_string<Pair>> edges(N + 1);
         for (int i = 1; i < n; ++i) {
@@ -399,7 +391,7 @@ int main() {
         for (int i = 2; i <= N; ++i) {
             if (!nonempty[i]) continue;
             auto& edges_p = edges[i];
-            basic_string<int> all;
+            vector<int> all;
             for (auto [u, v] : edges_p) {
                 g[u].push_back(v);
                 g[v].push_back(u);
@@ -411,8 +403,8 @@ int main() {
             for (auto root : all) {
                 if (visited_2[root]) continue;
                 // now find diameter
-                queue<Pair> q;
-                Pair best{0, root};
+                queue<pair<int, int>> q;
+                pair<int, int> best{0, root};
                 q.emplace(0, root);
                 while (not q.empty()) {
                     auto [du, u] = q.front();
@@ -420,7 +412,7 @@ int main() {
                     for (auto v : g[u]) {
                         if (visited_1[v]) continue;
                         visited_1[v] = true;
-                        Pair x{du + 1, v};
+                        pair x{du + 1, v};
                         best = max(best, x);
                         q.push(x);
                     }
@@ -435,7 +427,7 @@ int main() {
                     for (auto v : g[u]) {
                         if (visited_2[v]) continue;
                         visited_2[v] = true;
-                        Pair x{du + 1, v};
+                        pair x{du + 1, v};
                         best = max(best, x);
                         q.push(x);
                     }
@@ -453,3 +445,4 @@ int main() {
         cout << ans + add << '\n';
     }
 }
+
