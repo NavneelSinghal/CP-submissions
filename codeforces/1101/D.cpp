@@ -354,16 +354,6 @@ struct fast_sieve_func_spf {
 
 fast_sieve_func_spf<200000> sv{};
 
-struct Pair {
-    int first, second;
-};
-static constexpr int N = 200000;
-bitset<N + 1> nonempty, used, visited_1, visited_2;
-basic_string<Pair> edges[N + 1];
-basic_string<int> g[N];
-int all[N], allptr = 0;
-queue<pair<int, int>> q;
-
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int n;
@@ -377,6 +367,12 @@ int main() {
         cout << add << '\n';
         return 0;
     }
+    const int N = 2e5;
+    vector<bool> nonempty(N + 1);
+    struct Pair {
+        int first, second;
+    };
+    vector<basic_string<Pair>> edges(N + 1);
     for (int i = 1; i < n; ++i) {
         int u, v;
         cin >> u >> v;
@@ -391,18 +387,23 @@ int main() {
     }
     int ans = 0;
 
+    vector<basic_string<int>> g(n);
+    vector<bool> used(n), visited_1(n), visited_2(n);
+    vector<int> all;
+    all.reserve(n);
+    queue<pair<int, int>> q;
+
     for (int i = 2; i <= N; ++i) {
         if (!nonempty[i]) continue;
         auto& edges_p = edges[i];
         for (auto [u, v] : edges_p) {
             g[u].push_back(v);
             g[v].push_back(u);
-            if (!used[u]) used[u] = true, all[allptr++] = u;
-            if (!used[v]) used[v] = true, all[allptr++] = v;
+            if (!used[u]) used[u] = true, all.push_back(u);
+            if (!used[v]) used[v] = true, all.push_back(v);
         }
-        if (allptr == 0) continue;
-        for (int j = 0; j < allptr; ++j) {
-            int root = all[j];
+        if (all.empty()) continue;
+        for (auto root : all) {
             if (visited_2[root]) continue;
             pair<int, int> best{0, root};
             q.emplace(0, root);
@@ -440,7 +441,7 @@ int main() {
             visited_2[u] = false;
             g[u].clear();
         }
-        allptr = 0;
+        all.clear();
     }
     cout << ans + add << '\n';
 }
