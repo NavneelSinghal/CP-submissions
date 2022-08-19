@@ -354,121 +354,13 @@ struct fast_sieve_func_spf {
 
 fast_sieve_func_spf<200000> sv{};
 
-namespace graph_representations {
-    template <typename Data>
-    struct edge_data {
-        int to, nxt;
-        Data d;
-        constexpr edge_data() : to{}, nxt{}, d{} {}
-        constexpr edge_data(int to_, int nxt_, Data d_)
-            : to{to_}, nxt{nxt_}, d{d_} {}
-    };
-    struct edge {
-        int to, nxt;
-        constexpr edge() : to{}, nxt{} {}
-        constexpr edge(int to_, int nxt_) : to{to_}, nxt{nxt_} {}
-    };
-    template <typename Data, int N, int M>
-    struct graph {
-        static constexpr bool has_data = !std::is_same_v<Data, void>;
-        using edge_t = std::conditional_t<has_data, edge_data<Data>, edge>;
-        constexpr graph() : cur_edges{} { head.fill(-1); }
-        void clear(int n = N) {
-            std::fill_n(std::begin(head), n, -1);
-            cur_edges = 0;
-        }
-        void clear_vertex(int u) { head[u] = -1; }
-        void clear_edges() { cur_edges = 0; }
-        template <class T>
-        void add_edge(int u, int v, T d) noexcept {
-            if constexpr (has_data) {
-                edges[cur_edges] = {v, head[u], d};
-            } else {
-                throw "Graph doesn't handle edge data, do not use add_edge with data";
-            }
-            head[u] = cur_edges++;
-        }
-        void add_edge(int u, int v) noexcept {
-            if constexpr (has_data) {
-                throw "Graph handles edge data, do not use add_edge without data";
-            } else {
-                edges[cur_edges] = {v, head[u]};
-            }
-            head[u] = cur_edges++;
-        }
-        struct edge_range {
-            const edge_t* edges_array;
-            const int start;
-            struct edge_iterator {
-                const edge_t* edges_array;
-                int edge_index;
-                explicit constexpr edge_iterator(const edge_t* edges_array_,
-                                                 const int edge_index_)
-                    : edges_array{edges_array_}, edge_index{edge_index_} {}
-                constexpr const edge_iterator& operator++() {
-                    edge_index = edges_array[edge_index].nxt;
-                    return *this;
-                }
-                constexpr const edge_iterator operator++(int) {
-                    auto temp = *this;
-                    return operator++(), temp;
-                }
-                constexpr auto operator*() const {
-                    if constexpr (has_data) {
-                        return std::pair{edges_array[edge_index].to,
-                                         edges_array[edge_index].d};
-                    } else {
-                        return edges_array[edge_index].to;
-                    }
-                }
-                constexpr bool operator!=(const edge_iterator& it) const {
-                    return edge_index != it.edge_index;
-                }
-                constexpr bool operator==(const edge_iterator& it) const {
-                    return edge_index == it.edge_index;
-                }
-            };
-            constexpr edge_iterator begin() {
-                return edge_iterator(edges_array, start);
-            }
-            constexpr edge_iterator end() {
-                return edge_iterator(edges_array, -1);
-            }
-            constexpr edge_iterator begin() const {
-                return edge_iterator(edges_array, start);
-            }
-            constexpr edge_iterator end() const {
-                return edge_iterator(edges_array, -1);
-            }
-        };
-        edge_range operator[](int u) {
-            return edge_range{edges.data(), head[u]};
-        }
-        edge_range operator[](int u) const {
-            return edge_range{edges.data(), head[u]};
-        }
-
-       private:
-        std::array<int, N> head;
-        std::array<edge_t, M> edges;
-        int cur_edges;
-    };
-}  // namespace graph_representations
-
-template <typename Data, int N, int M>
-using fixed_size_graph_with_data_t = graph_representations::graph<Data, N, M>;
-template <int N, int M>
-using fixed_size_graph_t = graph_representations::graph<void, N, M>;
-
 struct Pair {
     int first, second;
 };
 static constexpr int N = 200000;
-bitset<N + 1> used, visited_1, visited_2;
-
-fixed_size_graph_with_data_t<int, N + 1, 6 * N> edges;
-fixed_size_graph_t<N, 2 * N - 2> g;
-
+bitset<N + 1> nonempty, used, visited_1, visited_2;
+basic_string<Pair> edges[N + 1];
+basic_string<int> g[N];
 int all[N], allptr = 0;
 queue<pair<int, int>> q;
 
@@ -478,27 +370,33 @@ int main() {
     cin >> n;
     vector<int> a(n);
     for (auto& x : a) cin >> x;
-    bool no_add = all_of(a.begin(), a.end(), [](int x) { return x == 1; });
-    if (no_add) {
-        cout << 0 << '\n';
+    int add = 0;
+    for (auto x : a)
+        if (x > 1) add = 1;
+    if (not add) {
+        cout << add << '\n';
         return 0;
     }
     for (int i = 1; i < n; ++i) {
         int u, v;
         cin >> u >> v;
         --u, --v;
-        int G = gcd(a[u], a[v]);
-        while (G > 1) {
-            int p = sv.spf[G];
-            edges.add_edge(p, u, v);
-            while (G % p == 0) G /= p;
+        int g = gcd(a[u], a[v]);
+        while (g > 1) {
+            int p = sv.spf[g];
+            nonempty[p] = true;
+            edges[p].push_back({u, v});
+            while (g % p == 0) g /= p;
         }
     }
     int ans = 0;
+
     for (int i = 2; i <= N; ++i) {
-        for (auto [u, v] : edges[i]) {
-            g.add_edge(u, v);
-            g.add_edge(v, u);
+        if (!nonempty[i]) continue;
+        auto& edges_p = edges[i];
+        for (auto [u, v] : edges_p) {
+            g[u].push_back(v);
+            g[v].push_back(u);
             if (!used[u]) used[u] = true, all[allptr++] = u;
             if (!used[v]) used[v] = true, all[allptr++] = v;
         }
@@ -508,7 +406,6 @@ int main() {
             if (visited_2[root]) continue;
             pair<int, int> best{0, root};
             q.emplace(0, root);
-            visited_1[root] = true;
             while (not q.empty()) {
                 auto [du, u] = q.front();
                 q.pop();
@@ -537,15 +434,13 @@ int main() {
             }
             ans = max(ans, best.first);
         }
-        g.clear_edges();
-        for (int j = 0; j < allptr; ++j) {
-            int u = all[j];
+        for (auto u : all) {
             used[u] = false;
             visited_1[u] = false;
             visited_2[u] = false;
-            g.clear_vertex(u);
+            g[u].clear();
         }
         allptr = 0;
     }
-    cout << ans + 1 << '\n';
+    cout << ans + add << '\n';
 }
