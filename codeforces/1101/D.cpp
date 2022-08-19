@@ -55,9 +55,7 @@ struct IO {
     IO& operator=(const IO&) = delete;
     IO& operator=(IO&&) = delete;
 
-    ~IO() {
-        flush();
-    }
+    ~IO() { flush(); }
 
     template <class T>
     struct is_char {
@@ -319,9 +317,7 @@ struct IO {
         return *this;
     }
 
-    IO* tie(std::nullptr_t) {
-        return this;
-    }
+    IO* tie(std::nullptr_t) { return this; }
     void sync_with_stdio(bool) {}
 };
 IO io;
@@ -391,13 +387,11 @@ int main() {
 
         vector<basic_string<int>> g(n);
         vector<bool> used(n), visited_1(n), visited_2(n);
-        vector<int> all;
-        all.reserve(n);
-        queue<pair<int, int>> q;
 
         for (int i = 2; i <= N; ++i) {
             if (!nonempty[i]) continue;
             auto& edges_p = edges[i];
+            vector<int> all;
             for (auto [u, v] : edges_p) {
                 g[u].push_back(v);
                 g[v].push_back(u);
@@ -405,8 +399,11 @@ int main() {
                 if (!used[v]) used[v] = true, all.push_back(v);
             }
             if (all.empty()) continue;
+
+            queue<pair<int, int>> q;
             for (auto root : all) {
                 if (visited_2[root]) continue;
+                // now find diameter
                 pair<int, int> best{0, root};
                 q.emplace(0, root);
                 while (not q.empty()) {
@@ -437,13 +434,13 @@ int main() {
                 }
                 ans = max(ans, best.first);
             }
+
             for (auto u : all) {
                 used[u] = false;
                 visited_1[u] = false;
                 visited_2[u] = false;
                 g[u].clear();
             }
-            all.clear();
         }
         cout << ans + add << '\n';
     }
