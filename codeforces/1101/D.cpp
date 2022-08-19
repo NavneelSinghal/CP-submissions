@@ -400,7 +400,7 @@ namespace graph_representations {
             const edge_t* edges_array;
             const int start;
             struct edge_iterator {
-                const edge_t* const edges_array;
+                const edge_t* edges_array;
                 int edge_index;
                 explicit constexpr edge_iterator(const edge_t* edges_array_,
                                                  const int edge_index_)
@@ -500,8 +500,8 @@ int main() {
         for (auto [u, v] : edges[i]) {
             g.add_edge(u, v);
             g.add_edge(v, u);
-            if (!used[u]) used.set(u), all[allptr++] = u;
-            if (!used[v]) used.set(v), all[allptr++] = v;
+            if (!used[u]) used[u] = true, all[allptr++] = u;
+            if (!used[v]) used[v] = true, all[allptr++] = v;
         }
         if (allptr == 0) continue;
         for (int j = 0; j < allptr; ++j) {
@@ -510,12 +510,12 @@ int main() {
             pair<int, int> best{0, root};
             q_start = 0, q_end = -1;
             q[++q_end] = {0, root};
-            visited_1.set(root);
+            visited_1[root] = true;
             while (q_start <= q_end) {
                 auto [du, u] = q[q_start++];
                 for (auto v : g[u]) {
                     if (visited_1[v]) continue;
-                    visited_1.set(v);
+                    visited_1[v] = true;
                     pair x{du + 1, v};
                     best = max(best, x);
                     q[++q_end] = x;
@@ -525,12 +525,12 @@ int main() {
             best = {0, root};
             q_start = 0, q_end = -1;
             q[++q_end] = {0, root};
-            visited_2.set(root);
+            visited_2[root] = true;
             while (q_start <= q_end) {
                 auto [du, u] = q[q_start++];
                 for (auto v : g[u]) {
                     if (visited_2[v]) continue;
-                    visited_2.set(v);
+                    visited_2[v] = true;
                     pair x{du + 1, v};
                     best = max(best, x);
                     q[++q_end] = x;
@@ -541,9 +541,9 @@ int main() {
         g.clear_edges();
         for (int j = 0; j < allptr; ++j) {
             int u = all[j];
-            used.reset(u);
-            visited_1.reset(u);
-            visited_2.reset(u);
+            used[u] = false;
+            visited_1[u] = false;
+            visited_2[u] = false;
             g.clear_vertex(u);
         }
         allptr = 0;
