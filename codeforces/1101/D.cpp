@@ -330,6 +330,30 @@ IO io;
 
 using namespace std;
 
+template <int n = 1'000'000>
+struct fast_sieve_func_spf {
+    vector<int> primes, spf;
+    vector<char> is_prime;
+    fast_sieve_func_spf() {
+        is_prime.assign(n + 1, true);
+        is_prime[0] = is_prime[1] = false;
+        spf.resize(n + 1);
+        for (int i = 2; i <= n; ++i) {
+            if (is_prime[i]) primes.push_back(i), spf[i] = i;
+            int spfi = spf[i];
+            for (const auto p : primes) {
+                const int k = i * p;
+                if (k > n) break;
+                is_prime[k] = false;
+                spf[k] = p;
+                if (spfi == p) break;
+            }
+        }
+    }
+};
+
+fast_sieve_func_spf<200000> sv{};
+
 namespace graph_representations {
     template <typename Data>
     struct edge_data {
@@ -449,38 +473,6 @@ int all[N], allptr = 0;
 pair<int, int> q[N];
 int q_start, q_end;
 
-constexpr std::uint32_t max_distinct_prime_factors(std::uint32_t N) {
-    std::uint32_t primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
-    std::uint64_t x = 1;
-    std::uint32_t ans = 0;
-    for (auto prime : primes) {
-        x *= prime;
-        if (x <= N)
-            ++ans;
-        else
-            break;
-    }
-    return ans;
-}
-
-template <int N = 1'000'000>
-struct sieve_prime_factors {
-    static constexpr std::uint32_t N_max_distinct_prime_factors =
-        max_distinct_prime_factors(N);
-    std::array<std::uint8_t, N + 1> len{};
-    std::array<std::array<int, N_max_distinct_prime_factors>, N + 1>
-        prime_factors{};
-    vector<int> primes, spf;
-    vector<char> is_prime;
-    sieve_prime_factors() {
-        for (int i = 2; i <= N; ++i)
-            if (!len[i])
-                for (int j = i; j <= N; j += i) prime_factors[j][len[j]++] = i;
-    }
-};
-
-sieve_prime_factors<200000> sv{};
-
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     int n;
@@ -497,8 +489,11 @@ int main() {
         cin >> u >> v;
         --u, --v;
         int G = gcd(a[u], a[v]);
-        for (int j = 0; j < sv.len[G]; ++j)
-            edges.add_edge(sv.prime_factors[G][j], u, v);
+        while (G > 1) {
+            int p = sv.spf[G];
+            edges.add_edge(p, u, v);
+            while (G % p == 0) G /= p;
+        }
     }
     int ans = 0;
     for (int i = 2; i <= N; ++i) {
