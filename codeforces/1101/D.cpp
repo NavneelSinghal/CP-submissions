@@ -470,8 +470,7 @@ fixed_size_graph_with_data_t<int, N + 1, 6 * N> edges;
 fixed_size_graph_t<N, 2 * N - 2> g;
 
 int all[N], allptr = 0;
-pair<int, int> q[N];
-int q_start, q_end;
+queue<pair<int, int>> q;
 
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
@@ -508,32 +507,32 @@ int main() {
             int root = all[j];
             if (visited_2[root]) continue;
             pair<int, int> best{0, root};
-            q_start = 0, q_end = -1;
-            q[++q_end] = {0, root};
+            q.emplace(0, root);
             visited_1[root] = true;
-            while (q_start <= q_end) {
-                auto [du, u] = q[q_start++];
+            while (not q.empty()) {
+                auto [du, u] = q.front();
+                q.pop();
                 for (auto v : g[u]) {
                     if (visited_1[v]) continue;
                     visited_1[v] = true;
                     pair x{du + 1, v};
                     best = max(best, x);
-                    q[++q_end] = x;
+                    q.push(x);
                 }
             }
             root = best.second;
             best = {0, root};
-            q_start = 0, q_end = -1;
-            q[++q_end] = {0, root};
+            q.emplace(0, root);
             visited_2[root] = true;
-            while (q_start <= q_end) {
-                auto [du, u] = q[q_start++];
+            while (not q.empty()) {
+                auto [du, u] = q.front();
+                q.pop();
                 for (auto v : g[u]) {
                     if (visited_2[v]) continue;
                     visited_2[v] = true;
                     pair x{du + 1, v};
                     best = max(best, x);
-                    q[++q_end] = x;
+                    q.push(x);
                 }
             }
             ans = max(ans, best.first);
