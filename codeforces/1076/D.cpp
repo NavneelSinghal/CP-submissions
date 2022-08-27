@@ -136,7 +136,7 @@ bool empty() {
 }
 
 node pop() {
-    assert(!empty());
+    // assert(!empty());
     node ans = pq[0];
     pq[0] = pq[--pq_size];
     int i = 0;
@@ -171,7 +171,7 @@ int main() {
         add_edge(v, u, w, i + 1);
     }
     // dijkstra
-    for (int i = 0; i < n; ++i) d[i] = INT64_MAX / 2;
+    memset(d, 0x3f, n * sizeof(ll));
     d[0] = 0;
     push((node){d[0], 0});
     while (!empty()) {
@@ -212,3 +212,4 @@ int main() {
     print_char('\n');
     fwrite(obuf, 1, obufptr - obuf, stdout);
 }
+
