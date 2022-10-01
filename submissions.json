@@ -10949,6 +10949,25 @@
     ],
     "timestamp": "Aug/13/2022 13:56"
   },
+  "CF174193149": {
+    "contest_id": 1738,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1738/E.cpp",
+    "platform": "Codeforces",
+    "problem_index": "E",
+    "problem_name": "Balance Addicts",
+    "problem_url": "https://codeforces.com/contest/1738/problem/E",
+    "submission_id": "CF174193149",
+    "submission_url": "https://codeforces.com/contest/1738/submission/174193149",
+    "tags": [
+      "combinatorics",
+      "dp",
+      "math",
+      "two pointers",
+      "*2300"
+    ],
+    "timestamp": "Oct/01/2022 08:38"
+  },
   "CF174221791": {
     "contest_id": 1738,
     "language": "GNU C++20 (64)",
