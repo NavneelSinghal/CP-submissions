@@ -10949,6 +10949,25 @@
     ],
     "timestamp": "Aug/13/2022 13:56"
   },
+  "CF174187407": {
+    "contest_id": 1738,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1738/G.cpp",
+    "platform": "Codeforces",
+    "problem_index": "G",
+    "problem_name": "Anti-Increasing Addicts",
+    "problem_url": "https://codeforces.com/contest/1738/problem/G",
+    "submission_id": "CF174187407",
+    "submission_url": "https://codeforces.com/contest/1738/submission/174187407",
+    "tags": [
+      "constructive algorithms",
+      "dp",
+      "greedy",
+      "math",
+      "*2900"
+    ],
+    "timestamp": "Oct/01/2022 06:55"
+  },
   "CF174187442": {
     "contest_id": 1738,
     "language": "GNU C11",
