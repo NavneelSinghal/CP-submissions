@@ -10949,6 +10949,28 @@
     ],
     "timestamp": "Aug/13/2022 13:56"
   },
+  "CF174221791": {
+    "contest_id": 1738,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1738/F.cpp",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Connectivity Addicts",
+    "problem_url": "https://codeforces.com/contest/1738/problem/F",
+    "submission_id": "CF174221791",
+    "submission_url": "https://codeforces.com/contest/1738/submission/174221791",
+    "tags": [
+      "constructive algorithms",
+      "dsu",
+      "graphs",
+      "greedy",
+      "interactive",
+      "shortest paths",
+      "trees",
+      "*2400"
+    ],
+    "timestamp": "Oct/01/2022 13:54"
+  },
   "CF175974928": {
     "contest_id": 1742,
     "language": "GNU C++20 (64)",
