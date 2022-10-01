@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define IBUFSIZE 5000000
-#define OBUFSIZE 5000000
+#define IBUFSIZE 10000000
+#define OBUFSIZE 10000000
 
 char ibuf[IBUFSIZE], obuf[OBUFSIZE];
 char *ibufptr = &*ibuf, *obufptr = &*obuf;
