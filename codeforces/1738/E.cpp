@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define IBUFSIZE 10000000
-#define OBUFSIZE 10000000
+#define IBUFSIZE 50000000
+#define OBUFSIZE 50000000
 
 char ibuf[IBUFSIZE], obuf[OBUFSIZE];
 char *ibufptr = &*ibuf, *obufptr = &*obuf;
@@ -165,7 +165,9 @@ mint divide(mint a, mint b) {
     return multiply(a, inverse(b));
 }
 
+const mint inv_2 = (mint){(MOD + 1) / 2};
 mint fact[N_FACTORIAL + 1], ifact[N_FACTORIAL + 1];
+// mint inv[N_FACTORIAL + 1];
 
 void precompute() {
     fact[0] = (mint){1};
@@ -174,6 +176,8 @@ void precompute() {
     ifact[N_FACTORIAL] = inverse(fact[N_FACTORIAL]);
     for (int i = N_FACTORIAL - 1; i >= 0; --i)
         ifact[i] = multiply(ifact[i + 1], (mint){i + 1});
+    // for (int i = 1; i <= N_FACTORIAL; ++i)
+    //     inv[i] = multiply(fact[i - 1], ifact[i]);
 }
 
 mint C(int n, int r) {
@@ -185,29 +189,37 @@ mint C(int n, int r) {
 int a[N];
 
 mint ways(int n, int m) {
-    return multiply(fact[n + m], multiply(ifact[n], ifact[m]));
+    return C(n + m, n);
 }
 
 void solve() {
     int n = read_u32();
     for (int i = 0; i < n; ++i) a[i] = read_u32();
-    mint ans = {1};
+    mint ans = construct_mint(1);
     int l = 0, r = n - 1;
     while (l <= r) {
         int x = l;
         while (x <= r && a[x] == 0) ++x;
         if (x > r) {
+            // all zeros
             ans = multiply(ans, power((mint){2}, r - l));
             break;
         }
+        // x = first non-zero from left
+        // not all zeros
         int y = r;
         while (y >= l && a[y] == 0) --y;
+        // y = first non-zero from right
         if (x > l && y < r) {
+            // a[l] = a[r] = 0
             ans = multiply(ans, ways(x - l, r - y));
             l = x, r = y;
         } else if (x == y) {
+            // either of a[l], a[r] != 0 and everything else is 0
+            // only one way, that is to keep everything here in the middle
             break;
         } else {
+            assert(x < y);
             int64_t sum_left = a[x], sum_right = a[y];
             while (x + 1 < y && sum_left != sum_right)
                 if (sum_left < sum_right)
@@ -215,14 +227,18 @@ void solve() {
                 else
                     sum_right += a[--y];
             if (sum_left != sum_right) {
+                // only one way, that is to keep everything here in the middle
                 break;
             } else {
+                // sum[l..x] = sum[y..r]
                 l = ++x, r = --y;
                 while (x <= r && a[x] == 0) ++x;
                 if (x > r) {
+                    // all zeros
                     ans = multiply(ans, power((mint){2}, r - l + 2));
                     break;
                 }
+                // not all zeros
                 while (y >= l && a[y] == 0) --y;
                 ans = multiply(ans, ways(x - l + 1, r - y + 1));
                 l = x, r = y;
