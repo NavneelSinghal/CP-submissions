@@ -129,7 +129,7 @@ void solve() {
     int n = read_u32(), k = read_u32();
     for (int i = 0; i < n; ++i) load_str_n(a[i], n);
     for (int i = 0; i <= n; ++i)
-        memset(dp[i], 0, (n + 1) * sizeof(int));
+        for (int j = 0; j <= n; ++j) dp[i][j] = 0;
 
     for (int i = 1; i < k; ++i)
         for (int j = 1; j <= k - i; ++j) dp[i][n - j + 1] = i, dp[n - i + 1][j] = j;
