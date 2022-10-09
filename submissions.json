@@ -2319,6 +2319,22 @@
     ],
     "timestamp": "Aug/09/2022 10:50"
   },
+  "AC35527811": {
+    "contest_id": "abc272",
+    "language": "C++ (GCC 9.2.1)",
+    "path": "atcoder/abc272/G.cpp",
+    "platform": "AtCoder",
+    "problem_index": "G",
+    "problem_name": "Yet Another mod M",
+    "problem_url": "https://atcoder.jp/contests/abc272/tasks/abc272_g",
+    "submission_id": "AC35527811",
+    "submission_url": "https://atcoder.jp/contests/abc272/submissions/35527811",
+    "tags": [
+      "AtCoder",
+      "*600"
+    ],
+    "timestamp": "Oct/09/2022 12:24"
+  },
   "CF100586070": {
     "contest_id": 1450,
     "language": "GNU C++17",
