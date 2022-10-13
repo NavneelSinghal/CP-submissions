@@ -13,9 +13,10 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-528 | [A - Sum](https://codeforces.com/contest/1742/problem/A) | [GNU C++20 (64)](./codeforces/1742/A.cpp) | `implementation` `*800` | Oct/13/2022 21:40 | 
-527 | [B - Increasing](https://codeforces.com/contest/1742/problem/B) | [GNU C++20 (64)](./codeforces/1742/B.cpp) | `greedy` `implementation` `sortings` `*800` | Oct/13/2022 21:39 | 
-526 | [C - Stripes](https://codeforces.com/contest/1742/problem/C) | [GNU C++20 (64)](./codeforces/1742/C.cpp) | `implementation` `*900` | Oct/13/2022 21:38 | 
+529 | [A - Sum](https://codeforces.com/contest/1742/problem/A) | [GNU C++20 (64)](./codeforces/1742/A.cpp) | `implementation` `*800` | Oct/13/2022 21:40 | 
+528 | [B - Increasing](https://codeforces.com/contest/1742/problem/B) | [GNU C++20 (64)](./codeforces/1742/B.cpp) | `greedy` `implementation` `sortings` `*800` | Oct/13/2022 21:39 | 
+527 | [C - Stripes](https://codeforces.com/contest/1742/problem/C) | [GNU C++20 (64)](./codeforces/1742/C.cpp) | `implementation` `*900` | Oct/13/2022 21:38 | 
+526 | [D - Coprime](https://codeforces.com/contest/1742/problem/D) | [GNU C++20 (64)](./codeforces/1742/D.cpp) | `brute force` `greedy` `number theory` `*1100` | Oct/13/2022 21:34 | 
 525 | [B - Subway Pursuit](https://codeforces.com/contest/1039/problem/B) | [GNU C11](./codeforces/1039/B.cpp) | `binary search` `interactive` `probabilities` `*2100` | Aug/13/2022 13:56 | 
 524 | [F - Lost Array](https://codeforces.com/contest/1713/problem/F) | [GNU C11](./codeforces/1713/F.cpp) | `bitmasks` `combinatorics` `constructive algorithms` `dp` `math` `*2900` | Aug/12/2022 20:06 | 
 523 | [B - Integers Have Friends](https://codeforces.com/contest/1548/problem/B) | [GNU C++20 (64)](./codeforces/1548/B.cpp) | `binary search` `data structures` `divide and conquer` `math` `number theory` `two pointers` `*1800` | Aug/12/2022 11:20 | 
