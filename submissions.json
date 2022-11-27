@@ -12103,6 +12103,24 @@
     ],
     "timestamp": "Oct/13/2022 21:40"
   },
+  "CF182903647": {
+    "contest_id": 1765,
+    "language": "PyPy 3",
+    "path": "codeforces/1765/F.py",
+    "platform": "Codeforces",
+    "problem_index": "F",
+    "problem_name": "Chemistry Lab",
+    "problem_url": "https://codeforces.com/contest/1765/problem/F",
+    "submission_id": "CF182903647",
+    "submission_url": "https://codeforces.com/contest/1765/submission/182903647",
+    "tags": [
+      "dp",
+      "geometry",
+      "probabilities",
+      "*2200"
+    ],
+    "timestamp": "Nov/27/2022 18:14"
+  },
   "CF182911333": {
     "contest_id": 1765,
     "language": "GNU C++20 (64)",
