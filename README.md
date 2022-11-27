@@ -13,6 +13,7 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
+541 | [A - Access Levels](https://codeforces.com/contest/1765/problem/A) | [GNU C++20 (64)](./codeforces/1765/A.cpp) | `bitmasks` `dsu` `flows` `graph matchings` `*2400` | Nov/27/2022 20:23 | 
 540 | [A - Sum](https://codeforces.com/contest/1742/problem/A) | [GNU C++20 (64)](./codeforces/1742/A.cpp) | `implementation` `*800` | Oct/13/2022 21:40 | 
 539 | [B - Increasing](https://codeforces.com/contest/1742/problem/B) | [GNU C++20 (64)](./codeforces/1742/B.cpp) | `greedy` `implementation` `sortings` `*800` | Oct/13/2022 21:39 | 
 538 | [C - Stripes](https://codeforces.com/contest/1742/problem/C) | [GNU C++20 (64)](./codeforces/1742/C.cpp) | `implementation` `*900` | Oct/13/2022 21:38 | 
@@ -21,7 +22,7 @@ A repository to keep track of problem solving practice, containing solutions fro
 535 | [G - Orray](https://codeforces.com/contest/1742/problem/G) | [GNU C++20 (64)](./codeforces/1742/G.cpp) | `bitmasks` `brute force` `greedy` `math` `sortings` `*1500` | Oct/13/2022 21:00 | 
 534 | [F - Connectivity Addicts](https://codeforces.com/contest/1738/problem/F) | [GNU C++20 (64)](./codeforces/1738/F.cpp) | `constructive algorithms` `dsu` `graphs` `greedy` `interactive` `shortest paths` `trees` `*2400` | Oct/01/2022 13:54 | 
 533 | [E - Balance Addicts](https://codeforces.com/contest/1738/problem/E) | [GNU C++20 (64)](./codeforces/1738/E.cpp) | `combinatorics` `dp` `math` `two pointers` `*2300` | Oct/01/2022 08:38 | 
-532 | [G - Anti-Increasing Addicts](https://codeforces.com/contest/1738/problem/G) | [GNU C11](./codeforces/1738/G.cpp) | `constructive algorithms` `dp` `greedy` `math` `*2900` | Oct/01/2022 06:55 | 
+532 | [G - Anti-Increasing Addicts](https://codeforces.com/contest/1738/problem/G) | [GNU C++20 (64)](./codeforces/1738/G.cpp) | `constructive algorithms` `dp` `greedy` `math` `*2900` | Oct/01/2022 06:55 | 
 531 | [F - Zeros and Ones](https://codeforces.com/contest/1734/problem/F) | [GNU C++20 (64)](./codeforces/1734/F.cpp) | `bitmasks` `divide and conquer` `dp` `math` `*2500` | Sep/23/2022 22:00 | 
 530 | [D - Edge Deletion](https://codeforces.com/contest/1076/problem/D) | [GNU C11](./codeforces/1076/D.cpp) | `graphs` `greedy` `shortest paths` `*1800` | Aug/27/2022 19:51 | 
 529 | [D - GCD Counting](https://codeforces.com/contest/1101/problem/D) | [GNU C++20 (64)](./codeforces/1101/D.cpp) | `data structures` `dfs and similar` `dp` `number theory` `trees` `*2000` | Aug/19/2022 11:02 | 
