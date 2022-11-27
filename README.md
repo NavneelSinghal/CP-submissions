@@ -13,8 +13,9 @@ A repository to keep track of problem solving practice, containing solutions fro
 
 | # | Title | Solution | Tags | Submitted |
 |---| ----- | -------- | ---- | --------- |
-542 | [A - Access Levels](https://codeforces.com/contest/1765/problem/A) | [GNU C++20 (64)](./codeforces/1765/A.cpp) | `bitmasks` `dsu` `flows` `graph matchings` `*2400` | Nov/27/2022 20:23 | 
-541 | [L - Project Manager](https://codeforces.com/contest/1765/problem/L) | [GNU C++20 (64)](./codeforces/1765/L.cpp) | `brute force` `data structures` `implementation` `*2400` | Nov/27/2022 19:50 | 
+543 | [A - Access Levels](https://codeforces.com/contest/1765/problem/A) | [GNU C++20 (64)](./codeforces/1765/A.cpp) | `bitmasks` `dsu` `flows` `graph matchings` `*2400` | Nov/27/2022 20:23 | 
+542 | [L - Project Manager](https://codeforces.com/contest/1765/problem/L) | [GNU C++20 (64)](./codeforces/1765/L.cpp) | `brute force` `data structures` `implementation` `*2400` | Nov/27/2022 19:50 | 
+541 | [H - Hospital Queue](https://codeforces.com/contest/1765/problem/H) | [GNU C++20 (64)](./codeforces/1765/H.cpp) | `binary search` `graphs` `greedy` `implementation` `*2200` | Nov/27/2022 19:21 | 
 540 | [A - Sum](https://codeforces.com/contest/1742/problem/A) | [GNU C++20 (64)](./codeforces/1742/A.cpp) | `implementation` `*800` | Oct/13/2022 21:40 | 
 539 | [B - Increasing](https://codeforces.com/contest/1742/problem/B) | [GNU C++20 (64)](./codeforces/1742/B.cpp) | `greedy` `implementation` `sortings` `*800` | Oct/13/2022 21:39 | 
 538 | [C - Stripes](https://codeforces.com/contest/1742/problem/C) | [GNU C++20 (64)](./codeforces/1742/C.cpp) | `implementation` `*900` | Oct/13/2022 21:38 | 
