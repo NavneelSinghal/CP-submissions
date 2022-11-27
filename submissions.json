@@ -12103,6 +12103,24 @@
     ],
     "timestamp": "Oct/13/2022 21:40"
   },
+  "CF182815851": {
+    "contest_id": 1765,
+    "language": "GNU C++20 (64)",
+    "path": "codeforces/1765/D.cpp",
+    "platform": "Codeforces",
+    "problem_index": "D",
+    "problem_name": "Watch the Videos",
+    "problem_url": "https://codeforces.com/contest/1765/problem/D",
+    "submission_id": "CF182815851",
+    "submission_url": "https://codeforces.com/contest/1765/submission/182815851",
+    "tags": [
+      "binary search",
+      "constructive algorithms",
+      "two pointers",
+      "*1700"
+    ],
+    "timestamp": "Nov/27/2022 17:20"
+  },
   "CF182903647": {
     "contest_id": 1765,
     "language": "PyPy 3",
